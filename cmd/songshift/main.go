@@ -6,13 +6,18 @@ import (
 	"os"
 
 	"github.com/GeorgeGorbanev/songshift/internal/songshift"
+	"github.com/GeorgeGorbanev/songshift/internal/songshift/spotify"
 	"github.com/GeorgeGorbanev/songshift/internal/songshift/telegram"
 
 	"github.com/joho/godotenv"
 )
 
 type config struct {
-	telegramToken string
+	telegramToken       string
+	spotifyAPIURL       string
+	spotifyAuthIURL     string
+	spotifyClientID     string
+	spotifyClientSecret string
 }
 
 func main() {
@@ -26,7 +31,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	ss := songshift.NewSongshift(bot.Sender())
+	spotifyClient := makeSpotifyClient(cfg)
+	ss := songshift.NewSongshift(spotifyClient, bot.Sender())
 	bot.HandleText(ss.HandleText)
 	defer bot.Stop()
 	bot.Start()
@@ -38,6 +44,19 @@ func readConfig() (*config, error) {
 	}
 
 	return &config{
-		telegramToken: os.Getenv("TELEGRAM_TOKEN"),
+		telegramToken:       os.Getenv("TELEGRAM_TOKEN"),
+		spotifyAPIURL:       os.Getenv("SPOTIFY_API_URL"),
+		spotifyAuthIURL:     os.Getenv("SPOTIFY_AUTH_URL"),
+		spotifyClientID:     os.Getenv("SPOTIFY_CLIENT_ID"),
+		spotifyClientSecret: os.Getenv("SPOTIFY_CLIENT_SECRET"),
 	}, nil
+}
+
+func makeSpotifyClient(cfg *config) *spotify.Client {
+	return spotify.NewClient(
+		cfg.spotifyAPIURL,
+		cfg.spotifyAuthIURL,
+		cfg.spotifyClientID,
+		cfg.spotifyClientSecret,
+	)
 }

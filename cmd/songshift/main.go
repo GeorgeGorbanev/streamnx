@@ -14,8 +14,6 @@ import (
 
 type config struct {
 	telegramToken       string
-	spotifyAPIURL       string
-	spotifyAuthIURL     string
 	spotifyClientID     string
 	spotifyClientSecret string
 }
@@ -45,18 +43,14 @@ func readConfig() (*config, error) {
 
 	return &config{
 		telegramToken:       os.Getenv("TELEGRAM_TOKEN"),
-		spotifyAPIURL:       os.Getenv("SPOTIFY_API_URL"),
-		spotifyAuthIURL:     os.Getenv("SPOTIFY_AUTH_URL"),
 		spotifyClientID:     os.Getenv("SPOTIFY_CLIENT_ID"),
 		spotifyClientSecret: os.Getenv("SPOTIFY_CLIENT_SECRET"),
 	}, nil
 }
 
 func makeSpotifyClient(cfg *config) *spotify.Client {
-	return spotify.NewClient(
-		cfg.spotifyAPIURL,
-		cfg.spotifyAuthIURL,
-		cfg.spotifyClientID,
-		cfg.spotifyClientSecret,
-	)
+	return spotify.NewClient(&spotify.Credentials{
+		ClientID:     cfg.spotifyClientID,
+		ClientSecret: cfg.spotifyClientSecret,
+	})
 }

@@ -1,46 +1,39 @@
-package spotify
+package spotify_test
 
 import (
-	"encoding/json"
-	"net/http"
-	"net/http/httptest"
 	"testing"
+
+	"github.com/GeorgeGorbanev/songshift/internal/songshift/spotify"
+	spotify_utils "github.com/GeorgeGorbanev/songshift/tests/utils/spotify"
 
 	"github.com/stretchr/testify/require"
 )
 
-func TestAuthHeader(t *testing.T) {
-	client := &Client{
-		clientID:     "testID",
-		clientSecret: "testSecret",
-	}
-
-	result := client.authHeader()
-
-	require.Equal(t, "Basic dGVzdElEOnRlc3RTZWNyZXQ=", result)
-}
-
 func TestFetchToken(t *testing.T) {
-	mockServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		require.Equal(t, "/api/token", r.URL.Path)
-		require.Equal(t, http.MethodPost, r.Method)
-		require.Equal(t, "application/x-www-form-urlencoded", r.Header.Get("Content-Type"))
-
-		err := json.NewEncoder(w).Encode(map[string]any{
-			"access_token": "test_access_token",
-			"token_type":   "Bearer",
-			"expires_in":   3600,
-		})
-		require.NoError(t, err)
-	}))
-
+	mockServer := spotify_utils.NewAuthServerMock(t)
 	defer mockServer.Close()
 
-	client := NewClient("", mockServer.URL, "client_id", "client_secret")
+	client := spotify.NewClient(&spotify_utils.SampleCredentials, spotify.WithAuthURL(mockServer.URL))
 	token, err := client.FetchToken()
 	require.NoError(t, err)
 	require.NotNil(t, token)
-	require.Equal(t, "test_access_token", token.AccessToken)
-	require.Equal(t, "Bearer", token.TokenType)
-	require.Equal(t, 3600, token.ExpiresIn)
+	require.Equal(t, &spotify_utils.SampleToken, token)
+}
+
+func TestGetTrack(t *testing.T) {
+	mockAuthServer := spotify_utils.NewAuthServerMock(t)
+	defer mockAuthServer.Close()
+
+	mockAPIServer := spotify_utils.NewAPIServerMock(t)
+	defer mockAPIServer.Close()
+
+	client := spotify.NewClient(
+		&spotify_utils.SampleCredentials,
+		spotify.WithAuthURL(mockAuthServer.URL),
+		spotify.WithAPIURL(mockAPIServer.URL),
+	)
+
+	track, err := client.GetTrack(spotify_utils.SampleTrack.ID)
+	require.NoError(t, err)
+	require.Equal(t, &spotify_utils.SampleTrack, track)
 }

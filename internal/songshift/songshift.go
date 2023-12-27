@@ -1,6 +1,7 @@
 package songshift
 
 import (
+	"errors"
 	"fmt"
 	"log"
 
@@ -22,23 +23,44 @@ func NewSongshift(spotifyClient *spotify.Client, telegramSender telegram.Sender)
 }
 
 func (s *Songshift) HandleText(inMsg *telebot.Message) {
-	log.Printf("Received message from %s: %s", inMsg.Sender.Username, inMsg.Text)
-
-	token, err := s.spotifyClient.FetchToken()
-	if err != nil {
-		log.Printf("Error fetching token: %s", err)
+	trackID := spotify.DetectTrackID(inMsg.Text)
+	if trackID == "" {
+		outMsg, err := s.respond(inMsg, "no track link found")
+		if err != nil {
+			log.Printf("Error sending message to %s: %s", inMsg.Sender.Username, err)
+			return
+		}
+		log.Printf("Sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
 		return
 	}
-	response := fmt.Sprintf("Received message: %s (token %s)", inMsg.Text, token.AccessToken)
-	outMsg, err := s.telegramSender.Send(
-		&telegram.Message{
-			To:   inMsg.Sender,
-			Text: response,
-		},
-	)
+
+	track, err := s.spotifyClient.GetTrack(trackID)
+	if err != nil {
+		log.Printf("Error fetching track: %s", err)
+		if errors.Is(err, spotify.TrackNotFoundError) {
+			outMsg, err := s.respond(inMsg, "track not found")
+			if err != nil {
+				log.Printf("Error sending message to %s: %s", inMsg.Sender.Username, err)
+				return
+			}
+			log.Printf("Sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+		}
+		return
+	}
+
+	outMsg, err := s.respond(inMsg, fmt.Sprintf(`Track: "%s – %s"`, track.ArtistsString(), track.Name))
 	if err != nil {
 		log.Printf("Error sending message to %s: %s", inMsg.Sender.Username, err)
 		return
 	}
 	log.Printf("Sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+}
+
+func (s *Songshift) respond(inMsg *telebot.Message, text string) (*telebot.Message, error) {
+	return s.telegramSender.Send(
+		&telegram.Message{
+			To:   inMsg.Sender,
+			Text: text,
+		},
+	)
 }

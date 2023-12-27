@@ -1,4 +1,4 @@
-package utils
+package telegram
 
 import (
 	"github.com/GeorgeGorbanev/songshift/internal/songshift/telegram"

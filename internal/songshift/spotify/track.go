@@ -1,8 +1,8 @@
 package spotify
 
 import (
+	"fmt"
 	"regexp"
-	"strings"
 )
 
 type Track struct {
@@ -66,10 +66,6 @@ func DetectTrackID(openTrackURL string) string {
 	return match[1]
 }
 
-func (t *Track) ArtistsString() string {
-	artists := make([]string, len(t.Artists))
-	for i, artist := range t.Artists {
-		artists[i] = artist.Name
-	}
-	return strings.Join(artists, ", ")
+func (t *Track) Title() string {
+	return fmt.Sprintf("%s – %s", t.Artists[0].Name, t.Name)
 }

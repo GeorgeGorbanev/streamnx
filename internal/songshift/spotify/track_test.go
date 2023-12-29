@@ -57,16 +57,17 @@ func TestDetectTrackID(t *testing.T) {
 	}
 }
 
-func TestTrack_ArtistsString(t *testing.T) {
+func TestTrack_Title(t *testing.T) {
 	track := Track{
 		Artists: []Artist{
 			{Name: "Artist 1"},
 			{Name: "Artist 2"},
 			{Name: "Artist 3"},
 		},
+		Name: "Track Name",
 	}
 
-	result := track.ArtistsString()
+	result := track.Title()
 
-	require.Equal(t, "Artist 1, Artist 2, Artist 3", result)
+	require.Equal(t, "Artist 1 – Track Name", result)
 }

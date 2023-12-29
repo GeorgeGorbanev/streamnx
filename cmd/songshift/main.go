@@ -8,6 +8,7 @@ import (
 	"github.com/GeorgeGorbanev/songshift/internal/songshift"
 	"github.com/GeorgeGorbanev/songshift/internal/songshift/spotify"
 	"github.com/GeorgeGorbanev/songshift/internal/songshift/telegram"
+	"github.com/GeorgeGorbanev/songshift/internal/songshift/ymusic"
 
 	"github.com/joho/godotenv"
 )
@@ -30,7 +31,11 @@ func main() {
 	}
 
 	spotifyClient := makeSpotifyClient(cfg)
-	ss := songshift.NewSongshift(spotifyClient, bot.Sender())
+	ss := songshift.NewSongshift(&songshift.Input{
+		SpotifyClient:  spotifyClient,
+		TelegramSender: bot.Sender(),
+		YmusicClient:   ymusic.NewClient(),
+	})
 	bot.HandleText(ss.HandleText)
 	defer bot.Stop()
 	bot.Start()

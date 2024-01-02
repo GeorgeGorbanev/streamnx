@@ -14,5 +14,4 @@ func TestTrack_URL(t *testing.T) {
 		},
 	}
 	require.Equal(t, "https://music.yandex.com/album/456/track/123", track.URL())
-
 }

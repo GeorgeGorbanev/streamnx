@@ -56,10 +56,10 @@ type Image struct {
 	Width  int    `json:"width"`
 }
 
-var openTrackRe = regexp.MustCompile(`https://open\.spotify\.com/track/([a-zA-Z0-9]+)(?:\?.*)?`)
+var OpenTrackRe = regexp.MustCompile(`https://open\.spotify\.com/track/([a-zA-Z0-9]+)(?:\?.*)?`)
 
 func DetectTrackID(openTrackURL string) string {
-	match := openTrackRe.FindStringSubmatch(openTrackURL)
+	match := OpenTrackRe.FindStringSubmatch(openTrackURL)
 	if match == nil || len(match) < 2 {
 		return ""
 	}

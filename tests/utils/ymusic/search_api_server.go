@@ -201,7 +201,6 @@ var (
 								Disclaimers:              []string{},
 								Genre:                    "triphopgenre",
 								ID:                       35627,
-								Labels:                   []string{"Virgin"},
 								LikesCount:               9931,
 								MetaType:                 "music",
 								OgImage:                  "avatars.yandex.net/get-music-content/28589/b060361b.a.35627-1/%%",
@@ -303,14 +302,14 @@ var (
 	}
 )
 
-func NewAPISearchServerMock(t *testing.T, query string) *httptest.Server {
+func NewAPISearchServerMock(t *testing.T) *httptest.Server {
 	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		require.Equal(t, http.MethodGet, r.Method)
 		require.Equal(t, r.URL.Path, "/search")
 		require.Equal(t, r.URL.Query().Get("page"), "0")
 		require.Equal(t, r.URL.Query().Get("type"), "track")
 
-		if r.URL.Query().Get("text") == query {
+		if r.URL.Query().Get("text") == SampleSearchQuery {
 			_, err := w.Write([]byte(SampleSearchResponseJSON))
 			require.NoError(t, err)
 		} else {

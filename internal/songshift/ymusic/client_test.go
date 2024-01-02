@@ -28,7 +28,7 @@ func TestClient_Search(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			apiServerMock := ymusic_utils.NewAPISearchServerMock(t, ymusic_utils.SampleSearchQuery)
+			apiServerMock := ymusic_utils.NewAPISearchServerMock(t)
 			defer apiServerMock.Close()
 
 			client := ymusic.NewClient(ymusic.WithAPIURL(apiServerMock.URL))
@@ -59,7 +59,7 @@ func TestClient_GetTrack(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			apiServerMock := ymusic_utils.NewAPIGetTrackServerMock(t, ymusic_utils.SampleTrackID)
+			apiServerMock := ymusic_utils.NewAPIGetTrackServerMock(t)
 			defer apiServerMock.Close()
 
 			client := ymusic.NewClient(ymusic.WithAPIURL(apiServerMock.URL))

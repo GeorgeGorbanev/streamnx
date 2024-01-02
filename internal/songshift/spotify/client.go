@@ -3,7 +3,6 @@ package spotify
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -34,8 +33,6 @@ const (
 	defaultAuthURL = "https://accounts.spotify.com"
 	defaultAPIURL  = "https://api.spotify.com"
 )
-
-var TrackNotFoundError = errors.New("track with given ID not found")
 
 func NewClient(credentials *Credentials, opts ...ClientOption) *Client {
 	c := Client{
@@ -102,7 +99,7 @@ func (c *Client) GetTrack(id string) (*Track, error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode == http.StatusBadRequest {
-		return nil, TrackNotFoundError
+		return nil, nil
 	}
 
 	body, err := io.ReadAll(resp.Body)

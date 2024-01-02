@@ -165,7 +165,6 @@ var (
 						Disclaimers:              []string{},
 						Genre:                    "indie",
 						ID:                       3192570,
-						Labels:                   []string{},
 						LikesCount:               30,
 						MetaType:                 "music",
 						OgImage:                  "avatars.yandex.net/get-music-content/32236/32877f96.a.3192570-1/%%",
@@ -258,7 +257,7 @@ var (
 	}
 )
 
-func NewAPIGetTrackServerMock(t *testing.T, trackID string) *httptest.Server {
+func NewAPIGetTrackServerMock(t *testing.T) *httptest.Server {
 	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		require.Equal(t, http.MethodGet, r.Method)
 
@@ -267,7 +266,7 @@ func NewAPIGetTrackServerMock(t *testing.T, trackID string) *httptest.Server {
 		require.Equal(t, "", path[0])
 		require.Equal(t, "tracks", path[1])
 
-		if path[2] == trackID {
+		if path[2] == SampleTrackID {
 			_, err := w.Write([]byte(SampleGetTrackResponseJSON))
 			require.NoError(t, err)
 		} else {

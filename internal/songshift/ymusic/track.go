@@ -54,7 +54,6 @@ type Album struct {
 	Disclaimers              []string      `json:"disclaimers"`
 	Genre                    string        `json:"genre"`
 	ID                       int           `json:"id"`
-	Labels                   []string      `json:"labels"`
 	LikesCount               int           `json:"likesCount"`
 	MetaType                 string        `json:"metaType"`
 	OgImage                  string        `json:"ogImage"`
@@ -138,6 +137,10 @@ func ParseTrackID(trackURL string) string {
 
 func (t *Track) URL() string {
 	return fmt.Sprintf("https://music.yandex.com/album/%d/track/%s", t.Albums[0].ID, t.idString())
+}
+
+func (t *Track) FullTitle() string {
+	return fmt.Sprintf("%s - %s", t.Artists[0].Name, t.Title)
 }
 
 func (t *Track) idString() string {

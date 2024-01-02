@@ -57,3 +57,28 @@ func (c *Client) Search(query string) (*SearchResponse, error) {
 
 	return &searchResponse, nil
 }
+
+func (c *Client) GetTrack(trackID string) (*Track, error) {
+	u := fmt.Sprintf("%s/tracks/%s", c.apiURL, trackID)
+	response, err := http.Get(u)
+	if err != nil {
+		return nil, fmt.Errorf("failed to perform get request: %s", err)
+	}
+	defer response.Body.Close()
+
+	responseData, err := io.ReadAll(response.Body)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read response body: %s", err)
+	}
+
+	trackResponse := TrackResponse{}
+	if err = json.Unmarshal(responseData, &trackResponse); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal response body: %s", err)
+	}
+
+	if len(trackResponse.Result) < 1 {
+		return nil, nil
+	}
+
+	return &trackResponse.Result[0], nil
+}

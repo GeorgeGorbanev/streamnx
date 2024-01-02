@@ -10,6 +10,7 @@ import (
 )
 
 var (
+	SampleSearchQuery        = "Massive Attack – Angel"
 	SampleSearchResponseJSON = `{
 		"invocationInfo": {
 			"exec-duration-millis": "123",
@@ -183,7 +184,7 @@ var (
 											Type:   "from-artist-photos",
 											URI:    "avatars.yandex.net/get-music-content/103235/87cf11b2.p.12662/%%",
 										},
-										Disclaimers: []any{},
+										Disclaimers: []string{},
 										Genres:      []string{},
 										ID:          12662,
 										Name:        "Massive Attack",
@@ -197,7 +198,7 @@ var (
 								AvailablePartially:       false,
 								Bests:                    []int{354093, 354094, 354089},
 								CoverUri:                 "avatars.yandex.net/get-music-content/28589/b060361b.a.35627-1/%%",
-								Disclaimers:              []any{},
+								Disclaimers:              []string{},
 								Genre:                    "triphopgenre",
 								ID:                       35627,
 								Labels:                   []string{"Virgin"},
@@ -224,7 +225,7 @@ var (
 									Type:   "from-artist-photos",
 									URI:    "avatars.yandex.net/get-music-content/103235/87cf11b2.p.12662/%%",
 								},
-								Disclaimers: []any{},
+								Disclaimers: []string{},
 								Genres:      []string{},
 								ID:          12662,
 								Name:        "Massive Attack",
@@ -248,7 +249,7 @@ var (
 						Explicit:          false,
 						Fade:              ymusic.Fade{InStart: 3.4, InStop: 10.1, OutStart: 376.9, OutStop: 377.1},
 						FileSize:          0,
-						ID:                354093,
+						ID:                354093.0,
 						LyricsAvailable:   true,
 						LyricsInfo:        ymusic.LyricsInfo{HasAvailableSyncLyrics: true, HasAvailableTextLyrics: true},
 						Major:             ymusic.Major{ID: 1, Name: "UNIVERSAL_MUSIC"},
@@ -270,8 +271,6 @@ var (
 			Type: "track",
 		},
 	}
-	SampleSearchQuery = "Massive Attack – Angel"
-
 	EmptySearchJSON = `
 		{
 			"invocationInfo": {
@@ -304,7 +303,7 @@ var (
 	}
 )
 
-func NewAPIServerMock(t *testing.T, query string) *httptest.Server {
+func NewAPISearchServerMock(t *testing.T, query string) *httptest.Server {
 	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		require.Equal(t, http.MethodGet, r.Method)
 		require.Equal(t, r.URL.Path, "/search")

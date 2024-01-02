@@ -5,12 +5,6 @@ type SearchResponse struct {
 	Result         SearchResult   `json:"result"`
 }
 
-type InvocationInfo struct {
-	ExecDurationMillis string `json:"exec-duration-millis"`
-	Hostname           string `json:"hostname"`
-	ReqID              string `json:"req-id"`
-}
-
 type SearchResult struct {
 	Page            int           `json:"page"`
 	PerPage         int           `json:"perPage"`

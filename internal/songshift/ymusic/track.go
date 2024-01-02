@@ -1,6 +1,14 @@
 package ymusic
 
-import "fmt"
+import (
+	"fmt"
+	"regexp"
+)
+
+type TrackResponse struct {
+	InvocationInfo InvocationInfo
+	Result         []Track
+}
 
 type Track struct {
 	Albums                         []Album       `json:"albums"`
@@ -17,7 +25,7 @@ type Track struct {
 	Explicit                       bool          `json:"explicit"`
 	Fade                           Fade          `json:"fade"`
 	FileSize                       int           `json:"fileSize"`
-	ID                             int           `json:"id"`
+	ID                             any           `json:"id"`
 	LyricsAvailable                bool          `json:"lyricsAvailable"`
 	LyricsInfo                     LyricsInfo    `json:"lyricsInfo"`
 	Major                          Major         `json:"major"`
@@ -43,7 +51,7 @@ type Album struct {
 	AvailablePartially       bool          `json:"availablePartially"`
 	Bests                    []int         `json:"bests"`
 	CoverUri                 string        `json:"coverUri"`
-	Disclaimers              []any         `json:"disclaimers"`
+	Disclaimers              []string      `json:"disclaimers"`
 	Genre                    string        `json:"genre"`
 	ID                       int           `json:"id"`
 	Labels                   []string      `json:"labels"`
@@ -65,7 +73,7 @@ type Album struct {
 type Artist struct {
 	Composer    bool        `json:"composer"`
 	Cover       ArtistCover `json:"cover"`
-	Disclaimers []any       `json:"disclaimers"`
+	Disclaimers []string    `json:"disclaimers"`
 	Genres      []string    `json:"genres"`
 	ID          int         `json:"id"`
 	Name        string      `json:"name"`
@@ -112,6 +120,35 @@ type R128 struct {
 	TP float64 `json:"tp"`
 }
 
+var TrackURLRegExp = regexp.MustCompile(`https://music\.yandex\.ru/album/\d+/track/(\d+)`)
+
+func IsTrackURL(url string) bool {
+	return TrackURLRegExp.MatchString(url)
+}
+
+func ParseTrackID(trackURL string) string {
+	matches := TrackURLRegExp.FindStringSubmatch(trackURL)
+
+	if len(matches) < 2 {
+		return ""
+	}
+
+	return matches[1]
+}
+
 func (t *Track) URL() string {
-	return fmt.Sprintf("https://music.yandex.com/album/%d/track/%d", t.Albums[0].ID, t.ID)
+	return fmt.Sprintf("https://music.yandex.com/album/%d/track/%s", t.Albums[0].ID, t.idString())
+}
+
+func (t *Track) idString() string {
+	switch id := t.ID.(type) {
+	case int:
+		return fmt.Sprintf("%d", id)
+	case string:
+		return id
+	case float64:
+		return fmt.Sprintf("%d", int(id))
+	default:
+		return ""
+	}
 }

@@ -91,7 +91,7 @@ func TestSongshift_HandleText(t *testing.T) {
 
 			require.Equal(t, ymusic_utils.SampleSearchQuery, spotify_utils.SampleTrack.Title())
 
-			ymusicMockServer := ymusic_utils.NewAPIServerMock(t, ymusic_utils.SampleSearchQuery)
+			ymusicMockServer := ymusic_utils.NewAPISearchServerMock(t, ymusic_utils.SampleSearchQuery)
 			defer ymusicMockServer.Close()
 
 			ymClient := ymusic.NewClient(ymusic.WithAPIURL(ymusicMockServer.URL))

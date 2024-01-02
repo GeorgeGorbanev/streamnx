@@ -28,12 +28,43 @@ func TestClient_Search(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			apiServerMock := ymusic_utils.NewAPIServerMock(t, ymusic_utils.SampleSearchQuery)
+			apiServerMock := ymusic_utils.NewAPISearchServerMock(t, ymusic_utils.SampleSearchQuery)
 			defer apiServerMock.Close()
 
 			client := ymusic.NewClient(ymusic.WithAPIURL(apiServerMock.URL))
 
 			result, err := client.Search(tt.query)
+			require.NoError(t, err)
+			require.Equal(t, tt.want, result)
+		})
+	}
+}
+
+func TestClient_GetTrack(t *testing.T) {
+	tests := []struct {
+		name    string
+		trackID string
+		want    *ymusic.Track
+	}{
+		{
+			name:    "when track found",
+			trackID: ymusic_utils.SampleTrackID,
+			want:    &ymusic_utils.SampleGetTrackResponse.Result[0],
+		},
+		{
+			name:    "when track not found",
+			trackID: "0",
+			want:    nil,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			apiServerMock := ymusic_utils.NewAPIGetTrackServerMock(t, ymusic_utils.SampleTrackID)
+			defer apiServerMock.Close()
+
+			client := ymusic.NewClient(ymusic.WithAPIURL(apiServerMock.URL))
+
+			result, err := client.GetTrack(tt.trackID)
 			require.NoError(t, err)
 			require.Equal(t, tt.want, result)
 		})

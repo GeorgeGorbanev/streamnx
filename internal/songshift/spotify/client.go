@@ -16,6 +16,10 @@ type Client struct {
 	credentials *Credentials
 }
 
+type SearchResult struct {
+	Tracks TracksSection `json:"tracks"`
+}
+
 type ClientOption func(client *Client)
 
 func WithAuthURL(url string) ClientOption {

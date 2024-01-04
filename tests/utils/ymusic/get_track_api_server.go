@@ -131,110 +131,21 @@ var (
 		]
 	}`
 	SampleGetTrackResponse = ymusic.TrackResponse{
-		InvocationInfo: ymusic.InvocationInfo{
-			ExecDurationMillis: "11",
-			Hostname:           "music-stable-back-vla-24.vla.yp-c.yandex.net",
-			ReqID:              "1704222836102466-11015214182353549756",
-		},
 		Result: []ymusic.Track{
 			{
+				ID:    "1197793",
+				Title: "Come On Santa",
 				Albums: []ymusic.Album{
 					{
-						Artists: []ymusic.Artist{
-							{
-								Composer: false,
-								Cover: ymusic.ArtistCover{
-									Prefix: "1cfff9fb.p.67307/",
-									Type:   "from-artist-photos",
-									URI:    "avatars.yandex.net/get-music-content/63210/1cfff9fb.p.67307/%%",
-								},
-								Disclaimers: []string{},
-								Genres:      []string{},
-								ID:          67307,
-								Name:        "The Raveonettes",
-								Various:     false,
-							},
-						},
-						Available:                true,
-						AvailableForMobile:       true,
-						AvailableForOptions:      []string{"bookmate"},
-						AvailableForPremiumUsers: true,
-						AvailablePartially:       false,
-						Bests:                    []int{1197793},
-						CoverUri:                 "avatars.yandex.net/get-music-content/32236/32877f96.a.3192570-1/%%",
-						Disclaimers:              []string{},
-						Genre:                    "indie",
-						ID:                       3192570,
-						LikesCount:               30,
-						MetaType:                 "music",
-						OgImage:                  "avatars.yandex.net/get-music-content/32236/32877f96.a.3192570-1/%%",
-						Recent:                   false,
-						ReleaseDate:              "2008-11-25T00:00:00+03:00",
-						Title:                    "Wishing You A Rave Christmas",
-						TrackCount:               4,
-						TrackPosition:            ymusic.TrackPosition{Index: 2, Volume: 1},
-						VeryImportant:            false,
-						Year:                     2008,
+						ID: 3192570,
 					},
 				},
 				Artists: []ymusic.Artist{
 					{
-						Composer: false,
-						Cover: ymusic.ArtistCover{
-							Prefix: "1cfff9fb.p.67307/",
-							Type:   "from-artist-photos",
-							URI:    "avatars.yandex.net/get-music-content/63210/1cfff9fb.p.67307/%%",
-						},
-						Disclaimers: []string{},
-						Genres:      []string{},
-						ID:          67307,
-						Name:        "The Raveonettes",
-						Various:     false,
+						ID:   67307,
+						Name: "The Raveonettes",
 					},
 				},
-				Available:                      true,
-				AvailableForOptions:            []string{"bookmate"},
-				AvailableForPremiumUsers:       true,
-				AvailableFullWithoutPermission: false,
-				CoverUri:                       "avatars.yandex.net/get-music-content/32236/32877f96.a.3192570-1/%%",
-				DerivedColors: ymusic.DerivedColors{
-					Accent:     "#6C8FC5",
-					Average:    "#121D2E",
-					MiniPlayer: "#98B0D6",
-					WaveText:   "#CCCCCC",
-				},
-				Disclaimers: []any{},
-				DurationMs:  221640,
-				Fade: ymusic.Fade{
-					InStart:  3,
-					InStop:   12,
-					OutStart: 205.8,
-					OutStop:  207.5,
-				},
-				FileSize:        0,
-				ID:              "1197793",
-				LyricsAvailable: false,
-				LyricsInfo: ymusic.LyricsInfo{
-					HasAvailableSyncLyrics: false,
-					HasAvailableTextLyrics: true,
-				},
-				Major: ymusic.Major{
-					ID:   39,
-					Name: "ORCHARD",
-				},
-				OgImage:           "avatars.yandex.net/get-music-content/32236/32877f96.a.3192570-1/%%",
-				PreviewDurationMs: 30000,
-				R128: ymusic.R128{
-					I:  -9.86,
-					TP: 0.72,
-				},
-				RealID:           "1197793",
-				RememberPosition: false,
-				StorageDir:       "",
-				Title:            "Come On Santa",
-				TrackSharingFlag: "COVER_ONLY",
-				TrackSource:      "OWN",
-				Type:             "music",
 			},
 		},
 	}
@@ -247,14 +158,6 @@ var (
 		},
 		"result": []
 	}`
-	EmptyGetTrackResponse = ymusic.TrackResponse{
-		InvocationInfo: ymusic.InvocationInfo{
-			ExecDurationMillis: "11",
-			Hostname:           "music-stable-back-vla-24.vla.yp-c.yandex.net",
-			ReqID:              "1704222836102466-11015214182353549756",
-		},
-		Result: []ymusic.Track{},
-	}
 )
 
 func NewAPIGetTrackServerMock(t *testing.T) *httptest.Server {

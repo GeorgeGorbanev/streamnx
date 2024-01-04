@@ -159,115 +159,26 @@ var (
 		}
 	}`
 	SampleSearchResponse = ymusic.SearchResponse{
-		InvocationInfo: ymusic.InvocationInfo{
-			ExecDurationMillis: "123",
-			Hostname:           "music-stable-back-klg-79.klg.yp-c.yandex.net",
-			ReqID:              "1703854680519912-9917339348184729128",
-		},
 		Result: ymusic.SearchResult{
-			Page:            0,
-			PerPage:         20,
-			SearchRequestID: "music-stable-back-klg-79.klg.yp-c.yandex.net-1703854680519912-9917339348184729128-1703854680540",
-			Text:            "massive attack – angel",
 			Tracks: ymusic.TracksSection{
-				Order:   0,
-				PerPage: 20,
 				Results: []ymusic.Track{
 					{
+						ID:    354093.0,
+						Title: "Angel",
 						Albums: []ymusic.Album{
 							{
-								Artists: []ymusic.Artist{
-									{
-										Composer: false,
-										Cover: ymusic.ArtistCover{
-											Prefix: "87cf11b2.p.12662/",
-											Type:   "from-artist-photos",
-											URI:    "avatars.yandex.net/get-music-content/103235/87cf11b2.p.12662/%%",
-										},
-										Disclaimers: []string{},
-										Genres:      []string{},
-										ID:          12662,
-										Name:        "Massive Attack",
-										Various:     false,
-									},
-								},
-								Available:                true,
-								AvailableForMobile:       true,
-								AvailableForOptions:      []string{"bookmate"},
-								AvailableForPremiumUsers: true,
-								AvailablePartially:       false,
-								Bests:                    []int{354093, 354094, 354089},
-								CoverUri:                 "avatars.yandex.net/get-music-content/28589/b060361b.a.35627-1/%%",
-								Disclaimers:              []string{},
-								Genre:                    "triphopgenre",
-								ID:                       35627,
-								LikesCount:               9931,
-								MetaType:                 "music",
-								OgImage:                  "avatars.yandex.net/get-music-content/28589/b060361b.a.35627-1/%%",
-								Recent:                   false,
-								Regions:                  []string{"BELARUS", "BELARUS_PREMIUM"},
-								ReleaseDate:              "1998-01-01T00:00:00+03:00",
-								StorageDir:               "b060361b.a.35627-1",
-								Title:                    "Mezzanine",
-								TrackCount:               11,
-								TrackPosition:            ymusic.TrackPosition{Index: 1, Volume: 1},
-								Type:                     "single",
-								VeryImportant:            false,
-								Year:                     1998,
+								ID: 35627,
 							},
 						},
 						Artists: []ymusic.Artist{
 							{
-								Composer: false,
-								Cover: ymusic.ArtistCover{
-									Prefix: "87cf11b2.p.12662/",
-									Type:   "from-artist-photos",
-									URI:    "avatars.yandex.net/get-music-content/103235/87cf11b2.p.12662/%%",
-								},
-								Disclaimers: []string{},
-								Genres:      []string{},
-								ID:          12662,
-								Name:        "Massive Attack",
-								Various:     false,
+								ID:   12662,
+								Name: "Massive Attack",
 							},
 						},
-						Available:                      true,
-						AvailableAsRbt:                 true,
-						AvailableForOptions:            []string{"bookmate"},
-						AvailableForPremiumUsers:       true,
-						AvailableFullWithoutPermission: false,
-						CoverUri:                       "avatars.yandex.net/get-music-content/28589/b060361b.a.35627-1/%%",
-						DerivedColors: ymusic.DerivedColors{
-							Accent:     "#999999",
-							Average:    "#666666",
-							MiniPlayer: "#B7B7B7",
-							WaveText:   "#CCCCCC",
-						},
-						Disclaimers:       []any{},
-						DurationMs:        379500,
-						Explicit:          false,
-						Fade:              ymusic.Fade{InStart: 3.4, InStop: 10.1, OutStart: 376.9, OutStop: 377.1},
-						FileSize:          0,
-						ID:                354093.0,
-						LyricsAvailable:   true,
-						LyricsInfo:        ymusic.LyricsInfo{HasAvailableSyncLyrics: true, HasAvailableTextLyrics: true},
-						Major:             ymusic.Major{ID: 1, Name: "UNIVERSAL_MUSIC"},
-						OgImage:           "avatars.yandex.net/get-music-content/28589/b060361b.a.35627-1/%%",
-						PreviewDurationMs: 30000,
-						R128:              ymusic.R128{I: -11.59, TP: 0.32},
-						RealID:            "354093",
-						Regions:           []string{"BELARUS", "BELARUS_PREMIUM"},
-						RememberPosition:  false,
-						StorageDir:        "",
-						Title:             "Angel",
-						TrackSharingFlag:  "VIDEO_ALLOWED",
-						TrackSource:       "OWN",
-						Type:              "music",
 					},
 				},
-				Total: 76,
 			},
-			Type: "track",
 		},
 	}
 	EmptySearchJSON = `
@@ -287,17 +198,8 @@ var (
 		}
 	`
 	EmptySearchResponse = ymusic.SearchResponse{
-		InvocationInfo: ymusic.InvocationInfo{
-			Hostname:           "music-stable-back-sas-108.sas.yp-c.yandex.net",
-			ReqID:              "1703860464774050-4133759126158316578",
-			ExecDurationMillis: "66",
-		},
 		Result: ymusic.SearchResult{
-			Type:            "track",
-			Page:            0,
-			PerPage:         20,
-			Text:            "SampleImpossibleQuery",
-			SearchRequestID: "music-stable-back-sas-108.sas.yp-c.yandex.net-1703860464774050-4133759126158316578-1703860464783",
+			Tracks: ymusic.TracksSection{},
 		},
 	}
 )

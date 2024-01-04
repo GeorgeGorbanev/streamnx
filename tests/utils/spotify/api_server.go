@@ -13,58 +13,13 @@ import (
 
 var (
 	SampleTrack = spotify.Track{
-		Album: spotify.Album{
-			AlbumType: "album",
-			Artists: []spotify.Artist{
-				{
-					ExternalURLs: map[string]string{"spotify": "https://spotify.com/artist1"},
-					Href:         "https://api.spotify.com/v1/artists/artist1",
-					ID:           "artist1",
-					Name:         "Massive Attack",
-					Type:         "artist",
-					URI:          "spotify:artist:artist1",
-				},
-			},
-			AvailableMarkets: []string{"US", "GB"},
-			ExternalURLs:     map[string]string{"spotify": "https://spotify.com/album1"},
-			Href:             "https://api.spotify.com/v1/albums/album1",
-			ID:               "album1",
-			Images: []spotify.Image{
-				{Height: 640, URL: "https://image.url/1", Width: 640},
-				{Height: 300, URL: "https://image.url/2", Width: 300},
-			},
-			Name:                 "Album One",
-			ReleaseDate:          "2023-01-01",
-			ReleaseDatePrecision: "day",
-			Type:                 "album",
-			URI:                  "spotify:album:album1",
-		},
+		ID: "track1",
 		Artists: []spotify.Artist{
 			{
-				ExternalURLs: map[string]string{"spotify": "https://spotify.com/artist1"},
-				Href:         "https://api.spotify.com/v1/artists/artist1",
-				ID:           "artist1",
-				Name:         "Massive Attack",
-				Type:         "artist",
-				URI:          "spotify:artist:artist1",
+				Name: "Massive Attack",
 			},
 		},
-		AvailableMarkets: []string{"US", "GB"},
-		DiscNumber:       1,
-		DurationMs:       240000,
-		Explicit:         false,
-		ExternalIDs:      map[string]string{"isrc": "US1234567890"},
-		ExternalURLs:     map[string]string{"spotify": "https://spotify.com/track1"},
-		Href:             "https://api.spotify.com/v1/tracks/track1",
-		ID:               "track1",
-		IsPlayable:       true,
-		LinkedFrom:       nil,
-		Name:             "Angel",
-		Popularity:       80,
-		PreviewURL:       "https://preview.url/track1",
-		TrackNumber:      5,
-		Type:             "track",
-		URI:              "spotify:track:track1",
+		Name: "Angel",
 	}
 	SampleTrackJSON = `{
         "album": {
@@ -122,58 +77,13 @@ var (
     }`
 
 	SampleYMusicNotFoundTrack = spotify.Track{
-		Album: spotify.Album{
-			AlbumType: "album",
-			Artists: []spotify.Artist{
-				{
-					ExternalURLs: map[string]string{"spotify": "https://spotify.com/artist1"},
-					Href:         "https://api.spotify.com/v1/artists/artist1",
-					ID:           "artist1",
-					Name:         "Not Y Music",
-					Type:         "artist",
-					URI:          "spotify:artist:artist1",
-				},
-			},
-			AvailableMarkets: []string{"US", "GB"},
-			ExternalURLs:     map[string]string{"spotify": "https://spotify.com/album1"},
-			Href:             "https://api.spotify.com/v1/albums/album1",
-			ID:               "album1",
-			Images: []spotify.Image{
-				{Height: 640, URL: "https://image.url/1", Width: 640},
-				{Height: 300, URL: "https://image.url/2", Width: 300},
-			},
-			Name:                 "Album One",
-			ReleaseDate:          "2023-01-01",
-			ReleaseDatePrecision: "day",
-			Type:                 "album",
-			URI:                  "spotify:album:album1",
-		},
+		ID:   "ymN07f0und",
+		Name: "Not y music",
 		Artists: []spotify.Artist{
 			{
-				ExternalURLs: map[string]string{"spotify": "https://spotify.com/artist1"},
-				Href:         "https://api.spotify.com/v1/artists/artist1",
-				ID:           "artist1",
-				Name:         "Not Y Music",
-				Type:         "artist",
-				URI:          "spotify:artist:artist1",
+				Name: "Not Y Music",
 			},
 		},
-		AvailableMarkets: []string{"US", "GB"},
-		DiscNumber:       1,
-		DurationMs:       240000,
-		Explicit:         false,
-		ExternalIDs:      map[string]string{"isrc": "US1234567890"},
-		ExternalURLs:     map[string]string{"spotify": "https://spotify.com/track1"},
-		Href:             "https://api.spotify.com/v1/tracks/track1",
-		ID:               "ymN07f0und",
-		IsPlayable:       true,
-		LinkedFrom:       nil,
-		Name:             "Not y music",
-		Popularity:       80,
-		PreviewURL:       "https://preview.url/track1",
-		TrackNumber:      5,
-		Type:             "track",
-		URI:              "spotify:track:track1",
 	}
 	SampleYMusicNotFoundTrackJSON = `{
         "album": {

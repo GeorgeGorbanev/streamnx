@@ -12,6 +12,14 @@ type Client struct {
 	apiURL string
 }
 
+type TrackResponse struct {
+	Result []Track `json:"result"`
+}
+
+type SearchResponse struct {
+	Result SearchResult `json:"result"`
+}
+
 type ClientOption func(client *Client)
 
 func WithAPIURL(url string) ClientOption {

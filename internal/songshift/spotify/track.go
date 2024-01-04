@@ -6,62 +6,16 @@ import (
 )
 
 type Track struct {
-	Album            Album             `json:"album"`
-	Artists          []Artist          `json:"artists"`
-	AvailableMarkets []string          `json:"available_markets"`
-	DiscNumber       int               `json:"disc_number"`
-	DurationMs       int               `json:"duration_ms"`
-	Explicit         bool              `json:"explicit"`
-	ExternalIDs      map[string]string `json:"external_ids"`
-	ExternalURLs     map[string]string `json:"external_urls"`
-	Href             string            `json:"href"`
-	ID               string            `json:"id"`
-	IsPlayable       bool              `json:"is_playable"`
-	LinkedFrom       *Track            `json:"linked_from"`
-	Name             string            `json:"name"`
-	Popularity       int               `json:"popularity"`
-	PreviewURL       string            `json:"preview_url"`
-	TrackNumber      int               `json:"track_number"`
-	Type             string            `json:"type"`
-	URI              string            `json:"uri"`
-}
-
-type Album struct {
-	AlbumType            string            `json:"album_type"`
-	Artists              []Artist          `json:"artists"`
-	AvailableMarkets     []string          `json:"available_markets"`
-	ExternalURLs         map[string]string `json:"external_urls"`
-	Href                 string            `json:"href"`
-	ID                   string            `json:"id"`
-	Images               []Image           `json:"images"`
-	Name                 string            `json:"name"`
-	ReleaseDate          string            `json:"release_date"`
-	ReleaseDatePrecision string            `json:"release_date_precision"`
-	Type                 string            `json:"type"`
-	URI                  string            `json:"uri"`
+	Artists []Artist `json:"artists"`
+	ID      string   `json:"id"`
+	Name    string   `json:"name"`
 }
 
 type Artist struct {
-	ExternalURLs map[string]string `json:"external_urls"`
-	Href         string            `json:"href"`
-	ID           string            `json:"id"`
-	Name         string            `json:"name"`
-	Type         string            `json:"type"`
-	URI          string            `json:"uri"`
+	Name string `json:"name"`
 }
 
-type Image struct {
-	Height int    `json:"height"`
-	URL    string `json:"url"`
-	Width  int    `json:"width"`
-}
-
-type SearchResult struct {
-	Tracks Tracks `json:"tracks"`
-}
-
-type Tracks struct {
-	Href  string   `json:"href"`
+type TracksSection struct {
 	Items []*Track `json:"items"`
 }
 

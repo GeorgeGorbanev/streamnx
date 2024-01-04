@@ -9,31 +9,31 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestClient_Search(t *testing.T) {
+func TestClient_SearchTrack(t *testing.T) {
 	tests := []struct {
 		name  string
 		query string
-		want  *ymusic.SearchResponse
+		want  *ymusic.Track
 	}{
 		{
 			name:  "when track found",
-			query: ymusic_utils.SampleSearchQuery,
-			want:  &ymusic_utils.SampleSearchResponse,
+			query: ymusic_utils.TrackFixtureMassiveAttackAngel.SearchQuery,
+			want:  ymusic_utils.TrackFixtureMassiveAttackAngel.Track,
 		},
 		{
 			name:  "when track not found",
 			query: "any impossible query",
-			want:  &ymusic_utils.EmptySearchResponse,
+			want:  nil,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			apiServerMock := ymusic_utils.NewAPISearchServerMock(t)
+			apiServerMock := ymusic_utils.NewAPIServerMock(t)
 			defer apiServerMock.Close()
 
 			client := ymusic.NewClient(ymusic.WithAPIURL(apiServerMock.URL))
 
-			result, err := client.Search(tt.query)
+			result, err := client.SearchTrack(tt.query)
 			require.NoError(t, err)
 			require.Equal(t, tt.want, result)
 		})
@@ -48,8 +48,8 @@ func TestClient_GetTrack(t *testing.T) {
 	}{
 		{
 			name:    "when track found",
-			trackID: ymusic_utils.SampleTrackID,
-			want:    &ymusic_utils.SampleGetTrackResponse.Result[0],
+			trackID: ymusic_utils.TrackFixtureMassiveAttackAngel.ID,
+			want:    ymusic_utils.TrackFixtureMassiveAttackAngel.TrackWithIDString(),
 		},
 		{
 			name:    "when track not found",
@@ -59,7 +59,7 @@ func TestClient_GetTrack(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			apiServerMock := ymusic_utils.NewAPIGetTrackServerMock(t)
+			apiServerMock := ymusic_utils.NewAPIServerMock(t)
 			defer apiServerMock.Close()
 
 			client := ymusic.NewClient(ymusic.WithAPIURL(apiServerMock.URL))

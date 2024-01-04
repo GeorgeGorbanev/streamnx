@@ -15,10 +15,6 @@ type Artist struct {
 	Name string `json:"name"`
 }
 
-type TracksSection struct {
-	Items []*Track `json:"items"`
-}
-
 var OpenTrackRe = regexp.MustCompile(`https://open\.spotify\.com/track/([a-zA-Z0-9]+)(?:\?.*)?`)
 
 func DetectTrackID(openTrackURL string) string {

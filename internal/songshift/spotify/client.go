@@ -16,8 +16,12 @@ type Client struct {
 	credentials *Credentials
 }
 
-type SearchResult struct {
-	Tracks TracksSection `json:"tracks"`
+type searchResult struct {
+	Tracks tracksSection `json:"tracks"`
+}
+
+type tracksSection struct {
+	Items []*Track `json:"items"`
 }
 
 type ClientOption func(client *Client)
@@ -121,9 +125,9 @@ func (c *Client) GetTrack(id string) (*Track, error) {
 }
 
 // https://developer.spotify.com/documentation/web-api/reference/search
-func (c *Client) SearchTrack(artistName, trackName string) ([]*Track, error) {
+func (c *Client) SearchTrack(artistName, trackName string) (*Track, error) {
 	query := url.QueryEscape(fmt.Sprintf("artist:%s track:%s", artistName, trackName))
-	u := fmt.Sprintf("%s/v1/search?q=%s&type=track", c.apiURL, query)
+	u := fmt.Sprintf("%s/v1/search?q=%s&type=track&limit=1", c.apiURL, query)
 	req, err := http.NewRequest(http.MethodGet, u, nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
@@ -147,10 +151,13 @@ func (c *Client) SearchTrack(artistName, trackName string) ([]*Track, error) {
 		return nil, fmt.Errorf("failed to read response body: %w", err)
 	}
 
-	searchResult := SearchResult{}
-	if err := json.Unmarshal(body, &searchResult); err != nil {
+	sr := searchResult{}
+	if err := json.Unmarshal(body, &sr); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal response body: %w", err)
 	}
+	if len(sr.Tracks.Items) == 0 {
+		return nil, nil
+	}
 
-	return searchResult.Tracks.Items, nil
+	return sr.Tracks.Items[0], nil
 }

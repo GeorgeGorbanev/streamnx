@@ -2,7 +2,6 @@ package songshift
 
 import (
 	"fmt"
-	"net/http/httptest"
 	"testing"
 
 	"github.com/GeorgeGorbanev/songshift/internal/songshift/spotify"
@@ -20,10 +19,9 @@ func TestSongshift_HandleText(t *testing.T) {
 	sampleSender := &telebot.User{Username: "sample_username"}
 
 	tests := []struct {
-		name                    string
-		inMsg                   *telebot.Message
-		yMusicMockServerCreator func(t *testing.T) *httptest.Server
-		expectedResponse        *telegram.Message
+		name             string
+		inMsg            *telebot.Message
+		expectedResponse *telegram.Message
 	}{
 		{
 			name: "when no link given",
@@ -31,7 +29,6 @@ func TestSongshift_HandleText(t *testing.T) {
 				Sender: sampleSender,
 				Text:   "just message with no link",
 			},
-			yMusicMockServerCreator: ymusic_utils.NewAPISearchServerMock,
 			expectedResponse: &telegram.Message{
 				To:   sampleSender,
 				Text: "no track link found",
@@ -41,9 +38,11 @@ func TestSongshift_HandleText(t *testing.T) {
 			name: "when spotify track link given and track found",
 			inMsg: &telebot.Message{
 				Sender: sampleSender,
-				Text:   fmt.Sprintf("prfx https://open.spotify.com/track/%s?sample=query", spotify_utils.SampleTrack.ID),
+				Text: fmt.Sprintf(
+					"prfx https://open.spotify.com/track/%s?sample=query",
+					spotify_utils.TrackFixtureMassiveAttackAngel.Track.ID,
+				),
 			},
-			yMusicMockServerCreator: ymusic_utils.NewAPISearchServerMock,
 			expectedResponse: &telegram.Message{
 				To:   sampleSender,
 				Text: "https://music.yandex.com/album/35627/track/354093",
@@ -53,9 +52,11 @@ func TestSongshift_HandleText(t *testing.T) {
 			name: "when spotify track link given and track found but ymusic track not found",
 			inMsg: &telebot.Message{
 				Sender: sampleSender,
-				Text:   fmt.Sprintf("prfx https://open.spotify.com/track/%s?sample=query", spotify_utils.SampleYMusicNotFoundTrack.ID),
+				Text: fmt.Sprintf(
+					"prfx https://open.spotify.com/track/%s?sample=query",
+					spotify_utils.TrackFixtureMileyCyrusFlowers.Track.ID,
+				),
 			},
-			yMusicMockServerCreator: ymusic_utils.NewAPISearchServerMock,
 			expectedResponse: &telegram.Message{
 				To:   sampleSender,
 				Text: "no ym track found",
@@ -67,7 +68,6 @@ func TestSongshift_HandleText(t *testing.T) {
 				Sender: sampleSender,
 				Text:   fmt.Sprintf("prfx https://open.spotify.com/track/%s?sample=query", "invalid_track_id"),
 			},
-			yMusicMockServerCreator: ymusic_utils.NewAPISearchServerMock,
 			expectedResponse: &telegram.Message{
 				To:   sampleSender,
 				Text: "track not found",
@@ -77,12 +77,14 @@ func TestSongshift_HandleText(t *testing.T) {
 			name: "when yandex music track link given and track found",
 			inMsg: &telebot.Message{
 				Sender: sampleSender,
-				Text:   fmt.Sprintf("prfx https://music.yandex.ru/album/3192570/track/%s", ymusic_utils.SampleTrackID),
+				Text: fmt.Sprintf(
+					"prfx https://music.yandex.ru/album/3192570/track/%s?query=sample",
+					ymusic_utils.TrackFixtureMassiveAttackAngel.ID,
+				),
 			},
-			yMusicMockServerCreator: ymusic_utils.NewAPIGetTrackServerMock,
 			expectedResponse: &telegram.Message{
 				To:   sampleSender,
-				Text: "https://open.spotify.com/track/1wsw6jqC9KuJfqSshK3437",
+				Text: "https://open.spotify.com/track/7uv632EkfwYhXoqf8rhYrg",
 			},
 		},
 		{
@@ -91,7 +93,6 @@ func TestSongshift_HandleText(t *testing.T) {
 				Sender: sampleSender,
 				Text:   fmt.Sprintf("prfx https://music.yandex.ru/album/3192570/track/%s", "0"),
 			},
-			yMusicMockServerCreator: ymusic_utils.NewAPIGetTrackServerMock,
 			expectedResponse: &telegram.Message{
 				To:   sampleSender,
 				Text: "track not found in yandex music",
@@ -113,12 +114,10 @@ func TestSongshift_HandleText(t *testing.T) {
 				spotify.WithAPIURL(mockAPIServer.URL),
 			)
 
-			require.Equal(t, ymusic_utils.SampleSearchQuery, spotify_utils.SampleTrack.Title())
+			yMusicMockServer := ymusic_utils.NewAPIServerMock(t)
+			defer yMusicMockServer.Close()
 
-			ymusicMockServer := tt.yMusicMockServerCreator(t)
-			defer ymusicMockServer.Close()
-
-			ymClient := ymusic.NewClient(ymusic.WithAPIURL(ymusicMockServer.URL))
+			ymClient := ymusic.NewClient(ymusic.WithAPIURL(yMusicMockServer.URL))
 
 			ss := NewSongshift(&Input{
 				SpotifyClient:  spotifyClient,

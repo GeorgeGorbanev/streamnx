@@ -12,12 +12,20 @@ type Client struct {
 	apiURL string
 }
 
-type TrackResponse struct {
+type trackResponse struct {
 	Result []Track `json:"result"`
 }
 
-type SearchResponse struct {
-	Result SearchResult `json:"result"`
+type searchResponse struct {
+	Result searchResult `json:"result"`
+}
+
+type searchResult struct {
+	Tracks tracksSection `json:"tracks"`
+}
+
+type tracksSection struct {
+	Results []Track `json:"results"`
 }
 
 type ClientOption func(client *Client)
@@ -42,7 +50,32 @@ func NewClient(opts ...ClientOption) *Client {
 	return &c
 }
 
-func (c *Client) Search(query string) (*SearchResponse, error) {
+func (c *Client) GetTrack(trackID string) (*Track, error) {
+	u := fmt.Sprintf("%s/tracks/%s", c.apiURL, trackID)
+	response, err := http.Get(u)
+	if err != nil {
+		return nil, fmt.Errorf("failed to perform get request: %s", err)
+	}
+	defer response.Body.Close()
+
+	responseData, err := io.ReadAll(response.Body)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read response body: %s", err)
+	}
+
+	trackResponse := trackResponse{}
+	if err = json.Unmarshal(responseData, &trackResponse); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal response body: %s", err)
+	}
+
+	if len(trackResponse.Result) < 1 {
+		return nil, nil
+	}
+
+	return &trackResponse.Result[0], nil
+}
+
+func (c *Client) SearchTrack(query string) (*Track, error) {
 	u := fmt.Sprintf("%s/search?type=track&page=0&text=", c.apiURL)
 	encodedQuery := url.QueryEscape(query)
 	fullUrl := u + encodedQuery
@@ -58,35 +91,14 @@ func (c *Client) Search(query string) (*SearchResponse, error) {
 		return nil, fmt.Errorf("failed to read response body: %s", err)
 	}
 
-	searchResponse := SearchResponse{}
-	if err = json.Unmarshal(responseData, &searchResponse); err != nil {
+	sr := searchResponse{}
+	if err = json.Unmarshal(responseData, &sr); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal response body: %s", err)
 	}
 
-	return &searchResponse, nil
-}
-
-func (c *Client) GetTrack(trackID string) (*Track, error) {
-	u := fmt.Sprintf("%s/tracks/%s", c.apiURL, trackID)
-	response, err := http.Get(u)
-	if err != nil {
-		return nil, fmt.Errorf("failed to perform get request: %s", err)
-	}
-	defer response.Body.Close()
-
-	responseData, err := io.ReadAll(response.Body)
-	if err != nil {
-		return nil, fmt.Errorf("failed to read response body: %s", err)
-	}
-
-	trackResponse := TrackResponse{}
-	if err = json.Unmarshal(responseData, &trackResponse); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal response body: %s", err)
-	}
-
-	if len(trackResponse.Result) < 1 {
+	if len(sr.Result.Tracks.Results) == 0 {
 		return nil, nil
 	}
 
-	return &trackResponse.Result[0], nil
+	return &sr.Result.Tracks.Results[0], nil
 }

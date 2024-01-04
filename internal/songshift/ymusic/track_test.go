@@ -52,47 +52,6 @@ func TestTrack_URL(t *testing.T) {
 	}
 }
 
-func TestIsTrackURL(t *testing.T) {
-	tests := []struct {
-		name string
-		url  string
-		want bool
-	}{
-		{
-			name: "Valid Track URL",
-			url:  "https://music.yandex.ru/album/3192570/track/1197793",
-			want: true,
-		},
-		{
-			name: "URL within text",
-			url:  "Check this track: https://music.yandex.ru/album/3192570/track/1197793 - it's great!",
-			want: true,
-		},
-		{
-			name: "Invalid URL - Missing track segment",
-			url:  "https://music.yandex.ru/album/3192570",
-			want: false,
-		},
-		{
-			name: "Invalid URL - Non-numeric IDs",
-			url:  "https://music.yandex.ru/album/abc/track/xyz",
-			want: false,
-		},
-		{
-			name: "Invalid URL - Incorrect domain",
-			url:  "https://otherwebsite.com/album/3192570/track/1197793",
-			want: false,
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			result := IsTrackURL(tt.url)
-			require.Equal(t, tt.want, result)
-		})
-	}
-}
-
 func TestParseTrackID(t *testing.T) {
 	tests := []struct {
 		name   string

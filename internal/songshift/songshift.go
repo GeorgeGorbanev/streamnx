@@ -48,15 +48,24 @@ func (s *Songshift) makeRouter() *telegram.Router {
 	return router
 }
 
+func (s *Songshift) respond(inMsg *telebot.Message, text string) (*telebot.Message, error) {
+	return s.telegramSender.Send(
+		&telegram.Message{
+			To:   inMsg.Sender,
+			Text: text,
+		},
+	)
+}
+
 func (s *Songshift) spotifyTrack() telegram.HandlerFunc {
 	return func(inMsg *telebot.Message) {
 		trackID := spotify.DetectTrackID(inMsg.Text)
-		track, err := s.spotifyClient.GetTrack(trackID)
+		spotifyTrack, err := s.spotifyClient.GetTrack(trackID)
 		if err != nil {
 			log.Printf("error fetching track: %s", err)
 			return
 		}
-		if track == nil {
+		if spotifyTrack == nil {
 			outMsg, err := s.respond(inMsg, "track not found")
 			if err != nil {
 				log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
@@ -66,13 +75,12 @@ func (s *Songshift) spotifyTrack() telegram.HandlerFunc {
 			return
 		}
 
-		searchResponse, err := s.ymusicClient.Search(track.Title())
+		yMusicTrack, err := s.ymusicClient.SearchTrack(spotifyTrack.Title())
 		if err != nil {
 			log.Printf("failed to search ymusic: %s", err)
 			return
 		}
-
-		if !searchResponse.Result.AnyTracksFound() {
+		if yMusicTrack == nil {
 			outMsg, err := s.respond(inMsg, "no ym track found")
 			if err != nil {
 				log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
@@ -82,9 +90,7 @@ func (s *Songshift) spotifyTrack() telegram.HandlerFunc {
 			return
 		}
 
-		trackURL := searchResponse.Result.Tracks.Results[0].URL()
-
-		outMsg, err := s.respond(inMsg, trackURL)
+		outMsg, err := s.respond(inMsg, yMusicTrack.URL())
 		if err != nil {
 			log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
 			return
@@ -96,12 +102,12 @@ func (s *Songshift) spotifyTrack() telegram.HandlerFunc {
 func (s *Songshift) yMusicTrack() telegram.HandlerFunc {
 	return func(inMsg *telebot.Message) {
 		trackID := ymusic.ParseTrackID(inMsg.Text)
-		track, err := s.ymusicClient.GetTrack(trackID)
+		yMusicTrack, err := s.ymusicClient.GetTrack(trackID)
 		if err != nil {
 			log.Printf("error fetching track: %s", err)
 			return
 		}
-		if track == nil {
+		if yMusicTrack == nil {
 			outMsg, err := s.respond(inMsg, "track not found in yandex music")
 			if err != nil {
 				log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
@@ -111,12 +117,12 @@ func (s *Songshift) yMusicTrack() telegram.HandlerFunc {
 			return
 		}
 
-		tracks, err := s.spotifyClient.SearchTrack(track.Artists[0].Name, track.Title)
+		spotifyTrack, err := s.spotifyClient.SearchTrack(yMusicTrack.Artists[0].Name, yMusicTrack.Title)
 		if err != nil {
 			log.Printf("failed to search spotify: %s", err)
 			return
 		}
-		if len(tracks) == 0 {
+		if spotifyTrack == nil {
 			outMsg, err := s.respond(inMsg, "no track found in spotify")
 			if err != nil {
 				log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
@@ -126,7 +132,7 @@ func (s *Songshift) yMusicTrack() telegram.HandlerFunc {
 			return
 		}
 
-		outMsg, err := s.respond(inMsg, tracks[0].URL())
+		outMsg, err := s.respond(inMsg, spotifyTrack.URL())
 		if err != nil {
 			log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
 			return
@@ -144,13 +150,4 @@ func (s *Songshift) notFound() telegram.HandlerFunc {
 		}
 		log.Printf("Sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
 	}
-}
-
-func (s *Songshift) respond(inMsg *telebot.Message, text string) (*telebot.Message, error) {
-	return s.telegramSender.Send(
-		&telegram.Message{
-			To:   inMsg.Sender,
-			Text: text,
-		},
-	)
 }

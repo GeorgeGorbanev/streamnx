@@ -33,7 +33,28 @@ func TestGetTrack(t *testing.T) {
 		spotify.WithAPIURL(mockAPIServer.URL),
 	)
 
-	track, err := client.GetTrack(spotify_utils.SampleTrack.ID)
+	track, err := client.GetTrack(spotify_utils.TrackFixtureMassiveAttackAngel.Track.ID)
 	require.NoError(t, err)
-	require.Equal(t, &spotify_utils.SampleTrack, track)
+	require.Equal(t, spotify_utils.TrackFixtureMassiveAttackAngel.Track, track)
+}
+
+func TestSearchTrack(t *testing.T) {
+	mockAuthServer := spotify_utils.NewAuthServerMock(t)
+	defer mockAuthServer.Close()
+
+	mockAPIServer := spotify_utils.NewAPIServerMock(t)
+	defer mockAPIServer.Close()
+
+	client := spotify.NewClient(
+		&spotify_utils.SampleCredentials,
+		spotify.WithAuthURL(mockAuthServer.URL),
+		spotify.WithAPIURL(mockAPIServer.URL),
+	)
+
+	track, err := client.SearchTrack(
+		spotify_utils.TrackFixtureMassiveAttackAngel.Track.Artists[0].Name,
+		spotify_utils.TrackFixtureMassiveAttackAngel.Track.Name,
+	)
+	require.NoError(t, err)
+	require.Equal(t, spotify_utils.TrackFixtureMassiveAttackAngel.Track, track)
 }

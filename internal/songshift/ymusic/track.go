@@ -23,10 +23,6 @@ type Artist struct {
 
 var TrackURLRegExp = regexp.MustCompile(`https://music\.yandex\.ru/album/\d+/track/(\d+)`)
 
-func IsTrackURL(url string) bool {
-	return TrackURLRegExp.MatchString(url)
-}
-
 func ParseTrackID(trackURL string) string {
 	matches := TrackURLRegExp.FindStringSubmatch(trackURL)
 
@@ -38,14 +34,14 @@ func ParseTrackID(trackURL string) string {
 }
 
 func (t *Track) URL() string {
-	return fmt.Sprintf("https://music.yandex.com/album/%d/track/%s", t.Albums[0].ID, t.idString())
+	return fmt.Sprintf("https://music.yandex.com/album/%d/track/%s", t.Albums[0].ID, t.IDString())
 }
 
 func (t *Track) FullTitle() string {
 	return fmt.Sprintf("%s - %s", t.Artists[0].Name, t.Title)
 }
 
-func (t *Track) idString() string {
+func (t *Track) IDString() string {
 	switch id := t.ID.(type) {
 	case int:
 		return fmt.Sprintf("%d", id)

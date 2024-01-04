@@ -82,7 +82,7 @@ func TestSongshift_HandleText(t *testing.T) {
 			yMusicMockServerCreator: ymusic_utils.NewAPIGetTrackServerMock,
 			expectedResponse: &telegram.Message{
 				To:   sampleSender,
-				Text: "The Raveonettes - Come On Santa",
+				Text: "https://open.spotify.com/track/1wsw6jqC9KuJfqSshK3437",
 			},
 		},
 		{
@@ -94,7 +94,7 @@ func TestSongshift_HandleText(t *testing.T) {
 			yMusicMockServerCreator: ymusic_utils.NewAPIGetTrackServerMock,
 			expectedResponse: &telegram.Message{
 				To:   sampleSender,
-				Text: "track not found",
+				Text: "track not found in yandex music",
 			},
 		},
 	}

@@ -102,7 +102,7 @@ func (s *Songshift) yMusicTrack() telegram.HandlerFunc {
 			return
 		}
 		if track == nil {
-			outMsg, err := s.respond(inMsg, "track not found")
+			outMsg, err := s.respond(inMsg, "track not found in yandex music")
 			if err != nil {
 				log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
 				return
@@ -111,7 +111,22 @@ func (s *Songshift) yMusicTrack() telegram.HandlerFunc {
 			return
 		}
 
-		outMsg, err := s.respond(inMsg, track.FullTitle())
+		tracks, err := s.spotifyClient.SearchTrack(track.Artists[0].Name, track.Title)
+		if err != nil {
+			log.Printf("failed to search spotify: %s", err)
+			return
+		}
+		if len(tracks) == 0 {
+			outMsg, err := s.respond(inMsg, "no track found in spotify")
+			if err != nil {
+				log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
+				return
+			}
+			log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+			return
+		}
+
+		outMsg, err := s.respond(inMsg, tracks[0].URL())
 		if err != nil {
 			log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
 			return

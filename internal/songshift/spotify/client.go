@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 )
 
 type Client struct {
@@ -113,4 +114,39 @@ func (c *Client) GetTrack(id string) (*Track, error) {
 	}
 
 	return &track, nil
+}
+
+// https://developer.spotify.com/documentation/web-api/reference/search
+func (c *Client) SearchTrack(artistName, trackName string) ([]*Track, error) {
+	query := url.QueryEscape(fmt.Sprintf("artist:%s track:%s", artistName, trackName))
+	u := fmt.Sprintf("%s/v1/search?q=%s&type=track", c.apiURL, query)
+	req, err := http.NewRequest(http.MethodGet, u, nil)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create request: %w", err)
+	}
+
+	token, err := c.FetchToken()
+	if err != nil {
+		return nil, fmt.Errorf("failed to fetch token: %w", err)
+	}
+
+	req.Header.Set("Authorization", token.authHeader())
+
+	resp, err := c.httpClient.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("failed to send request: %w", err)
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read response body: %w", err)
+	}
+
+	searchResult := SearchResult{}
+	if err := json.Unmarshal(body, &searchResult); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal response body: %w", err)
+	}
+
+	return searchResult.Tracks.Items, nil
 }

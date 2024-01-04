@@ -56,6 +56,15 @@ type Image struct {
 	Width  int    `json:"width"`
 }
 
+type SearchResult struct {
+	Tracks Tracks `json:"tracks"`
+}
+
+type Tracks struct {
+	Href  string   `json:"href"`
+	Items []*Track `json:"items"`
+}
+
 var OpenTrackRe = regexp.MustCompile(`https://open\.spotify\.com/track/([a-zA-Z0-9]+)(?:\?.*)?`)
 
 func DetectTrackID(openTrackURL string) string {
@@ -68,4 +77,8 @@ func DetectTrackID(openTrackURL string) string {
 
 func (t *Track) Title() string {
 	return fmt.Sprintf("%s – %s", t.Artists[0].Name, t.Name)
+}
+
+func (t *Track) URL() string {
+	return fmt.Sprintf("https://open.spotify.com/track/%s", t.ID)
 }

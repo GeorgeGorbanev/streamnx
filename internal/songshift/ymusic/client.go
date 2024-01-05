@@ -58,13 +58,13 @@ func (c *Client) GetTrack(trackID string) (*Track, error) {
 	}
 	defer response.Body.Close()
 
-	responseData, err := io.ReadAll(response.Body)
+	body, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, fmt.Errorf("failed to read response body: %s", err)
 	}
 
 	trackResponse := trackResponse{}
-	if err = json.Unmarshal(responseData, &trackResponse); err != nil {
+	if err = json.Unmarshal(body, &trackResponse); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal response body: %s", err)
 	}
 
@@ -75,9 +75,9 @@ func (c *Client) GetTrack(trackID string) (*Track, error) {
 	return &trackResponse.Result[0], nil
 }
 
-func (c *Client) SearchTrack(query string) (*Track, error) {
+func (c *Client) SearchTrack(artistName, trackName string) (*Track, error) {
 	u := fmt.Sprintf("%s/search?type=track&page=0&text=", c.apiURL)
-	encodedQuery := url.QueryEscape(query)
+	encodedQuery := url.QueryEscape(fmt.Sprintf("%s – %s", artistName, trackName))
 	fullUrl := u + encodedQuery
 
 	response, err := http.Get(fullUrl)
@@ -86,13 +86,13 @@ func (c *Client) SearchTrack(query string) (*Track, error) {
 	}
 	defer response.Body.Close()
 
-	responseData, err := io.ReadAll(response.Body)
+	body, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, fmt.Errorf("failed to read response body: %s", err)
 	}
 
 	sr := searchResponse{}
-	if err = json.Unmarshal(responseData, &sr); err != nil {
+	if err = json.Unmarshal(body, &sr); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal response body: %s", err)
 	}
 
@@ -100,5 +100,11 @@ func (c *Client) SearchTrack(query string) (*Track, error) {
 		return nil, nil
 	}
 
-	return &sr.Result.Tracks.Results[0], nil
+	foundTrack := sr.Result.Tracks.Results[0]
+
+	if foundTrack.Artists[0].Name != artistName {
+		return nil, nil
+	}
+
+	return &foundTrack, nil
 }

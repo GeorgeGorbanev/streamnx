@@ -75,7 +75,7 @@ func (s *Songshift) spotifyTrack() telegram.HandlerFunc {
 			return
 		}
 
-		yMusicTrack, err := s.ymusicClient.SearchTrack(spotifyTrack.Title())
+		yMusicTrack, err := s.ymusicClient.SearchTrack(spotifyTrack.Artists[0].Name, spotifyTrack.Name)
 		if err != nil {
 			log.Printf("failed to search ymusic: %s", err)
 			return

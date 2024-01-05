@@ -66,7 +66,7 @@ func TestSongshift_HandleText(t *testing.T) {
 			name: "when spotify track link given and track not found",
 			inMsg: &telebot.Message{
 				Sender: sampleSender,
-				Text:   fmt.Sprintf("prfx https://open.spotify.com/track/%s?sample=query", "invalid_track_id"),
+				Text:   "https://open.spotify.com/track/invalid_track_id?sample=query",
 			},
 			expectedResponse: &telegram.Message{
 				To:   sampleSender,

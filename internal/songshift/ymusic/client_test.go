@@ -11,19 +11,28 @@ import (
 
 func TestClient_SearchTrack(t *testing.T) {
 	tests := []struct {
-		name  string
-		query string
-		want  *ymusic.Track
+		name        string
+		queryArtist string
+		queryTrack  string
+		want        *ymusic.Track
 	}{
 		{
-			name:  "when track found",
-			query: ymusic_utils.TrackFixtureMassiveAttackAngel.SearchQuery,
-			want:  ymusic_utils.TrackFixtureMassiveAttackAngel.Track,
+			name:        "when track found",
+			queryArtist: ymusic_utils.TrackFixtureMassiveAttackAngel.SearchQueryArtist,
+			queryTrack:  ymusic_utils.TrackFixtureMassiveAttackAngel.SearchQueryTrack,
+			want:        ymusic_utils.TrackFixtureMassiveAttackAngel.Track,
 		},
 		{
-			name:  "when track not found",
-			query: "any impossible query",
-			want:  nil,
+			name:        "when track not found",
+			queryArtist: "any impossible artist",
+			queryTrack:  "any impossible track",
+			want:        nil,
+		},
+		{
+			name:        "when track found but artist name is different",
+			queryArtist: ymusic_utils.TrackFixtureDJAmor20Flowers.SearchQueryArtist,
+			queryTrack:  ymusic_utils.TrackFixtureDJAmor20Flowers.SearchQueryTrack,
+			want:        nil,
 		},
 	}
 	for _, tt := range tests {
@@ -33,7 +42,7 @@ func TestClient_SearchTrack(t *testing.T) {
 
 			client := ymusic.NewClient(ymusic.WithAPIURL(apiServerMock.URL))
 
-			result, err := client.SearchTrack(tt.query)
+			result, err := client.SearchTrack(tt.queryArtist, tt.queryTrack)
 			require.NoError(t, err)
 			require.Equal(t, tt.want, result)
 		})

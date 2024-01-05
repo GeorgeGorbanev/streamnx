@@ -25,10 +25,6 @@ func DetectTrackID(openTrackURL string) string {
 	return match[1]
 }
 
-func (t *Track) Title() string {
-	return fmt.Sprintf("%s – %s", t.Artists[0].Name, t.Name)
-}
-
 func (t *Track) URL() string {
 	return fmt.Sprintf("https://open.spotify.com/track/%s", t.ID)
 }

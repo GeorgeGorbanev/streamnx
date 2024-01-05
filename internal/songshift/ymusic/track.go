@@ -21,16 +21,16 @@ type Artist struct {
 	Name string `json:"name"`
 }
 
-var TrackURLRegExp = regexp.MustCompile(`https://music\.yandex\.ru/album/\d+/track/(\d+)`)
+var TrackURLRegExp = regexp.MustCompile(`https://music\.yandex\.(ru|com)/album/\d+/track/(\d+)`)
 
 func ParseTrackID(trackURL string) string {
 	matches := TrackURLRegExp.FindStringSubmatch(trackURL)
 
-	if len(matches) < 2 {
+	if len(matches) < 3 {
 		return ""
 	}
 
-	return matches[1]
+	return matches[2]
 }
 
 func (t *Track) URL() string {

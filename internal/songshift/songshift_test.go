@@ -74,11 +74,25 @@ func TestSongshift_HandleText(t *testing.T) {
 			},
 		},
 		{
-			name: "when yandex music track link given and track found",
+			name: "when yandex music track link given and track found with .ru",
 			inMsg: &telebot.Message{
 				Sender: sampleSender,
 				Text: fmt.Sprintf(
 					"prfx https://music.yandex.ru/album/3192570/track/%s?query=sample",
+					ymusic_utils.TrackFixtureMassiveAttackAngel.ID,
+				),
+			},
+			expectedResponse: &telegram.Message{
+				To:   sampleSender,
+				Text: "https://open.spotify.com/track/7uv632EkfwYhXoqf8rhYrg",
+			},
+		},
+		{
+			name: "when yandex music track link given and track found with .com",
+			inMsg: &telebot.Message{
+				Sender: sampleSender,
+				Text: fmt.Sprintf(
+					"https://music.yandex.com/album/3192570/track/%s",
 					ymusic_utils.TrackFixtureMassiveAttackAngel.ID,
 				),
 			},

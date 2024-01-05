@@ -1,6 +1,7 @@
 package ymusic_test
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/GeorgeGorbanev/songshift/internal/songshift/ymusic"
@@ -18,20 +19,14 @@ func TestClient_SearchTrack(t *testing.T) {
 	}{
 		{
 			name:        "when track found",
-			queryArtist: ymusic_utils.TrackFixtureMassiveAttackAngel.SearchQueryArtist,
-			queryTrack:  ymusic_utils.TrackFixtureMassiveAttackAngel.SearchQueryTrack,
+			queryArtist: strings.ToLower(ymusic_utils.TrackFixtureMassiveAttackAngel.SearchQueryArtist),
+			queryTrack:  strings.ToLower(ymusic_utils.TrackFixtureMassiveAttackAngel.SearchQueryTrack),
 			want:        ymusic_utils.TrackFixtureMassiveAttackAngel.Track,
 		},
 		{
 			name:        "when track not found",
 			queryArtist: "any impossible artist",
 			queryTrack:  "any impossible track",
-			want:        nil,
-		},
-		{
-			name:        "when track found but artist name is different",
-			queryArtist: ymusic_utils.TrackFixtureDJAmor20Flowers.SearchQueryArtist,
-			queryTrack:  ymusic_utils.TrackFixtureDJAmor20Flowers.SearchQueryTrack,
 			want:        nil,
 		},
 	}

@@ -49,20 +49,6 @@ func TestSongshift_HandleText(t *testing.T) {
 			},
 		},
 		{
-			name: "when spotify track link given and track found but ymusic track not found",
-			inMsg: &telebot.Message{
-				Sender: sampleSender,
-				Text: fmt.Sprintf(
-					"prfx https://open.spotify.com/track/%s?sample=query",
-					spotify_utils.TrackFixtureMileyCyrusFlowers.Track.ID,
-				),
-			},
-			expectedResponse: &telegram.Message{
-				To:   sampleSender,
-				Text: "no ym track found",
-			},
-		},
-		{
 			name: "when spotify track link given and track not found",
 			inMsg: &telebot.Message{
 				Sender: sampleSender,
@@ -110,6 +96,39 @@ func TestSongshift_HandleText(t *testing.T) {
 			expectedResponse: &telegram.Message{
 				To:   sampleSender,
 				Text: "track not found in yandex music",
+			},
+		},
+		{
+			name: "when spotify track link given, track found and ymusic track found, but artist name not match",
+			inMsg: &telebot.Message{
+				Sender: sampleSender,
+				Text: fmt.Sprintf(
+					"prfx https://open.spotify.com/track/%s?sample=query",
+					spotify_utils.TrackFixtureMileyCyrusFlowers.Track.ID,
+				),
+			},
+			expectedResponse: &telegram.Message{
+				To:   sampleSender,
+				Text: "no ym track found",
+			},
+		},
+		{
+			name: "when spotify track link given, track found and ymusic track found, artist name not match, " +
+				"but match in translit",
+			inMsg: &telebot.Message{
+				Sender: sampleSender,
+				Text: fmt.Sprintf(
+					"prfx https://open.spotify.com/track/%s?sample=query",
+					spotify_utils.TrackFixtureZemfiraIskala.Track.ID,
+				),
+			},
+			expectedResponse: &telegram.Message{
+				To: sampleSender,
+				Text: fmt.Sprintf(
+					"https://music.yandex.com/album/%d/track/%s",
+					ymusic_utils.TrackFixtureZemfiraIskala.Track.Albums[0].ID,
+					ymusic_utils.TrackFixtureZemfiraIskala.Track.IDString(),
+				),
 			},
 		},
 	}

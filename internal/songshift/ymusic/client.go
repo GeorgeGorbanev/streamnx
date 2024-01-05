@@ -63,16 +63,16 @@ func (c *Client) GetTrack(trackID string) (*Track, error) {
 		return nil, fmt.Errorf("failed to read response body: %s", err)
 	}
 
-	trackResponse := trackResponse{}
-	if err = json.Unmarshal(body, &trackResponse); err != nil {
+	tr := trackResponse{}
+	if err = json.Unmarshal(body, &tr); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal response body: %s", err)
 	}
 
-	if len(trackResponse.Result) < 1 {
+	if len(tr.Result) < 1 {
 		return nil, nil
 	}
 
-	return &trackResponse.Result[0], nil
+	return &tr.Result[0], nil
 }
 
 func (c *Client) SearchTrack(artistName, trackName string) (*Track, error) {
@@ -100,11 +100,5 @@ func (c *Client) SearchTrack(artistName, trackName string) (*Track, error) {
 		return nil, nil
 	}
 
-	foundTrack := sr.Result.Tracks.Results[0]
-
-	if foundTrack.Artists[0].Name != artistName {
-		return nil, nil
-	}
-
-	return &foundTrack, nil
+	return &sr.Result.Tracks.Results[0], nil
 }

@@ -46,16 +46,17 @@ func searchHandler(t *testing.T) http.HandlerFunc {
 		require.Equal(t, r.URL.Query().Get("page"), "0")
 		require.Equal(t, r.URL.Query().Get("type"), "track")
 
+		var err error
 		switch r.URL.Query().Get("text") {
 		case TrackFixtureMassiveAttackAngel.SearchQuery():
-			_, err := w.Write([]byte(TrackFixtureMassiveAttackAngel.SearchResponse))
-			require.NoError(t, err)
+			_, err = w.Write([]byte(TrackFixtureMassiveAttackAngel.SearchResponse))
 		case TrackFixtureDJAmor20Flowers.SearchQuery():
-			_, err := w.Write([]byte(TrackFixtureDJAmor20Flowers.SearchResponse))
-			require.NoError(t, err)
+			_, err = w.Write([]byte(TrackFixtureDJAmor20Flowers.SearchResponse))
+		case TrackFixtureZemfiraIskala.SearchQuery():
+			_, err = w.Write([]byte(TrackFixtureZemfiraIskala.SearchResponse))
 		default:
-			_, err := w.Write([]byte(TrackFixtureNotFound.SearchResponse))
-			require.NoError(t, err)
+			_, err = w.Write([]byte(TrackFixtureNotFound.SearchResponse))
 		}
+		require.NoError(t, err)
 	}
 }

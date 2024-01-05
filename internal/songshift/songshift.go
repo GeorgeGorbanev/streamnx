@@ -1,11 +1,15 @@
 package songshift
 
 import (
+	"fmt"
 	"log"
+	"strings"
 
 	"github.com/GeorgeGorbanev/songshift/internal/songshift/spotify"
 	"github.com/GeorgeGorbanev/songshift/internal/songshift/telegram"
 	"github.com/GeorgeGorbanev/songshift/internal/songshift/ymusic"
+
+	"github.com/essentialkaos/translit/v2"
 	"github.com/tucnak/telebot"
 )
 
@@ -57,6 +61,29 @@ func (s *Songshift) respond(inMsg *telebot.Message, text string) (*telebot.Messa
 	)
 }
 
+func (s *Songshift) yMusicSearch(spotifyTrack *spotify.Track) (*ymusic.Track, error) {
+	artistName := strings.ToLower(spotifyTrack.Artists[0].Name)
+	trackName := strings.ToLower(spotifyTrack.Name)
+
+	yMusicTrack, err := s.ymusicClient.SearchTrack(artistName, trackName)
+	if err != nil {
+		return nil, fmt.Errorf("failed to find ymusic track: %w", err)
+	}
+	if yMusicTrack != nil {
+		foundLowcased := strings.ToLower(yMusicTrack.Artists[0].Name)
+		if artistName == foundLowcased {
+			return yMusicTrack, nil
+		}
+
+		translited := translit.ICAO(foundLowcased)
+		if artistName == translited {
+			return yMusicTrack, nil
+		}
+	}
+
+	return nil, nil
+}
+
 func (s *Songshift) spotifyTrack() telegram.HandlerFunc {
 	return func(inMsg *telebot.Message) {
 		trackID := spotify.DetectTrackID(inMsg.Text)
@@ -75,7 +102,7 @@ func (s *Songshift) spotifyTrack() telegram.HandlerFunc {
 			return
 		}
 
-		yMusicTrack, err := s.ymusicClient.SearchTrack(spotifyTrack.Artists[0].Name, spotifyTrack.Name)
+		yMusicTrack, err := s.yMusicSearch(spotifyTrack)
 		if err != nil {
 			log.Printf("failed to search ymusic: %s", err)
 			return

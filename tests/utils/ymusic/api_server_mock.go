@@ -54,6 +54,8 @@ func searchHandler(t *testing.T) http.HandlerFunc {
 			_, err = w.Write([]byte(TrackFixtureDJAmor20Flowers.SearchResponse))
 		case TrackFixtureZemfiraIskala.SearchQuery():
 			_, err = w.Write([]byte(TrackFixtureZemfiraIskala.SearchResponse))
+		case TrackFixtureNadezhdaKadyshevaShirokaReka.SearchQuery():
+			_, err = w.Write([]byte(TrackFixtureNadezhdaKadyshevaShirokaReka.SearchResponse))
 		default:
 			_, err = w.Write([]byte(TrackFixtureNotFound.SearchResponse))
 		}

@@ -7,9 +7,9 @@ import (
 
 	"github.com/GeorgeGorbanev/songshift/internal/songshift/spotify"
 	"github.com/GeorgeGorbanev/songshift/internal/songshift/telegram"
+	"github.com/GeorgeGorbanev/songshift/internal/songshift/translit"
 	"github.com/GeorgeGorbanev/songshift/internal/songshift/ymusic"
 
-	"github.com/essentialkaos/translit/v2"
 	"github.com/tucnak/telebot"
 )
 
@@ -70,18 +70,27 @@ func (s *Songshift) yMusicSearch(spotifyTrack *spotify.Track) (*ymusic.Track, er
 		return nil, fmt.Errorf("failed to find ymusic track: %w", err)
 	}
 	if yMusicTrack != nil {
-		foundLowcased := strings.ToLower(yMusicTrack.Artists[0].Name)
-		if artistName == foundLowcased {
+		foundLowcasedArtist := strings.ToLower(yMusicTrack.Artists[0].Name)
+		if artistName == foundLowcasedArtist {
 			return yMusicTrack, nil
 		}
 
-		translited := translit.ICAO(foundLowcased)
-		if artistName == translited {
+		translitedArtist := translit.CyrillicToLatin(foundLowcasedArtist)
+		if artistName == translitedArtist {
 			return yMusicTrack, nil
+		}
+		return nil, nil
+	}
+
+	if spotifyTrack.NameContainsRussianLetters() {
+		translitedArtist := translit.LatinToCyrillic(artistName)
+		yMusicTrack, err = s.ymusicClient.SearchTrack(translitedArtist, trackName)
+		if err != nil {
+			return nil, fmt.Errorf("failed to find ymusic track: %w", err)
 		}
 	}
 
-	return nil, nil
+	return yMusicTrack, nil
 }
 
 func (s *Songshift) spotifyTrack() telegram.HandlerFunc {

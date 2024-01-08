@@ -3,6 +3,7 @@ package spotify
 import (
 	"fmt"
 	"regexp"
+	"unicode"
 )
 
 type Track struct {
@@ -27,4 +28,13 @@ func DetectTrackID(openTrackURL string) string {
 
 func (t *Track) URL() string {
 	return fmt.Sprintf("https://open.spotify.com/track/%s", t.ID)
+}
+
+func (t *Track) NameContainsRussianLetters() bool {
+	for _, char := range t.Name {
+		if unicode.Is(unicode.Cyrillic, char) {
+			return true
+		}
+	}
+	return false
 }

@@ -43,6 +43,9 @@ func tracksHandler(t *testing.T) http.HandlerFunc {
 		case TrackFixtureZemfiraIskala.Track.ID:
 			_, err := w.Write([]byte(TrackFixtureZemfiraIskala.GetResponse))
 			require.NoError(t, err)
+		case TrackFixtureNadezhdaKadyshevaShirokaReka.Track.ID:
+			_, err := w.Write([]byte(TrackFixtureNadezhdaKadyshevaShirokaReka.GetResponse))
+			require.NoError(t, err)
 		default:
 			w.WriteHeader(http.StatusBadRequest)
 		}

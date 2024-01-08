@@ -56,3 +56,30 @@ func TestDetectTrackID(t *testing.T) {
 		})
 	}
 }
+
+func TestTrack_NameContainsRussianLetters(t *testing.T) {
+	tests := []struct {
+		trackName string
+		want      bool
+	}{
+		{
+			trackName: "sample english track",
+			want:      false,
+		},
+		{
+			trackName: "широка река",
+			want:      true,
+		},
+		{
+			trackName: "sample руnglish track",
+			want:      true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.trackName, func(t *testing.T) {
+			track := Track{Name: tt.trackName}
+			result := track.NameContainsRussianLetters()
+			require.Equal(t, tt.want, result)
+		})
+	}
+}

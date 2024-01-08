@@ -131,6 +131,24 @@ func TestSongshift_HandleText(t *testing.T) {
 				),
 			},
 		},
+		{
+			name: "when spotify track link given, track found, ymusic track not found but found in translit",
+			inMsg: &telebot.Message{
+				Sender: sampleSender,
+				Text: fmt.Sprintf(
+					"prfx https://open.spotify.com/track/%s?sample=query",
+					spotify_utils.TrackFixtureNadezhdaKadyshevaShirokaReka.Track.ID,
+				),
+			},
+			expectedResponse: &telegram.Message{
+				To: sampleSender,
+				Text: fmt.Sprintf(
+					"https://music.yandex.com/album/%d/track/%s",
+					ymusic_utils.TrackFixtureNadezhdaKadyshevaShirokaReka.Track.Albums[0].ID,
+					ymusic_utils.TrackFixtureNadezhdaKadyshevaShirokaReka.Track.IDString(),
+				),
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

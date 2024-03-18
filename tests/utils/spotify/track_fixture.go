@@ -1,7 +1,7 @@
 package spotify
 
 import (
-	"github.com/GeorgeGorbanev/songshift/internal/songshift/spotify"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
 )
 
 type TrackFixture struct {

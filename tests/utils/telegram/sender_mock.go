@@ -1,7 +1,7 @@
 package telegram
 
 import (
-	"github.com/GeorgeGorbanev/songshift/internal/songshift/telegram"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
 	"github.com/tucnak/telebot"
 )
 

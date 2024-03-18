@@ -1,21 +1,21 @@
-package songshift
+package vibeshare
 
 import (
 	"fmt"
 	"testing"
 
-	"github.com/GeorgeGorbanev/songshift/internal/songshift/spotify"
-	"github.com/GeorgeGorbanev/songshift/internal/songshift/telegram"
-	"github.com/GeorgeGorbanev/songshift/internal/songshift/ymusic"
-	spotify_utils "github.com/GeorgeGorbanev/songshift/tests/utils/spotify"
-	telegram_utils "github.com/GeorgeGorbanev/songshift/tests/utils/telegram"
-	ymusic_utils "github.com/GeorgeGorbanev/songshift/tests/utils/ymusic"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/ymusic"
+	spotify_utils "github.com/GeorgeGorbanev/vibeshare/tests/utils/spotify"
+	telegram_utils "github.com/GeorgeGorbanev/vibeshare/tests/utils/telegram"
+	ymusic_utils "github.com/GeorgeGorbanev/vibeshare/tests/utils/ymusic"
 
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"
 )
 
-func TestSongshift_HandleText(t *testing.T) {
+func TestVibeshare_HandleText(t *testing.T) {
 	sampleSender := &telebot.User{Username: "sample_username"}
 
 	tests := []struct {
@@ -170,12 +170,12 @@ func TestSongshift_HandleText(t *testing.T) {
 
 			ymClient := ymusic.NewClient(ymusic.WithAPIURL(yMusicMockServer.URL))
 
-			ss := NewSongshift(&Input{
+			ts := NewVibeshare(&Input{
 				SpotifyClient:  spotifyClient,
 				TelegramSender: senderMock,
 				YmusicClient:   ymClient,
 			})
-			ss.HandleText(tt.inMsg)
+			ts.HandleText(tt.inMsg)
 
 			require.Equal(t, tt.expectedResponse, senderMock.Response)
 		})

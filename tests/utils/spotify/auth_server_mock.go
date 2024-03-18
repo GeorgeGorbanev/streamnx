@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/GeorgeGorbanev/songshift/internal/songshift/spotify"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
 	"github.com/stretchr/testify/require"
 )
 

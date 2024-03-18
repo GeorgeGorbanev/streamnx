@@ -3,8 +3,8 @@ package spotify_test
 import (
 	"testing"
 
-	"github.com/GeorgeGorbanev/songshift/internal/songshift/spotify"
-	spotify_utils "github.com/GeorgeGorbanev/songshift/tests/utils/spotify"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
+	spotify_utils "github.com/GeorgeGorbanev/vibeshare/tests/utils/spotify"
 
 	"github.com/stretchr/testify/require"
 )

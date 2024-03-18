@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/GeorgeGorbanev/songshift/internal/songshift/ymusic"
-	ymusic_utils "github.com/GeorgeGorbanev/songshift/tests/utils/ymusic"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/ymusic"
+	ymusic_utils "github.com/GeorgeGorbanev/vibeshare/tests/utils/ymusic"
 
 	"github.com/stretchr/testify/require"
 )

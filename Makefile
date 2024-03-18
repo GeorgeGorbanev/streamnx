@@ -3,4 +3,4 @@ lint:
 test:
 	go test ./internal/...
 run:
-	go run cmd/songshift/main.go
+	go run cmd/vibeshare/main.go

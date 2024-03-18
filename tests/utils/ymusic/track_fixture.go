@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/GeorgeGorbanev/songshift/internal/songshift/ymusic"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/ymusic"
 )
 
 type TrackFixture struct {

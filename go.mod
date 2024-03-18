@@ -1,4 +1,4 @@
-module github.com/GeorgeGorbanev/songshift
+module github.com/GeorgeGorbanev/vibeshare
 
 go 1.21.5
 

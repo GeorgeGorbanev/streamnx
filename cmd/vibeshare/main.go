@@ -5,10 +5,10 @@ import (
 	"log"
 	"os"
 
-	"github.com/GeorgeGorbanev/songshift/internal/songshift"
-	"github.com/GeorgeGorbanev/songshift/internal/songshift/spotify"
-	"github.com/GeorgeGorbanev/songshift/internal/songshift/telegram"
-	"github.com/GeorgeGorbanev/songshift/internal/songshift/ymusic"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/ymusic"
 
 	"github.com/joho/godotenv"
 )
@@ -30,13 +30,16 @@ func main() {
 		log.Fatal(err)
 	}
 
-	spotifyClient := makeSpotifyClient(cfg)
-	ss := songshift.NewSongshift(&songshift.Input{
+	spotifyClient := spotify.NewClient(&spotify.Credentials{
+		ClientID:     cfg.spotifyClientID,
+		ClientSecret: cfg.spotifyClientSecret,
+	})
+	ts := vibeshare.NewVibeshare(&vibeshare.Input{
 		SpotifyClient:  spotifyClient,
 		TelegramSender: bot.Sender(),
 		YmusicClient:   ymusic.NewClient(),
 	})
-	bot.HandleText(ss.HandleText)
+	bot.HandleText(ts.HandleText)
 	defer bot.Stop()
 	bot.Start()
 }
@@ -51,11 +54,4 @@ func readConfig() (*config, error) {
 		spotifyClientID:     os.Getenv("SPOTIFY_CLIENT_ID"),
 		spotifyClientSecret: os.Getenv("SPOTIFY_CLIENT_SECRET"),
 	}, nil
-}
-
-func makeSpotifyClient(cfg *config) *spotify.Client {
-	return spotify.NewClient(&spotify.Credentials{
-		ClientID:     cfg.spotifyClientID,
-		ClientSecret: cfg.spotifyClientSecret,
-	})
 }

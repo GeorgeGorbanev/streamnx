@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -20,9 +19,16 @@ type config struct {
 }
 
 func main() {
-	cfg, err := readConfig()
-	if err != nil {
-		log.Fatal(err)
+	if _, err := os.Stat(".env"); err == nil {
+		if err := godotenv.Load(); err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	cfg := config{
+		telegramToken:       os.Getenv("TELEGRAM_TOKEN"),
+		spotifyClientID:     os.Getenv("SPOTIFY_CLIENT_ID"),
+		spotifyClientSecret: os.Getenv("SPOTIFY_CLIENT_SECRET"),
 	}
 
 	bot, err := telegram.NewBot(cfg.telegramToken)
@@ -41,17 +47,6 @@ func main() {
 	})
 	bot.HandleText(ts.HandleText)
 	defer bot.Stop()
+
 	bot.Start()
-}
-
-func readConfig() (*config, error) {
-	if err := godotenv.Load(); err != nil {
-		return nil, fmt.Errorf("error loading .env file: %w", err)
-	}
-
-	return &config{
-		telegramToken:       os.Getenv("TELEGRAM_TOKEN"),
-		spotifyClientID:     os.Getenv("SPOTIFY_CLIENT_ID"),
-		spotifyClientSecret: os.Getenv("SPOTIFY_CLIENT_SECRET"),
-	}, nil
 }

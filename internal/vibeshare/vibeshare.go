@@ -45,12 +45,12 @@ func (vs *Vibeshare) HandleText(inMsg *telebot.Message) {
 func (vs *Vibeshare) makeRouter() *telegram.Router {
 	router := telegram.NewRouter()
 
-	router.Register(spotify.TrackRe, vs.spotifyTrack())
-	router.Register(spotify.AlbumRe, vs.spotifyAlbum())
-	router.Register(ymusic.TrackRe, vs.yMusicTrack())
-	router.Register(ymusic.AlbumRe, vs.yMusicAlbum())
+	router.Register(spotify.TrackRe, vs.spotifyTrackHandler)
+	router.Register(spotify.AlbumRe, vs.spotifyAlbumHandler)
+	router.Register(ymusic.TrackRe, vs.yMusicTrackHandler)
+	router.Register(ymusic.AlbumRe, vs.yMusicAlbumHandler)
 
-	router.RegisterNotFound(vs.notFound())
+	router.RegisterNotFound(vs.notFoundHandler)
 
 	return router
 }
@@ -96,183 +96,173 @@ func (vs *Vibeshare) yMusicSearch(spotifyTrack *spotify.Track) (*ymusic.Track, e
 	return yMusicTrack, nil
 }
 
-func (vs *Vibeshare) spotifyTrack() telegram.HandlerFunc {
-	return func(inMsg *telebot.Message) {
-		trackID := spotify.DetectTrackID(inMsg.Text)
-		spotifyTrack, err := vs.spotifyClient.GetTrack(trackID)
-		if err != nil {
-			log.Printf("error fetching track: %s", err)
-			return
-		}
-		if spotifyTrack == nil {
-			outMsg, err := vs.respond(inMsg, "track not found")
-			if err != nil {
-				log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
-				return
-			}
-			log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
-			return
-		}
-
-		yMusicTrack, err := vs.yMusicSearch(spotifyTrack)
-		if err != nil {
-			log.Printf("failed to search ymusic: %s", err)
-			return
-		}
-		if yMusicTrack == nil {
-			outMsg, err := vs.respond(inMsg, "no ym track found")
-			if err != nil {
-				log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
-				return
-			}
-			log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
-			return
-		}
-
-		outMsg, err := vs.respond(inMsg, yMusicTrack.URL())
+func (vs *Vibeshare) spotifyTrackHandler(inMsg *telebot.Message) {
+	trackID := spotify.DetectTrackID(inMsg.Text)
+	spotifyTrack, err := vs.spotifyClient.GetTrack(trackID)
+	if err != nil {
+		log.Printf("error fetching track: %s", err)
+		return
+	}
+	if spotifyTrack == nil {
+		outMsg, err := vs.respond(inMsg, "track not found")
 		if err != nil {
 			log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
 			return
 		}
 		log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+		return
 	}
-}
 
-func (vs *Vibeshare) spotifyAlbum() telegram.HandlerFunc {
-	return func(inMsg *telebot.Message) {
-		albumID := spotify.DetectAlbumID(inMsg.Text)
-		spotifyAlbum, err := vs.spotifyClient.GetAlbum(albumID)
-		if err != nil {
-			log.Printf("error fetching album: %s", err)
-			return
-		}
-		if spotifyAlbum == nil {
-			outMsg, err := vs.respond(inMsg, "no spotify album found")
-			if err != nil {
-				log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
-				return
-			}
-			log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
-			return
-		}
-
-		yMusicAlbum, err := vs.ymusicClient.SearchAlbum(spotifyAlbum.Artists[0].Name, spotifyAlbum.Name)
-		if err != nil {
-			log.Printf("error fetching album: %s", err)
-			return
-		}
-
-		if yMusicAlbum == nil {
-			outMsg, err := vs.respond(inMsg, "no ym album found")
-			if err != nil {
-				log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
-				return
-			}
-			log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
-			return
-		}
-
-		outMsg, err := vs.respond(inMsg, yMusicAlbum.URL())
+	yMusicTrack, err := vs.yMusicSearch(spotifyTrack)
+	if err != nil {
+		log.Printf("failed to search ymusic: %s", err)
+		return
+	}
+	if yMusicTrack == nil {
+		outMsg, err := vs.respond(inMsg, "no ym track found")
 		if err != nil {
 			log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
 			return
 		}
 		log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+		return
 	}
+
+	outMsg, err := vs.respond(inMsg, yMusicTrack.URL())
+	if err != nil {
+		log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
+		return
+	}
+	log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
 }
 
-func (vs *Vibeshare) yMusicTrack() telegram.HandlerFunc {
-	return func(inMsg *telebot.Message) {
-		trackID := ymusic.DetectTrackID(inMsg.Text)
-		yMusicTrack, err := vs.ymusicClient.GetTrack(trackID)
-		if err != nil {
-			log.Printf("error fetching track: %s", err)
-			return
-		}
-		if yMusicTrack == nil {
-			outMsg, err := vs.respond(inMsg, "track not found in yandex music")
-			if err != nil {
-				log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
-				return
-			}
-			log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
-			return
-		}
-
-		spotifyTrack, err := vs.spotifyClient.SearchTrack(yMusicTrack.Artists[0].Name, yMusicTrack.Title)
-		if err != nil {
-			log.Printf("failed to search spotify: %s", err)
-			return
-		}
-		if spotifyTrack == nil {
-			outMsg, err := vs.respond(inMsg, "no track found in spotify")
-			if err != nil {
-				log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
-				return
-			}
-			log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
-			return
-		}
-
-		outMsg, err := vs.respond(inMsg, spotifyTrack.URL())
+func (vs *Vibeshare) spotifyAlbumHandler(inMsg *telebot.Message) {
+	albumID := spotify.DetectAlbumID(inMsg.Text)
+	spotifyAlbum, err := vs.spotifyClient.GetAlbum(albumID)
+	if err != nil {
+		log.Printf("error fetching album: %s", err)
+		return
+	}
+	if spotifyAlbum == nil {
+		outMsg, err := vs.respond(inMsg, "no spotify album found")
 		if err != nil {
 			log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
 			return
 		}
 		log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+		return
 	}
-}
 
-func (vs *Vibeshare) yMusicAlbum() telegram.HandlerFunc {
-	return func(inMsg *telebot.Message) {
-		albumID := ymusic.DetectAlbumID(inMsg.Text)
-		ymusicAlbum, err := vs.ymusicClient.GetAlbum(albumID)
-		if err != nil {
-			log.Printf("error fetching album: %s", err)
-			return
-		}
-		if ymusicAlbum == nil {
-			outMsg, err := vs.respond(inMsg, "no yandex music album found")
-			if err != nil {
-				log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
-				return
-			}
-			log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
-			return
-		}
+	yMusicAlbum, err := vs.ymusicClient.SearchAlbum(spotifyAlbum.Artists[0].Name, spotifyAlbum.Name)
+	if err != nil {
+		log.Printf("error fetching album: %s", err)
+		return
+	}
 
-		spotifyAlbum, err := vs.spotifyClient.SearchAlbum(ymusicAlbum.Artists[0].Name, ymusicAlbum.Title)
-		if err != nil {
-			log.Printf("error fetching album: %s", err)
-			return
-		}
-
-		if spotifyAlbum == nil {
-			outMsg, err := vs.respond(inMsg, "no spotify album found")
-			if err != nil {
-				log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
-				return
-			}
-			log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
-			return
-		}
-
-		outMsg, err := vs.respond(inMsg, spotifyAlbum.URL())
+	if yMusicAlbum == nil {
+		outMsg, err := vs.respond(inMsg, "no ym album found")
 		if err != nil {
 			log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
 			return
 		}
 		log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+		return
 	}
+
+	outMsg, err := vs.respond(inMsg, yMusicAlbum.URL())
+	if err != nil {
+		log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
+		return
+	}
+	log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
 }
 
-func (vs *Vibeshare) notFound() telegram.HandlerFunc {
-	return func(inMsg *telebot.Message) {
-		outMsg, err := vs.respond(inMsg, "no track link found")
+func (vs *Vibeshare) yMusicTrackHandler(inMsg *telebot.Message) {
+	trackID := ymusic.DetectTrackID(inMsg.Text)
+	yMusicTrack, err := vs.ymusicClient.GetTrack(trackID)
+	if err != nil {
+		log.Printf("error fetching track: %s", err)
+		return
+	}
+	if yMusicTrack == nil {
+		outMsg, err := vs.respond(inMsg, "track not found in yandex music")
 		if err != nil {
 			log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
 			return
 		}
-		log.Printf("Sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+		log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+		return
 	}
+
+	spotifyTrack, err := vs.spotifyClient.SearchTrack(yMusicTrack.Artists[0].Name, yMusicTrack.Title)
+	if err != nil {
+		log.Printf("failed to search spotify: %s", err)
+		return
+	}
+	if spotifyTrack == nil {
+		outMsg, err := vs.respond(inMsg, "no track found in spotify")
+		if err != nil {
+			log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
+			return
+		}
+		log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+		return
+	}
+
+	outMsg, err := vs.respond(inMsg, spotifyTrack.URL())
+	if err != nil {
+		log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
+		return
+	}
+	log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+}
+
+func (vs *Vibeshare) yMusicAlbumHandler(inMsg *telebot.Message) {
+	albumID := ymusic.DetectAlbumID(inMsg.Text)
+	ymusicAlbum, err := vs.ymusicClient.GetAlbum(albumID)
+	if err != nil {
+		log.Printf("error fetching album: %s", err)
+		return
+	}
+	if ymusicAlbum == nil {
+		outMsg, err := vs.respond(inMsg, "no yandex music album found")
+		if err != nil {
+			log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
+			return
+		}
+		log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+		return
+	}
+
+	spotifyAlbum, err := vs.spotifyClient.SearchAlbum(ymusicAlbum.Artists[0].Name, ymusicAlbum.Title)
+	if err != nil {
+		log.Printf("error fetching album: %s", err)
+		return
+	}
+
+	if spotifyAlbum == nil {
+		outMsg, err := vs.respond(inMsg, "no spotify album found")
+		if err != nil {
+			log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
+			return
+		}
+		log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+		return
+	}
+
+	outMsg, err := vs.respond(inMsg, spotifyAlbum.URL())
+	if err != nil {
+		log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
+		return
+	}
+	log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+}
+
+func (vs *Vibeshare) notFoundHandler(inMsg *telebot.Message) {
+	outMsg, err := vs.respond(inMsg, "no track link found")
+	if err != nil {
+		log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
+		return
+	}
+	log.Printf("Sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
 }

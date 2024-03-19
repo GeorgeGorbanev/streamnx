@@ -16,10 +16,10 @@ type Artist struct {
 	Name string `json:"name"`
 }
 
-var OpenTrackRe = regexp.MustCompile(`https://open\.spotify\.com/track/([a-zA-Z0-9]+)(?:\?.*)?`)
+var TrackRe = regexp.MustCompile(`https://open\.spotify\.com/track/([a-zA-Z0-9]+)(?:\?.*)?`)
 
 func DetectTrackID(openTrackURL string) string {
-	match := OpenTrackRe.FindStringSubmatch(openTrackURL)
+	match := TrackRe.FindStringSubmatch(openTrackURL)
 	if match == nil || len(match) < 2 {
 		return ""
 	}

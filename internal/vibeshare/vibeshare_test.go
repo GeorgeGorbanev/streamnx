@@ -35,7 +35,8 @@ func TestVibeshare_HandleText(t *testing.T) {
 			},
 		},
 		{
-			name: "when spotify track link given and track found",
+			name: "when spotify track link given " +
+				"and track found",
 			inMsg: &telebot.Message{
 				Sender: sampleSender,
 				Text: fmt.Sprintf(
@@ -49,7 +50,8 @@ func TestVibeshare_HandleText(t *testing.T) {
 			},
 		},
 		{
-			name: "when spotify track link given and track not found",
+			name: "when spotify track link given " +
+				"and track not found",
 			inMsg: &telebot.Message{
 				Sender: sampleSender,
 				Text:   "https://open.spotify.com/track/invalid_track_id?sample=query",
@@ -60,7 +62,8 @@ func TestVibeshare_HandleText(t *testing.T) {
 			},
 		},
 		{
-			name: "when yandex music track link given and track found with .ru",
+			name: "when yandex music track link given " +
+				"and track found with .ru",
 			inMsg: &telebot.Message{
 				Sender: sampleSender,
 				Text: fmt.Sprintf(
@@ -74,7 +77,8 @@ func TestVibeshare_HandleText(t *testing.T) {
 			},
 		},
 		{
-			name: "when yandex music track link given and track found with .com",
+			name: "when yandex music track link given " +
+				"and track found with .com",
 			inMsg: &telebot.Message{
 				Sender: sampleSender,
 				Text: fmt.Sprintf(
@@ -88,7 +92,8 @@ func TestVibeshare_HandleText(t *testing.T) {
 			},
 		},
 		{
-			name: "when yandex music track link given and track not found",
+			name: "when yandex music track link given " +
+				"and track not found",
 			inMsg: &telebot.Message{
 				Sender: sampleSender,
 				Text:   fmt.Sprintf("prfx https://music.yandex.ru/album/3192570/track/%s", "0"),
@@ -99,7 +104,10 @@ func TestVibeshare_HandleText(t *testing.T) {
 			},
 		},
 		{
-			name: "when spotify track link given, track found and ymusic track found, but artist name not match",
+			name: "when spotify track link given, " +
+				"track found " +
+				"and ymusic track found, " +
+				"but artist name not match",
 			inMsg: &telebot.Message{
 				Sender: sampleSender,
 				Text: fmt.Sprintf(
@@ -113,7 +121,10 @@ func TestVibeshare_HandleText(t *testing.T) {
 			},
 		},
 		{
-			name: "when spotify track link given, track found and ymusic track found, artist name not match, " +
+			name: "when spotify track link given, " +
+				"track found " +
+				"and ymusic track found, " +
+				"artist name not match, " +
 				"but match in translit",
 			inMsg: &telebot.Message{
 				Sender: sampleSender,
@@ -132,7 +143,10 @@ func TestVibeshare_HandleText(t *testing.T) {
 			},
 		},
 		{
-			name: "when spotify track link given, track found, ymusic track not found but found in translit",
+			name: "when spotify track link given, " +
+				"track found, " +
+				"ymusic track not found, " +
+				"but found in translit",
 			inMsg: &telebot.Message{
 				Sender: sampleSender,
 				Text: fmt.Sprintf(
@@ -147,6 +161,66 @@ func TestVibeshare_HandleText(t *testing.T) {
 					ymusic_utils.TrackFixtureNadezhdaKadyshevaShirokaReka.Track.Albums[0].ID,
 					ymusic_utils.TrackFixtureNadezhdaKadyshevaShirokaReka.Track.IDString(),
 				),
+			},
+		},
+		{
+			name: "when yandex music album link given " +
+				"and album found",
+			inMsg: &telebot.Message{
+				Sender: sampleSender,
+				Text: fmt.Sprintf(
+					"https://music.yandex.com/album/%s",
+					ymusic_utils.AlbumFixtureRadioheadAmnesiac.ID,
+				),
+			},
+			expectedResponse: &telegram.Message{
+				To:   sampleSender,
+				Text: "https://open.spotify.com/album/1HrMmB5useeZ0F5lHrMvl0",
+			},
+		},
+		{
+			name: "when yandex music album link given " +
+				"and yandex music album not found",
+			inMsg: &telebot.Message{
+				Sender: sampleSender,
+				Text: fmt.Sprintf(
+					"https://music.yandex.com/album/%s",
+					"0",
+				),
+			},
+			expectedResponse: &telegram.Message{
+				To:   sampleSender,
+				Text: "no yandex music album found",
+			},
+		},
+		{
+			name: "when spotify album link given " +
+				"and album found",
+			inMsg: &telebot.Message{
+				Sender: sampleSender,
+				Text: fmt.Sprintf(
+					"https://open.spotify.com/album/%s",
+					spotify_utils.AlbumFixtureRadioheadAmnesiac.Album.ID,
+				),
+			},
+			expectedResponse: &telegram.Message{
+				To:   sampleSender,
+				Text: "https://music.yandex.com/album/3389008",
+			},
+		},
+		{
+			name: "when spotify album link given " +
+				"and spotify album not found",
+			inMsg: &telebot.Message{
+				Sender: sampleSender,
+				Text: fmt.Sprintf(
+					"https://open.spotify.com/album/%s",
+					"0",
+				),
+			},
+			expectedResponse: &telegram.Message{
+				To:   sampleSender,
+				Text: "no spotify album found",
 			},
 		},
 	}

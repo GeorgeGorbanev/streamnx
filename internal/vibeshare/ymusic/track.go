@@ -12,19 +12,15 @@ type Track struct {
 	Title   string   `json:"title"`
 }
 
-type Album struct {
-	ID int `json:"id"`
-}
-
 type Artist struct {
 	ID   int    `json:"id"`
 	Name string `json:"name"`
 }
 
-var TrackURLRegExp = regexp.MustCompile(`https://music\.yandex\.(ru|com)/album/\d+/track/(\d+)`)
+var TrackRe = regexp.MustCompile(`https://music\.yandex\.(ru|com)/album/\d+/track/(\d+)`)
 
-func ParseTrackID(trackURL string) string {
-	matches := TrackURLRegExp.FindStringSubmatch(trackURL)
+func DetectTrackID(trackURL string) string {
+	matches := TrackRe.FindStringSubmatch(trackURL)
 
 	if len(matches) < 3 {
 		return ""
@@ -35,10 +31,6 @@ func ParseTrackID(trackURL string) string {
 
 func (t *Track) URL() string {
 	return fmt.Sprintf("https://music.yandex.com/album/%d/track/%s", t.Albums[0].ID, t.IDString())
-}
-
-func (t *Track) FullTitle() string {
-	return fmt.Sprintf("%s - %s", t.Artists[0].Name, t.Title)
 }
 
 func (t *Track) IDString() string {

@@ -9,6 +9,11 @@ import (
 	"net/url"
 )
 
+const (
+	defaultAuthURL = "https://accounts.spotify.com"
+	defaultAPIURL  = "https://api.spotify.com"
+)
+
 type Client struct {
 	authURL     string
 	apiURL      string
@@ -18,10 +23,15 @@ type Client struct {
 
 type searchResult struct {
 	Tracks tracksSection `json:"tracks"`
+	Albums albumsSection `json:"albums"`
 }
 
 type tracksSection struct {
 	Items []*Track `json:"items"`
+}
+
+type albumsSection struct {
+	Items []*Album `json:"items"`
 }
 
 type ClientOption func(client *Client)
@@ -37,11 +47,6 @@ func WithAPIURL(url string) ClientOption {
 		client.apiURL = url
 	}
 }
-
-const (
-	defaultAuthURL = "https://accounts.spotify.com"
-	defaultAPIURL  = "https://api.spotify.com"
-)
 
 func NewClient(credentials *Credentials, opts ...ClientOption) *Client {
 	c := Client{
@@ -160,4 +165,79 @@ func (c *Client) SearchTrack(artistName, trackName string) (*Track, error) {
 	}
 
 	return sr.Tracks.Items[0], nil
+}
+
+// https://developer.spotify.com/documentation/web-api/reference/get-an-album
+func (c *Client) GetAlbum(id string) (*Album, error) {
+	url := fmt.Sprintf("%s/v1/albums/%s", c.apiURL, id)
+	req, err := http.NewRequest(http.MethodGet, url, nil)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create request: %w", err)
+	}
+
+	token, err := c.FetchToken()
+	if err != nil {
+		return nil, fmt.Errorf("failed to fetch token: %w", err)
+	}
+
+	req.Header.Set("Authorization", token.authHeader())
+	resp, err := c.httpClient.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("failed to send request: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode == http.StatusBadRequest {
+		return nil, nil
+	}
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read response body: %w", err)
+	}
+
+	album := Album{}
+	if err := json.Unmarshal(body, &album); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal response body: %w", err)
+	}
+
+	return &album, nil
+}
+
+// https://developer.spotify.com/documentation/web-api/reference/search
+func (c *Client) SearchAlbum(artistName, albumName string) (*Album, error) {
+	query := url.QueryEscape(fmt.Sprintf("artist:%s album:%s", artistName, albumName))
+	u := fmt.Sprintf("%s/v1/search?q=%s&type=album&limit=1", c.apiURL, query)
+	req, err := http.NewRequest(http.MethodGet, u, nil)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create request: %w", err)
+	}
+
+	token, err := c.FetchToken()
+	if err != nil {
+		return nil, fmt.Errorf("failed to fetch token: %w", err)
+	}
+
+	req.Header.Set("Authorization", token.authHeader())
+
+	resp, err := c.httpClient.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("failed to send request: %w", err)
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read response body: %w", err)
+	}
+
+	sr := searchResult{}
+	if err := json.Unmarshal(body, &sr); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal response body: %w", err)
+	}
+	if len(sr.Albums.Items) == 0 {
+		return nil, nil
+	}
+
+	return sr.Albums.Items[0], nil
 }

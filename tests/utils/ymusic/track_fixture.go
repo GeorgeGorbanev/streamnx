@@ -25,7 +25,14 @@ var (
 			Title: "Angel",
 			Albums: []ymusic.Album{
 				{
-					ID: 35627,
+					ID:    35627,
+					Title: "Mezzanine",
+					Artists: []ymusic.Artist{
+						{
+							ID:   12662,
+							Name: "Massive Attack",
+						},
+					},
 				},
 			},
 			Artists: []ymusic.Artist{
@@ -233,7 +240,7 @@ var (
 							"ogImage": "avatars.yandex.net/get-music-content/42108/96350b7f.a.49408-1/%%",
 							"recent": false,
 							"releaseDate": "1998-01-01T00:00:00+03:00",
-							"title": "Singles Collection",
+							"title": "Mezzanine",
 							"trackCount": 61,
 							"trackPosition": {
 								"index": 1,

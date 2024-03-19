@@ -259,7 +259,7 @@ func (vs *Vibeshare) yMusicAlbumHandler(inMsg *telebot.Message) {
 }
 
 func (vs *Vibeshare) notFoundHandler(inMsg *telebot.Message) {
-	outMsg, err := vs.respond(inMsg, "no track link found")
+	outMsg, err := vs.respond(inMsg, "no link found")
 	if err != nil {
 		log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
 		return

@@ -1,11 +1,9 @@
-package ymusic_test
+package ymusic
 
 import (
-	"strings"
+	"net/http"
+	"net/http/httptest"
 	"testing"
-
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/ymusic"
-	ymusic_utils "github.com/GeorgeGorbanev/vibeshare/tests/utils/ymusic"
 
 	"github.com/stretchr/testify/require"
 )
@@ -14,25 +12,69 @@ func TestClient_GetTrack(t *testing.T) {
 	tests := []struct {
 		name    string
 		trackID string
-		want    *ymusic.Track
+		want    *Track
 	}{
 		{
 			name:    "when track found",
-			trackID: ymusic_utils.TrackFixtureMassiveAttackAngel.ID,
-			want:    ymusic_utils.TrackFixtureMassiveAttackAngel.TrackWithIDString(),
+			trackID: "foundID",
+			want: &Track{
+				ID:    "1",
+				Title: "sample title",
+				Albums: []Album{
+					{
+						ID:    2,
+						Title: "sample title",
+						Artists: []Artist{
+							{
+								ID:   3,
+								Name: "sample artist",
+							},
+						},
+					},
+				},
+				Artists: []Artist{
+					{
+						ID:   4,
+						Name: "sample artist",
+					},
+				},
+			},
 		},
 		{
 			name:    "when track not found",
-			trackID: "0",
+			trackID: "notFoundID",
 			want:    nil,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			apiServerMock := ymusic_utils.NewAPIServerMock(t)
+			apiServerMock := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				require.Equal(t, http.MethodGet, r.Method)
+
+				if r.URL.Path == "/tracks/foundID" {
+					_, err := w.Write([]byte(`{
+						"result": [{
+							"id": "1",
+							"title": "sample title",
+							"albums": [
+								{
+									"id": 2,
+									"title": "sample title",
+									"artists": [{"id": 3, "name": "sample artist"}]
+								}
+							],
+							"artists": [{"id": 4, "name": "sample artist" }]
+						}]
+					}`))
+					require.NoError(t, err)
+				} else {
+					_, err := w.Write([]byte(`{"result": []}`))
+					require.NoError(t, err)
+				}
+			}))
 			defer apiServerMock.Close()
 
-			client := ymusic.NewClient(ymusic.WithAPIURL(apiServerMock.URL))
+			client := NewClient(WithAPIURL(apiServerMock.URL))
 
 			result, err := client.GetTrack(tt.trackID)
 			require.NoError(t, err)
@@ -45,25 +87,54 @@ func TestClient_GetAlbum(t *testing.T) {
 	tests := []struct {
 		name    string
 		albumID string
-		want    *ymusic.Album
+		want    *Album
 	}{
 		{
 			name:    "when track found",
-			albumID: ymusic_utils.AlbumFixtureRadioheadAmnesiac.ID,
-			want:    ymusic_utils.AlbumFixtureRadioheadAmnesiac.Album,
+			albumID: "foundID",
+			want: &Album{
+				ID:    1,
+				Title: "Sample Title",
+				Artists: []Artist{
+					{
+						ID:   2,
+						Name: "Sample Artist",
+					},
+				},
+			},
 		},
 		{
 			name:    "when track not found",
-			albumID: "0",
+			albumID: "notFoundID",
 			want:    nil,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			apiServerMock := ymusic_utils.NewAPIServerMock(t)
+			apiServerMock := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				require.Equal(t, http.MethodGet, r.Method)
+
+				if r.URL.Path == "/albums/foundID" {
+					_, err := w.Write([]byte(`{
+						"result": {
+							"id": 1,
+							"title": "Sample Title",
+							"artists": [{"id": 2, "name": "Sample Artist" }]
+						}
+					}`))
+					require.NoError(t, err)
+				} else {
+					_, err := w.Write([]byte(`{
+						"result": {
+							"error": "not-found"
+						}
+					}`))
+					require.NoError(t, err)
+				}
+			}))
 			defer apiServerMock.Close()
 
-			client := ymusic.NewClient(ymusic.WithAPIURL(apiServerMock.URL))
+			client := NewClient(WithAPIURL(apiServerMock.URL))
 
 			result, err := client.GetAlbum(tt.albumID)
 			require.NoError(t, err)
@@ -77,13 +148,34 @@ func TestClient_SearchTrack(t *testing.T) {
 		name        string
 		queryArtist string
 		queryTrack  string
-		want        *ymusic.Track
+		want        *Track
 	}{
 		{
 			name:        "when track found",
-			queryArtist: strings.ToLower(ymusic_utils.TrackFixtureMassiveAttackAngel.SearchQueryArtist),
-			queryTrack:  strings.ToLower(ymusic_utils.TrackFixtureMassiveAttackAngel.SearchQueryTrack),
-			want:        ymusic_utils.TrackFixtureMassiveAttackAngel.Track,
+			queryArtist: "Found artist",
+			queryTrack:  "Found track",
+			want: &Track{
+				ID:    "1",
+				Title: "sample title",
+				Albums: []Album{
+					{
+						ID:    2,
+						Title: "sample title",
+						Artists: []Artist{
+							{
+								ID:   3,
+								Name: "sample artist",
+							},
+						},
+					},
+				},
+				Artists: []Artist{
+					{
+						ID:   4,
+						Name: "sample artist",
+					},
+				},
+			},
 		},
 		{
 			name:        "when track not found",
@@ -94,10 +186,41 @@ func TestClient_SearchTrack(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			apiServerMock := ymusic_utils.NewAPIServerMock(t)
+			apiServerMock := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				require.Equal(t, http.MethodGet, r.Method)
+
+				searchType := r.URL.Query().Get("type")
+				require.Equal(t, "track", searchType)
+
+				query := r.URL.Query().Get("text")
+				if query == "Found artist – Found track" {
+					_, err := w.Write([]byte(`{
+						"result": {
+							"tracks":{
+								"results": [{
+									"id": "1",
+									"title": "sample title",
+									"albums": [
+										{
+											"id": 2,
+											"title": "sample title",
+											"artists": [{"id": 3, "name": "sample artist"}]
+										}
+									],
+									"artists": [{"id": 4, "name": "sample artist" }]
+								}]
+							}
+						}
+					}`))
+					require.NoError(t, err)
+				} else {
+					_, err := w.Write([]byte(`{"result": {}}`))
+					require.NoError(t, err)
+				}
+			}))
 			defer apiServerMock.Close()
 
-			client := ymusic.NewClient(ymusic.WithAPIURL(apiServerMock.URL))
+			client := NewClient(WithAPIURL(apiServerMock.URL))
 
 			result, err := client.SearchTrack(tt.queryArtist, tt.queryTrack)
 			require.NoError(t, err)
@@ -111,13 +234,22 @@ func TestClient_SearchAlbum(t *testing.T) {
 		name        string
 		queryArtist string
 		queryAlbum  string
-		want        *ymusic.Album
+		want        *Album
 	}{
 		{
 			name:        "when track found",
-			queryArtist: strings.ToLower(ymusic_utils.AlbumFixtureRadioheadAmnesiac.SearchQueryArtist),
-			queryAlbum:  strings.ToLower(ymusic_utils.AlbumFixtureRadioheadAmnesiac.SearchQueryAlbum),
-			want:        ymusic_utils.AlbumFixtureRadioheadAmnesiac.Album,
+			queryArtist: "Found artist",
+			queryAlbum:  "Found album",
+			want: &Album{
+				ID:    1,
+				Title: "Sample Title",
+				Artists: []Artist{
+					{
+						ID:   2,
+						Name: "Sample Artist",
+					},
+				},
+			},
 		},
 		{
 			name:        "when track not found",
@@ -128,10 +260,34 @@ func TestClient_SearchAlbum(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			apiServerMock := ymusic_utils.NewAPIServerMock(t)
+			apiServerMock := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				require.Equal(t, http.MethodGet, r.Method)
+
+				searchType := r.URL.Query().Get("type")
+				require.Equal(t, "album", searchType)
+
+				query := r.URL.Query().Get("text")
+				if query == "Found artist – Found album" {
+					_, err := w.Write([]byte(`{
+						"result": {
+							"albums":{
+								"results": [{
+									"id": 1,
+									"title": "Sample Title",
+									"artists": [{"id": 2, "name": "Sample Artist" }]
+								}]
+							}
+						}
+					}`))
+					require.NoError(t, err)
+				} else {
+					_, err := w.Write([]byte(`{"result": {}}`))
+					require.NoError(t, err)
+				}
+			}))
 			defer apiServerMock.Close()
 
-			client := ymusic.NewClient(ymusic.WithAPIURL(apiServerMock.URL))
+			client := NewClient(WithAPIURL(apiServerMock.URL))
 
 			result, err := client.SearchAlbum(tt.queryArtist, tt.queryAlbum)
 			require.NoError(t, err)

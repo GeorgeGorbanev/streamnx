@@ -1,16 +1,13 @@
 package integration
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/ymusic"
-	spotify_utils "github.com/GeorgeGorbanev/vibeshare/tests/utils/spotify"
+	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
 	telegram_utils "github.com/GeorgeGorbanev/vibeshare/tests/utils/telegram"
-	ymusic_utils "github.com/GeorgeGorbanev/vibeshare/tests/utils/ymusic"
-
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"
 )
@@ -20,40 +17,44 @@ func TestMessage_SpotifyAlbum(t *testing.T) {
 		name             string
 		input            string
 		expectedResponse string
+		fixturesMap      fixturesMap
 	}{
 		{
-			name: "when spotify album link given and album found",
-			input: fmt.Sprintf(
-				"https://open.spotify.com/album/%s",
-				spotify_utils.AlbumFixtureRadioheadAmnesiac.Album.ID,
-			),
+			name:             "when spotify album link given and album found",
+			input:            "https://open.spotify.com/album/1HrMmB5useeZ0F5lHrMvl0",
 			expectedResponse: "https://music.yandex.com/album/3389008",
+			fixturesMap: fixturesMap{
+				spotifyAlbums: map[string][]byte{
+					"1HrMmB5useeZ0F5lHrMvl0": fixture.Read("spotify/get_album_radiohead_amnesiac.json"),
+				},
+				yandexSearchAlbums: map[string][]byte{
+					"radiohead – amnesiac": fixture.Read("yandex/search_album_radiohead_amnesiac.json"),
+				},
+			},
 		},
 		{
-			name: "when spotify album link given and spotify album not found",
-			input: fmt.Sprintf(
-				"https://open.spotify.com/album/%s",
-				"0",
-			),
+			name:             "when spotify album link given and spotify album not found",
+			input:            "https://open.spotify.com/album/0",
 			expectedResponse: "no spotify album found",
+			fixturesMap:      fixturesMap{},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			mockAuthServer := spotify_utils.NewAuthServerMock(t)
-			defer mockAuthServer.Close()
+			spotifyAuthServerMock := newSpotifyAuthServerMock(t)
+			defer spotifyAuthServerMock.Close()
 
-			mockAPIServer := spotify_utils.NewAPIServerMock(t)
-			defer mockAPIServer.Close()
+			spotifyAPIServerMock := newSpotifyAPIServerMock(t, tt.fixturesMap)
+			defer spotifyAPIServerMock.Close()
 
 			senderMock := telegram_utils.NewTelegramSenderMock()
 			spotifyClient := spotify.NewClient(
-				&spotify_utils.SampleCredentials,
-				spotify.WithAuthURL(mockAuthServer.URL),
-				spotify.WithAPIURL(mockAPIServer.URL),
+				&sampleCredentials,
+				spotify.WithAuthURL(spotifyAuthServerMock.URL),
+				spotify.WithAPIURL(spotifyAPIServerMock.URL),
 			)
 
-			yMusicMockServer := ymusic_utils.NewAPIServerMock(t)
+			yMusicMockServer := newYandexAPIServerMock(t, tt.fixturesMap)
 			defer yMusicMockServer.Close()
 
 			ymClient := ymusic.NewClient(ymusic.WithAPIURL(yMusicMockServer.URL))

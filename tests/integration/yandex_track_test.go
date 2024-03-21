@@ -1,16 +1,13 @@
 package integration
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/ymusic"
-	spotify_utils "github.com/GeorgeGorbanev/vibeshare/tests/utils/spotify"
+	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
 	telegram_utils "github.com/GeorgeGorbanev/vibeshare/tests/utils/telegram"
-	ymusic_utils "github.com/GeorgeGorbanev/vibeshare/tests/utils/ymusic"
-
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"
 )
@@ -20,45 +17,57 @@ func TestMessage_YandexTrack(t *testing.T) {
 		name             string
 		input            string
 		expectedResponse string
+		fixturesMap      fixturesMap
 	}{
 		{
-			name: "when yandex music track link given and track found with .ru",
-			input: fmt.Sprintf(
-				"prfx https://music.yandex.ru/album/3192570/track/%s?query=sample",
-				ymusic_utils.TrackFixtureMassiveAttackAngel.ID,
-			),
+			name:             "when yandex music track link given and track found with .ru",
+			input:            "prfx https://music.yandex.ru/album/3192570/track/354093?query=sample",
 			expectedResponse: "https://open.spotify.com/track/7uv632EkfwYhXoqf8rhYrg",
+			fixturesMap: fixturesMap{
+				yandexTracks: map[string][]byte{
+					"354093": fixture.Read("yandex/get_track_massive_attack_angel.json"),
+				},
+				spotifySearchTracks: map[string][]byte{
+					"artist:Massive Attack track:Angel": fixture.Read("spotify/search_track_massive_attack_angel.json"),
+				},
+			},
 		},
 		{
-			name: "when yandex music track link given and track found with .com",
-			input: fmt.Sprintf(
-				"https://music.yandex.com/album/3192570/track/%s",
-				ymusic_utils.TrackFixtureMassiveAttackAngel.ID,
-			),
+			name:             "when yandex music track link given and track found with .com",
+			input:            "https://music.yandex.com/album/3192570/track/354093",
 			expectedResponse: "https://open.spotify.com/track/7uv632EkfwYhXoqf8rhYrg",
+			fixturesMap: fixturesMap{
+				yandexTracks: map[string][]byte{
+					"354093": fixture.Read("yandex/get_track_massive_attack_angel.json"),
+				},
+				spotifySearchTracks: map[string][]byte{
+					"artist:Massive Attack track:Angel": fixture.Read("spotify/search_track_massive_attack_angel.json"),
+				},
+			},
 		},
 		{
 			name:             "when yandex music track link given and track not found",
-			input:            fmt.Sprintf("prfx https://music.yandex.ru/album/3192570/track/%s", "0"),
+			input:            "prfx https://music.yandex.ru/album/3192570/track/0",
 			expectedResponse: "track not found in yandex music",
+			fixturesMap:      fixturesMap{},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			mockAuthServer := spotify_utils.NewAuthServerMock(t)
-			defer mockAuthServer.Close()
+			spotifyAuthServerMock := newSpotifyAuthServerMock(t)
+			defer spotifyAuthServerMock.Close()
 
-			mockAPIServer := spotify_utils.NewAPIServerMock(t)
-			defer mockAPIServer.Close()
+			spotifyAPIServerMock := newSpotifyAPIServerMock(t, tt.fixturesMap)
+			defer spotifyAPIServerMock.Close()
 
 			senderMock := telegram_utils.NewTelegramSenderMock()
 			spotifyClient := spotify.NewClient(
-				&spotify_utils.SampleCredentials,
-				spotify.WithAuthURL(mockAuthServer.URL),
-				spotify.WithAPIURL(mockAPIServer.URL),
+				&sampleCredentials,
+				spotify.WithAuthURL(spotifyAuthServerMock.URL),
+				spotify.WithAPIURL(spotifyAPIServerMock.URL),
 			)
 
-			yMusicMockServer := ymusic_utils.NewAPIServerMock(t)
+			yMusicMockServer := newYandexAPIServerMock(t, tt.fixturesMap)
 			defer yMusicMockServer.Close()
 
 			ymClient := ymusic.NewClient(ymusic.WithAPIURL(yMusicMockServer.URL))

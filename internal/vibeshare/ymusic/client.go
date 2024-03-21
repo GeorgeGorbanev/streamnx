@@ -8,6 +8,8 @@ import (
 	"net/url"
 )
 
+const defaultAPIURL = "https://api.music.yandex.net"
+
 type Client struct {
 	apiURL string
 }
@@ -36,16 +38,6 @@ type tracksSection struct {
 type albumsSection struct {
 	Results []Album `json:"results"`
 }
-
-type ClientOption func(client *Client)
-
-func WithAPIURL(url string) ClientOption {
-	return func(client *Client) {
-		client.apiURL = url
-	}
-}
-
-const defaultAPIURL = "https://api.music.yandex.net"
 
 func NewClient(opts ...ClientOption) *Client {
 	c := Client{

@@ -7,11 +7,11 @@ import (
 	"github.com/tucnak/telebot"
 )
 
+const timeout = 10 * time.Second
+
 type Bot struct {
 	telebotBot *telebot.Bot
 }
-
-const timeout = 10 * time.Second
 
 func NewBot(token string) (*Bot, error) {
 	telebotBot, err := telebot.NewBot(telebot.Settings{

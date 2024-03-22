@@ -55,13 +55,18 @@ func (vs *Vibeshare) makeRouter() *telegram.Router {
 	return router
 }
 
-func (vs *Vibeshare) respond(inMsg *telebot.Message, text string) (*telebot.Message, error) {
-	return vs.telegramSender.Send(
-		&telegram.Message{
-			To:   inMsg.Sender,
-			Text: text,
-		},
-	)
+func (vs *Vibeshare) respond(inMsg *telebot.Message, text string) {
+	response := &telegram.Message{
+		To:   inMsg.Sender,
+		Text: text,
+	}
+
+	_, err := vs.telegramSender.Send(response)
+	if err != nil {
+		log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
+		return
+	}
+	log.Printf("sent message to %s: %s", inMsg.Sender.Username, text)
 }
 
 func (vs *Vibeshare) yMusicSearch(spotifyTrack *spotify.Track) (*ymusic.Track, error) {
@@ -104,12 +109,7 @@ func (vs *Vibeshare) spotifyTrackHandler(inMsg *telebot.Message) {
 		return
 	}
 	if spotifyTrack == nil {
-		outMsg, err := vs.respond(inMsg, "track not found")
-		if err != nil {
-			log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
-			return
-		}
-		log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+		vs.respond(inMsg, "track not found")
 		return
 	}
 
@@ -119,21 +119,11 @@ func (vs *Vibeshare) spotifyTrackHandler(inMsg *telebot.Message) {
 		return
 	}
 	if yMusicTrack == nil {
-		outMsg, err := vs.respond(inMsg, "no ym track found")
-		if err != nil {
-			log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
-			return
-		}
-		log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+		vs.respond(inMsg, "no ym track found")
 		return
 	}
 
-	outMsg, err := vs.respond(inMsg, yMusicTrack.URL())
-	if err != nil {
-		log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
-		return
-	}
-	log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+	vs.respond(inMsg, yMusicTrack.URL())
 }
 
 func (vs *Vibeshare) spotifyAlbumHandler(inMsg *telebot.Message) {
@@ -144,12 +134,7 @@ func (vs *Vibeshare) spotifyAlbumHandler(inMsg *telebot.Message) {
 		return
 	}
 	if spotifyAlbum == nil {
-		outMsg, err := vs.respond(inMsg, "no spotify album found")
-		if err != nil {
-			log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
-			return
-		}
-		log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+		vs.respond(inMsg, "no spotify album found")
 		return
 	}
 
@@ -160,21 +145,11 @@ func (vs *Vibeshare) spotifyAlbumHandler(inMsg *telebot.Message) {
 	}
 
 	if yMusicAlbum == nil {
-		outMsg, err := vs.respond(inMsg, "no ym album found")
-		if err != nil {
-			log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
-			return
-		}
-		log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+		vs.respond(inMsg, "no ym album found")
 		return
 	}
 
-	outMsg, err := vs.respond(inMsg, yMusicAlbum.URL())
-	if err != nil {
-		log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
-		return
-	}
-	log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+	vs.respond(inMsg, yMusicAlbum.URL())
 }
 
 func (vs *Vibeshare) yMusicTrackHandler(inMsg *telebot.Message) {
@@ -185,12 +160,7 @@ func (vs *Vibeshare) yMusicTrackHandler(inMsg *telebot.Message) {
 		return
 	}
 	if yMusicTrack == nil {
-		outMsg, err := vs.respond(inMsg, "track not found in yandex music")
-		if err != nil {
-			log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
-			return
-		}
-		log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+		vs.respond(inMsg, "track not found in yandex music")
 		return
 	}
 
@@ -200,21 +170,11 @@ func (vs *Vibeshare) yMusicTrackHandler(inMsg *telebot.Message) {
 		return
 	}
 	if spotifyTrack == nil {
-		outMsg, err := vs.respond(inMsg, "no track found in spotify")
-		if err != nil {
-			log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
-			return
-		}
-		log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+		vs.respond(inMsg, "no track found in spotify")
 		return
 	}
 
-	outMsg, err := vs.respond(inMsg, spotifyTrack.URL())
-	if err != nil {
-		log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
-		return
-	}
-	log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+	vs.respond(inMsg, spotifyTrack.URL())
 }
 
 func (vs *Vibeshare) yMusicAlbumHandler(inMsg *telebot.Message) {
@@ -225,12 +185,7 @@ func (vs *Vibeshare) yMusicAlbumHandler(inMsg *telebot.Message) {
 		return
 	}
 	if ymusicAlbum == nil {
-		outMsg, err := vs.respond(inMsg, "no yandex music album found")
-		if err != nil {
-			log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
-			return
-		}
-		log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+		vs.respond(inMsg, "no yandex music album found")
 		return
 	}
 
@@ -241,28 +196,13 @@ func (vs *Vibeshare) yMusicAlbumHandler(inMsg *telebot.Message) {
 	}
 
 	if spotifyAlbum == nil {
-		outMsg, err := vs.respond(inMsg, "no spotify album found")
-		if err != nil {
-			log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
-			return
-		}
-		log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+		vs.respond(inMsg, "no spotify album found")
 		return
 	}
 
-	outMsg, err := vs.respond(inMsg, spotifyAlbum.URL())
-	if err != nil {
-		log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
-		return
-	}
-	log.Printf("sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+	vs.respond(inMsg, spotifyAlbum.URL())
 }
 
 func (vs *Vibeshare) notFoundHandler(inMsg *telebot.Message) {
-	outMsg, err := vs.respond(inMsg, "no link found")
-	if err != nil {
-		log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
-		return
-	}
-	log.Printf("Sent message to %s: %s", inMsg.Sender.Username, outMsg.Text)
+	vs.respond(inMsg, "no link found")
 }

@@ -30,6 +30,8 @@ jobs:
               -e TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}\
               -e SPOTIFY_CLIENT_ID=${{ secrets.SPOTIFY_CLIENT_ID }}\
               -e SPOTIFY_CLIENT_SECRET=${{ secrets.SPOTIFY_CLIENT_SECRET }}\
-              ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPO }}:latest
+              -v ~/logs:/app/logs \
+              ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPO }}:latest \
+              /bin/sh -c 'exec vibeshare > /app/logs/$(date "+%Y-%m-%d_%H-%M-%S").log 2>&1'
             echo "Docker prune"
             docker image prune --force --all

@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/converter"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/ymusic"
@@ -34,12 +35,7 @@ func main() {
 			return
 		}
 	}
-
-	cfg := config{
-		telegramToken:       os.Getenv("TELEGRAM_TOKEN"),
-		spotifyClientID:     os.Getenv("SPOTIFY_CLIENT_ID"),
-		spotifyClientSecret: os.Getenv("SPOTIFY_CLIENT_SECRET"),
-	}
+	cfg := newConfig()
 
 	bot, err := telegram.NewBot(cfg.telegramToken)
 	if err != nil {
@@ -47,18 +43,31 @@ func main() {
 		return
 	}
 
-	spotifyClient := spotify.NewClient(&spotify.Credentials{
-		ClientID:     cfg.spotifyClientID,
-		ClientSecret: cfg.spotifyClientSecret,
-	})
-	ts := vibeshare.NewVibeshare(&vibeshare.Input{
-		SpotifyClient:  spotifyClient,
-		TelegramSender: bot.Sender(),
-		YmusicClient:   ymusic.NewClient(),
-	})
-	bot.HandleText(ts.HandleText)
+	vs := newVibeshare(cfg, bot.Sender())
+	bot.HandleText(vs.HandleText)
 	defer bot.Stop()
 
 	slog.Info("Bot started")
 	bot.Start()
+}
+
+func newConfig() *config {
+	return &config{
+		telegramToken:       os.Getenv("TELEGRAM_TOKEN"),
+		spotifyClientID:     os.Getenv("SPOTIFY_CLIENT_ID"),
+		spotifyClientSecret: os.Getenv("SPOTIFY_CLIENT_SECRET"),
+	}
+}
+
+func newVibeshare(cfg *config, ts telegram.Sender) *vibeshare.Vibeshare {
+	return vibeshare.NewVibeshare(&vibeshare.Input{
+		Converter: converter.NewConverter(&converter.Input{
+			SpotifyClient: spotify.NewClient(&spotify.Credentials{
+				ClientID:     cfg.spotifyClientID,
+				ClientSecret: cfg.spotifyClientSecret,
+			}),
+			YandexClient: ymusic.NewClient(),
+		}),
+		TelegramSender: ts,
+	})
 }

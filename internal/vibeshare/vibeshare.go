@@ -1,40 +1,35 @@
 package vibeshare
 
 import (
-	"fmt"
 	"log/slog"
-	"strings"
 
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/converter"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/translit"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/ymusic"
 
 	"github.com/tucnak/telebot"
 )
 
 type Vibeshare struct {
-	spotifyClient  *spotify.Client
+	converter      *converter.Converter
 	telegramRouter *telegram.Router
 	telegramSender telegram.Sender
-	ymusicClient   *ymusic.Client
 }
 
 type Input struct {
+	Converter      *converter.Converter
 	SpotifyClient  *spotify.Client
 	TelegramSender telegram.Sender
-	YmusicClient   *ymusic.Client
+	YandexClient   *ymusic.Client
 }
 
 func NewVibeshare(input *Input) *Vibeshare {
 	vs := Vibeshare{
-		spotifyClient:  input.SpotifyClient,
+		converter:      input.Converter,
 		telegramSender: input.TelegramSender,
-		ymusicClient:   input.YmusicClient,
 	}
-
 	vs.telegramRouter = vs.makeRouter()
-
 	return &vs
 }
 
@@ -69,138 +64,60 @@ func (vs *Vibeshare) respond(inMsg *telebot.Message, text string) {
 	slog.Info("sent message", slog.Int("to", inMsg.Sender.ID), slog.String("text", text))
 }
 
-func (vs *Vibeshare) yMusicSearch(spotifyTrack *spotify.Track) (*ymusic.Track, error) {
-	artistName := strings.ToLower(spotifyTrack.Artists[0].Name)
-	trackName := strings.ToLower(spotifyTrack.Name)
-
-	yMusicTrack, err := vs.ymusicClient.SearchTrack(artistName, trackName)
-	if err != nil {
-		return nil, fmt.Errorf("failed to find ymusic track: %w", err)
-	}
-	if yMusicTrack != nil {
-		foundLowcasedArtist := strings.ToLower(yMusicTrack.Artists[0].Name)
-		if artistName == foundLowcasedArtist {
-			return yMusicTrack, nil
-		}
-
-		translitedArtist := translit.CyrillicToLatin(foundLowcasedArtist)
-		if artistName == translitedArtist {
-			return yMusicTrack, nil
-		}
-		return nil, nil
-	}
-
-	if spotifyTrack.NameContainsRussianLetters() {
-		translitedArtist := translit.LatinToCyrillic(artistName)
-		yMusicTrack, err = vs.ymusicClient.SearchTrack(translitedArtist, trackName)
-		if err != nil {
-			return nil, fmt.Errorf("failed to find ymusic track: %w", err)
-		}
-	}
-
-	return yMusicTrack, nil
-}
-
 func (vs *Vibeshare) spotifyTrackHandler(inMsg *telebot.Message) {
-	trackID := spotify.DetectTrackID(inMsg.Text)
-	spotifyTrack, err := vs.spotifyClient.GetTrack(trackID)
+	link, err := vs.converter.SpotifyTrackToYandex(inMsg.Text)
 	if err != nil {
-		slog.Error("failed fetch track", slog.String("error", err.Error()))
+		slog.Error("failed to convert track", slog.String("error", err.Error()))
 		return
 	}
-	if spotifyTrack == nil {
-		vs.respond(inMsg, "track not found")
+	if link == "" {
+		vs.respond(inMsg, "failed to convert")
 		return
 	}
 
-	yMusicTrack, err := vs.yMusicSearch(spotifyTrack)
-	if err != nil {
-		slog.Error("failed to search track", slog.String("error", err.Error()))
-		return
-	}
-	if yMusicTrack == nil {
-		vs.respond(inMsg, "no ym track found")
-		return
-	}
-
-	vs.respond(inMsg, yMusicTrack.URL())
+	vs.respond(inMsg, link)
 }
 
 func (vs *Vibeshare) spotifyAlbumHandler(inMsg *telebot.Message) {
-	albumID := spotify.DetectAlbumID(inMsg.Text)
-	spotifyAlbum, err := vs.spotifyClient.GetAlbum(albumID)
+	link, err := vs.converter.SpotifyAlbumToYandex(inMsg.Text)
 	if err != nil {
-		slog.Error("failed fetch album", slog.String("error", err.Error()))
+		slog.Error("failed to convert album", slog.String("error", err.Error()))
 		return
 	}
-	if spotifyAlbum == nil {
-		vs.respond(inMsg, "no spotify album found")
-		return
-	}
-
-	yMusicAlbum, err := vs.ymusicClient.SearchAlbum(spotifyAlbum.Artists[0].Name, spotifyAlbum.Name)
-	if err != nil {
-		slog.Error("failed to search album", slog.String("error", err.Error()))
+	if link == "" {
+		vs.respond(inMsg, "failed to convert")
 		return
 	}
 
-	if yMusicAlbum == nil {
-		vs.respond(inMsg, "no ym album found")
-		return
-	}
-
-	vs.respond(inMsg, yMusicAlbum.URL())
+	vs.respond(inMsg, link)
 }
 
 func (vs *Vibeshare) yMusicTrackHandler(inMsg *telebot.Message) {
-	trackID := ymusic.DetectTrackID(inMsg.Text)
-	yMusicTrack, err := vs.ymusicClient.GetTrack(trackID)
+	link, err := vs.converter.YandexTrackToSpotify(inMsg.Text)
 	if err != nil {
-		slog.Error("failed fetch track", slog.String("error", err.Error()))
+		slog.Error("failed to convert track", slog.String("error", err.Error()))
 		return
 	}
-	if yMusicTrack == nil {
-		vs.respond(inMsg, "track not found in yandex music")
+	if link == "" {
+		vs.respond(inMsg, "failed to convert")
 		return
 	}
 
-	spotifyTrack, err := vs.spotifyClient.SearchTrack(yMusicTrack.Artists[0].Name, yMusicTrack.Title)
-	if err != nil {
-		slog.Error("failed to search track", slog.String("error", err.Error()))
-		return
-	}
-	if spotifyTrack == nil {
-		vs.respond(inMsg, "no track found in spotify")
-		return
-	}
-
-	vs.respond(inMsg, spotifyTrack.URL())
+	vs.respond(inMsg, link)
 }
 
 func (vs *Vibeshare) yMusicAlbumHandler(inMsg *telebot.Message) {
-	albumID := ymusic.DetectAlbumID(inMsg.Text)
-	ymusicAlbum, err := vs.ymusicClient.GetAlbum(albumID)
+	link, err := vs.converter.YandexAlbumToSpotify(inMsg.Text)
 	if err != nil {
-		slog.Error("failed to fetch album", slog.String("error", err.Error()))
+		slog.Error("failed to convert album", slog.String("error", err.Error()))
 		return
 	}
-	if ymusicAlbum == nil {
-		vs.respond(inMsg, "no yandex music album found")
-		return
-	}
-
-	spotifyAlbum, err := vs.spotifyClient.SearchAlbum(ymusicAlbum.Artists[0].Name, ymusicAlbum.Title)
-	if err != nil {
-		slog.Error("failed to search album", slog.String("error", err.Error()))
+	if link == "" {
+		vs.respond(inMsg, "failed to convert")
 		return
 	}
 
-	if spotifyAlbum == nil {
-		vs.respond(inMsg, "no spotify album found")
-		return
-	}
-
-	vs.respond(inMsg, spotifyAlbum.URL())
+	vs.respond(inMsg, link)
 }
 
 func (vs *Vibeshare) notFoundHandler(inMsg *telebot.Message) {

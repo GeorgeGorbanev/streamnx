@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/converter"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/ymusic"
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
@@ -35,7 +36,7 @@ func TestMessage_YandexAlbum(t *testing.T) {
 		{
 			name:             "when yandex music album link given and yandex music album not found",
 			input:            "https://music.yandex.com/album/0",
-			expectedResponse: "no yandex music album found",
+			expectedResponse: "failed to convert",
 			fixturesMap:      fixturesMap{},
 		},
 	}
@@ -59,10 +60,13 @@ func TestMessage_YandexAlbum(t *testing.T) {
 
 			ymClient := ymusic.NewClient(ymusic.WithAPIURL(yMusicMockServer.URL))
 
+			c := converter.NewConverter(&converter.Input{
+				SpotifyClient: spotifyClient,
+				YandexClient:  ymClient,
+			})
 			vs := vibeshare.NewVibeshare(&vibeshare.Input{
-				SpotifyClient:  spotifyClient,
+				Converter:      c,
 				TelegramSender: senderMock,
-				YmusicClient:   ymClient,
 			})
 
 			user := &telebot.User{

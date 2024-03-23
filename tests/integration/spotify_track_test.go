@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/converter"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/ymusic"
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
@@ -35,13 +36,13 @@ func TestMessage_SpotifyTrack(t *testing.T) {
 		{
 			name:             "when spotify track link given and track not found",
 			input:            "https://open.spotify.com/track/invalid_track_id?sample=query",
-			expectedResponse: "track not found",
+			expectedResponse: "failed to convert",
 			fixturesMap:      fixturesMap{},
 		},
 		{
 			name:             "when spotify track link given, track found and ymusic track found, but artist name not match",
 			input:            "prfx https://open.spotify.com/track/7DSAEUvxU8FajXtRloy8M0?sample=query",
-			expectedResponse: "no ym track found",
+			expectedResponse: "failed to convert",
 			fixturesMap: fixturesMap{
 				spotifyTracks: map[string][]byte{
 					"7DSAEUvxU8FajXtRloy8M0": fixture.Read("spotify/get_track_miley_cyrus_flowers.json"),
@@ -98,10 +99,13 @@ func TestMessage_SpotifyTrack(t *testing.T) {
 
 			ymClient := ymusic.NewClient(ymusic.WithAPIURL(yMusicMockServer.URL))
 
+			c := converter.NewConverter(&converter.Input{
+				SpotifyClient: spotifyClient,
+				YandexClient:  ymClient,
+			})
 			vs := vibeshare.NewVibeshare(&vibeshare.Input{
-				SpotifyClient:  spotifyClient,
+				Converter:      c,
 				TelegramSender: senderMock,
-				YmusicClient:   ymClient,
 			})
 
 			user := &telebot.User{

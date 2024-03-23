@@ -13,29 +13,23 @@ jobs:
       - name: docker login
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USER }}/vibeshare:${{ github.sha }}
+        run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPO }}:latest
       - name: Docker Push
-        run: docker push ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPO }}:${{ github.sha }}
+        run: docker push ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPO }}:latest
       - name: Deploy to VPS
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
-          password: ${{ secrets.DEPLOY_PASSWORD }}
+          key: ${{ secrets.DEPLOY_KEY }}
           script: |
-            echo "Docker login"
-            echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USER }} --password-stdin
-            echo "Docker pull"
-            docker pull ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPO }}:${{ github.sha }}
-            echo "Docker stop"
-            docker stop vibeshare_bot || true
-            echo "Docker remove"
-            docker container rm vibeshare_bot || true
-            echo "Docker run"
-            docker run -d --name vibeshare_bot \
+            docker pull ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPO }}:latest
+            docker stop ${{ secrets.DEPLOY_CONTAINER }} || true
+            docker container rm ${{ secrets.DEPLOY_CONTAINER }} || true
+            docker run -d --name ${{ secrets.DEPLOY_CONTAINER }} \
               -e TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}\
               -e SPOTIFY_CLIENT_ID=${{ secrets.SPOTIFY_CLIENT_ID }}\
               -e SPOTIFY_CLIENT_SECRET=${{ secrets.SPOTIFY_CLIENT_SECRET }}\
-              ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPO }}:${{ github.sha }}
+              ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPO }}:latest
             echo "Docker prune"
             docker image prune --force --all

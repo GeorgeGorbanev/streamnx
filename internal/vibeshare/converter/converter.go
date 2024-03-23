@@ -6,17 +6,17 @@ import (
 
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/translit"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/ymusic"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/yandex"
 )
 
 type Converter struct {
 	spotifyClient *spotify.Client
-	yandexClient  *ymusic.Client
+	yandexClient  *yandex.Client
 }
 
 type Input struct {
 	SpotifyClient *spotify.Client
-	YandexClient  *ymusic.Client
+	YandexClient  *yandex.Client
 }
 
 func NewConverter(input *Input) *Converter {
@@ -70,7 +70,7 @@ func (c *Converter) SpotifyAlbumToYandex(link string) (string, error) {
 }
 
 func (c *Converter) YandexTrackToSpotify(link string) (string, error) {
-	trackID := ymusic.DetectTrackID(link)
+	trackID := yandex.DetectTrackID(link)
 	yandexTrack, err := c.yandexClient.GetTrack(trackID)
 	if err != nil {
 		return "", fmt.Errorf("error fetching track: %w", err)
@@ -91,7 +91,7 @@ func (c *Converter) YandexTrackToSpotify(link string) (string, error) {
 }
 
 func (c *Converter) YandexAlbumToSpotify(link string) (string, error) {
-	albumID := ymusic.DetectAlbumID(link)
+	albumID := yandex.DetectAlbumID(link)
 	yandexAlbum, err := c.yandexClient.GetAlbum(albumID)
 	if err != nil {
 		return "", fmt.Errorf("error fetching album: %w", err)
@@ -111,7 +111,7 @@ func (c *Converter) YandexAlbumToSpotify(link string) (string, error) {
 	return spotifyAlbum.URL(), nil
 }
 
-func (с *Converter) yandexTrackSearch(spotifyTrack *spotify.Track) (*ymusic.Track, error) {
+func (с *Converter) yandexTrackSearch(spotifyTrack *spotify.Track) (*yandex.Track, error) {
 	artistName := strings.ToLower(spotifyTrack.Artists[0].Name)
 	trackName := strings.ToLower(spotifyTrack.Name)
 

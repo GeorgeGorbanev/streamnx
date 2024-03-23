@@ -6,7 +6,7 @@ import (
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/converter"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/ymusic"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/yandex"
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
 	telegram_utils "github.com/GeorgeGorbanev/vibeshare/tests/utils/telegram"
 	"github.com/stretchr/testify/require"
@@ -55,10 +55,10 @@ func TestMessage_SpotifyAlbum(t *testing.T) {
 				spotify.WithAPIURL(spotifyAPIServerMock.URL),
 			)
 
-			yMusicMockServer := newYandexAPIServerMock(t, tt.fixturesMap)
-			defer yMusicMockServer.Close()
+			yandexMockServer := newYandexAPIServerMock(t, tt.fixturesMap)
+			defer yandexMockServer.Close()
 
-			ymClient := ymusic.NewClient(ymusic.WithAPIURL(yMusicMockServer.URL))
+			ymClient := yandex.NewClient(yandex.WithAPIURL(yandexMockServer.URL))
 
 			c := converter.NewConverter(&converter.Input{
 				SpotifyClient: spotifyClient,

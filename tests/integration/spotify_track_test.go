@@ -6,7 +6,7 @@ import (
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/converter"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/ymusic"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/yandex"
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
 	telegram_utils "github.com/GeorgeGorbanev/vibeshare/tests/utils/telegram"
 	"github.com/stretchr/testify/require"
@@ -40,7 +40,7 @@ func TestMessage_SpotifyTrack(t *testing.T) {
 			fixturesMap:      fixturesMap{},
 		},
 		{
-			name:             "when spotify track link given, track found and ymusic track found, but artist name not match",
+			name:             "when spotify track link given, track found and yandex track found, but artist name not match",
 			input:            "prfx https://open.spotify.com/track/7DSAEUvxU8FajXtRloy8M0?sample=query",
 			expectedResponse: "failed to convert",
 			fixturesMap: fixturesMap{
@@ -53,7 +53,7 @@ func TestMessage_SpotifyTrack(t *testing.T) {
 			},
 		},
 		{
-			name:             "when spotify track link given, ymusic track found and artist name not match, but match in translit",
+			name:             "when spotify track link given, yandex track found and artist name not match, but match in translit",
 			input:            "prfx https://open.spotify.com/track/3NHSz1GyC5IeK1soZSjIIX?sample=query",
 			expectedResponse: "https://music.yandex.com/album/81431/track/732401",
 			fixturesMap: fixturesMap{
@@ -66,7 +66,7 @@ func TestMessage_SpotifyTrack(t *testing.T) {
 			},
 		},
 		{
-			name:             "when spotify track link given, track found, ymusic track not found, but found in translit",
+			name:             "when spotify track link given, track found, yandex track not found, but found in translit",
 			input:            "prfx https://open.spotify.com/track/2sP5VgY8PWb6c9DhgZEpSv?sample=query",
 			expectedResponse: "https://music.yandex.com/album/4058886/track/33223088",
 			fixturesMap: fixturesMap{
@@ -94,10 +94,10 @@ func TestMessage_SpotifyTrack(t *testing.T) {
 				spotify.WithAPIURL(spotifyAPIServerMock.URL),
 			)
 
-			yMusicMockServer := newYandexAPIServerMock(t, tt.fixturesMap)
-			defer yMusicMockServer.Close()
+			yandexMockServer := newYandexAPIServerMock(t, tt.fixturesMap)
+			defer yandexMockServer.Close()
 
-			ymClient := ymusic.NewClient(ymusic.WithAPIURL(yMusicMockServer.URL))
+			ymClient := yandex.NewClient(yandex.WithAPIURL(yandexMockServer.URL))
 
 			c := converter.NewConverter(&converter.Input{
 				SpotifyClient: spotifyClient,

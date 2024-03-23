@@ -8,7 +8,7 @@ import (
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/converter"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/ymusic"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/yandex"
 
 	"github.com/joho/godotenv"
 )
@@ -66,7 +66,7 @@ func newVibeshare(cfg *config, ts telegram.Sender) *vibeshare.Vibeshare {
 				ClientID:     cfg.spotifyClientID,
 				ClientSecret: cfg.spotifyClientSecret,
 			}),
-			YandexClient: ymusic.NewClient(),
+			YandexClient: yandex.NewClient(),
 		}),
 		TelegramSender: ts,
 	})

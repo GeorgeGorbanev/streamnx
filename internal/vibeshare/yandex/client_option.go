@@ -1,4 +1,4 @@
-package ymusic
+package yandex
 
 type ClientOption func(client *Client)
 

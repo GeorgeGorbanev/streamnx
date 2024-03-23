@@ -1,7 +1,7 @@
 package main
 
 import (
-	"log"
+	"log/slog"
 	"os"
 
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare"
@@ -19,9 +19,19 @@ type config struct {
 }
 
 func main() {
+	slog.SetDefault(
+		slog.New(
+			slog.NewJSONHandler(
+				os.Stdout,
+				&slog.HandlerOptions{AddSource: true},
+			),
+		),
+	)
+
 	if _, err := os.Stat(".env"); err == nil {
 		if err := godotenv.Load(); err != nil {
-			log.Fatal(err)
+			slog.Error("failed to load .env file", slog.String("error", err.Error()))
+			return
 		}
 	}
 
@@ -33,7 +43,8 @@ func main() {
 
 	bot, err := telegram.NewBot(cfg.telegramToken)
 	if err != nil {
-		log.Fatal(err)
+		slog.Error("failed to create bot", slog.String("error", err.Error()))
+		return
 	}
 
 	spotifyClient := spotify.NewClient(&spotify.Credentials{
@@ -48,5 +59,6 @@ func main() {
 	bot.HandleText(ts.HandleText)
 	defer bot.Stop()
 
+	slog.Info("Bot started")
 	bot.Start()
 }

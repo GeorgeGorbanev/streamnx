@@ -2,7 +2,7 @@ package vibeshare
 
 import (
 	"fmt"
-	"log"
+	"log/slog"
 	"strings"
 
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
@@ -63,10 +63,10 @@ func (vs *Vibeshare) respond(inMsg *telebot.Message, text string) {
 
 	_, err := vs.telegramSender.Send(response)
 	if err != nil {
-		log.Printf("failed to send message to %s: %s", inMsg.Sender.Username, err)
+		slog.Error("failed to send message", slog.String("error", err.Error()))
 		return
 	}
-	log.Printf("sent message to %s: %s", inMsg.Sender.Username, text)
+	slog.Info("sent message", slog.Int("to", inMsg.Sender.ID), slog.String("text", text))
 }
 
 func (vs *Vibeshare) yMusicSearch(spotifyTrack *spotify.Track) (*ymusic.Track, error) {
@@ -105,7 +105,7 @@ func (vs *Vibeshare) spotifyTrackHandler(inMsg *telebot.Message) {
 	trackID := spotify.DetectTrackID(inMsg.Text)
 	spotifyTrack, err := vs.spotifyClient.GetTrack(trackID)
 	if err != nil {
-		log.Printf("error fetching track: %s", err)
+		slog.Error("failed fetch track", slog.String("error", err.Error()))
 		return
 	}
 	if spotifyTrack == nil {
@@ -115,7 +115,7 @@ func (vs *Vibeshare) spotifyTrackHandler(inMsg *telebot.Message) {
 
 	yMusicTrack, err := vs.yMusicSearch(spotifyTrack)
 	if err != nil {
-		log.Printf("failed to search ymusic: %s", err)
+		slog.Error("failed to search track", slog.String("error", err.Error()))
 		return
 	}
 	if yMusicTrack == nil {
@@ -130,7 +130,7 @@ func (vs *Vibeshare) spotifyAlbumHandler(inMsg *telebot.Message) {
 	albumID := spotify.DetectAlbumID(inMsg.Text)
 	spotifyAlbum, err := vs.spotifyClient.GetAlbum(albumID)
 	if err != nil {
-		log.Printf("error fetching album: %s", err)
+		slog.Error("failed fetch album", slog.String("error", err.Error()))
 		return
 	}
 	if spotifyAlbum == nil {
@@ -140,7 +140,7 @@ func (vs *Vibeshare) spotifyAlbumHandler(inMsg *telebot.Message) {
 
 	yMusicAlbum, err := vs.ymusicClient.SearchAlbum(spotifyAlbum.Artists[0].Name, spotifyAlbum.Name)
 	if err != nil {
-		log.Printf("error fetching album: %s", err)
+		slog.Error("failed to search album", slog.String("error", err.Error()))
 		return
 	}
 
@@ -156,7 +156,7 @@ func (vs *Vibeshare) yMusicTrackHandler(inMsg *telebot.Message) {
 	trackID := ymusic.DetectTrackID(inMsg.Text)
 	yMusicTrack, err := vs.ymusicClient.GetTrack(trackID)
 	if err != nil {
-		log.Printf("error fetching track: %s", err)
+		slog.Error("failed fetch track", slog.String("error", err.Error()))
 		return
 	}
 	if yMusicTrack == nil {
@@ -166,7 +166,7 @@ func (vs *Vibeshare) yMusicTrackHandler(inMsg *telebot.Message) {
 
 	spotifyTrack, err := vs.spotifyClient.SearchTrack(yMusicTrack.Artists[0].Name, yMusicTrack.Title)
 	if err != nil {
-		log.Printf("failed to search spotify: %s", err)
+		slog.Error("failed to search track", slog.String("error", err.Error()))
 		return
 	}
 	if spotifyTrack == nil {
@@ -181,7 +181,7 @@ func (vs *Vibeshare) yMusicAlbumHandler(inMsg *telebot.Message) {
 	albumID := ymusic.DetectAlbumID(inMsg.Text)
 	ymusicAlbum, err := vs.ymusicClient.GetAlbum(albumID)
 	if err != nil {
-		log.Printf("error fetching album: %s", err)
+		slog.Error("failed to fetch album", slog.String("error", err.Error()))
 		return
 	}
 	if ymusicAlbum == nil {
@@ -191,7 +191,7 @@ func (vs *Vibeshare) yMusicAlbumHandler(inMsg *telebot.Message) {
 
 	spotifyAlbum, err := vs.spotifyClient.SearchAlbum(ymusicAlbum.Artists[0].Name, ymusicAlbum.Title)
 	if err != nil {
-		log.Printf("error fetching album: %s", err)
+		slog.Error("failed to search album", slog.String("error", err.Error()))
 		return
 	}
 

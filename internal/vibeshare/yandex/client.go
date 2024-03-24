@@ -10,7 +10,14 @@ import (
 
 const defaultAPIURL = "https://api.music.yandex.net"
 
-type Client struct {
+type Client interface {
+	GetTrack(id string) (*Track, error)
+	SearchTrack(artistName, trackName string) (*Track, error)
+	GetAlbum(id string) (*Album, error)
+	SearchAlbum(artistName, albumName string) (*Album, error)
+}
+
+type HTTPClient struct {
 	apiURL string
 }
 
@@ -39,8 +46,8 @@ type albumsSection struct {
 	Results []Album `json:"results"`
 }
 
-func NewClient(opts ...ClientOption) *Client {
-	c := Client{
+func NewHTTPClient(opts ...ClientOption) *HTTPClient {
+	c := HTTPClient{
 		apiURL: defaultAPIURL,
 	}
 
@@ -51,7 +58,7 @@ func NewClient(opts ...ClientOption) *Client {
 	return &c
 }
 
-func (c *Client) GetTrack(trackID string) (*Track, error) {
+func (c *HTTPClient) GetTrack(trackID string) (*Track, error) {
 	u := fmt.Sprintf("%s/tracks/%s", c.apiURL, trackID)
 	response, err := http.Get(u)
 	if err != nil {
@@ -76,7 +83,7 @@ func (c *Client) GetTrack(trackID string) (*Track, error) {
 	return &tr.Result[0], nil
 }
 
-func (c *Client) SearchTrack(artistName, trackName string) (*Track, error) {
+func (c *HTTPClient) SearchTrack(artistName, trackName string) (*Track, error) {
 	u := fmt.Sprintf("%s/search?type=track&page=0&text=", c.apiURL)
 	encodedQuery := url.QueryEscape(fmt.Sprintf("%s – %s", artistName, trackName))
 	fullUrl := u + encodedQuery
@@ -104,7 +111,7 @@ func (c *Client) SearchTrack(artistName, trackName string) (*Track, error) {
 	return &sr.Result.Tracks.Results[0], nil
 }
 
-func (c *Client) GetAlbum(albumID string) (*Album, error) {
+func (c *HTTPClient) GetAlbum(albumID string) (*Album, error) {
 	u := fmt.Sprintf("%s/albums/%s", c.apiURL, albumID)
 	response, err := http.Get(u)
 	if err != nil {
@@ -125,7 +132,7 @@ func (c *Client) GetAlbum(albumID string) (*Album, error) {
 	return ar.Result, nil
 }
 
-func (c *Client) SearchAlbum(artistName, albumName string) (*Album, error) {
+func (c *HTTPClient) SearchAlbum(artistName, albumName string) (*Album, error) {
 	u := fmt.Sprintf("%s/search?type=album&page=0&text=", c.apiURL)
 	encodedQuery := url.QueryEscape(fmt.Sprintf("%s – %s", artistName, albumName))
 	fullUrl := u + encodedQuery

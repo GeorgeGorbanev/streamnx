@@ -19,16 +19,6 @@ type Artist struct {
 
 var TrackRe = regexp.MustCompile(`https://music\.yandex\.(ru|com)/album/\d+/track/(\d+)`)
 
-func DetectTrackID(trackURL string) string {
-	matches := TrackRe.FindStringSubmatch(trackURL)
-
-	if len(matches) < 3 {
-		return ""
-	}
-
-	return matches[2]
-}
-
 func (t *Track) URL() string {
 	return fmt.Sprintf("https://music.yandex.com/album/%d/track/%s", t.Albums[0].ID, t.IDString())
 }

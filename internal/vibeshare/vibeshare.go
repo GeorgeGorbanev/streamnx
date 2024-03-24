@@ -19,9 +19,9 @@ type Vibeshare struct {
 
 type Input struct {
 	Converter      *converter.Converter
-	SpotifyClient  *spotify.Client
+	SpotifyClient  *spotify.HTTPClient
 	TelegramSender telegram.Sender
-	YandexClient   *yandex.Client
+	YandexClient   *yandex.HTTPClient
 }
 
 func NewVibeshare(input *Input) *Vibeshare {
@@ -65,7 +65,7 @@ func (vs *Vibeshare) respond(inMsg *telebot.Message, text string) {
 }
 
 func (vs *Vibeshare) spotifyTrackHandler(inMsg *telebot.Message) {
-	link, err := vs.converter.SpotifyTrackToYandex(inMsg.Text)
+	link, err := vs.converter.ConvertTrack(inMsg.Text, converter.Spotify, converter.Yandex)
 	if err != nil {
 		slog.Error("failed to convert track", slog.String("error", err.Error()))
 		return
@@ -79,7 +79,7 @@ func (vs *Vibeshare) spotifyTrackHandler(inMsg *telebot.Message) {
 }
 
 func (vs *Vibeshare) spotifyAlbumHandler(inMsg *telebot.Message) {
-	link, err := vs.converter.SpotifyAlbumToYandex(inMsg.Text)
+	link, err := vs.converter.ConvertAlbum(inMsg.Text, converter.Spotify, converter.Yandex)
 	if err != nil {
 		slog.Error("failed to convert album", slog.String("error", err.Error()))
 		return
@@ -93,7 +93,7 @@ func (vs *Vibeshare) spotifyAlbumHandler(inMsg *telebot.Message) {
 }
 
 func (vs *Vibeshare) yandexTrackHandler(inMsg *telebot.Message) {
-	link, err := vs.converter.YandexTrackToSpotify(inMsg.Text)
+	link, err := vs.converter.ConvertTrack(inMsg.Text, converter.Yandex, converter.Spotify)
 	if err != nil {
 		slog.Error("failed to convert track", slog.String("error", err.Error()))
 		return
@@ -107,7 +107,7 @@ func (vs *Vibeshare) yandexTrackHandler(inMsg *telebot.Message) {
 }
 
 func (vs *Vibeshare) yandexAlbumHandler(inMsg *telebot.Message) {
-	link, err := vs.converter.YandexAlbumToSpotify(inMsg.Text)
+	link, err := vs.converter.ConvertAlbum(inMsg.Text, converter.Yandex, converter.Spotify)
 	if err != nil {
 		slog.Error("failed to convert album", slog.String("error", err.Error()))
 		return

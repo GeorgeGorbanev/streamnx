@@ -74,7 +74,7 @@ func TestClient_GetTrack(t *testing.T) {
 			}))
 			defer apiServerMock.Close()
 
-			client := NewClient(WithAPIURL(apiServerMock.URL))
+			client := NewHTTPClient(WithAPIURL(apiServerMock.URL))
 
 			result, err := client.GetTrack(tt.trackID)
 			require.NoError(t, err)
@@ -134,7 +134,7 @@ func TestClient_GetAlbum(t *testing.T) {
 			}))
 			defer apiServerMock.Close()
 
-			client := NewClient(WithAPIURL(apiServerMock.URL))
+			client := NewHTTPClient(WithAPIURL(apiServerMock.URL))
 
 			result, err := client.GetAlbum(tt.albumID)
 			require.NoError(t, err)
@@ -220,7 +220,7 @@ func TestClient_SearchTrack(t *testing.T) {
 			}))
 			defer apiServerMock.Close()
 
-			client := NewClient(WithAPIURL(apiServerMock.URL))
+			client := NewHTTPClient(WithAPIURL(apiServerMock.URL))
 
 			result, err := client.SearchTrack(tt.queryArtist, tt.queryTrack)
 			require.NoError(t, err)
@@ -287,7 +287,7 @@ func TestClient_SearchAlbum(t *testing.T) {
 			}))
 			defer apiServerMock.Close()
 
-			client := NewClient(WithAPIURL(apiServerMock.URL))
+			client := NewHTTPClient(WithAPIURL(apiServerMock.URL))
 
 			result, err := client.SearchAlbum(tt.queryArtist, tt.queryAlbum)
 			require.NoError(t, err)

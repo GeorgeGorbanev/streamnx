@@ -6,42 +6,6 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestDetectTrackID(t *testing.T) {
-	tests := []struct {
-		name   string
-		url    string
-		wantID string
-	}{
-		{
-			name:   "Valid Track URL",
-			url:    "https://music.yandex.ru/album/3192570/track/1197793",
-			wantID: "1197793",
-		},
-		{
-			name:   "Invalid URL - Missing track ID",
-			url:    "https://music.yandex.ru/album/3192570/track/",
-			wantID: "",
-		},
-		{
-			name:   "Invalid URL - Non-numeric track ID",
-			url:    "https://music.yandex.ru/album/3192570/track/abc",
-			wantID: "",
-		},
-		{
-			name:   "Invalid URL - Incorrect format",
-			url:    "https://example.com/album/3192570/track/1197793",
-			wantID: "",
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			result := DetectTrackID(tt.url)
-			require.Equal(t, tt.wantID, result)
-		})
-	}
-}
-
 func TestTrack_URL(t *testing.T) {
 	tests := []struct {
 		name  string

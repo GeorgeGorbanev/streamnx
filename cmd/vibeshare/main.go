@@ -62,11 +62,11 @@ func newConfig() *config {
 func newVibeshare(cfg *config, ts telegram.Sender) *vibeshare.Vibeshare {
 	return vibeshare.NewVibeshare(&vibeshare.Input{
 		Converter: converter.NewConverter(&converter.Input{
-			SpotifyClient: spotify.NewClient(&spotify.Credentials{
+			SpotifyClient: spotify.NewHTTPClient(&spotify.Credentials{
 				ClientID:     cfg.spotifyClientID,
 				ClientSecret: cfg.spotifyClientSecret,
 			}),
-			YandexClient: yandex.NewClient(),
+			YandexClient: yandex.NewHTTPClient(),
 		}),
 		TelegramSender: ts,
 	})

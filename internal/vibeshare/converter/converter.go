@@ -2,143 +2,86 @@ package converter
 
 import (
 	"fmt"
-	"strings"
 
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/music"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/translit"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/yandex"
 )
 
 type Converter struct {
-	spotifyClient *spotify.Client
-	yandexClient  *yandex.Client
+	adapters map[provider]music.Adapter
 }
 
 type Input struct {
-	SpotifyClient *spotify.Client
-	YandexClient  *yandex.Client
+	SpotifyClient *spotify.HTTPClient
+	YandexClient  *yandex.HTTPClient
 }
+
+type provider string
+
+const (
+	Yandex  provider = "yandex"
+	Spotify provider = "spotify"
+)
 
 func NewConverter(input *Input) *Converter {
+	spotifyAdapter := music.NewSpotifyAdapter(input.SpotifyClient)
+	yandexAdapter := music.NewYandexAdapter(input.YandexClient)
+
 	return &Converter{
-		spotifyClient: input.SpotifyClient,
-		yandexClient:  input.YandexClient,
+		adapters: map[provider]music.Adapter{
+			Spotify: spotifyAdapter,
+			Yandex:  yandexAdapter,
+		},
 	}
 }
 
-func (c *Converter) SpotifyTrackToYandex(link string) (string, error) {
-	trackID := spotify.DetectTrackID(link)
-	spotifyTrack, err := c.spotifyClient.GetTrack(trackID)
+func (c *Converter) ConvertTrack(link string, source, target provider) (string, error) {
+	sourceTrackID := c.providerAdapter(source).DetectTrackID(link)
+	sourceTrack, err := c.providerAdapter(source).GetTrack(sourceTrackID)
 	if err != nil {
 		return "", fmt.Errorf("error fetching track: %w", err)
 	}
-	if spotifyTrack == nil {
+	if sourceTrack == nil {
 		return "", nil
 	}
 
-	yandexTrack, err := c.yandexTrackSearch(spotifyTrack)
-	if err != nil {
-		return "", fmt.Errorf("error searching yandex track: %w", err)
-	}
-	if yandexTrack == nil {
-		return "", nil
-	}
-
-	return yandexTrack.URL(), nil
-}
-
-func (c *Converter) SpotifyAlbumToYandex(link string) (string, error) {
-	albumID := spotify.DetectAlbumID(link)
-	spotifyAlbum, err := c.spotifyClient.GetAlbum(albumID)
-	if err != nil {
-		return "", fmt.Errorf("error fetching album: %w", err)
-	}
-	if spotifyAlbum == nil {
-		return "", nil
-	}
-
-	yandexAlbum, err := c.yandexClient.SearchAlbum(spotifyAlbum.Artists[0].Name, spotifyAlbum.Name)
-	if err != nil {
-		return "", fmt.Errorf("error searching album: %w", err)
-	}
-
-	if yandexAlbum == nil {
-		return "", nil
-	}
-
-	return yandexAlbum.URL(), nil
-}
-
-func (c *Converter) YandexTrackToSpotify(link string) (string, error) {
-	trackID := yandex.DetectTrackID(link)
-	yandexTrack, err := c.yandexClient.GetTrack(trackID)
-	if err != nil {
-		return "", fmt.Errorf("error fetching track: %w", err)
-	}
-	if yandexTrack == nil {
-		return "", nil
-	}
-
-	spotifyTrack, err := c.spotifyClient.SearchTrack(yandexTrack.Artists[0].Name, yandexTrack.Title)
+	targetTrack, err := c.providerAdapter(target).SearchTrack(sourceTrack.Artist, sourceTrack.Title)
 	if err != nil {
 		return "", fmt.Errorf("error searching track: %w", err)
 	}
-	if spotifyTrack == nil {
+	if targetTrack == nil {
 		return "", nil
 	}
 
-	return spotifyTrack.URL(), nil
+	return targetTrack.URL, nil
 }
 
-func (c *Converter) YandexAlbumToSpotify(link string) (string, error) {
-	albumID := yandex.DetectAlbumID(link)
-	yandexAlbum, err := c.yandexClient.GetAlbum(albumID)
+func (c *Converter) ConvertAlbum(link string, source, target provider) (string, error) {
+	sourceAlbumID := c.providerAdapter(source).DetectAlbumID(link)
+	sourceAlbum, err := c.providerAdapter(source).GetAlbum(sourceAlbumID)
 	if err != nil {
 		return "", fmt.Errorf("error fetching album: %w", err)
 	}
-	if yandexAlbum == nil {
+	if sourceAlbum == nil {
 		return "", nil
 	}
 
-	spotifyAlbum, err := c.spotifyClient.SearchAlbum(yandexAlbum.Artists[0].Name, yandexAlbum.Title)
+	targetAlbum, err := c.providerAdapter(target).SearchAlbum(sourceAlbum.Artist, sourceAlbum.Title)
 	if err != nil {
 		return "", fmt.Errorf("error searching album: %w", err)
 	}
-	if spotifyAlbum == nil {
+	if targetAlbum == nil {
 		return "", nil
 	}
 
-	return spotifyAlbum.URL(), nil
+	return targetAlbum.URL, nil
 }
 
-func (с *Converter) yandexTrackSearch(spotifyTrack *spotify.Track) (*yandex.Track, error) {
-	artistName := strings.ToLower(spotifyTrack.Artists[0].Name)
-	trackName := strings.ToLower(spotifyTrack.Name)
-
-	yandexTrack, err := с.yandexClient.SearchTrack(artistName, trackName)
-	if err != nil {
-		return nil, fmt.Errorf("error searching track: %w", err)
+func (с *Converter) providerAdapter(p provider) music.Adapter {
+	adapter, ok := с.adapters[p]
+	if !ok {
+		panic(fmt.Sprintf("adapter for provider %s not found", p))
 	}
-	if yandexTrack != nil {
-		foundLowcasedArtist := strings.ToLower(yandexTrack.Artists[0].Name)
-		if artistName == foundLowcasedArtist {
-			return yandexTrack, nil
-		}
-
-		translitedArtist := translit.CyrillicToLatin(foundLowcasedArtist)
-		if artistName == translitedArtist {
-			return yandexTrack, nil
-		}
-		return nil, nil
-	}
-
-	if spotifyTrack.NameContainsRussianLetters() {
-		translitedArtist := translit.LatinToCyrillic(artistName)
-		yandexTrack, err = с.yandexClient.SearchTrack(translitedArtist, trackName)
-		if err != nil {
-			return nil, fmt.Errorf("error searching yandex track: %w", err)
-		}
-	}
-
-	return yandexTrack, nil
+	return adapter
 }

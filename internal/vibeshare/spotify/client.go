@@ -14,7 +14,14 @@ const (
 	defaultAPIURL  = "https://api.spotify.com"
 )
 
-type Client struct {
+type Client interface {
+	GetTrack(id string) (*Track, error)
+	SearchTrack(artistName, trackName string) (*Track, error)
+	GetAlbum(id string) (*Album, error)
+	SearchAlbum(artistName, albumName string) (*Album, error)
+}
+
+type HTTPClient struct {
 	authURL     string
 	apiURL      string
 	httpClient  *http.Client
@@ -34,8 +41,8 @@ type albumsSection struct {
 	Items []*Album `json:"items"`
 }
 
-func NewClient(credentials *Credentials, opts ...ClientOption) *Client {
-	c := Client{
+func NewHTTPClient(credentials *Credentials, opts ...ClientOption) *HTTPClient {
+	c := HTTPClient{
 		authURL:     defaultAuthURL,
 		apiURL:      defaultAPIURL,
 		credentials: credentials,
@@ -50,7 +57,7 @@ func NewClient(credentials *Credentials, opts ...ClientOption) *Client {
 }
 
 // https://developer.spotify.com/documentation/web-api/tutorials/client-credentials-flow
-func (c *Client) FetchToken() (*Token, error) {
+func (c *HTTPClient) FetchToken() (*Token, error) {
 	url := fmt.Sprintf("%s/api/token", c.authURL)
 	form := bytes.NewBuffer([]byte("grant_type=client_credentials"))
 	req, err := http.NewRequest(http.MethodPost, url, form)
@@ -79,7 +86,7 @@ func (c *Client) FetchToken() (*Token, error) {
 }
 
 // https://developer.spotify.com/documentation/web-api/reference/get-track
-func (c *Client) GetTrack(id string) (*Track, error) {
+func (c *HTTPClient) GetTrack(id string) (*Track, error) {
 	url := fmt.Sprintf("%s/v1/tracks/%s", c.apiURL, id)
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
@@ -116,7 +123,7 @@ func (c *Client) GetTrack(id string) (*Track, error) {
 }
 
 // https://developer.spotify.com/documentation/web-api/reference/search
-func (c *Client) SearchTrack(artistName, trackName string) (*Track, error) {
+func (c *HTTPClient) SearchTrack(artistName, trackName string) (*Track, error) {
 	query := url.QueryEscape(fmt.Sprintf("artist:%s track:%s", artistName, trackName))
 	u := fmt.Sprintf("%s/v1/search?q=%s&type=track&limit=1", c.apiURL, query)
 	req, err := http.NewRequest(http.MethodGet, u, nil)
@@ -154,7 +161,7 @@ func (c *Client) SearchTrack(artistName, trackName string) (*Track, error) {
 }
 
 // https://developer.spotify.com/documentation/web-api/reference/get-an-album
-func (c *Client) GetAlbum(id string) (*Album, error) {
+func (c *HTTPClient) GetAlbum(id string) (*Album, error) {
 	url := fmt.Sprintf("%s/v1/albums/%s", c.apiURL, id)
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
@@ -191,7 +198,7 @@ func (c *Client) GetAlbum(id string) (*Album, error) {
 }
 
 // https://developer.spotify.com/documentation/web-api/reference/search
-func (c *Client) SearchAlbum(artistName, albumName string) (*Album, error) {
+func (c *HTTPClient) SearchAlbum(artistName, albumName string) (*Album, error) {
 	query := url.QueryEscape(fmt.Sprintf("artist:%s album:%s", artistName, albumName))
 	u := fmt.Sprintf("%s/v1/search?q=%s&type=album&limit=1", c.apiURL, query)
 	req, err := http.NewRequest(http.MethodGet, u, nil)

@@ -41,7 +41,7 @@ func TestGetTrack(t *testing.T) {
 	}))
 	defer mockAPIServer.Close()
 
-	client := NewClient(
+	client := NewHTTPClient(
 		&sampleCredentials,
 		WithAuthURL(mockAuthServer.URL),
 		WithAPIURL(mockAPIServer.URL),
@@ -84,7 +84,7 @@ func TestSearchTrack(t *testing.T) {
 	}))
 	defer mockAPIServer.Close()
 
-	client := NewClient(
+	client := NewHTTPClient(
 		&sampleCredentials,
 		WithAuthURL(mockAuthServer.URL),
 		WithAPIURL(mockAPIServer.URL),
@@ -122,7 +122,7 @@ func TestGetAlbum(t *testing.T) {
 	}))
 	defer mockAPIServer.Close()
 
-	client := NewClient(
+	client := NewHTTPClient(
 		&sampleCredentials,
 		WithAuthURL(mockAuthServer.URL),
 		WithAPIURL(mockAPIServer.URL),
@@ -165,7 +165,7 @@ func TestSearchAlbum(t *testing.T) {
 	}))
 	defer mockAPIServer.Close()
 
-	client := NewClient(
+	client := NewHTTPClient(
 		&sampleCredentials,
 		WithAuthURL(mockAuthServer.URL),
 		WithAPIURL(mockAPIServer.URL),

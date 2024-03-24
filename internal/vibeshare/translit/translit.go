@@ -1,6 +1,9 @@
 package translit
 
-import "strings"
+import (
+	"strings"
+	"unicode"
+)
 
 var (
 	singleLatinToCyrillicReplacer = strings.NewReplacer(
@@ -39,4 +42,13 @@ func LatinToCyrillic(input string) string {
 	return singleLatinToCyrillicReplacer.Replace(
 		multipleLatinToCyrillicReplacer.Replace(input),
 	)
+}
+
+func Translitable(s string) bool {
+	for _, char := range s {
+		if unicode.Is(unicode.Cyrillic, char) {
+			return true
+		}
+	}
+	return false
 }

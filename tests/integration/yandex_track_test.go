@@ -9,6 +9,7 @@ import (
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/yandex"
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
 	telegram_utils "github.com/GeorgeGorbanev/vibeshare/tests/utils/telegram"
+
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"
 )
@@ -62,7 +63,7 @@ func TestMessage_YandexTrack(t *testing.T) {
 			defer spotifyAPIServerMock.Close()
 
 			senderMock := telegram_utils.NewTelegramSenderMock()
-			spotifyClient := spotify.NewClient(
+			spotifyClient := spotify.NewHTTPClient(
 				&sampleCredentials,
 				spotify.WithAuthURL(spotifyAuthServerMock.URL),
 				spotify.WithAPIURL(spotifyAPIServerMock.URL),
@@ -71,11 +72,11 @@ func TestMessage_YandexTrack(t *testing.T) {
 			yandexMockServer := newYandexAPIServerMock(t, tt.fixturesMap)
 			defer yandexMockServer.Close()
 
-			ymClient := yandex.NewClient(yandex.WithAPIURL(yandexMockServer.URL))
+			yandexClient := yandex.NewHTTPClient(yandex.WithAPIURL(yandexMockServer.URL))
 
 			c := converter.NewConverter(&converter.Input{
 				SpotifyClient: spotifyClient,
-				YandexClient:  ymClient,
+				YandexClient:  yandexClient,
 			})
 			vs := vibeshare.NewVibeshare(&vibeshare.Input{
 				Converter:      c,

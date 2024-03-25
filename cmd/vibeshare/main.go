@@ -44,7 +44,8 @@ func main() {
 	}
 
 	vs := newVibeshare(cfg, bot.Sender())
-	bot.HandleText(vs.HandleText)
+	bot.HandleText(vs.TextHandler)
+	bot.HandleCallback(vs.CallbackHandler)
 	defer bot.Stop()
 
 	slog.Info("Bot started")

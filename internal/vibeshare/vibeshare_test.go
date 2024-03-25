@@ -15,7 +15,7 @@ func TestVibeshare_HandleText(t *testing.T) {
 		TelegramSender: senderMock,
 	})
 
-	vs.HandleText(&telebot.Message{
+	vs.TextHandler(&telebot.Message{
 		Sender: sampleSender,
 		Text:   "just message with no link",
 	})

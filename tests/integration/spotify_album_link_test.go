@@ -14,7 +14,7 @@ import (
 	"github.com/tucnak/telebot"
 )
 
-func TestMessage_YandexTrack(t *testing.T) {
+func TestMessage_SpotifyAlbum(t *testing.T) {
 	tests := []struct {
 		name             string
 		input            string
@@ -22,34 +22,21 @@ func TestMessage_YandexTrack(t *testing.T) {
 		fixturesMap      fixturesMap
 	}{
 		{
-			name:             "when yandex music track link given and track found with .ru",
-			input:            "prfx https://music.yandex.ru/album/3192570/track/354093?query=sample",
-			expectedResponse: "https://open.spotify.com/track/7uv632EkfwYhXoqf8rhYrg",
+			name:             "when spotify album link given and album found",
+			input:            "https://open.spotify.com/album/1HrMmB5useeZ0F5lHrMvl0",
+			expectedResponse: "https://music.yandex.com/album/3389008",
 			fixturesMap: fixturesMap{
-				yandexTracks: map[string][]byte{
-					"354093": fixture.Read("yandex/get_track_massive_attack_angel.json"),
+				spotifyAlbums: map[string][]byte{
+					"1HrMmB5useeZ0F5lHrMvl0": fixture.Read("spotify/get_album_radiohead_amnesiac.json"),
 				},
-				spotifySearchTracks: map[string][]byte{
-					"artist:Massive Attack track:Angel": fixture.Read("spotify/search_track_massive_attack_angel.json"),
+				yandexSearchAlbums: map[string][]byte{
+					"radiohead – amnesiac": fixture.Read("yandex/search_album_radiohead_amnesiac.json"),
 				},
 			},
 		},
 		{
-			name:             "when yandex music track link given and track found with .com",
-			input:            "https://music.yandex.com/album/3192570/track/354093",
-			expectedResponse: "https://open.spotify.com/track/7uv632EkfwYhXoqf8rhYrg",
-			fixturesMap: fixturesMap{
-				yandexTracks: map[string][]byte{
-					"354093": fixture.Read("yandex/get_track_massive_attack_angel.json"),
-				},
-				spotifySearchTracks: map[string][]byte{
-					"artist:Massive Attack track:Angel": fixture.Read("spotify/search_track_massive_attack_angel.json"),
-				},
-			},
-		},
-		{
-			name:             "when yandex music track link given and track not found",
-			input:            "prfx https://music.yandex.ru/album/3192570/track/0",
+			name:             "when spotify album link given and spotify album not found",
+			input:            "https://open.spotify.com/album/0",
 			expectedResponse: "failed to convert",
 			fixturesMap:      fixturesMap{},
 		},
@@ -91,7 +78,7 @@ func TestMessage_YandexTrack(t *testing.T) {
 				Text:   tt.input,
 			}
 
-			vs.HandleText(msg)
+			vs.TextHandler(msg)
 
 			require.Equal(t, user, senderMock.Response.To)
 			require.Equal(t, tt.expectedResponse, senderMock.Response.Text)

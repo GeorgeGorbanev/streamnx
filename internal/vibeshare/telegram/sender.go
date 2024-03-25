@@ -17,5 +17,5 @@ func NewTelebotSender(bot *telebot.Bot) *TelebotSender {
 }
 
 func (t *TelebotSender) Send(msg *Message) (*telebot.Message, error) {
-	return t.bot.Send(msg.To, msg.Text)
+	return t.bot.Send(msg.To, msg.Text, msg.ReplyMarkup)
 }

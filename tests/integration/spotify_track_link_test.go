@@ -117,7 +117,7 @@ func TestMessage_SpotifyTrack(t *testing.T) {
 				Text:   tt.input,
 			}
 
-			vs.HandleText(msg)
+			vs.TextHandler(msg)
 
 			require.Equal(t, user, senderMock.Response.To)
 			require.Equal(t, tt.expectedResponse, senderMock.Response.Text)

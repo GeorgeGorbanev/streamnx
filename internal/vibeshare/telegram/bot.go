@@ -34,6 +34,10 @@ func (b *Bot) HandleText(handler func(inMsg *telebot.Message)) {
 	b.telebotBot.Handle(telebot.OnText, handler)
 }
 
+func (b *Bot) HandleCallback(handler func(callback *telebot.Callback)) {
+	b.telebotBot.Handle(telebot.OnCallback, handler)
+}
+
 func (b *Bot) Start() {
 	b.telebotBot.Start()
 }

@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/converter"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/music"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/yandex"
@@ -31,7 +31,7 @@ func main() {
 
 	if _, err := os.Stat(".env"); err == nil {
 		if err := godotenv.Load(); err != nil {
-			slog.Error("failed to load .env file", slog.String("error", err.Error()))
+			slog.Error("failed to load .env file", slog.Any("error", err))
 			return
 		}
 	}
@@ -39,7 +39,7 @@ func main() {
 
 	bot, err := telegram.NewBot(cfg.telegramToken)
 	if err != nil {
-		slog.Error("failed to create bot", slog.String("error", err.Error()))
+		slog.Error("failed to create bot", slog.Any("error", err))
 		return
 	}
 
@@ -62,7 +62,7 @@ func newConfig() *config {
 
 func newVibeshare(cfg *config, ts telegram.Sender) *vibeshare.Vibeshare {
 	return vibeshare.NewVibeshare(&vibeshare.Input{
-		Converter: converter.NewConverter(&converter.Input{
+		MusicRegistry: music.NewRegistry(&music.RegistryInput{
 			SpotifyClient: spotify.NewHTTPClient(&spotify.Credentials{
 				ClientID:     cfg.spotifyClientID,
 				ClientSecret: cfg.spotifyClientSecret,

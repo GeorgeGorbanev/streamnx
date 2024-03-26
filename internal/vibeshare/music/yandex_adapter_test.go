@@ -37,7 +37,7 @@ func TestYandexAdapter_DetectTrackID(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			adapter := NewYandexAdapter(nil)
+			adapter := newYandexAdapter(nil)
 			result := adapter.DetectTrackID(tt.url)
 			require.Equal(t, tt.wantID, result)
 		})
@@ -74,7 +74,7 @@ func TestYandexAdapter_DetectAlbumID(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			adapter := NewYandexAdapter(nil)
+			adapter := newYandexAdapter(nil)
 			result := adapter.DetectAlbumID(tt.url)
 			require.Equal(t, tt.wantID, result)
 		})
@@ -91,9 +91,11 @@ func TestYandexAdapter_GetTrack(t *testing.T) {
 			name: "found ID",
 			id:   "42",
 			expectedTrack: &Track{
-				Title:  "sample name",
-				Artist: "sample artist",
-				URL:    "https://music.yandex.com/album/41/track/42",
+				ID:       "42",
+				Title:    "sample name",
+				Artist:   "sample artist",
+				URL:      "https://music.yandex.com/album/41/track/42",
+				Provider: Yandex,
 			},
 		},
 		{
@@ -128,9 +130,11 @@ func TestYandexAdapter_SearchTrack(t *testing.T) {
 			artistName: "sample artist",
 			searchName: "sample name",
 			expectedTrack: &Track{
-				Title:  "sample name",
-				Artist: "sample artist",
-				URL:    "https://music.yandex.com/album/41/track/42",
+				ID:       "42",
+				Title:    "sample name",
+				Artist:   "sample artist",
+				URL:      "https://music.yandex.com/album/41/track/42",
+				Provider: Yandex,
 			},
 		},
 		{
@@ -164,9 +168,11 @@ func TestYandexAdapter_GetAlbum(t *testing.T) {
 			name: "found id",
 			id:   "42",
 			expectedTrack: &Album{
-				Title:  "sample name",
-				Artist: "sample artist",
-				URL:    "https://music.yandex.com/album/42",
+				ID:       "42",
+				Title:    "sample name",
+				Artist:   "sample artist",
+				URL:      "https://music.yandex.com/album/42",
+				Provider: Yandex,
 			},
 		},
 		{
@@ -201,9 +207,11 @@ func TestYandexAdapter_SearchAlbum(t *testing.T) {
 			artistName: "sample artist",
 			searchName: "sample name",
 			expectedTrack: &Album{
-				Title:  "sample name",
-				Artist: "sample artist",
-				URL:    "https://music.yandex.com/album/42",
+				ID:       "42",
+				Title:    "sample name",
+				Artist:   "sample artist",
+				URL:      "https://music.yandex.com/album/42",
+				Provider: Yandex,
 			},
 		},
 		{

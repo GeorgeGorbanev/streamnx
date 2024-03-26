@@ -52,7 +52,7 @@ func TestSpotifyAdapter_DetectTrackID(t *testing.T) {
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			adapter := NewSpotifyAdapter(nil)
+			adapter := newSpotifyAdapter(nil)
 			result := adapter.DetectTrackID(tc.inputURL)
 			require.Equal(t, tc.expected, result)
 		})
@@ -104,7 +104,7 @@ func TestSpotifyAdapter_DetectAlbumID(t *testing.T) {
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			adapter := NewSpotifyAdapter(nil)
+			adapter := newSpotifyAdapter(nil)
 			result := adapter.DetectAlbumID(tc.inputURL)
 			require.Equal(t, tc.expected, result)
 		})
@@ -121,9 +121,11 @@ func TestSpotifyAdapter_GetTrack(t *testing.T) {
 			name: "found ID",
 			id:   "sampleID",
 			expectedTrack: &Track{
-				Title:  "sample name",
-				Artist: "sample artist",
-				URL:    "https://open.spotify.com/track/sampleID",
+				ID:       "sampleID",
+				Title:    "sample name",
+				Artist:   "sample artist",
+				URL:      "https://open.spotify.com/track/sampleID",
+				Provider: Spotify,
 			},
 		},
 		{
@@ -158,9 +160,11 @@ func TestSpotifyAdapter_SearchTrack(t *testing.T) {
 			artistName: "sample artist",
 			searchName: "sample name",
 			expectedTrack: &Track{
-				Title:  "sample name",
-				Artist: "sample artist",
-				URL:    "https://open.spotify.com/track/sampleID",
+				ID:       "sampleID",
+				Title:    "sample name",
+				Artist:   "sample artist",
+				URL:      "https://open.spotify.com/track/sampleID",
+				Provider: Spotify,
 			},
 		},
 		{
@@ -194,9 +198,11 @@ func TestSpotifyAdapter_GetAlbum(t *testing.T) {
 			name: "found ID",
 			id:   "sampleID",
 			expectedTrack: &Album{
-				Title:  "sample name",
-				Artist: "sample artist",
-				URL:    "https://open.spotify.com/album/sampleID",
+				ID:       "sampleID",
+				Title:    "sample name",
+				Artist:   "sample artist",
+				URL:      "https://open.spotify.com/album/sampleID",
+				Provider: Spotify,
 			},
 		},
 		{
@@ -231,9 +237,11 @@ func TestSpotifyAdapter_SearchAlbum(t *testing.T) {
 			artistName: "sample artist",
 			searchName: "sample name",
 			expectedTrack: &Album{
-				Title:  "sample name",
-				Artist: "sample artist",
-				URL:    "https://open.spotify.com/album/sampleID",
+				ID:       "sampleID",
+				Title:    "sample name",
+				Artist:   "sample artist",
+				URL:      "https://open.spotify.com/album/sampleID",
+				Provider: Spotify,
 			},
 		},
 		{

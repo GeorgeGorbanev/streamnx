@@ -1,8 +1,8 @@
 package telegram
 
 import (
-	"encoding/json"
 	"regexp"
+	"strings"
 
 	"github.com/tucnak/telebot"
 )
@@ -12,7 +12,6 @@ type Router struct {
 	textNotFoundHandler     TextHandlerFunc
 	callbackHandlers        []*callbackHandler
 	callbackHandlerNotFound CallbackHandlerFunc
-	callbackHandlerError    CallbackHandlerFunc
 }
 
 func NewRouter() *Router {
@@ -29,9 +28,9 @@ func (r *Router) HandleText(re *regexp.Regexp, hf TextHandlerFunc) {
 	})
 }
 
-func (r *Router) HandleCallback(command string, hf CallbackHandlerFunc) {
+func (r *Router) HandleCallback(route string, hf CallbackHandlerFunc) {
 	r.callbackHandlers = append(r.callbackHandlers, &callbackHandler{
-		command:     command,
+		route:       route,
 		handlerFunc: hf,
 	})
 }
@@ -42,10 +41,6 @@ func (r *Router) HandleTextNotFound(hf TextHandlerFunc) {
 
 func (r *Router) HandleCallbackNotFound(hf CallbackHandlerFunc) {
 	r.callbackHandlerNotFound = hf
-}
-
-func (r *Router) HandleCallbackError(hf CallbackHandlerFunc) {
-	r.callbackHandlerError = hf
 }
 
 func (r *Router) RouteText(inMsg *telebot.Message) {
@@ -61,16 +56,17 @@ func (r *Router) RouteText(inMsg *telebot.Message) {
 }
 
 func (r *Router) RouteCallback(callback *telebot.Callback) {
-	cb := Callback{Data: &callbackData{}}
-	if err := json.Unmarshal([]byte(callback.Data), cb.Data); err != nil {
-		if r.callbackHandlerError != nil {
-			r.callbackHandlerError(&cb)
-		}
-		return
+	splittedData := strings.Split(callback.Data, CallbackRouteSeparator)
+	cb := Callback{
+		Sender: callback.Sender,
+		Data: &CallbackData{
+			Route:  splittedData[0],
+			Params: splittedData[1:],
+		},
 	}
 
 	for _, h := range r.callbackHandlers {
-		if h.command == cb.Data.Command {
+		if h.route == cb.Data.Route {
 			h.handlerFunc(&cb)
 			return
 		}

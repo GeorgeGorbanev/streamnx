@@ -78,37 +78,22 @@ func TestRouter_RouteCallback(t *testing.T) {
 		expectNotFoundCalled bool
 	}{
 		{
-			name: "when command matched",
-			callbackData: `{
-				"command":"sample_callback",
-				"payload":{
-					"sample":"payload"
-				}
-			}`,
+			name:                 "when route matched",
+			callbackData:         "sample_callback/any/route/params",
 			handleNotFound:       false,
 			expectHandlerCalled:  true,
 			expectNotFoundCalled: false,
 		},
 		{
-			name: "when msg not matched",
-			callbackData: `{
-				"command":"not_found_callback",
-				"payload":{
-					"sample":"payload"
-				}
-			}`,
+			name:                 "when msg not matched",
+			callbackData:         "not_found_callback/any/route/params",
 			handleNotFound:       false,
 			expectHandlerCalled:  false,
 			expectNotFoundCalled: false,
 		},
 		{
-			name: "when msg not matched and not found given",
-			callbackData: `{
-				"command":"not_found_callback",
-				"payload":{
-					"sample":"payload"
-				}
-			}`,
+			name:                 "when msg not matched and not found given",
+			callbackData:         "not_found_callback/any/route/params",
 			handleNotFound:       true,
 			expectHandlerCalled:  false,
 			expectNotFoundCalled: true,

@@ -3,7 +3,7 @@ package vibeshare
 import (
 	"testing"
 
-	telegram_utils "github.com/GeorgeGorbanev/vibeshare/tests/utils/telegram"
+	telegram_utils "github.com/GeorgeGorbanev/vibeshare/tests/utils"
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"
 )
@@ -20,5 +20,5 @@ func TestVibeshare_HandleText(t *testing.T) {
 		Text:   "just message with no link",
 	})
 
-	require.Equal(t, "no link found", senderMock.Response.Text)
+	require.Equal(t, "No supported link found", senderMock.Response.Text)
 }

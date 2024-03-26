@@ -2,6 +2,7 @@ package music
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/translit"
@@ -12,7 +13,7 @@ type YandexAdapter struct {
 	client yandex.Client
 }
 
-func NewYandexAdapter(client *yandex.HTTPClient) *YandexAdapter {
+func newYandexAdapter(client yandex.Client) *YandexAdapter {
 	return &YandexAdapter{
 		client: client,
 	}
@@ -107,16 +108,20 @@ func (a *YandexAdapter) SearchAlbum(artistName, albumName string) (*Album, error
 
 func (a *YandexAdapter) adaptTrack(yandexTrack *yandex.Track) *Track {
 	return &Track{
-		Title:  yandexTrack.Title,
-		Artist: yandexTrack.Artists[0].Name,
-		URL:    yandexTrack.URL(),
+		ID:       yandexTrack.IDString(),
+		Title:    yandexTrack.Title,
+		Artist:   yandexTrack.Artists[0].Name,
+		URL:      yandexTrack.URL(),
+		Provider: Yandex,
 	}
 }
 
 func (a *YandexAdapter) adaptAlbum(yandexAlbum *yandex.Album) *Album {
 	return &Album{
-		Title:  yandexAlbum.Title,
-		Artist: yandexAlbum.Artists[0].Name,
-		URL:    yandexAlbum.URL(),
+		ID:       strconv.Itoa(yandexAlbum.ID),
+		Title:    yandexAlbum.Title,
+		Artist:   yandexAlbum.Artists[0].Name,
+		URL:      yandexAlbum.URL(),
+		Provider: Yandex,
 	}
 }

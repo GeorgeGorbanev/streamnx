@@ -1,4 +1,4 @@
-package telegram
+package utils
 
 import (
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"

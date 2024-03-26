@@ -3,42 +3,35 @@ package vibeshare
 import (
 	"log/slog"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/converter"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/music"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/yandex"
+)
 
-	"github.com/tucnak/telebot"
+const (
+	convertTrackCallbackRoute = "convert_track"
+	convertAlbumCallbackRoute = "convert_album"
 )
 
 type Vibeshare struct {
-	converter      *converter.Converter
+	musicRegistry  *music.Registry
 	telegramRouter *telegram.Router
 	telegramSender telegram.Sender
 }
 
 type Input struct {
-	Converter      *converter.Converter
-	SpotifyClient  *spotify.HTTPClient
+	MusicRegistry  *music.Registry
 	TelegramSender telegram.Sender
-	YandexClient   *yandex.HTTPClient
 }
 
 func NewVibeshare(input *Input) *Vibeshare {
 	vs := Vibeshare{
-		converter:      input.Converter,
+		musicRegistry:  input.MusicRegistry,
 		telegramSender: input.TelegramSender,
 	}
 	vs.telegramRouter = vs.makeRouter()
 	return &vs
-}
-
-func (vs *Vibeshare) TextHandler(inMsg *telebot.Message) {
-	vs.telegramRouter.RouteText(inMsg)
-}
-
-func (vs *Vibeshare) CallbackHandler(callback *telebot.Callback) {
-	vs.telegramRouter.RouteCallback(callback)
 }
 
 func (vs *Vibeshare) makeRouter() *telegram.Router {
@@ -50,80 +43,20 @@ func (vs *Vibeshare) makeRouter() *telegram.Router {
 	router.HandleText(yandex.AlbumRe, vs.yandexAlbumLink)
 	router.HandleTextNotFound(vs.textNotFoundHandler)
 
+	router.HandleCallback(convertTrackCallbackRoute, vs.convertTrack)
+	router.HandleCallback(convertAlbumCallbackRoute, vs.convertAlbum)
 	router.HandleCallbackNotFound(vs.callbackNotFoundHandler)
 
 	return router
 }
 
-func (vs *Vibeshare) send(response *telegram.Message) {
+func (vs *Vibeshare) respond(response *telegram.Message) {
 	_, err := vs.telegramSender.Send(response)
 	if err != nil {
-		slog.Error("failed to send message", slog.String("error", err.Error()))
+		slog.Error("failed to send message", slog.Any("error", err))
 		return
 	}
-	slog.Info("sent message", slog.String("to", response.To.Recipient()), slog.String("text", response.Text))
-}
-
-func (vs *Vibeshare) spotifyTrackLink(inMsg *telebot.Message) {
-	link, err := vs.converter.ConvertTrack(inMsg.Text, converter.Spotify, converter.Yandex)
-	if err != nil {
-		slog.Error("failed to convert track", slog.String("error", err.Error()))
-		return
-	}
-	if link == "" {
-		vs.send(&telegram.Message{To: inMsg.Sender, Text: "failed to convert"})
-		return
-	}
-
-	vs.send(&telegram.Message{To: inMsg.Sender, Text: link})
-}
-
-func (vs *Vibeshare) spotifyAlbumLink(inMsg *telebot.Message) {
-	link, err := vs.converter.ConvertAlbum(inMsg.Text, converter.Spotify, converter.Yandex)
-	if err != nil {
-		slog.Error("failed to convert album", slog.String("error", err.Error()))
-		return
-	}
-	if link == "" {
-		vs.send(&telegram.Message{To: inMsg.Sender, Text: "failed to convert"})
-		return
-	}
-
-	vs.send(&telegram.Message{To: inMsg.Sender, Text: link})
-}
-
-func (vs *Vibeshare) yandexTrackLink(inMsg *telebot.Message) {
-	link, err := vs.converter.ConvertTrack(inMsg.Text, converter.Yandex, converter.Spotify)
-	if err != nil {
-		slog.Error("failed to convert track", slog.String("error", err.Error()))
-		return
-	}
-	if link == "" {
-		vs.send(&telegram.Message{To: inMsg.Sender, Text: "failed to convert"})
-		return
-	}
-
-	vs.send(&telegram.Message{To: inMsg.Sender, Text: link})
-}
-
-func (vs *Vibeshare) yandexAlbumLink(inMsg *telebot.Message) {
-	link, err := vs.converter.ConvertAlbum(inMsg.Text, converter.Yandex, converter.Spotify)
-	if err != nil {
-		slog.Error("failed to convert album", slog.String("error", err.Error()))
-		return
-	}
-	if link == "" {
-		vs.send(&telegram.Message{To: inMsg.Sender, Text: "failed to convert"})
-		return
-	}
-
-	vs.send(&telegram.Message{To: inMsg.Sender, Text: link})
-}
-
-func (vs *Vibeshare) textNotFoundHandler(inMsg *telebot.Message) {
-	vs.send(&telegram.Message{To: inMsg.Sender, Text: "no link found"})
-}
-
-func (vs *Vibeshare) callbackNotFoundHandler(callback *telegram.Callback) {
-	slog.Warn("callback not found", slog.String("data", callback.Data.Command))
+	slog.Info("sent message",
+		slog.String("to", response.To.Recipient()),
+		slog.String("text", response.Text))
 }

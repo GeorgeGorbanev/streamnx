@@ -23,7 +23,7 @@ func TestCallback_ConvertAlbumSpotifyToYandex(t *testing.T) {
 	}{
 		{
 			name:         "when spotify album link given and yandex album found",
-			input:        "convert_album/sf/1HrMmB5useeZ0F5lHrMvl0/ya",
+			input:        "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ya",
 			expectedText: "https://music.yandex.com/album/3389008",
 			fixturesMap: utils.FixturesMap{
 				SpotifyAlbums: map[string][]byte{
@@ -36,7 +36,7 @@ func TestCallback_ConvertAlbumSpotifyToYandex(t *testing.T) {
 		},
 		{
 			name:         "when spotify album link given and yandex album not found",
-			input:        "convert_album/sf/1HrMmB5useeZ0F5lHrMvl0/ya",
+			input:        "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ya",
 			expectedText: "Album not found in Yandex",
 			fixturesMap: utils.FixturesMap{
 				SpotifyAlbums: map[string][]byte{
@@ -47,7 +47,7 @@ func TestCallback_ConvertAlbumSpotifyToYandex(t *testing.T) {
 		},
 		{
 			name:         "when spotify album not found",
-			input:        "convert_album/sf/1HrMmB5useeZ0F5lHrMvl0/ya",
+			input:        "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ya",
 			expectedText: "",
 			fixturesMap: utils.FixturesMap{
 				SpotifyAlbums:      map[string][]byte{},

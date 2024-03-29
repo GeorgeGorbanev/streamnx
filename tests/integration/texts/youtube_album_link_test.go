@@ -30,11 +30,11 @@ func TestText_YoutubeAlbumLink(t *testing.T) {
 					{
 						{
 							Text: "Spotify",
-							Data: "convert_album/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/sf",
+							Data: "cnval/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/sf",
 						},
 						{
 							Text: "Yandex",
-							Data: "convert_album/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/ya",
+							Data: "cnval/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/ya",
 						},
 					},
 				},
@@ -56,11 +56,11 @@ func TestText_YoutubeAlbumLink(t *testing.T) {
 					{
 						{
 							Text: "Spotify",
-							Data: "convert_album/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/sf",
+							Data: "cnval/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/sf",
 						},
 						{
 							Text: "Yandex",
-							Data: "convert_album/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/ya",
+							Data: "cnval/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/ya",
 						},
 					},
 				},

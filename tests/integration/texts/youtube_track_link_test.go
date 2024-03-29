@@ -30,11 +30,11 @@ func TestText_YoutubeTrackLink(t *testing.T) {
 					{
 						{
 							Text: "Spotify",
-							Data: "convert_track/yt/hbe3CQamF8k/sf",
+							Data: "cnvtr/yt/hbe3CQamF8k/sf",
 						},
 						{
 							Text: "Yandex",
-							Data: "convert_track/yt/hbe3CQamF8k/ya",
+							Data: "cnvtr/yt/hbe3CQamF8k/ya",
 						},
 					},
 				},
@@ -54,11 +54,11 @@ func TestText_YoutubeTrackLink(t *testing.T) {
 					{
 						{
 							Text: "Spotify",
-							Data: "convert_track/yt/hbe3CQamF8k/sf",
+							Data: "cnvtr/yt/hbe3CQamF8k/sf",
 						},
 						{
 							Text: "Yandex",
-							Data: "convert_track/yt/hbe3CQamF8k/ya",
+							Data: "cnvtr/yt/hbe3CQamF8k/ya",
 						},
 					},
 				},

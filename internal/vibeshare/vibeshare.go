@@ -11,8 +11,8 @@ import (
 )
 
 const (
-	convertTrackCallbackRoute = "convert_track"
-	convertAlbumCallbackRoute = "convert_album"
+	convertTrackCallbackRoute = "cnvtr"
+	convertAlbumCallbackRoute = "cnval"
 )
 
 type Vibeshare struct {

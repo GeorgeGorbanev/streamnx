@@ -23,7 +23,7 @@ func TestCallback_ConvertTrackYandexToSpotify(t *testing.T) {
 	}{
 		{
 			name:         "when yandex track link given and spotify track found",
-			input:        "convert_track/ya/354093/sf",
+			input:        "cnvtr/ya/354093/sf",
 			expectedText: "https://open.spotify.com/track/7uv632EkfwYhXoqf8rhYrg",
 			fixturesMap: utils.FixturesMap{
 				YandexTracks: map[string][]byte{
@@ -36,7 +36,7 @@ func TestCallback_ConvertTrackYandexToSpotify(t *testing.T) {
 		},
 		{
 			name:         "when yandex track link given and spotify track not found",
-			input:        "convert_track/ya/354093/sf",
+			input:        "cnvtr/ya/354093/sf",
 			expectedText: "Track not found in Spotify",
 			fixturesMap: utils.FixturesMap{
 				YandexTracks: map[string][]byte{
@@ -49,7 +49,7 @@ func TestCallback_ConvertTrackYandexToSpotify(t *testing.T) {
 		},
 		{
 			name:         "when yandex track not found",
-			input:        "convert_track/ya/354093/sf",
+			input:        "cnvtr/ya/354093/sf",
 			expectedText: "",
 			fixturesMap: utils.FixturesMap{
 				SpotifyTracks:      map[string][]byte{},

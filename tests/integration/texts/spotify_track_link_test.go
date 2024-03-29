@@ -30,11 +30,11 @@ func TestText_SpotifyTrackLink(t *testing.T) {
 					{
 						{
 							Text: "Yandex",
-							Data: "convert_track/sf/7uv632EkfwYhXoqf8rhYrg/ya",
+							Data: "cnvtr/sf/7uv632EkfwYhXoqf8rhYrg/ya",
 						},
 						{
 							Text: "Youtube",
-							Data: "convert_track/sf/7uv632EkfwYhXoqf8rhYrg/yt",
+							Data: "cnvtr/sf/7uv632EkfwYhXoqf8rhYrg/yt",
 						},
 					},
 				},

@@ -23,7 +23,7 @@ func TestCallback_ConvertTrackSpotifyToYandex(t *testing.T) {
 	}{
 		{
 			name:         "when spotify track link given and yandex track found",
-			input:        "convert_track/sf/7uv632EkfwYhXoqf8rhYrg/ya",
+			input:        "cnvtr/sf/7uv632EkfwYhXoqf8rhYrg/ya",
 			expectedText: "https://music.yandex.com/album/35627/track/354093",
 			fixturesMap: utils.FixturesMap{
 				SpotifyTracks: map[string][]byte{
@@ -36,7 +36,7 @@ func TestCallback_ConvertTrackSpotifyToYandex(t *testing.T) {
 		},
 		{
 			name:         "when spotify track link given and yandex track not found",
-			input:        "convert_track/sf/7uv632EkfwYhXoqf8rhYrg/ya",
+			input:        "cnvtr/sf/7uv632EkfwYhXoqf8rhYrg/ya",
 			expectedText: "Track not found in Yandex",
 			fixturesMap: utils.FixturesMap{
 				SpotifyTracks: map[string][]byte{
@@ -46,7 +46,7 @@ func TestCallback_ConvertTrackSpotifyToYandex(t *testing.T) {
 		},
 		{
 			name:         "when yandex track not found",
-			input:        "convert_track/sf/7uv632EkfwYhXoqf8rhYrg/ya",
+			input:        "cnvtr/sf/7uv632EkfwYhXoqf8rhYrg/ya",
 			expectedText: "",
 			fixturesMap: utils.FixturesMap{
 				SpotifyTracks:      map[string][]byte{},
@@ -55,7 +55,7 @@ func TestCallback_ConvertTrackSpotifyToYandex(t *testing.T) {
 		},
 		{
 			name:         "when spotify track link given, track found and yandex track found, but artist name not match",
-			input:        "convert_track/sf/7DSAEUvxU8FajXtRloy8M0/ya",
+			input:        "cnvtr/sf/7DSAEUvxU8FajXtRloy8M0/ya",
 			expectedText: "Track not found in Yandex",
 			fixturesMap: utils.FixturesMap{
 				SpotifyTracks: map[string][]byte{
@@ -68,7 +68,7 @@ func TestCallback_ConvertTrackSpotifyToYandex(t *testing.T) {
 		},
 		{
 			name:         "when spotify track link given, yandex track found and artist name not match, but match in translit",
-			input:        "convert_track/sf/3NHSz1GyC5IeK1soZSjIIX/ya",
+			input:        "cnvtr/sf/3NHSz1GyC5IeK1soZSjIIX/ya",
 			expectedText: "https://music.yandex.com/album/81431/track/732401",
 			fixturesMap: utils.FixturesMap{
 				SpotifyTracks: map[string][]byte{
@@ -81,7 +81,7 @@ func TestCallback_ConvertTrackSpotifyToYandex(t *testing.T) {
 		},
 		{
 			name:         "when spotify track link given, track found, yandex track not found, but found in translit",
-			input:        "convert_track/sf/2sP5VgY8PWb6c9DhgZEpSv/ya",
+			input:        "cnvtr/sf/2sP5VgY8PWb6c9DhgZEpSv/ya",
 			expectedText: "https://music.yandex.com/album/4058886/track/33223088",
 			fixturesMap: utils.FixturesMap{
 				SpotifyTracks: map[string][]byte{

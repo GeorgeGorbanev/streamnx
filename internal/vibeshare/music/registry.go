@@ -7,7 +7,7 @@ import (
 )
 
 type Registry struct {
-	adapters map[Provider]Adapter
+	adapters map[string]Adapter
 }
 
 type Adapter interface {
@@ -25,7 +25,7 @@ type Track struct {
 	Title    string
 	Artist   string
 	URL      string
-	Provider Provider
+	Provider *Provider
 }
 
 type Album struct {
@@ -33,7 +33,7 @@ type Album struct {
 	Title    string
 	Artist   string
 	URL      string
-	Provider Provider
+	Provider *Provider
 }
 
 type RegistryInput struct {
@@ -44,14 +44,14 @@ type RegistryInput struct {
 
 func NewRegistry(input *RegistryInput) *Registry {
 	return &Registry{
-		adapters: map[Provider]Adapter{
-			Spotify: newSpotifyAdapter(input.SpotifyClient),
-			Yandex:  newYandexAdapter(input.YandexClient),
-			Youtube: newYoutubeAdapter(input.YoutubeClient),
+		adapters: map[string]Adapter{
+			Spotify.Code: newSpotifyAdapter(input.SpotifyClient),
+			Yandex.Code:  newYandexAdapter(input.YandexClient),
+			Youtube.Code: newYoutubeAdapter(input.YoutubeClient),
 		},
 	}
 }
 
-func (r *Registry) Adapter(p Provider) Adapter {
-	return r.adapters[p]
+func (r *Registry) Adapter(p *Provider) Adapter {
+	return r.adapters[p.Code]
 }

@@ -10,7 +10,7 @@ import (
 func convertTrackMenu(track *music.Track) (*telebot.ReplyMarkup, error) {
 	buttonsParams := make([]convertParams, 0, len(music.Providers)-1)
 	for _, provider := range music.Providers {
-		if provider != track.Provider {
+		if provider.Code != track.Provider.Code {
 			buttonsParams = append(buttonsParams, convertParams{
 				ID:     track.ID,
 				Source: track.Provider,
@@ -27,7 +27,7 @@ func convertTrackMenu(track *music.Track) (*telebot.ReplyMarkup, error) {
 		}
 
 		buttons = append(buttons, telebot.InlineButton{
-			Text: buttonParams.Target.Name(),
+			Text: buttonParams.Target.Name,
 			Data: cbData.Marshal(),
 		})
 	}
@@ -59,7 +59,7 @@ func convertAlbumMenu(album *music.Album) (*telebot.ReplyMarkup, error) {
 		}
 
 		buttons = append(buttons, telebot.InlineButton{
-			Text: buttonParams.Target.Name(),
+			Text: buttonParams.Target.Name,
 			Data: cbData.Marshal(),
 		})
 	}

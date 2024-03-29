@@ -13,7 +13,7 @@ func TestConvertParamsMarshal(t *testing.T) {
 		Source: music.Spotify,
 		Target: music.Yandex,
 	}
-	require.Equal(t, []string{"spotify", "123", "yandex"}, params.marshal())
+	require.Equal(t, []string{"sf", "123", "ya"}, params.marshal())
 }
 
 func TestConvertParamsUnmarshal(t *testing.T) {
@@ -25,7 +25,7 @@ func TestConvertParamsUnmarshal(t *testing.T) {
 	}{
 		{
 			name:  "when params are valid",
-			input: []string{"spotify", "123", "yandex"},
+			input: []string{"sf", "123", "ya"},
 			want: convertParams{
 				ID:     "123",
 				Source: music.Spotify,
@@ -35,17 +35,17 @@ func TestConvertParamsUnmarshal(t *testing.T) {
 		},
 		{
 			name:    "when invalid length",
-			input:   []string{"spotify", "123"},
+			input:   []string{"sf", "123"},
 			wantErr: true,
 		},
 		{
 			name:    "when invalid source provider",
-			input:   []string{"invalid", "123", "yandex"},
+			input:   []string{"invalid", "123", "ya"},
 			wantErr: true,
 		},
 		{
 			name:    "when invalid target provider",
-			input:   []string{"spotify", "123", "invalid"},
+			input:   []string{"sf", "123", "invalid"},
 			wantErr: true,
 		},
 	}

@@ -30,11 +30,11 @@ func TestText_SpotifyAlbumLink(t *testing.T) {
 					{
 						{
 							Text: "Yandex",
-							Data: "convert_album/spotify/1HrMmB5useeZ0F5lHrMvl0/yandex",
+							Data: "convert_album/sf/1HrMmB5useeZ0F5lHrMvl0/ya",
 						},
 						{
 							Text: "Youtube",
-							Data: "convert_album/spotify/1HrMmB5useeZ0F5lHrMvl0/youtube",
+							Data: "convert_album/sf/1HrMmB5useeZ0F5lHrMvl0/yt",
 						},
 					},
 				},

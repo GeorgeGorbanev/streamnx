@@ -12,10 +12,10 @@ func TestRegistry_Adapter(t *testing.T) {
 	youtubeAdapter := newYoutubeAdapter(nil)
 
 	registry := Registry{
-		adapters: map[Provider]Adapter{
-			Spotify: spotifyAdapter,
-			Yandex:  yandexAdapter,
-			Youtube: youtubeAdapter,
+		adapters: map[string]Adapter{
+			Spotify.Code: spotifyAdapter,
+			Yandex.Code:  yandexAdapter,
+			Youtube.Code: youtubeAdapter,
 		},
 	}
 

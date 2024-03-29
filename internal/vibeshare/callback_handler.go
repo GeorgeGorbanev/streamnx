@@ -38,7 +38,7 @@ func (vs *Vibeshare) convertTrack(callback *telegram.Callback) {
 		return
 	}
 	if track == nil {
-		text := fmt.Sprintf("Track not found in %s", params.Target.Name())
+		text := fmt.Sprintf("Track not found in %s", params.Target.Name)
 		vs.respond(&telegram.Message{To: callback.Sender, Text: text})
 		return
 	}
@@ -69,7 +69,7 @@ func (vs *Vibeshare) convertAlbum(callback *telegram.Callback) {
 		return
 	}
 	if album == nil {
-		text := fmt.Sprintf("Album not found in %s", params.Target.Name())
+		text := fmt.Sprintf("Album not found in %s", params.Target.Name)
 		vs.respond(&telegram.Message{To: callback.Sender, Text: text})
 		return
 	}

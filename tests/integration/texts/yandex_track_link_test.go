@@ -30,11 +30,11 @@ func TestText_YandexTrackLink(t *testing.T) {
 					{
 						{
 							Text: "Spotify",
-							Data: "convert_track/yandex/354093/spotify",
+							Data: "convert_track/ya/354093/sf",
 						},
 						{
 							Text: "Youtube",
-							Data: "convert_track/yandex/354093/youtube",
+							Data: "convert_track/ya/354093/yt",
 						},
 					},
 				},
@@ -54,11 +54,11 @@ func TestText_YandexTrackLink(t *testing.T) {
 					{
 						{
 							Text: "Spotify",
-							Data: "convert_track/yandex/354093/spotify",
+							Data: "convert_track/ya/354093/sf",
 						},
 						{
 							Text: "Youtube",
-							Data: "convert_track/yandex/354093/youtube",
+							Data: "convert_track/ya/354093/yt",
 						},
 					},
 				},

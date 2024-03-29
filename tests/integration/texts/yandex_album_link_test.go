@@ -30,11 +30,11 @@ func TestText_YandexAlbumLink(t *testing.T) {
 					{
 						{
 							Text: "Spotify",
-							Data: "convert_album/yandex/3389008/spotify",
+							Data: "convert_album/ya/3389008/sf",
 						},
 						{
 							Text: "Youtube",
-							Data: "convert_album/yandex/3389008/youtube",
+							Data: "convert_album/ya/3389008/yt",
 						},
 					},
 				},

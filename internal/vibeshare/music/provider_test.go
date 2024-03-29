@@ -6,58 +6,32 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestIsValidProvider(t *testing.T) {
+func TestFindProviderByCode(t *testing.T) {
 	tests := []struct {
-		provider Provider
-		expected bool
+		code string
+		want *Provider
 	}{
 		{
-			provider: Spotify,
-			expected: true,
+			code: "sf",
+			want: Spotify,
 		},
 		{
-			provider: Yandex,
-			expected: true,
+			code: "ya",
+			want: Yandex,
 		},
 		{
-			provider: Youtube,
-			expected: true,
+			code: "yt",
+			want: Youtube,
 		},
 		{
-			provider: Provider("not provider"),
-			expected: false,
+			code: "unknown",
+			want: nil,
 		},
 	}
 	for _, tt := range tests {
-		t.Run(string(tt.provider), func(t *testing.T) {
-			result := IsValidProvider(tt.provider)
-			require.Equal(t, tt.expected, result)
-		})
-	}
-}
-
-func TestProvider_Name(t *testing.T) {
-	tests := []struct {
-		provider Provider
-		expected string
-	}{
-		{
-			provider: Spotify,
-			expected: "Spotify",
-		},
-		{
-			provider: Yandex,
-			expected: "Yandex",
-		},
-		{
-			provider: Youtube,
-			expected: "Youtube",
-		},
-	}
-	for _, tt := range tests {
-		t.Run(string(tt.provider), func(t *testing.T) {
-			result := tt.provider.Name()
-			require.Equal(t, tt.expected, result)
+		t.Run(tt.code, func(t *testing.T) {
+			result := FindProviderByCode(tt.code)
+			require.Equal(t, tt.want, result)
 		})
 	}
 }

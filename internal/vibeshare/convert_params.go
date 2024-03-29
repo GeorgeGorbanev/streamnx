@@ -8,15 +8,15 @@ import (
 
 type convertParams struct {
 	ID     string
-	Source music.Provider
-	Target music.Provider
+	Source *music.Provider
+	Target *music.Provider
 }
 
 func (p *convertParams) marshal() []string {
 	return []string{
-		string(p.Source),
+		p.Source.Code,
 		p.ID,
-		string(p.Target),
+		p.Target.Code,
 	}
 }
 
@@ -24,12 +24,12 @@ func (p *convertParams) unmarshal(s []string) error {
 	if len(s) != 3 {
 		return fmt.Errorf("invalid convert params: %s", s)
 	}
-	sourceProvider := music.Provider(s[0])
-	if !music.IsValidProvider(sourceProvider) {
+	sourceProvider := music.FindProviderByCode(s[0])
+	if sourceProvider == nil {
 		return fmt.Errorf("invalid source provider: %s", s[0])
 	}
-	targetProvider := music.Provider(s[2])
-	if !music.IsValidProvider(targetProvider) {
+	targetProvider := music.FindProviderByCode(s[2])
+	if targetProvider == nil {
 		return fmt.Errorf("invalid target provider: %s", s[2])
 	}
 

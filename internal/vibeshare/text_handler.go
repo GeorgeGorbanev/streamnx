@@ -43,7 +43,7 @@ func (vs *Vibeshare) textNotFoundHandler(inMsg *telebot.Message) {
 	vs.respond(&telegram.Message{To: inMsg.Sender, Text: "No supported link found"})
 }
 
-func (vs *Vibeshare) trackLink(provider music.Provider, inMsg *telebot.Message) {
+func (vs *Vibeshare) trackLink(provider *music.Provider, inMsg *telebot.Message) {
 	trackID := vs.musicRegistry.Adapter(provider).DetectTrackID(inMsg.Text)
 	track, err := vs.musicRegistry.Adapter(provider).GetTrack(trackID)
 	if err != nil {
@@ -64,7 +64,7 @@ func (vs *Vibeshare) trackLink(provider music.Provider, inMsg *telebot.Message) 
 	vs.respond(&telegram.Message{To: inMsg.Sender, Text: "Select target link provider", ReplyMarkup: menu})
 }
 
-func (vs *Vibeshare) albumLink(provider music.Provider, inMsg *telebot.Message) {
+func (vs *Vibeshare) albumLink(provider *music.Provider, inMsg *telebot.Message) {
 	albumID := vs.musicRegistry.Adapter(provider).DetectAlbumID(inMsg.Text)
 	album, err := vs.musicRegistry.Adapter(provider).GetAlbum(albumID)
 	if err != nil {

@@ -9,6 +9,7 @@ import (
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/yandex"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/youtube"
 
 	"github.com/joho/godotenv"
 )
@@ -17,6 +18,7 @@ type config struct {
 	telegramToken       string
 	spotifyClientID     string
 	spotifyClientSecret string
+	youtubeAPIKey       string
 }
 
 func main() {
@@ -57,6 +59,7 @@ func newConfig() *config {
 		telegramToken:       os.Getenv("TELEGRAM_TOKEN"),
 		spotifyClientID:     os.Getenv("SPOTIFY_CLIENT_ID"),
 		spotifyClientSecret: os.Getenv("SPOTIFY_CLIENT_SECRET"),
+		youtubeAPIKey:       os.Getenv("YOUTUBE_API_KEY"),
 	}
 }
 
@@ -68,6 +71,9 @@ func newVibeshare(cfg *config, ts telegram.Sender) *vibeshare.Vibeshare {
 				ClientSecret: cfg.spotifyClientSecret,
 			}),
 			YandexClient: yandex.NewHTTPClient(),
+			YoutubeClient: youtube.NewHTTPClient(
+				cfg.youtubeAPIKey,
+			),
 		}),
 		TelegramSender: ts,
 	})

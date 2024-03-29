@@ -18,36 +18,43 @@ type FixturesMap struct {
 	SpotifyAlbums       map[string][]byte
 	SpotifySearchTracks map[string][]byte
 	SpotifySearchAlbums map[string][]byte
-	YandexTracks        map[string][]byte
-	YandexAlbums        map[string][]byte
-	YandexSearchTracks  map[string][]byte
-	YandexSearchAlbums  map[string][]byte
+
+	YandexTracks       map[string][]byte
+	YandexAlbums       map[string][]byte
+	YandexSearchTracks map[string][]byte
+	YandexSearchAlbums map[string][]byte
+
+	YoutubeTracks       map[string][]byte
+	YoutubeAlbums       map[string][]byte
+	YoutubeSearchTracks map[string][]byte
+	YoutubeSearchAlbums map[string][]byte
 }
 
 var (
-	SampleCredentials = spotify.Credentials{
+	SpotifyCredentials = spotify.Credentials{
 		ClientID:     "sampleClientID",
 		ClientSecret: "sampleClientSecret",
 	}
-	SampleToken = spotify.Token{
+	SpotifyToken = spotify.Token{
 		AccessToken: "mock_access_token",
 		TokenType:   "Bearer",
 		ExpiresIn:   360,
 	}
-	SampleBasicAuth = "Basic c2FtcGxlQ2xpZW50SUQ6c2FtcGxlQ2xpZW50U2VjcmV0"
+	SpotifyBasicAuth = "Basic c2FtcGxlQ2xpZW50SUQ6c2FtcGxlQ2xpZW50U2VjcmV0"
+	YoutubeAPIKey    = "sampleAPIKey"
 )
 
 func NewSpotifyAuthServerMock(t *testing.T) *httptest.Server {
 	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		require.Equal(t, http.MethodPost, r.Method)
 		require.Equal(t, "/api/token", r.URL.Path)
-		require.Equal(t, r.Header.Get("Authorization"), SampleBasicAuth)
+		require.Equal(t, r.Header.Get("Authorization"), SpotifyBasicAuth)
 		require.Equal(t, "application/x-www-form-urlencoded", r.Header.Get("Content-Type"))
 
 		err := json.NewEncoder(w).Encode(map[string]any{
-			"access_token": SampleToken.AccessToken,
-			"token_type":   SampleToken.TokenType,
-			"expires_in":   SampleToken.ExpiresIn,
+			"access_token": SpotifyToken.AccessToken,
+			"token_type":   SpotifyToken.TokenType,
+			"expires_in":   SpotifyToken.ExpiresIn,
 		})
 		require.NoError(t, err)
 	}))
@@ -133,6 +140,38 @@ func NewSpotifyAPIServerMock(t *testing.T, fm FixturesMap) *httptest.Server {
 			albumID := splitted[len(splitted)-1]
 
 			if response, ok = fm.SpotifyAlbums[albumID]; !ok {
+				w.WriteHeader(http.StatusBadRequest)
+				return
+			}
+		default:
+			t.Errorf("unexpected request: %s", r.URL.Path)
+		}
+
+		_, err := w.Write(response)
+		require.NoError(t, err)
+	}))
+}
+
+func NewYoutubeAPIServerMock(t *testing.T, fm FixturesMap) *httptest.Server {
+	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		require.Equal(t, r.URL.Query().Get("key"), YoutubeAPIKey)
+
+		var response []byte
+		var ok bool
+
+		switch r.URL.Path {
+		case "/youtube/v3/videos":
+			trackID := r.URL.Query().Get("id")
+			if response, ok = fm.YoutubeTracks[trackID]; !ok {
+				w.WriteHeader(http.StatusBadRequest)
+				return
+			}
+		case "/youtube/v3/search":
+			// TODO
+		case "/youtube/v3/playlists":
+			albumID := r.URL.Query().Get("id")
+
+			if response, ok = fm.YoutubeAlbums[albumID]; !ok {
 				w.WriteHeader(http.StatusBadRequest)
 				return
 			}

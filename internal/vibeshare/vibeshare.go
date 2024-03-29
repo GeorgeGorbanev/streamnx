@@ -7,6 +7,7 @@ import (
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/yandex"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/youtube"
 )
 
 const (
@@ -41,6 +42,8 @@ func (vs *Vibeshare) makeRouter() *telegram.Router {
 	router.HandleText(spotify.AlbumRe, vs.spotifyAlbumLink)
 	router.HandleText(yandex.TrackRe, vs.yandexTrackLink)
 	router.HandleText(yandex.AlbumRe, vs.yandexAlbumLink)
+	router.HandleText(youtube.VideoRe, vs.youtubeTrackLink)
+	router.HandleText(youtube.PlaylistRe, vs.youtubeAlbumLink)
 	router.HandleTextNotFound(vs.textNotFoundHandler)
 
 	router.HandleCallback(convertTrackCallbackRoute, vs.convertTrack)

@@ -10,6 +10,7 @@ import (
 const (
 	Yandex  Provider = "yandex"
 	Spotify Provider = "spotify"
+	Youtube Provider = "youtube"
 )
 
 type Provider string
@@ -17,6 +18,7 @@ type Provider string
 var Providers = []Provider{
 	Spotify,
 	Yandex,
+	Youtube,
 }
 
 func IsValidProvider(p Provider) bool {

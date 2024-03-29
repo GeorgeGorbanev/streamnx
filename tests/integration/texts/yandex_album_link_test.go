@@ -5,7 +5,6 @@ import (
 
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/music"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/yandex"
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
 	"github.com/GeorgeGorbanev/vibeshare/tests/utils"
@@ -30,8 +29,12 @@ func TestText_YandexAlbumLink(t *testing.T) {
 				InlineKeyboard: [][]telebot.InlineButton{
 					{
 						{
-							Text: "spotify",
+							Text: "Spotify",
 							Data: "convert_album/yandex/3389008/spotify",
+						},
+						{
+							Text: "Youtube",
+							Data: "convert_album/yandex/3389008/youtube",
 						},
 					},
 				},
@@ -51,18 +54,7 @@ func TestText_YandexAlbumLink(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			spotifyAuthServerMock := utils.NewSpotifyAuthServerMock(t)
-			defer spotifyAuthServerMock.Close()
-
-			spotifyAPIServerMock := utils.NewSpotifyAPIServerMock(t, tt.fixturesMap)
-			defer spotifyAPIServerMock.Close()
-
 			senderMock := utils.NewTelegramSenderMock()
-			spotifyClient := spotify.NewHTTPClient(
-				&utils.SampleCredentials,
-				spotify.WithAuthURL(spotifyAuthServerMock.URL),
-				spotify.WithAPIURL(spotifyAPIServerMock.URL),
-			)
 
 			yandexMockServer := utils.NewYandexAPIServerMock(t, tt.fixturesMap)
 			defer yandexMockServer.Close()
@@ -71,8 +63,7 @@ func TestText_YandexAlbumLink(t *testing.T) {
 
 			vs := vibeshare.NewVibeshare(&vibeshare.Input{
 				MusicRegistry: music.NewRegistry(&music.RegistryInput{
-					SpotifyClient: spotifyClient,
-					YandexClient:  yandexClient,
+					YandexClient: yandexClient,
 				}),
 				TelegramSender: senderMock,
 			})

@@ -7,6 +7,67 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+type yandexClientMock struct{}
+
+func (c *yandexClientMock) GetTrack(id string) (*yandex.Track, error) {
+	if id != "42" {
+		return nil, nil
+	}
+	return &yandex.Track{
+		ID:    42,
+		Title: "sample name",
+		Artists: []yandex.Artist{
+			{Name: "sample artist"},
+		},
+		Albums: []yandex.Album{
+			{ID: 41},
+		},
+	}, nil
+}
+
+func (c *yandexClientMock) SearchTrack(artistName, trackName string) (*yandex.Track, error) {
+	if artistName != "sample artist" || trackName != "sample name" {
+		return nil, nil
+	}
+
+	return &yandex.Track{
+		ID:    42,
+		Title: "sample name",
+		Artists: []yandex.Artist{
+			{Name: "sample artist"},
+		},
+		Albums: []yandex.Album{
+			{ID: 41},
+		},
+	}, nil
+}
+
+func (c *yandexClientMock) GetAlbum(id string) (*yandex.Album, error) {
+	if id != "42" {
+		return nil, nil
+	}
+	return &yandex.Album{
+		ID:    42,
+		Title: "sample name",
+		Artists: []yandex.Artist{
+			{Name: "sample artist"},
+		},
+	}, nil
+}
+
+func (c *yandexClientMock) SearchAlbum(artistName, albumName string) (*yandex.Album, error) {
+	if artistName != "sample artist" || albumName != "sample name" {
+		return nil, nil
+	}
+	return &yandex.Album{
+		ID:    42,
+		Title: "sample name",
+		Artists: []yandex.Artist{
+			{Name: "sample artist"},
+		},
+	}, nil
+}
+
 func TestYandexAdapter_DetectTrackID(t *testing.T) {
 	tests := []struct {
 		name   string
@@ -106,9 +167,7 @@ func TestYandexAdapter_GetTrack(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			a := &YandexAdapter{
-				client: &yandexClientMock{},
-			}
+			a := newYandexAdapter(&yandexClientMock{})
 
 			result, err := a.GetTrack(tt.id)
 
@@ -146,9 +205,7 @@ func TestYandexAdapter_SearchTrack(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			a := &YandexAdapter{
-				client: &yandexClientMock{},
-			}
+			a := newYandexAdapter(&yandexClientMock{})
 
 			result, err := a.SearchTrack(tt.artistName, tt.searchName)
 
@@ -183,9 +240,7 @@ func TestYandexAdapter_GetAlbum(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			a := &YandexAdapter{
-				client: &yandexClientMock{},
-			}
+			a := newYandexAdapter(&yandexClientMock{})
 
 			result, err := a.GetAlbum(tt.id)
 
@@ -223,9 +278,7 @@ func TestYandexAdapter_SearchAlbum(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			a := &YandexAdapter{
-				client: &yandexClientMock{},
-			}
+			a := newYandexAdapter(&yandexClientMock{})
 
 			result, err := a.SearchAlbum(tt.artistName, tt.searchName)
 
@@ -233,65 +286,4 @@ func TestYandexAdapter_SearchAlbum(t *testing.T) {
 			require.Equal(t, tt.expectedTrack, result)
 		})
 	}
-}
-
-type yandexClientMock struct{}
-
-func (c *yandexClientMock) GetTrack(id string) (*yandex.Track, error) {
-	if id != "42" {
-		return nil, nil
-	}
-	return &yandex.Track{
-		ID:    42,
-		Title: "sample name",
-		Artists: []yandex.Artist{
-			{Name: "sample artist"},
-		},
-		Albums: []yandex.Album{
-			{ID: 41},
-		},
-	}, nil
-}
-
-func (c *yandexClientMock) SearchTrack(artistName, trackName string) (*yandex.Track, error) {
-	if artistName != "sample artist" || trackName != "sample name" {
-		return nil, nil
-	}
-
-	return &yandex.Track{
-		ID:    42,
-		Title: "sample name",
-		Artists: []yandex.Artist{
-			{Name: "sample artist"},
-		},
-		Albums: []yandex.Album{
-			{ID: 41},
-		},
-	}, nil
-}
-
-func (c *yandexClientMock) GetAlbum(id string) (*yandex.Album, error) {
-	if id != "42" {
-		return nil, nil
-	}
-	return &yandex.Album{
-		ID:    42,
-		Title: "sample name",
-		Artists: []yandex.Artist{
-			{Name: "sample artist"},
-		},
-	}, nil
-}
-
-func (c *yandexClientMock) SearchAlbum(artistName, albumName string) (*yandex.Album, error) {
-	if artistName != "sample artist" || albumName != "sample name" {
-		return nil, nil
-	}
-	return &yandex.Album{
-		ID:    42,
-		Title: "sample name",
-		Artists: []yandex.Artist{
-			{Name: "sample artist"},
-		},
-	}, nil
 }

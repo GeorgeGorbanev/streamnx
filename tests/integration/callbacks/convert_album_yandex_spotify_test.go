@@ -67,7 +67,7 @@ func TestCallback_ConvertAlbumYandexToSpotify(t *testing.T) {
 
 			senderMock := utils.NewTelegramSenderMock()
 			spotifyClient := spotify.NewHTTPClient(
-				&utils.SampleCredentials,
+				&utils.SpotifyCredentials,
 				spotify.WithAuthURL(spotifyAuthServerMock.URL),
 				spotify.WithAPIURL(spotifyAPIServerMock.URL),
 			)

@@ -7,6 +7,61 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+type spotifyClientMock struct{}
+
+func (c *spotifyClientMock) GetTrack(id string) (*spotify.Track, error) {
+	if id != "sampleID" {
+		return nil, nil
+	}
+	return &spotify.Track{
+		ID:   id,
+		Name: "sample name",
+		Artists: []spotify.Artist{
+			{Name: "sample artist"},
+		},
+	}, nil
+}
+
+func (c *spotifyClientMock) SearchTrack(artistName, trackName string) (*spotify.Track, error) {
+	if artistName != "sample artist" || trackName != "sample name" {
+		return nil, nil
+	}
+
+	return &spotify.Track{
+		ID:   "sampleID",
+		Name: "sample name",
+		Artists: []spotify.Artist{
+			{Name: "sample artist"},
+		},
+	}, nil
+}
+
+func (c *spotifyClientMock) GetAlbum(id string) (*spotify.Album, error) {
+	if id != "sampleID" {
+		return nil, nil
+	}
+	return &spotify.Album{
+		ID:   id,
+		Name: "sample name",
+		Artists: []spotify.Artist{
+			{Name: "sample artist"},
+		},
+	}, nil
+}
+
+func (c *spotifyClientMock) SearchAlbum(artistName, albumName string) (*spotify.Album, error) {
+	if artistName != "sample artist" || albumName != "sample name" {
+		return nil, nil
+	}
+	return &spotify.Album{
+		ID:   "sampleID",
+		Name: "sample name",
+		Artists: []spotify.Artist{
+			{Name: "sample artist"},
+		},
+	}, nil
+}
+
 func TestSpotifyAdapter_DetectTrackID(t *testing.T) {
 	tests := []struct {
 		name     string
@@ -136,9 +191,7 @@ func TestSpotifyAdapter_GetTrack(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			a := &SpotifyAdapter{
-				client: &spotifyClientMock{},
-			}
+			a := newSpotifyAdapter(&spotifyClientMock{})
 
 			result, err := a.GetTrack(tt.id)
 
@@ -176,9 +229,7 @@ func TestSpotifyAdapter_SearchTrack(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			a := &SpotifyAdapter{
-				client: &spotifyClientMock{},
-			}
+			a := newSpotifyAdapter(&spotifyClientMock{})
 
 			result, err := a.SearchTrack(tt.artistName, tt.searchName)
 
@@ -213,9 +264,7 @@ func TestSpotifyAdapter_GetAlbum(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			a := &SpotifyAdapter{
-				client: &spotifyClientMock{},
-			}
+			a := newSpotifyAdapter(&spotifyClientMock{})
 
 			result, err := a.GetAlbum(tt.id)
 
@@ -253,9 +302,7 @@ func TestSpotifyAdapter_SearchAlbum(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			a := &SpotifyAdapter{
-				client: &spotifyClientMock{},
-			}
+			a := newSpotifyAdapter(&spotifyClientMock{})
 
 			result, err := a.SearchAlbum(tt.artistName, tt.searchName)
 
@@ -263,59 +310,4 @@ func TestSpotifyAdapter_SearchAlbum(t *testing.T) {
 			require.Equal(t, tt.expectedTrack, result)
 		})
 	}
-}
-
-type spotifyClientMock struct{}
-
-func (c *spotifyClientMock) GetTrack(id string) (*spotify.Track, error) {
-	if id != "sampleID" {
-		return nil, nil
-	}
-	return &spotify.Track{
-		ID:   id,
-		Name: "sample name",
-		Artists: []spotify.Artist{
-			{Name: "sample artist"},
-		},
-	}, nil
-}
-
-func (c *spotifyClientMock) SearchTrack(artistName, trackName string) (*spotify.Track, error) {
-	if artistName != "sample artist" || trackName != "sample name" {
-		return nil, nil
-	}
-
-	return &spotify.Track{
-		ID:   "sampleID",
-		Name: "sample name",
-		Artists: []spotify.Artist{
-			{Name: "sample artist"},
-		},
-	}, nil
-}
-
-func (c *spotifyClientMock) GetAlbum(id string) (*spotify.Album, error) {
-	if id != "sampleID" {
-		return nil, nil
-	}
-	return &spotify.Album{
-		ID:   id,
-		Name: "sample name",
-		Artists: []spotify.Artist{
-			{Name: "sample artist"},
-		},
-	}, nil
-}
-
-func (c *spotifyClientMock) SearchAlbum(artistName, albumName string) (*spotify.Album, error) {
-	if artistName != "sample artist" || albumName != "sample name" {
-		return nil, nil
-	}
-	return &spotify.Album{
-		ID:   "sampleID",
-		Name: "sample name",
-		Artists: []spotify.Artist{
-			{Name: "sample artist"},
-		},
-	}, nil
 }

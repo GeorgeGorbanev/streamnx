@@ -27,7 +27,7 @@ func convertTrackMenu(track *music.Track) (*telebot.ReplyMarkup, error) {
 		}
 
 		buttons = append(buttons, telebot.InlineButton{
-			Text: string(buttonParams.Target),
+			Text: buttonParams.Target.Name(),
 			Data: cbData.Marshal(),
 		})
 	}
@@ -59,7 +59,7 @@ func convertAlbumMenu(album *music.Album) (*telebot.ReplyMarkup, error) {
 		}
 
 		buttons = append(buttons, telebot.InlineButton{
-			Text: string(buttonParams.Target),
+			Text: buttonParams.Target.Name(),
 			Data: cbData.Marshal(),
 		})
 	}

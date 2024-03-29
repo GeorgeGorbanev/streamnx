@@ -5,7 +5,7 @@ import (
 
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/music"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/yandex"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/youtube"
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
 	"github.com/GeorgeGorbanev/vibeshare/tests/utils"
 
@@ -13,7 +13,7 @@ import (
 	"github.com/tucnak/telebot"
 )
 
-func TestText_YandexTrackLink(t *testing.T) {
+func TestText_YoutubeTrackLink(t *testing.T) {
 	tests := []struct {
 		name                string
 		input               string
@@ -22,72 +22,76 @@ func TestText_YandexTrackLink(t *testing.T) {
 		fixturesMap         utils.FixturesMap
 	}{
 		{
-			name:         "when yandex music track link given and track found with .ru",
-			input:        "prfx https://music.yandex.ru/album/3192570/track/354093?query=sample",
+			name:         "when youtube track regular link given and track found",
+			input:        "https://www.youtube.com/watch?v=hbe3CQamF8k",
 			expectedText: "Select target link provider",
 			expectedReplyMarkup: &telebot.ReplyMarkup{
 				InlineKeyboard: [][]telebot.InlineButton{
 					{
 						{
 							Text: "Spotify",
-							Data: "convert_track/yandex/354093/spotify",
+							Data: "convert_track/youtube/hbe3CQamF8k/spotify",
 						},
 						{
-							Text: "Youtube",
-							Data: "convert_track/yandex/354093/youtube",
+							Text: "Yandex",
+							Data: "convert_track/youtube/hbe3CQamF8k/yandex",
 						},
 					},
 				},
 			},
 			fixturesMap: utils.FixturesMap{
-				YandexTracks: map[string][]byte{
-					"354093": fixture.Read("yandex/get_track_massive_attack_angel.json"),
+				YoutubeTracks: map[string][]byte{
+					"hbe3CQamF8k": fixture.Read("youtube/get_track_massive_attack_angel.json"),
 				},
 			},
 		},
 		{
-			name:         "when yandex music track link given and track found with .com",
-			input:        "https://music.yandex.com/album/3192570/track/354093",
+			name:         "when youtube track short link given and track found",
+			input:        "https://www.youtu.be/hbe3CQamF8k",
 			expectedText: "Select target link provider",
 			expectedReplyMarkup: &telebot.ReplyMarkup{
 				InlineKeyboard: [][]telebot.InlineButton{
 					{
 						{
 							Text: "Spotify",
-							Data: "convert_track/yandex/354093/spotify",
+							Data: "convert_track/youtube/hbe3CQamF8k/spotify",
 						},
 						{
-							Text: "Youtube",
-							Data: "convert_track/yandex/354093/youtube",
+							Text: "Yandex",
+							Data: "convert_track/youtube/hbe3CQamF8k/yandex",
 						},
 					},
 				},
 			},
 			fixturesMap: utils.FixturesMap{
-				YandexTracks: map[string][]byte{
-					"354093": fixture.Read("yandex/get_track_massive_attack_angel.json"),
+				YoutubeTracks: map[string][]byte{
+					"hbe3CQamF8k": fixture.Read("youtube/get_track_massive_attack_angel.json"),
 				},
 			},
 		},
 		{
-			name:         "when yandex music track link given and track not found",
-			input:        "prfx https://music.yandex.ru/album/3192570/track/0",
-			expectedText: "Link is invalid",
-			fixturesMap:  utils.FixturesMap{},
+			name:                "when youtube track regular link given and track found",
+			input:               "https://www.youtube.com/watch?v=notFound",
+			expectedText:        "No supported link found",
+			expectedReplyMarkup: nil,
+			fixturesMap: utils.FixturesMap{
+				YoutubeTracks: map[string][]byte{
+					"notFound": fixture.Read("youtube/get_not_found.json"),
+				},
+			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			youtubeAPIServerMock := utils.NewYoutubeAPIServerMock(t, tt.fixturesMap)
+			defer youtubeAPIServerMock.Close()
+
 			senderMock := utils.NewTelegramSenderMock()
-
-			yandexMockServer := utils.NewYandexAPIServerMock(t, tt.fixturesMap)
-			defer yandexMockServer.Close()
-
-			yandexClient := yandex.NewHTTPClient(yandex.WithAPIURL(yandexMockServer.URL))
+			youtubeClient := youtube.NewHTTPClient(utils.YoutubeAPIKey, youtube.WithAPIURL(youtubeAPIServerMock.URL))
 
 			vs := vibeshare.NewVibeshare(&vibeshare.Input{
 				MusicRegistry: music.NewRegistry(&music.RegistryInput{
-					YandexClient: yandexClient,
+					YoutubeClient: youtubeClient,
 				}),
 				TelegramSender: senderMock,
 			})

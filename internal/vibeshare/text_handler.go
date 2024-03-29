@@ -31,6 +31,14 @@ func (vs *Vibeshare) yandexAlbumLink(inMsg *telebot.Message) {
 	vs.albumLink(music.Yandex, inMsg)
 }
 
+func (vs *Vibeshare) youtubeTrackLink(inMsg *telebot.Message) {
+	vs.trackLink(music.Youtube, inMsg)
+}
+
+func (vs *Vibeshare) youtubeAlbumLink(inMsg *telebot.Message) {
+	vs.albumLink(music.Youtube, inMsg)
+}
+
 func (vs *Vibeshare) textNotFoundHandler(inMsg *telebot.Message) {
 	vs.respond(&telegram.Message{To: inMsg.Sender, Text: "No supported link found"})
 }

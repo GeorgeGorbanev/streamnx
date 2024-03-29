@@ -20,6 +20,10 @@ func TestIsValidProvider(t *testing.T) {
 			expected: true,
 		},
 		{
+			provider: Youtube,
+			expected: true,
+		},
+		{
 			provider: Provider("not provider"),
 			expected: false,
 		},
@@ -44,6 +48,10 @@ func TestProvider_Name(t *testing.T) {
 		{
 			provider: Yandex,
 			expected: "Yandex",
+		},
+		{
+			provider: Youtube,
+			expected: "Youtube",
 		},
 	}
 	for _, tt := range tests {

@@ -3,9 +3,6 @@ package texts
 import (
 	"testing"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/music"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/yandex"
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
 	"github.com/GeorgeGorbanev/vibeshare/tests/utils"
 
@@ -78,23 +75,10 @@ func TestText_YandexTrackLink(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			senderMock := utils.NewTelegramSenderMock()
+			fixturesMap.Merge(&tt.fixturesMap)
+			defer fixturesMap.Reset()
+			defer senderMock.Reset()
 
-			yandexMockServer := utils.NewYandexAPIServerMock(t, tt.fixturesMap)
-			defer yandexMockServer.Close()
-
-			yandexClient := yandex.NewHTTPClient(yandex.WithAPIURL(yandexMockServer.URL))
-
-			vs := vibeshare.NewVibeshare(&vibeshare.Input{
-				MusicRegistry: music.NewRegistry(&music.RegistryInput{
-					YandexClient: yandexClient,
-				}),
-				TelegramSender: senderMock,
-			})
-
-			user := &telebot.User{
-				Username: "sample_username",
-			}
 			msg := &telebot.Message{
 				Sender: user,
 				Text:   tt.input,
@@ -102,6 +86,7 @@ func TestText_YandexTrackLink(t *testing.T) {
 
 			vs.TextHandler(msg)
 
+			require.NotNil(t, senderMock.Response)
 			require.Equal(t, user, senderMock.Response.To)
 			require.Equal(t, tt.expectedText, senderMock.Response.Text)
 			require.Equal(t, tt.expectedReplyMarkup, senderMock.Response.ReplyMarkup)

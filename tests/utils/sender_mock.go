@@ -17,3 +17,7 @@ func (t *TelegramSenderMock) Send(msg *telegram.Message) (*telebot.Message, erro
 	t.Response = msg
 	return &telebot.Message{}, nil
 }
+
+func (t *TelegramSenderMock) Reset() {
+	t.Response = nil
+}

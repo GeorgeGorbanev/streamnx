@@ -64,7 +64,7 @@ func NewAppleAPIServerMock(fm *fixture.FixturesMap) *httptest.Server {
 			if response, ok = fm.AppleTracks[string(trackID)]; !ok {
 				status = http.StatusNotFound
 			}
-		case r.URL.Path == "/v1/catalog/us/search/suggestions":
+		case r.URL.Path == "/v1/catalog/us/search":
 			term := r.URL.Query().Get("term")
 			found := false
 

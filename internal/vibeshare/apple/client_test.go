@@ -109,21 +109,29 @@ func TestHTTPClient_SearchTrack(t *testing.T) {
 				require.Equal(t, http.MethodGet, r.Method)
 				require.Equal(t, "Bearer tokenMock", r.Header.Get("Authorization"))
 				require.Equal(t, "https://music.apple.com", r.Header.Get("Origin"))
-				require.Equal(t, "/v1/catalog/us/search/suggestions", r.URL.Path)
+				require.Equal(t, "/v1/catalog/us/search", r.URL.Path)
 
 				q := r.URL.Query()
+				require.Equal(t, "c", q.Get("art[music-videos:url]"))
 				require.Equal(t, "f", q.Get("art[url]"))
-				require.Equal(t, "artwork,name,playParams,url,artistName", q.Get("fields[albums]"))
+				require.Equal(t, "artistUrl", q.Get("extend"))
 				require.Equal(t, "url,name,artwork", q.Get("fields[artists]"))
 				require.Equal(t, "map", q.Get("format[resources]"))
-				require.Equal(t, "terms,topResults", q.Get("kinds"))
+				require.Equal(t, "artists", q.Get("include[albums]"))
+				require.Equal(t, "artists", q.Get("include[music-videos]"))
+				require.Equal(t, "artists", q.Get("include[songs]"))
+				require.Equal(t, "radio-show", q.Get("include[stations]"))
 				require.Equal(t, "en-US", q.Get("l"))
-				require.Equal(t, "5", q.Get("limit[results:terms]"))
-				require.Equal(t, "10", q.Get("limit[results:topResults]"))
+				require.Equal(t, "21", q.Get("limit"))
 				require.Equal(t, "autos", q.Get("omit[resource]"))
 				require.Equal(t, "web", q.Get("platform"))
-				require.Equal(t, "activities,albums,artists,editorial-items,music-movies,music-videos,"+
-					"playlists,record-labels,songs,stations,tv-episodes", q.Get("types"))
+				require.Equal(t, "artists", q.Get("relate[albums]"))
+				require.Equal(t, "albums", q.Get("relate[songs]"))
+				require.Equal(t, "artistName,artistUrl,artwork,contentRating,editorialArtwork,editorialNotes,name,"+
+					"playParams,releaseDate,url,trackCount", q.Get("fields[albums]"))
+				require.Equal(t, "activities,albums,apple-curators,artists,curators,editorial-items,music-movies,"+
+					"music-videos,playlists,record-labels,songs,stations,tv-episodes,uploaded-videos", q.Get("types"))
+				require.Equal(t, "lyricHighlights,lyrics,serverBubbles", q.Get("with"))
 
 				var resp string
 				if q.Get("term") == "foundArtistName foundTrackName" {
@@ -262,21 +270,29 @@ func TestHTTPClient_SearchAlbum(t *testing.T) {
 				require.Equal(t, http.MethodGet, r.Method)
 				require.Equal(t, "Bearer tokenMock", r.Header.Get("Authorization"))
 				require.Equal(t, "https://music.apple.com", r.Header.Get("Origin"))
-				require.Equal(t, "/v1/catalog/us/search/suggestions", r.URL.Path)
+				require.Equal(t, "/v1/catalog/us/search", r.URL.Path)
 
 				q := r.URL.Query()
+				require.Equal(t, "c", q.Get("art[music-videos:url]"))
 				require.Equal(t, "f", q.Get("art[url]"))
-				require.Equal(t, "artwork,name,playParams,url,artistName", q.Get("fields[albums]"))
+				require.Equal(t, "artistUrl", q.Get("extend"))
 				require.Equal(t, "url,name,artwork", q.Get("fields[artists]"))
 				require.Equal(t, "map", q.Get("format[resources]"))
-				require.Equal(t, "terms,topResults", q.Get("kinds"))
+				require.Equal(t, "artists", q.Get("include[albums]"))
+				require.Equal(t, "artists", q.Get("include[music-videos]"))
+				require.Equal(t, "artists", q.Get("include[songs]"))
+				require.Equal(t, "radio-show", q.Get("include[stations]"))
 				require.Equal(t, "en-US", q.Get("l"))
-				require.Equal(t, "5", q.Get("limit[results:terms]"))
-				require.Equal(t, "10", q.Get("limit[results:topResults]"))
+				require.Equal(t, "21", q.Get("limit"))
 				require.Equal(t, "autos", q.Get("omit[resource]"))
 				require.Equal(t, "web", q.Get("platform"))
-				require.Equal(t, "activities,albums,artists,editorial-items,music-movies,music-videos,"+
-					"playlists,record-labels,songs,stations,tv-episodes", q.Get("types"))
+				require.Equal(t, "artists", q.Get("relate[albums]"))
+				require.Equal(t, "albums", q.Get("relate[songs]"))
+				require.Equal(t, "artistName,artistUrl,artwork,contentRating,editorialArtwork,editorialNotes,name,"+
+					"playParams,releaseDate,url,trackCount", q.Get("fields[albums]"))
+				require.Equal(t, "activities,albums,apple-curators,artists,curators,editorial-items,music-movies,"+
+					"music-videos,playlists,record-labels,songs,stations,tv-episodes,uploaded-videos", q.Get("types"))
+				require.Equal(t, "lyricHighlights,lyrics,serverBubbles", q.Get("with"))
 
 				var resp string
 				if q.Get("term") == "foundArtistName foundAlbumName" {
@@ -352,19 +368,27 @@ func Test_searchQuery(t *testing.T) {
 	sampleTerm := "sample term"
 	result := searchQuery(sampleTerm)
 
-	resultQuery, err := url.ParseQuery(result)
+	q, err := url.ParseQuery(result)
 	require.NoError(t, err)
-	require.Equal(t, sampleTerm, resultQuery.Get("term"))
-	require.Equal(t, "f", resultQuery.Get("art[url]"))
-	require.Equal(t, "artwork,name,playParams,url,artistName", resultQuery.Get("fields[albums]"))
-	require.Equal(t, "url,name,artwork", resultQuery.Get("fields[artists]"))
-	require.Equal(t, "map", resultQuery.Get("format[resources]"))
-	require.Equal(t, "terms,topResults", resultQuery.Get("kinds"))
-	require.Equal(t, "en-US", resultQuery.Get("l"))
-	require.Equal(t, "5", resultQuery.Get("limit[results:terms]"))
-	require.Equal(t, "10", resultQuery.Get("limit[results:topResults]"))
-	require.Equal(t, "autos", resultQuery.Get("omit[resource]"))
-	require.Equal(t, "web", resultQuery.Get("platform"))
-	require.Equal(t, "activities,albums,artists,editorial-items,music-movies,music-videos,"+
-		"playlists,record-labels,songs,stations,tv-episodes", resultQuery.Get("types"))
+	require.Equal(t, sampleTerm, q.Get("term"))
+	require.Equal(t, "c", q.Get("art[music-videos:url]"))
+	require.Equal(t, "f", q.Get("art[url]"))
+	require.Equal(t, "artistUrl", q.Get("extend"))
+	require.Equal(t, "url,name,artwork", q.Get("fields[artists]"))
+	require.Equal(t, "map", q.Get("format[resources]"))
+	require.Equal(t, "artists", q.Get("include[albums]"))
+	require.Equal(t, "artists", q.Get("include[music-videos]"))
+	require.Equal(t, "artists", q.Get("include[songs]"))
+	require.Equal(t, "radio-show", q.Get("include[stations]"))
+	require.Equal(t, "en-US", q.Get("l"))
+	require.Equal(t, "21", q.Get("limit"))
+	require.Equal(t, "autos", q.Get("omit[resource]"))
+	require.Equal(t, "web", q.Get("platform"))
+	require.Equal(t, "artists", q.Get("relate[albums]"))
+	require.Equal(t, "albums", q.Get("relate[songs]"))
+	require.Equal(t, "artistName,artistUrl,artwork,contentRating,editorialArtwork,editorialNotes,name,"+
+		"playParams,releaseDate,url,trackCount", q.Get("fields[albums]"))
+	require.Equal(t, "activities,albums,apple-curators,artists,curators,editorial-items,music-movies,"+
+		"music-videos,playlists,record-labels,songs,stations,tv-episodes,uploaded-videos", q.Get("types"))
+	require.Equal(t, "lyricHighlights,lyrics,serverBubbles", q.Get("with"))
 }

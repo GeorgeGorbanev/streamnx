@@ -99,7 +99,7 @@ func (c *HTTPClient) SearchTrack(artistName, trackName string) (*MusicEntity, er
 		c.token = token
 	}
 
-	searchURL := fmt.Sprintf(`%s/v1/catalog/us/search/suggestions?%s`, c.apiURL, searchQuery(artistName+" "+trackName))
+	searchURL := fmt.Sprintf(`%s/v1/catalog/us/search?%s`, c.apiURL, searchQuery(artistName+" "+trackName))
 	req, err := c.newAPIRequest(searchURL)
 	if err != nil {
 		return nil, err
@@ -169,7 +169,7 @@ func (c *HTTPClient) SearchAlbum(artistName, albumName string) (*MusicEntity, er
 		c.token = token
 	}
 
-	searchURL := fmt.Sprintf(`%s/v1/catalog/us/search/suggestions?%s`, c.apiURL, searchQuery(artistName+" "+albumName))
+	searchURL := fmt.Sprintf(`%s/v1/catalog/us/search?%s`, c.apiURL, searchQuery(artistName+" "+albumName))
 	req, err := c.newAPIRequest(searchURL)
 	if err != nil {
 		return nil, err
@@ -252,18 +252,24 @@ func searchQuery(term string) string {
 	query := url.Values{}
 
 	query.Set("term", term)
+	query.Set("art[music-videos:url]", "c")
 	query.Set("art[url]", "f")
-	query.Set("fields[albums]", "artwork,name,playParams,url,artistName")
+	query.Set("extend", "artistUrl")
+	query.Set("fields[albums]", "artistName,artistUrl,artwork,contentRating,editorialArtwork,editorialNotes,name,playParams,releaseDate,url,trackCount")
 	query.Set("fields[artists]", "url,name,artwork")
 	query.Set("format[resources]", "map")
-	query.Set("kinds", "terms,topResults")
+	query.Set("include[albums]", "artists")
+	query.Set("include[music-videos]", "artists")
+	query.Set("include[songs]", "artists")
+	query.Set("include[stations]", "radio-show")
 	query.Set("l", "en-US")
-	query.Set("limit[results:terms]", "5")
-	query.Set("limit[results:topResults]", "10")
+	query.Set("limit", "21")
 	query.Set("omit[resource]", "autos")
 	query.Set("platform", "web")
-	query.Set("types", "activities,albums,artists,editorial-items,music-movies,"+
-		"music-videos,playlists,record-labels,songs,stations,tv-episodes")
+	query.Set("relate[albums]", "artists")
+	query.Set("relate[songs]", "albums")
+	query.Set("types", "activities,albums,apple-curators,artists,curators,editorial-items,music-movies,music-videos,playlists,record-labels,songs,stations,tv-episodes,uploaded-videos")
+	query.Set("with", "lyricHighlights,lyrics,serverBubbles")
 
 	return query.Encode()
 }

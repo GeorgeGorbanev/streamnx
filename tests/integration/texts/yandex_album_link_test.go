@@ -4,8 +4,6 @@ import (
 	"testing"
 
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
-	"github.com/GeorgeGorbanev/vibeshare/tests/utils"
-
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"
 )
@@ -16,7 +14,7 @@ func TestText_YandexAlbumLink(t *testing.T) {
 		input               string
 		expectedText        string
 		expectedReplyMarkup *telebot.ReplyMarkup
-		fixturesMap         utils.FixturesMap
+		fixturesMap         fixture.FixturesMap
 	}{
 		{
 			name:         "when yandex music album link given and album found",
@@ -25,6 +23,10 @@ func TestText_YandexAlbumLink(t *testing.T) {
 			expectedReplyMarkup: &telebot.ReplyMarkup{
 				InlineKeyboard: [][]telebot.InlineButton{
 					{
+						{
+							Text: "Apple",
+							Data: "cnval/ya/3389008/ap",
+						},
 						{
 							Text: "Spotify",
 							Data: "cnval/ya/3389008/sf",
@@ -36,7 +38,7 @@ func TestText_YandexAlbumLink(t *testing.T) {
 					},
 				},
 			},
-			fixturesMap: utils.FixturesMap{
+			fixturesMap: fixture.FixturesMap{
 				YandexAlbums: map[string][]byte{
 					"3389008": fixture.Read("yandex/get_album_radiohead_amnesiac.json"),
 				},
@@ -46,7 +48,7 @@ func TestText_YandexAlbumLink(t *testing.T) {
 			name:         "when yandex music album link given and yandex music album not found",
 			input:        "https://music.yandex.com/album/0",
 			expectedText: "Link is invalid",
-			fixturesMap:  utils.FixturesMap{},
+			fixturesMap:  fixture.FixturesMap{},
 		},
 	}
 	for _, tt := range tests {

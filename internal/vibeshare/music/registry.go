@@ -1,6 +1,7 @@
 package music
 
 import (
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/apple"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/yandex"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/youtube"
@@ -37,6 +38,7 @@ type Album struct {
 }
 
 type RegistryInput struct {
+	AppleClient   apple.Client
 	SpotifyClient spotify.Client
 	YandexClient  yandex.Client
 	YoutubeClient youtube.Client
@@ -45,6 +47,7 @@ type RegistryInput struct {
 func NewRegistry(input *RegistryInput) *Registry {
 	return &Registry{
 		adapters: map[string]Adapter{
+			Apple.Code:   newAppleAdapter(input.AppleClient),
 			Spotify.Code: newSpotifyAdapter(input.SpotifyClient),
 			Yandex.Code:  newYandexAdapter(input.YandexClient),
 			Youtube.Code: newYoutubeAdapter(input.YoutubeClient),

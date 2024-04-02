@@ -4,8 +4,6 @@ import (
 	"testing"
 
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
-	"github.com/GeorgeGorbanev/vibeshare/tests/utils"
-
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"
 )
@@ -16,7 +14,7 @@ func TestText_YoutubeAlbumLink(t *testing.T) {
 		input               string
 		expectedText        string
 		expectedReplyMarkup *telebot.ReplyMarkup
-		fixturesMap         utils.FixturesMap
+		fixturesMap         fixture.FixturesMap
 	}{
 		{
 			name:         "when youtube album regular link given and album found",
@@ -25,6 +23,10 @@ func TestText_YoutubeAlbumLink(t *testing.T) {
 			expectedReplyMarkup: &telebot.ReplyMarkup{
 				InlineKeyboard: [][]telebot.InlineButton{
 					{
+						{
+							Text: "Apple",
+							Data: "cnval/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/ap",
+						},
 						{
 							Text: "Spotify",
 							Data: "cnval/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/sf",
@@ -36,7 +38,7 @@ func TestText_YoutubeAlbumLink(t *testing.T) {
 					},
 				},
 			},
-			fixturesMap: utils.FixturesMap{
+			fixturesMap: fixture.FixturesMap{
 				YoutubeAlbums: map[string][]byte{
 					"PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C": fixture.Read(
 						"youtube/get_album_radiohead_amnesiac.json",
@@ -52,6 +54,10 @@ func TestText_YoutubeAlbumLink(t *testing.T) {
 				InlineKeyboard: [][]telebot.InlineButton{
 					{
 						{
+							Text: "Apple",
+							Data: "cnval/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/ap",
+						},
+						{
 							Text: "Spotify",
 							Data: "cnval/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/sf",
 						},
@@ -62,7 +68,7 @@ func TestText_YoutubeAlbumLink(t *testing.T) {
 					},
 				},
 			},
-			fixturesMap: utils.FixturesMap{
+			fixturesMap: fixture.FixturesMap{
 				YoutubeAlbums: map[string][]byte{
 					"PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C": fixture.Read(
 						"youtube/get_album_radiohead_amnesiac.json",
@@ -75,7 +81,7 @@ func TestText_YoutubeAlbumLink(t *testing.T) {
 			input:               "https://www.youtube.com/watch?v=notFound",
 			expectedText:        "No supported link found",
 			expectedReplyMarkup: nil,
-			fixturesMap: utils.FixturesMap{
+			fixturesMap: fixture.FixturesMap{
 				YoutubeTracks: map[string][]byte{
 					"notFound": fixture.Read("youtube/not_found.json"),
 				},

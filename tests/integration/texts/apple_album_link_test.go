@@ -8,7 +8,7 @@ import (
 	"github.com/tucnak/telebot"
 )
 
-func TestText_SpotifyTrackLink(t *testing.T) {
+func TestText_AppleAlbumLink(t *testing.T) {
 	tests := []struct {
 		name                string
 		input               string
@@ -17,36 +17,36 @@ func TestText_SpotifyTrackLink(t *testing.T) {
 		fixturesMap         fixture.FixturesMap
 	}{
 		{
-			name:         "when spotify track link given and track found",
-			input:        "prfx https://open.spotify.com/track/7uv632EkfwYhXoqf8rhYrg?sample=query",
+			name:         "when apple album link given and album found",
+			input:        "https://music.apple.com/us/album/amnesiac/1097864180",
 			expectedText: "Select target link provider",
 			expectedReplyMarkup: &telebot.ReplyMarkup{
 				InlineKeyboard: [][]telebot.InlineButton{
 					{
 						{
-							Text: "Apple",
-							Data: "cnvtr/sf/7uv632EkfwYhXoqf8rhYrg/ap",
+							Text: "Spotify",
+							Data: "cnval/ap/1097864180/sf",
 						},
 						{
 							Text: "Yandex",
-							Data: "cnvtr/sf/7uv632EkfwYhXoqf8rhYrg/ya",
+							Data: "cnval/ap/1097864180/ya",
 						},
 						{
 							Text: "Youtube",
-							Data: "cnvtr/sf/7uv632EkfwYhXoqf8rhYrg/yt",
+							Data: "cnval/ap/1097864180/yt",
 						},
 					},
 				},
 			},
 			fixturesMap: fixture.FixturesMap{
-				SpotifyTracks: map[string][]byte{
-					"7uv632EkfwYhXoqf8rhYrg": fixture.Read("spotify/get_track_massive_attack_angel.json"),
+				AppleAlbums: map[string][]byte{
+					"1097864180": fixture.Read("apple/get_album_radiohead_amnesiac.json"),
 				},
 			},
 		},
 		{
-			name:         "when spotify track link given and track not found",
-			input:        "https://open.spotify.com/track/0?sample=query",
+			name:         "when apple album link given and spotify album not found",
+			input:        "https://music.apple.com/us/album/amnesiac/0",
 			expectedText: "Link is invalid",
 			fixturesMap:  fixture.FixturesMap{},
 		},

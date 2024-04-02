@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
-	"github.com/GeorgeGorbanev/vibeshare/tests/utils"
 
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"
@@ -15,13 +14,13 @@ func TestCallback_ConvertTrackYoutubeToSpotify(t *testing.T) {
 		name         string
 		input        string
 		expectedText string
-		fixturesMap  utils.FixturesMap
+		fixturesMap  fixture.FixturesMap
 	}{
 		{
 			name:         "when youtube track link given and spotify track found",
 			input:        "cnvtr/yt/hbe3CQamF8k/sf",
 			expectedText: "https://open.spotify.com/track/7uv632EkfwYhXoqf8rhYrg",
-			fixturesMap: utils.FixturesMap{
+			fixturesMap: fixture.FixturesMap{
 				YoutubeTracks: map[string][]byte{
 					"hbe3CQamF8k": fixture.Read("youtube/get_track_massive_attack_angel.json"),
 				},
@@ -32,10 +31,10 @@ func TestCallback_ConvertTrackYoutubeToSpotify(t *testing.T) {
 			},
 		},
 		{
-			name:         "when yotube track link given and spotify track not found",
+			name:         "when youtube track link given and spotify track not found",
 			input:        "cnvtr/yt/hbe3CQamF8k/sf",
 			expectedText: "Track not found in Spotify",
-			fixturesMap: utils.FixturesMap{
+			fixturesMap: fixture.FixturesMap{
 				YoutubeTracks: map[string][]byte{
 					"hbe3CQamF8k": fixture.Read("youtube/get_track_massive_attack_angel.json"),
 				},
@@ -46,8 +45,8 @@ func TestCallback_ConvertTrackYoutubeToSpotify(t *testing.T) {
 			name:         "when youtube track not found",
 			input:        "cnvtr/yt/hbe3CQamF8k/sf",
 			expectedText: "",
-			fixturesMap: utils.FixturesMap{
-				SpotifyTracks:       map[string][]byte{},
+			fixturesMap: fixture.FixturesMap{
+				YoutubeTracks:       map[string][]byte{},
 				SpotifySearchTracks: map[string][]byte{},
 			},
 		},

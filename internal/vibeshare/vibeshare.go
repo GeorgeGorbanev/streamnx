@@ -3,6 +3,7 @@ package vibeshare
 import (
 	"log/slog"
 
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/apple"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/music"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
@@ -38,12 +39,18 @@ func NewVibeshare(input *Input) *Vibeshare {
 func (vs *Vibeshare) makeRouter() *telegram.Router {
 	router := telegram.NewRouter()
 
+	router.HandleText(apple.TrackRe, vs.appleTrackLink)
+	router.HandleText(apple.AlbumRe, vs.appleAlbumLink)
+
 	router.HandleText(spotify.TrackRe, vs.spotifyTrackLink)
 	router.HandleText(spotify.AlbumRe, vs.spotifyAlbumLink)
+
 	router.HandleText(yandex.TrackRe, vs.yandexTrackLink)
 	router.HandleText(yandex.AlbumRe, vs.yandexAlbumLink)
+
 	router.HandleText(youtube.VideoRe, vs.youtubeTrackLink)
 	router.HandleText(youtube.PlaylistRe, vs.youtubeAlbumLink)
+
 	router.HandleTextNotFound(vs.textNotFoundHandler)
 
 	router.HandleCallback(convertTrackCallbackRoute, vs.convertTrack)

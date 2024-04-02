@@ -4,8 +4,6 @@ import (
 	"testing"
 
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
-	"github.com/GeorgeGorbanev/vibeshare/tests/utils"
-
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"
 )
@@ -16,7 +14,7 @@ func TestText_SpotifyAlbumLink(t *testing.T) {
 		input               string
 		expectedText        string
 		expectedReplyMarkup *telebot.ReplyMarkup
-		fixturesMap         utils.FixturesMap
+		fixturesMap         fixture.FixturesMap
 	}{
 		{
 			name:         "when spotify album link given and album found",
@@ -25,6 +23,10 @@ func TestText_SpotifyAlbumLink(t *testing.T) {
 			expectedReplyMarkup: &telebot.ReplyMarkup{
 				InlineKeyboard: [][]telebot.InlineButton{
 					{
+						{
+							Text: "Apple",
+							Data: "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ap",
+						},
 						{
 							Text: "Yandex",
 							Data: "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ya",
@@ -36,7 +38,7 @@ func TestText_SpotifyAlbumLink(t *testing.T) {
 					},
 				},
 			},
-			fixturesMap: utils.FixturesMap{
+			fixturesMap: fixture.FixturesMap{
 				SpotifyAlbums: map[string][]byte{
 					"1HrMmB5useeZ0F5lHrMvl0": fixture.Read("spotify/get_album_radiohead_amnesiac.json"),
 				},
@@ -46,7 +48,7 @@ func TestText_SpotifyAlbumLink(t *testing.T) {
 			name:         "when spotify album link given and spotify album not found",
 			input:        "https://open.spotify.com/album/0",
 			expectedText: "Link is invalid",
-			fixturesMap:  utils.FixturesMap{},
+			fixturesMap:  fixture.FixturesMap{},
 		},
 	}
 	for _, tt := range tests {

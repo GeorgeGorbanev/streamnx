@@ -4,11 +4,12 @@ import (
 	"testing"
 
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
+
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"
 )
 
-func TestCallback_ConvertAlbumYandexToYoutube(t *testing.T) {
+func TestCallback_ConvertAlbumYandexToApple(t *testing.T) {
 	tests := []struct {
 		name         string
 		input        string
@@ -16,36 +17,36 @@ func TestCallback_ConvertAlbumYandexToYoutube(t *testing.T) {
 		fixturesMap  fixture.FixturesMap
 	}{
 		{
-			name:         "when yandex album link given and youtube album found",
-			input:        "cnval/ya/3389008/yt",
-			expectedText: "https://www.youtube.com/playlist?list=PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C",
+			name:         "when yandex album link given and apple album found",
+			input:        "cnval/ya/3389008/ap",
+			expectedText: "https://music.apple.com/us/album/amnesiac/1097864180",
 			fixturesMap: fixture.FixturesMap{
 				YandexAlbums: map[string][]byte{
 					"3389008": fixture.Read("yandex/get_album_radiohead_amnesiac.json"),
 				},
-				YoutubeSearchAlbums: map[string][]byte{
-					"Radiohead – Amnesiac": fixture.Read("youtube/search_album_radiohead_amnesiac.json"),
+				AppleSearchAlbums: map[string][]byte{
+					"Radiohead Amnesiac": fixture.Read("apple/search_album_radiohead_amnesiac.json"),
 				},
 			},
 		},
 		{
-			name:         "when yandex album link given and youtube album not found",
-			input:        "cnval/ya/3389008/yt",
-			expectedText: "Album not found in Youtube",
+			name:         "when yandex album link given and apple album not found",
+			input:        "cnval/ya/3389008/ap",
+			expectedText: "Album not found in Apple",
 			fixturesMap: fixture.FixturesMap{
 				YandexAlbums: map[string][]byte{
 					"3389008": fixture.Read("yandex/get_album_radiohead_amnesiac.json"),
 				},
-				YoutubeSearchAlbums: map[string][]byte{},
+				AppleSearchAlbums: map[string][]byte{},
 			},
 		},
 		{
 			name:         "when yandex album not found",
-			input:        "cnval/ya/3389008/sf",
+			input:        "cnval/ya/3389008/ap",
 			expectedText: "",
 			fixturesMap: fixture.FixturesMap{
-				YandexAlbums:        map[string][]byte{},
-				YoutubeSearchAlbums: map[string][]byte{},
+				YandexAlbums:      map[string][]byte{},
+				AppleSearchAlbums: map[string][]byte{},
 			},
 		},
 	}

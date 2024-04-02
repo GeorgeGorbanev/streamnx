@@ -9,7 +9,7 @@ import (
 	"github.com/tucnak/telebot"
 )
 
-func TestCallback_ConvertAlbumYoutubeToSpotify(t *testing.T) {
+func TestCallback_ConvertAlbumYoutubeToApple(t *testing.T) {
 	tests := []struct {
 		name         string
 		input        string
@@ -17,37 +17,37 @@ func TestCallback_ConvertAlbumYoutubeToSpotify(t *testing.T) {
 		fixturesMap  fixture.FixturesMap
 	}{
 		{
-			name:         "when youtube album link given and spotify album found",
-			input:        "cnval/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/sf",
-			expectedText: "https://open.spotify.com/album/1HrMmB5useeZ0F5lHrMvl0",
+			name:         "when youtube album link given and apple album found",
+			input:        "cnval/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/ap",
+			expectedText: "https://music.apple.com/us/album/amnesiac/1097864180",
 			fixturesMap: fixture.FixturesMap{
 				YoutubeAlbums: map[string][]byte{
 					"PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C": fixture.Read("youtube/get_album_radiohead_amnesiac.json"),
 				},
 				// TODO: fix adapter query
-				SpotifySearchAlbums: map[string][]byte{
-					"artist:Radiohead Amnesiac (2001) album:": fixture.Read("spotify/search_album_radiohead_amnesiac.json"),
+				AppleSearchAlbums: map[string][]byte{
+					"Radiohead Amnesiac (2001) ": fixture.Read("apple/search_album_radiohead_amnesiac.json"),
 				},
 			},
 		},
 		{
-			name:         "when youtube album link given and spotify album not found",
-			input:        "cnval/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/sf",
-			expectedText: "Album not found in Spotify",
+			name:         "when youtube album link given and apple album not found",
+			input:        "cnval/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/ap",
+			expectedText: "Album not found in Apple",
 			fixturesMap: fixture.FixturesMap{
 				YoutubeAlbums: map[string][]byte{
 					"PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C": fixture.Read("youtube/get_album_radiohead_amnesiac.json"),
 				},
-				SpotifySearchAlbums: map[string][]byte{},
+				AppleSearchAlbums: map[string][]byte{},
 			},
 		},
 		{
 			name:         "when youtube album not found",
-			input:        "cnval/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/sf",
+			input:        "cnval/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/ap",
 			expectedText: "",
 			fixturesMap: fixture.FixturesMap{
-				YoutubeAlbums:       map[string][]byte{},
-				SpotifySearchAlbums: map[string][]byte{},
+				YoutubeAlbums:     map[string][]byte{},
+				AppleSearchAlbums: map[string][]byte{},
 			},
 		},
 	}

@@ -12,6 +12,10 @@ func TestFindProviderByCode(t *testing.T) {
 		want *Provider
 	}{
 		{
+			code: "ap",
+			want: Apple,
+		},
+		{
 			code: "sf",
 			want: Spotify,
 		},

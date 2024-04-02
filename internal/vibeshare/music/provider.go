@@ -6,6 +6,10 @@ type Provider struct {
 }
 
 var (
+	Apple = &Provider{
+		Name: "Apple",
+		Code: "ap",
+	}
 	Spotify = &Provider{
 		Name: "Spotify",
 		Code: "sf",
@@ -20,6 +24,7 @@ var (
 	}
 
 	Providers = []*Provider{
+		Apple,
 		Spotify,
 		Yandex,
 		Youtube,

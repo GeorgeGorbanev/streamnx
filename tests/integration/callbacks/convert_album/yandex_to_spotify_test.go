@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
-	"github.com/GeorgeGorbanev/vibeshare/tests/utils"
 
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"
@@ -15,13 +14,13 @@ func TestCallback_ConvertAlbumYandexToSpotify(t *testing.T) {
 		name         string
 		input        string
 		expectedText string
-		fixturesMap  utils.FixturesMap
+		fixturesMap  fixture.FixturesMap
 	}{
 		{
 			name:         "when yandex album link given and spotify album found",
 			input:        "cnval/ya/3389008/sf",
 			expectedText: "https://open.spotify.com/album/1HrMmB5useeZ0F5lHrMvl0",
-			fixturesMap: utils.FixturesMap{
+			fixturesMap: fixture.FixturesMap{
 				YandexAlbums: map[string][]byte{
 					"3389008": fixture.Read("yandex/get_album_radiohead_amnesiac.json"),
 				},
@@ -34,7 +33,7 @@ func TestCallback_ConvertAlbumYandexToSpotify(t *testing.T) {
 			name:         "when yandex album link given and spotify album not found",
 			input:        "cnval/ya/3389008/sf",
 			expectedText: "Album not found in Spotify",
-			fixturesMap: utils.FixturesMap{
+			fixturesMap: fixture.FixturesMap{
 				YandexAlbums: map[string][]byte{
 					"3389008": fixture.Read("yandex/get_album_radiohead_amnesiac.json"),
 				},
@@ -45,7 +44,7 @@ func TestCallback_ConvertAlbumYandexToSpotify(t *testing.T) {
 			name:         "when yandex album not found",
 			input:        "cnval/ya/3389008/sf",
 			expectedText: "",
-			fixturesMap: utils.FixturesMap{
+			fixturesMap: fixture.FixturesMap{
 				SpotifyAlbums:      map[string][]byte{},
 				YandexSearchAlbums: map[string][]byte{},
 			},

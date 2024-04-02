@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
-	"github.com/GeorgeGorbanev/vibeshare/tests/utils"
 
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"
@@ -15,13 +14,13 @@ func TestCallback_ConvertAlbumYoutubeToYandex(t *testing.T) {
 		name         string
 		input        string
 		expectedText string
-		fixturesMap  utils.FixturesMap
+		fixturesMap  fixture.FixturesMap
 	}{
 		{
 			name:         "when youtube album link given and yandex album found",
 			input:        "cnval/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/ya",
 			expectedText: "https://music.yandex.com/album/3389008",
-			fixturesMap: utils.FixturesMap{
+			fixturesMap: fixture.FixturesMap{
 				YoutubeAlbums: map[string][]byte{
 					"PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C": fixture.Read("youtube/get_album_radiohead_amnesiac.json"),
 				},
@@ -35,7 +34,7 @@ func TestCallback_ConvertAlbumYoutubeToYandex(t *testing.T) {
 			name:         "when youtube album link given and yandex album not found",
 			input:        "cnval/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/ya",
 			expectedText: "Album not found in Yandex",
-			fixturesMap: utils.FixturesMap{
+			fixturesMap: fixture.FixturesMap{
 				YoutubeAlbums: map[string][]byte{
 					"PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C": fixture.Read("youtube/get_album_radiohead_amnesiac.json"),
 				},
@@ -46,7 +45,7 @@ func TestCallback_ConvertAlbumYoutubeToYandex(t *testing.T) {
 			name:         "when youtube album not found",
 			input:        "cnval/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/ya",
 			expectedText: "",
-			fixturesMap: utils.FixturesMap{
+			fixturesMap: fixture.FixturesMap{
 				YoutubeAlbums:      map[string][]byte{},
 				YandexSearchAlbums: map[string][]byte{},
 			},

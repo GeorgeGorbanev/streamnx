@@ -9,7 +9,7 @@ import (
 	"github.com/tucnak/telebot"
 )
 
-func TestCallback_ConvertAlbumSpotifyToYandex(t *testing.T) {
+func TestCallback_ConvertAlbumSpotifyToApple(t *testing.T) {
 	tests := []struct {
 		name         string
 		input        string
@@ -17,36 +17,36 @@ func TestCallback_ConvertAlbumSpotifyToYandex(t *testing.T) {
 		fixturesMap  fixture.FixturesMap
 	}{
 		{
-			name:         "when spotify album link given and yandex album found",
-			input:        "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ya",
-			expectedText: "https://music.yandex.com/album/3389008",
+			name:         "when spotify album link given and apple album found",
+			input:        "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ap",
+			expectedText: "https://music.apple.com/us/album/amnesiac/1097864180",
 			fixturesMap: fixture.FixturesMap{
 				SpotifyAlbums: map[string][]byte{
 					"1HrMmB5useeZ0F5lHrMvl0": fixture.Read("spotify/get_album_radiohead_amnesiac.json"),
 				},
-				YandexSearchAlbums: map[string][]byte{
-					"radiohead – amnesiac": fixture.Read("yandex/search_album_radiohead_amnesiac.json"),
+				AppleSearchAlbums: map[string][]byte{
+					"Radiohead Amnesiac": fixture.Read("apple/search_album_radiohead_amnesiac.json"),
 				},
 			},
 		},
 		{
-			name:         "when spotify album link given and yandex album not found",
-			input:        "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ya",
-			expectedText: "Album not found in Yandex",
+			name:         "when spotify album link given and apple album not found",
+			input:        "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ap",
+			expectedText: "Album not found in Apple",
 			fixturesMap: fixture.FixturesMap{
 				SpotifyAlbums: map[string][]byte{
 					"1HrMmB5useeZ0F5lHrMvl0": fixture.Read("spotify/get_album_radiohead_amnesiac.json"),
 				},
-				YandexSearchAlbums: map[string][]byte{},
+				AppleSearchAlbums: map[string][]byte{},
 			},
 		},
 		{
 			name:         "when spotify album not found",
-			input:        "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ya",
+			input:        "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ap",
 			expectedText: "",
 			fixturesMap: fixture.FixturesMap{
-				SpotifyAlbums:      map[string][]byte{},
-				YandexSearchAlbums: map[string][]byte{},
+				SpotifyAlbums:     map[string][]byte{},
+				AppleSearchAlbums: map[string][]byte{},
 			},
 		},
 	}

@@ -15,6 +15,14 @@ func (vs *Vibeshare) TextHandler(inMsg *telebot.Message) {
 	vs.telegramRouter.RouteText(inMsg)
 }
 
+func (vs *Vibeshare) appleTrackLink(inMsg *telebot.Message) {
+	vs.trackLink(music.Apple, inMsg)
+}
+
+func (vs *Vibeshare) appleAlbumLink(inMsg *telebot.Message) {
+	vs.albumLink(music.Apple, inMsg)
+}
+
 func (vs *Vibeshare) spotifyTrackLink(inMsg *telebot.Message) {
 	vs.trackLink(music.Spotify, inMsg)
 }

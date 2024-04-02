@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
-	"github.com/GeorgeGorbanev/vibeshare/tests/utils"
 
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"
@@ -15,13 +14,13 @@ func TestCallback_ConvertAlbumSpotifyToYoutube(t *testing.T) {
 		name         string
 		input        string
 		expectedText string
-		fixturesMap  utils.FixturesMap
+		fixturesMap  fixture.FixturesMap
 	}{
 		{
 			name:         "when spotify album link given and youtube album found",
 			input:        "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/yt",
 			expectedText: "https://www.youtube.com/playlist?list=PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C",
-			fixturesMap: utils.FixturesMap{
+			fixturesMap: fixture.FixturesMap{
 				SpotifyAlbums: map[string][]byte{
 					"1HrMmB5useeZ0F5lHrMvl0": fixture.Read("spotify/get_album_radiohead_amnesiac.json"),
 				},
@@ -34,7 +33,7 @@ func TestCallback_ConvertAlbumSpotifyToYoutube(t *testing.T) {
 			name:         "when spotify album link given and youtube album not found",
 			input:        "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/yt",
 			expectedText: "Album not found in Youtube",
-			fixturesMap: utils.FixturesMap{
+			fixturesMap: fixture.FixturesMap{
 				SpotifyAlbums: map[string][]byte{
 					"1HrMmB5useeZ0F5lHrMvl0": fixture.Read("spotify/get_album_radiohead_amnesiac.json"),
 				},
@@ -43,9 +42,9 @@ func TestCallback_ConvertAlbumSpotifyToYoutube(t *testing.T) {
 		},
 		{
 			name:         "when spotify album not found",
-			input:        "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ya",
+			input:        "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/yt",
 			expectedText: "",
-			fixturesMap: utils.FixturesMap{
+			fixturesMap: fixture.FixturesMap{
 				SpotifyAlbums:       map[string][]byte{},
 				YoutubeSearchAlbums: map[string][]byte{},
 			},

@@ -9,7 +9,7 @@ import (
 	"github.com/tucnak/telebot"
 )
 
-func TestCallback_ConvertTrackSpotifyToYoutube(t *testing.T) {
+func TestCallback_ConvertTrackSpotifyToApple(t *testing.T) {
 	tests := []struct {
 		name         string
 		input        string
@@ -17,36 +17,36 @@ func TestCallback_ConvertTrackSpotifyToYoutube(t *testing.T) {
 		fixturesMap  fixture.FixturesMap
 	}{
 		{
-			name:         "when spotify track link given and youtube track found",
-			input:        "cnvtr/sf/7uv632EkfwYhXoqf8rhYrg/yt",
-			expectedText: "https://www.youtube.com/watch?v=hbe3CQamF8k",
+			name:         "when spotify track link given and apple track found",
+			input:        "cnvtr/sf/7uv632EkfwYhXoqf8rhYrg/ap",
+			expectedText: "https://music.apple.com/us/album/angel/724466069?i=724466660",
 			fixturesMap: fixture.FixturesMap{
 				SpotifyTracks: map[string][]byte{
 					"7uv632EkfwYhXoqf8rhYrg": fixture.Read("spotify/get_track_massive_attack_angel.json"),
 				},
-				YoutubeSearchTracks: map[string][]byte{
-					"Massive Attack – Angel": fixture.Read("youtube/search_track_massive_attack_angel.json"),
+				AppleSearchTracks: map[string][]byte{
+					"Massive Attack Angel": fixture.Read("apple/search_track_massive_attack_angel.json"),
 				},
 			},
 		},
 		{
-			name:         "when spotify track link given and youtube track not found",
-			input:        "cnvtr/sf/7uv632EkfwYhXoqf8rhYrg/yt",
-			expectedText: "Track not found in Youtube",
+			name:         "when spotify track link given and apple track not found",
+			input:        "cnvtr/sf/7uv632EkfwYhXoqf8rhYrg/ap",
+			expectedText: "Track not found in Apple",
 			fixturesMap: fixture.FixturesMap{
 				SpotifyTracks: map[string][]byte{
 					"7uv632EkfwYhXoqf8rhYrg": fixture.Read("spotify/get_track_massive_attack_angel.json"),
 				},
-				YoutubeSearchTracks: map[string][]byte{},
+				AppleSearchTracks: map[string][]byte{},
 			},
 		},
 		{
 			name:         "when spotify track not found",
-			input:        "cnvtr/sf/7uv632EkfwYhXoqf8rhYrg/yt",
+			input:        "cnvtr/sf/7uv632EkfwYhXoqf8rhYrg/ap",
 			expectedText: "",
 			fixturesMap: fixture.FixturesMap{
-				SpotifyTracks:       map[string][]byte{},
-				YoutubeSearchTracks: map[string][]byte{},
+				SpotifyTracks:     map[string][]byte{},
+				AppleSearchTracks: map[string][]byte{},
 			},
 		},
 	}

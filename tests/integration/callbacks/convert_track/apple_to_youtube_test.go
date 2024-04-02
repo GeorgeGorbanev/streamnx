@@ -4,12 +4,12 @@ import (
 	"testing"
 
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
-	
+
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"
 )
 
-func TestCallback_ConvertTrackYandexToYoutube(t *testing.T) {
+func TestCallback_ConvertTrackAppleToYoutube(t *testing.T) {
 	tests := []struct {
 		name         string
 		input        string
@@ -17,12 +17,12 @@ func TestCallback_ConvertTrackYandexToYoutube(t *testing.T) {
 		fixturesMap  fixture.FixturesMap
 	}{
 		{
-			name:         "when yandex track link given and youtube track found",
-			input:        "cnvtr/ya/354093/yt",
+			name:         "when apple track link given and youtube track found",
+			input:        "cnvtr/ap/724466660/yt",
 			expectedText: "https://www.youtube.com/watch?v=hbe3CQamF8k",
 			fixturesMap: fixture.FixturesMap{
-				YandexTracks: map[string][]byte{
-					"354093": fixture.Read("yandex/get_track_massive_attack_angel.json"),
+				AppleTracks: map[string][]byte{
+					"724466660": fixture.Read("apple/get_track_massive_attack_angel.json"),
 				},
 				YoutubeSearchTracks: map[string][]byte{
 					"Massive Attack – Angel": fixture.Read("youtube/search_track_massive_attack_angel.json"),
@@ -30,22 +30,22 @@ func TestCallback_ConvertTrackYandexToYoutube(t *testing.T) {
 			},
 		},
 		{
-			name:         "when yandex track link given and youtube track not found",
-			input:        "cnvtr/ya/354093/yt",
+			name:         "when apple track link given and youtube track not found",
+			input:        "cnvtr/ap/724466660/yt",
 			expectedText: "Track not found in Youtube",
 			fixturesMap: fixture.FixturesMap{
-				YandexTracks: map[string][]byte{
-					"354093": fixture.Read("yandex/get_track_massive_attack_angel.json"),
+				AppleTracks: map[string][]byte{
+					"724466660": fixture.Read("apple/get_track_massive_attack_angel.json"),
 				},
 				YoutubeSearchTracks: map[string][]byte{},
 			},
 		},
 		{
-			name:         "when yandex track not found",
-			input:        "cnvtr/ya/354093/yt",
+			name:         "when apple track not found",
+			input:        "cnvtr/ap/724466660/yt",
 			expectedText: "",
 			fixturesMap: fixture.FixturesMap{
-				YandexTracks:        map[string][]byte{},
+				AppleTracks:         map[string][]byte{},
 				YoutubeSearchTracks: map[string][]byte{},
 			},
 		},

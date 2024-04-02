@@ -9,7 +9,7 @@ import (
 	"github.com/tucnak/telebot"
 )
 
-func TestCallback_ConvertAlbumSpotifyToYandex(t *testing.T) {
+func TestCallback_ConvertAlbumAppleToSpotify(t *testing.T) {
 	tests := []struct {
 		name         string
 		input        string
@@ -17,35 +17,35 @@ func TestCallback_ConvertAlbumSpotifyToYandex(t *testing.T) {
 		fixturesMap  fixture.FixturesMap
 	}{
 		{
-			name:         "when spotify album link given and yandex album found",
-			input:        "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ya",
-			expectedText: "https://music.yandex.com/album/3389008",
+			name:         "when apple album link given and spotify album found",
+			input:        "cnval/ap/1097864180/sf",
+			expectedText: "https://open.spotify.com/album/1HrMmB5useeZ0F5lHrMvl0",
 			fixturesMap: fixture.FixturesMap{
-				SpotifyAlbums: map[string][]byte{
-					"1HrMmB5useeZ0F5lHrMvl0": fixture.Read("spotify/get_album_radiohead_amnesiac.json"),
+				AppleAlbums: map[string][]byte{
+					"1097864180": fixture.Read("apple/get_album_radiohead_amnesiac.json"),
 				},
-				YandexSearchAlbums: map[string][]byte{
-					"radiohead – amnesiac": fixture.Read("yandex/search_album_radiohead_amnesiac.json"),
+				SpotifySearchAlbums: map[string][]byte{
+					"artist:Radiohead album:Amnesiac": fixture.Read("spotify/search_album_radiohead_amnesiac.json"),
 				},
 			},
 		},
 		{
-			name:         "when spotify album link given and yandex album not found",
-			input:        "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ya",
-			expectedText: "Album not found in Yandex",
+			name:         "when apple album link given and spotify album not found",
+			input:        "cnval/ap/1097864180/sf",
+			expectedText: "Album not found in Spotify",
 			fixturesMap: fixture.FixturesMap{
-				SpotifyAlbums: map[string][]byte{
-					"1HrMmB5useeZ0F5lHrMvl0": fixture.Read("spotify/get_album_radiohead_amnesiac.json"),
+				AppleAlbums: map[string][]byte{
+					"1097864180": fixture.Read("apple/get_album_radiohead_amnesiac.json"),
 				},
-				YandexSearchAlbums: map[string][]byte{},
+				SpotifySearchAlbums: map[string][]byte{},
 			},
 		},
 		{
-			name:         "when spotify album not found",
-			input:        "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ya",
+			name:         "when apple album not found",
+			input:        "cnval/ap/1097864180/sf",
 			expectedText: "",
 			fixturesMap: fixture.FixturesMap{
-				SpotifyAlbums:      map[string][]byte{},
+				AppleAlbums:        map[string][]byte{},
 				YandexSearchAlbums: map[string][]byte{},
 			},
 		},

@@ -4,8 +4,6 @@ import (
 	"testing"
 
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
-	"github.com/GeorgeGorbanev/vibeshare/tests/utils"
-
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"
 )
@@ -16,7 +14,7 @@ func TestText_YandexTrackLink(t *testing.T) {
 		input               string
 		expectedText        string
 		expectedReplyMarkup *telebot.ReplyMarkup
-		fixturesMap         utils.FixturesMap
+		fixturesMap         fixture.FixturesMap
 	}{
 		{
 			name:         "when yandex music track link given and track found with .ru",
@@ -25,6 +23,10 @@ func TestText_YandexTrackLink(t *testing.T) {
 			expectedReplyMarkup: &telebot.ReplyMarkup{
 				InlineKeyboard: [][]telebot.InlineButton{
 					{
+						{
+							Text: "Apple",
+							Data: "cnvtr/ya/354093/ap",
+						},
 						{
 							Text: "Spotify",
 							Data: "cnvtr/ya/354093/sf",
@@ -36,7 +38,7 @@ func TestText_YandexTrackLink(t *testing.T) {
 					},
 				},
 			},
-			fixturesMap: utils.FixturesMap{
+			fixturesMap: fixture.FixturesMap{
 				YandexTracks: map[string][]byte{
 					"354093": fixture.Read("yandex/get_track_massive_attack_angel.json"),
 				},
@@ -50,6 +52,10 @@ func TestText_YandexTrackLink(t *testing.T) {
 				InlineKeyboard: [][]telebot.InlineButton{
 					{
 						{
+							Text: "Apple",
+							Data: "cnvtr/ya/354093/ap",
+						},
+						{
 							Text: "Spotify",
 							Data: "cnvtr/ya/354093/sf",
 						},
@@ -60,7 +66,7 @@ func TestText_YandexTrackLink(t *testing.T) {
 					},
 				},
 			},
-			fixturesMap: utils.FixturesMap{
+			fixturesMap: fixture.FixturesMap{
 				YandexTracks: map[string][]byte{
 					"354093": fixture.Read("yandex/get_track_massive_attack_angel.json"),
 				},
@@ -70,7 +76,7 @@ func TestText_YandexTrackLink(t *testing.T) {
 			name:         "when yandex music track link given and track not found",
 			input:        "prfx https://music.yandex.ru/album/3192570/track/0",
 			expectedText: "Link is invalid",
-			fixturesMap:  utils.FixturesMap{},
+			fixturesMap:  fixture.FixturesMap{},
 		},
 	}
 	for _, tt := range tests {

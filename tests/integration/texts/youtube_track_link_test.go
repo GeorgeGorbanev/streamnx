@@ -4,8 +4,6 @@ import (
 	"testing"
 
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
-	"github.com/GeorgeGorbanev/vibeshare/tests/utils"
-
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"
 )
@@ -16,7 +14,7 @@ func TestText_YoutubeTrackLink(t *testing.T) {
 		input               string
 		expectedText        string
 		expectedReplyMarkup *telebot.ReplyMarkup
-		fixturesMap         utils.FixturesMap
+		fixturesMap         fixture.FixturesMap
 	}{
 		{
 			name:         "when youtube track regular link given and track found",
@@ -25,6 +23,10 @@ func TestText_YoutubeTrackLink(t *testing.T) {
 			expectedReplyMarkup: &telebot.ReplyMarkup{
 				InlineKeyboard: [][]telebot.InlineButton{
 					{
+						{
+							Text: "Apple",
+							Data: "cnvtr/yt/hbe3CQamF8k/ap",
+						},
 						{
 							Text: "Spotify",
 							Data: "cnvtr/yt/hbe3CQamF8k/sf",
@@ -36,7 +38,7 @@ func TestText_YoutubeTrackLink(t *testing.T) {
 					},
 				},
 			},
-			fixturesMap: utils.FixturesMap{
+			fixturesMap: fixture.FixturesMap{
 				YoutubeTracks: map[string][]byte{
 					"hbe3CQamF8k": fixture.Read("youtube/get_track_massive_attack_angel.json"),
 				},
@@ -50,6 +52,10 @@ func TestText_YoutubeTrackLink(t *testing.T) {
 				InlineKeyboard: [][]telebot.InlineButton{
 					{
 						{
+							Text: "Apple",
+							Data: "cnvtr/yt/hbe3CQamF8k/ap",
+						},
+						{
 							Text: "Spotify",
 							Data: "cnvtr/yt/hbe3CQamF8k/sf",
 						},
@@ -60,7 +66,7 @@ func TestText_YoutubeTrackLink(t *testing.T) {
 					},
 				},
 			},
-			fixturesMap: utils.FixturesMap{
+			fixturesMap: fixture.FixturesMap{
 				YoutubeTracks: map[string][]byte{
 					"hbe3CQamF8k": fixture.Read("youtube/get_track_massive_attack_angel.json"),
 				},
@@ -71,7 +77,7 @@ func TestText_YoutubeTrackLink(t *testing.T) {
 			input:               "https://www.youtube.com/watch?v=notFound",
 			expectedText:        "No supported link found",
 			expectedReplyMarkup: nil,
-			fixturesMap: utils.FixturesMap{
+			fixturesMap: fixture.FixturesMap{
 				YoutubeTracks: map[string][]byte{
 					"notFound": fixture.Read("youtube/not_found.json"),
 				},

@@ -1,0 +1,48 @@
+{
+  "results": {
+    "suggestions": [
+      {
+        "kind": "terms",
+        "searchTerm": "radiohead amnesiac",
+        "displayTerm": "radiohead amnesiac"
+      },
+      {
+        "kind": "topResults",
+        "content": {
+          "id": "1097864180",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1097864180?l=en-US"
+        }
+      }
+    ]
+  },
+  "resources": {
+    "albums": {
+      "1097864180": {
+        "id": "1097864180",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/1097864180?l=en-US",
+        "attributes": {
+          "name": "Amnesiac",
+          "artistName": "Radiohead",
+          "artwork": {
+            "width": 4000,
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/43/d8/ec/43d8ec17-0e96-dba9-21d9-4cdf9d98f2bf/634904078362.png/{w}x{h}bb.{f}",
+            "height": 4000,
+            "textColor3": "c5674d",
+            "textColor2": "f44e33",
+            "textColor4": "c33e29",
+            "textColor1": "f78160",
+            "bgColor": "000000",
+            "hasP3": false
+          },
+          "url": "https://music.apple.com/us/album/amnesiac/1097864180",
+          "playParams": {
+            "id": "1097864180",
+            "kind": "album"
+          }
+        }
+      }
+    }
+  }
+}

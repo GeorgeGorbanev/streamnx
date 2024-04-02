@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/apple"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/music"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
@@ -22,14 +23,7 @@ type config struct {
 }
 
 func main() {
-	slog.SetDefault(
-		slog.New(
-			slog.NewJSONHandler(
-				os.Stdout,
-				&slog.HandlerOptions{AddSource: true},
-			),
-		),
-	)
+	setupLogs()
 
 	if _, err := os.Stat(".env"); err == nil {
 		if err := godotenv.Load(); err != nil {
@@ -54,6 +48,17 @@ func main() {
 	bot.Start()
 }
 
+func setupLogs() {
+	slog.SetDefault(
+		slog.New(
+			slog.NewJSONHandler(
+				os.Stdout,
+				&slog.HandlerOptions{AddSource: true},
+			),
+		),
+	)
+}
+
 func newConfig() *config {
 	return &config{
 		telegramToken:       os.Getenv("TELEGRAM_TOKEN"),
@@ -66,6 +71,7 @@ func newConfig() *config {
 func newVibeshare(cfg *config, ts telegram.Sender) *vibeshare.Vibeshare {
 	return vibeshare.NewVibeshare(&vibeshare.Input{
 		MusicRegistry: music.NewRegistry(&music.RegistryInput{
+			AppleClient: apple.NewHTTPClient(),
 			SpotifyClient: spotify.NewHTTPClient(&spotify.Credentials{
 				ClientID:     cfg.spotifyClientID,
 				ClientSecret: cfg.spotifyClientSecret,

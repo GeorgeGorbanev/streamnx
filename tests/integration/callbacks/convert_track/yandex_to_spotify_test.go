@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
-	"github.com/GeorgeGorbanev/vibeshare/tests/utils"
 
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"
@@ -15,13 +14,13 @@ func TestCallback_ConvertTrackYandexToSpotify(t *testing.T) {
 		name         string
 		input        string
 		expectedText string
-		fixturesMap  utils.FixturesMap
+		fixturesMap  fixture.FixturesMap
 	}{
 		{
 			name:         "when yandex track link given and spotify track found",
 			input:        "cnvtr/ya/354093/sf",
 			expectedText: "https://open.spotify.com/track/7uv632EkfwYhXoqf8rhYrg",
-			fixturesMap: utils.FixturesMap{
+			fixturesMap: fixture.FixturesMap{
 				YandexTracks: map[string][]byte{
 					"354093": fixture.Read("yandex/get_track_massive_attack_angel.json"),
 				},
@@ -34,7 +33,7 @@ func TestCallback_ConvertTrackYandexToSpotify(t *testing.T) {
 			name:         "when yandex track link given and spotify track not found",
 			input:        "cnvtr/ya/354093/sf",
 			expectedText: "Track not found in Spotify",
-			fixturesMap: utils.FixturesMap{
+			fixturesMap: fixture.FixturesMap{
 				YandexTracks: map[string][]byte{
 					"354093": fixture.Read("yandex/get_track_massive_attack_angel.json"),
 				},
@@ -45,9 +44,9 @@ func TestCallback_ConvertTrackYandexToSpotify(t *testing.T) {
 			name:         "when yandex track not found",
 			input:        "cnvtr/ya/354093/sf",
 			expectedText: "",
-			fixturesMap: utils.FixturesMap{
-				SpotifyTracks:      map[string][]byte{},
-				YandexSearchTracks: map[string][]byte{},
+			fixturesMap: fixture.FixturesMap{
+				YandexTracks:        map[string][]byte{},
+				SpotifySearchTracks: map[string][]byte{},
 			},
 		},
 	}

@@ -1,14 +1,15 @@
-package texts
+package links
 
 import (
 	"testing"
 
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
+
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"
 )
 
-func TestText_AppleAlbumLink(t *testing.T) {
+func TestText_SpotifyTrackLink(t *testing.T) {
 	tests := []struct {
 		name                string
 		input               string
@@ -17,36 +18,36 @@ func TestText_AppleAlbumLink(t *testing.T) {
 		fixturesMap         fixture.FixturesMap
 	}{
 		{
-			name:         "when apple album link given and album found",
-			input:        "https://music.apple.com/us/album/amnesiac/1097864180",
+			name:         "when spotify track link given and track found",
+			input:        "prfx https://open.spotify.com/track/7uv632EkfwYhXoqf8rhYrg?sample=query",
 			expectedText: "Select target link provider",
 			expectedReplyMarkup: &telebot.ReplyMarkup{
 				InlineKeyboard: [][]telebot.InlineButton{
 					{
 						{
-							Text: "Spotify",
-							Data: "cnval/ap/1097864180/sf",
+							Text: "Apple",
+							Data: "cnvtr/sf/7uv632EkfwYhXoqf8rhYrg/ap",
 						},
 						{
 							Text: "Yandex",
-							Data: "cnval/ap/1097864180/ya",
+							Data: "cnvtr/sf/7uv632EkfwYhXoqf8rhYrg/ya",
 						},
 						{
 							Text: "Youtube",
-							Data: "cnval/ap/1097864180/yt",
+							Data: "cnvtr/sf/7uv632EkfwYhXoqf8rhYrg/yt",
 						},
 					},
 				},
 			},
 			fixturesMap: fixture.FixturesMap{
-				AppleAlbums: map[string][]byte{
-					"1097864180": fixture.Read("apple/get_album_radiohead_amnesiac.json"),
+				SpotifyTracks: map[string][]byte{
+					"7uv632EkfwYhXoqf8rhYrg": fixture.Read("spotify/get_track_massive_attack_angel.json"),
 				},
 			},
 		},
 		{
-			name:         "when apple album link given and spotify album not found",
-			input:        "https://music.apple.com/us/album/amnesiac/0",
+			name:         "when spotify track link given and track not found",
+			input:        "https://open.spotify.com/track/0?sample=query",
 			expectedText: "Link is invalid",
 			fixturesMap:  fixture.FixturesMap{},
 		},

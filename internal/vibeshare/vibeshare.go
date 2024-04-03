@@ -2,6 +2,7 @@ package vibeshare
 
 import (
 	"log/slog"
+	"regexp"
 
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/apple"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/music"
@@ -14,6 +15,10 @@ import (
 const (
 	convertTrackCallbackRoute = "cnvtr"
 	convertAlbumCallbackRoute = "cnval"
+)
+
+var (
+	startCommand = regexp.MustCompile("/start")
 )
 
 type Vibeshare struct {
@@ -38,6 +43,8 @@ func NewVibeshare(input *Input) *Vibeshare {
 
 func (vs *Vibeshare) makeRouter() *telegram.Router {
 	router := telegram.NewRouter()
+
+	router.HandleText(startCommand, vs.start)
 
 	router.HandleText(apple.TrackRe, vs.appleTrackLink)
 	router.HandleText(apple.AlbumRe, vs.appleAlbumLink)

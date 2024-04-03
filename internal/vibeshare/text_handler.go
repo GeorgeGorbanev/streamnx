@@ -15,6 +15,10 @@ func (vs *Vibeshare) TextHandler(inMsg *telebot.Message) {
 	vs.telegramRouter.RouteText(inMsg)
 }
 
+func (vs *Vibeshare) start(inMsg *telebot.Message) {
+	vs.respond(&telegram.Message{To: inMsg.Sender, Text: startResponse})
+}
+
 func (vs *Vibeshare) appleTrackLink(inMsg *telebot.Message) {
 	vs.trackLink(music.Apple, inMsg)
 }

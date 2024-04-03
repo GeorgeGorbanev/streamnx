@@ -1,14 +1,15 @@
-package texts
+package links
 
 import (
 	"testing"
 
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
+
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"
 )
 
-func TestText_YandexAlbumLink(t *testing.T) {
+func TestText_SpotifyAlbumLink(t *testing.T) {
 	tests := []struct {
 		name                string
 		input               string
@@ -17,36 +18,36 @@ func TestText_YandexAlbumLink(t *testing.T) {
 		fixturesMap         fixture.FixturesMap
 	}{
 		{
-			name:         "when yandex music album link given and album found",
-			input:        "https://music.yandex.com/album/3389008",
+			name:         "when spotify album link given and album found",
+			input:        "https://open.spotify.com/album/1HrMmB5useeZ0F5lHrMvl0",
 			expectedText: "Select target link provider",
 			expectedReplyMarkup: &telebot.ReplyMarkup{
 				InlineKeyboard: [][]telebot.InlineButton{
 					{
 						{
 							Text: "Apple",
-							Data: "cnval/ya/3389008/ap",
+							Data: "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ap",
 						},
 						{
-							Text: "Spotify",
-							Data: "cnval/ya/3389008/sf",
+							Text: "Yandex",
+							Data: "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ya",
 						},
 						{
 							Text: "Youtube",
-							Data: "cnval/ya/3389008/yt",
+							Data: "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/yt",
 						},
 					},
 				},
 			},
 			fixturesMap: fixture.FixturesMap{
-				YandexAlbums: map[string][]byte{
-					"3389008": fixture.Read("yandex/get_album_radiohead_amnesiac.json"),
+				SpotifyAlbums: map[string][]byte{
+					"1HrMmB5useeZ0F5lHrMvl0": fixture.Read("spotify/get_album_radiohead_amnesiac.json"),
 				},
 			},
 		},
 		{
-			name:         "when yandex music album link given and yandex music album not found",
-			input:        "https://music.yandex.com/album/0",
+			name:         "when spotify album link given and spotify album not found",
+			input:        "https://open.spotify.com/album/0",
 			expectedText: "Link is invalid",
 			fixturesMap:  fixture.FixturesMap{},
 		},

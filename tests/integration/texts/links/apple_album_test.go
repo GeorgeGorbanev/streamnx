@@ -1,14 +1,15 @@
-package texts
+package links
 
 import (
 	"testing"
 
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
+
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"
 )
 
-func TestText_SpotifyAlbumLink(t *testing.T) {
+func TestText_AppleAlbumLink(t *testing.T) {
 	tests := []struct {
 		name                string
 		input               string
@@ -17,36 +18,36 @@ func TestText_SpotifyAlbumLink(t *testing.T) {
 		fixturesMap         fixture.FixturesMap
 	}{
 		{
-			name:         "when spotify album link given and album found",
-			input:        "https://open.spotify.com/album/1HrMmB5useeZ0F5lHrMvl0",
+			name:         "when apple album link given and album found",
+			input:        "https://music.apple.com/us/album/amnesiac/1097864180",
 			expectedText: "Select target link provider",
 			expectedReplyMarkup: &telebot.ReplyMarkup{
 				InlineKeyboard: [][]telebot.InlineButton{
 					{
 						{
-							Text: "Apple",
-							Data: "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ap",
+							Text: "Spotify",
+							Data: "cnval/ap/1097864180/sf",
 						},
 						{
 							Text: "Yandex",
-							Data: "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ya",
+							Data: "cnval/ap/1097864180/ya",
 						},
 						{
 							Text: "Youtube",
-							Data: "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/yt",
+							Data: "cnval/ap/1097864180/yt",
 						},
 					},
 				},
 			},
 			fixturesMap: fixture.FixturesMap{
-				SpotifyAlbums: map[string][]byte{
-					"1HrMmB5useeZ0F5lHrMvl0": fixture.Read("spotify/get_album_radiohead_amnesiac.json"),
+				AppleAlbums: map[string][]byte{
+					"1097864180": fixture.Read("apple/get_album_radiohead_amnesiac.json"),
 				},
 			},
 		},
 		{
-			name:         "when spotify album link given and spotify album not found",
-			input:        "https://open.spotify.com/album/0",
+			name:         "when apple album link given and spotify album not found",
+			input:        "https://music.apple.com/us/album/amnesiac/0",
 			expectedText: "Link is invalid",
 			fixturesMap:  fixture.FixturesMap{},
 		},

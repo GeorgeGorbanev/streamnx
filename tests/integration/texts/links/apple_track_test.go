@@ -1,14 +1,15 @@
-package texts
+package links
 
 import (
 	"testing"
 
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
+
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"
 )
 
-func TestText_SpotifyTrackLink(t *testing.T) {
+func TestText_AppleTrackLink(t *testing.T) {
 	tests := []struct {
 		name                string
 		input               string
@@ -17,36 +18,36 @@ func TestText_SpotifyTrackLink(t *testing.T) {
 		fixturesMap         fixture.FixturesMap
 	}{
 		{
-			name:         "when spotify track link given and track found",
-			input:        "prfx https://open.spotify.com/track/7uv632EkfwYhXoqf8rhYrg?sample=query",
+			name:         "when apple track link given and track found",
+			input:        "https://music.apple.com/us/album/angel/724466069?i=724466660",
 			expectedText: "Select target link provider",
 			expectedReplyMarkup: &telebot.ReplyMarkup{
 				InlineKeyboard: [][]telebot.InlineButton{
 					{
 						{
-							Text: "Apple",
-							Data: "cnvtr/sf/7uv632EkfwYhXoqf8rhYrg/ap",
+							Text: "Spotify",
+							Data: "cnvtr/ap/724466660/sf",
 						},
 						{
 							Text: "Yandex",
-							Data: "cnvtr/sf/7uv632EkfwYhXoqf8rhYrg/ya",
+							Data: "cnvtr/ap/724466660/ya",
 						},
 						{
 							Text: "Youtube",
-							Data: "cnvtr/sf/7uv632EkfwYhXoqf8rhYrg/yt",
+							Data: "cnvtr/ap/724466660/yt",
 						},
 					},
 				},
 			},
 			fixturesMap: fixture.FixturesMap{
-				SpotifyTracks: map[string][]byte{
-					"7uv632EkfwYhXoqf8rhYrg": fixture.Read("spotify/get_track_massive_attack_angel.json"),
+				AppleTracks: map[string][]byte{
+					"724466660": fixture.Read("apple/get_track_massive_attack_angel.json"),
 				},
 			},
 		},
 		{
-			name:         "when spotify track link given and track not found",
-			input:        "https://open.spotify.com/track/0?sample=query",
+			name:         "when apple track link given and track not found",
+			input:        "https://music.apple.com/us/album/angel/724466069?i=724466660123123123123",
 			expectedText: "Link is invalid",
 			fixturesMap:  fixture.FixturesMap{},
 		},

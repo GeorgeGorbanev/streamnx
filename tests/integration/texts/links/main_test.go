@@ -1,4 +1,4 @@
-package texts
+package links
 
 import (
 	"os"

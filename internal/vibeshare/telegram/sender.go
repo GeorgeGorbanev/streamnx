@@ -23,11 +23,11 @@ func NewTelebotSender(bot *telebot.Bot) *TelebotSender {
 }
 
 func (t *TelebotSender) Send(msg *Message) (*telebot.Message, error) {
-	return t.bot.Send(msg.To, msg.Text, safeSendOptions(msg)...)
+	return t.bot.Send(msg.To, msg.Text, sendOptions(msg)...)
 }
 
-func safeSendOptions(msg *Message) []any {
-	options := []any{}
+func sendOptions(msg *Message) []any {
+	options := []any{telebot.ModeHTML}
 	if msg.ReplyMarkup != nil {
 		options = append(options, msg.ReplyMarkup)
 	}

@@ -1,14 +1,15 @@
-package texts
+package links
 
 import (
 	"testing"
 
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
+
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"
 )
 
-func TestText_AppleTrackLink(t *testing.T) {
+func TestText_YandexAlbumLink(t *testing.T) {
 	tests := []struct {
 		name                string
 		input               string
@@ -17,36 +18,36 @@ func TestText_AppleTrackLink(t *testing.T) {
 		fixturesMap         fixture.FixturesMap
 	}{
 		{
-			name:         "when apple track link given and track found",
-			input:        "https://music.apple.com/us/album/angel/724466069?i=724466660",
+			name:         "when yandex music album link given and album found",
+			input:        "https://music.yandex.com/album/3389008",
 			expectedText: "Select target link provider",
 			expectedReplyMarkup: &telebot.ReplyMarkup{
 				InlineKeyboard: [][]telebot.InlineButton{
 					{
 						{
-							Text: "Spotify",
-							Data: "cnvtr/ap/724466660/sf",
+							Text: "Apple",
+							Data: "cnval/ya/3389008/ap",
 						},
 						{
-							Text: "Yandex",
-							Data: "cnvtr/ap/724466660/ya",
+							Text: "Spotify",
+							Data: "cnval/ya/3389008/sf",
 						},
 						{
 							Text: "Youtube",
-							Data: "cnvtr/ap/724466660/yt",
+							Data: "cnval/ya/3389008/yt",
 						},
 					},
 				},
 			},
 			fixturesMap: fixture.FixturesMap{
-				AppleTracks: map[string][]byte{
-					"724466660": fixture.Read("apple/get_track_massive_attack_angel.json"),
+				YandexAlbums: map[string][]byte{
+					"3389008": fixture.Read("yandex/get_album_radiohead_amnesiac.json"),
 				},
 			},
 		},
 		{
-			name:         "when apple track link given and track not found",
-			input:        "https://music.apple.com/us/album/angel/724466069?i=724466660123123123123",
+			name:         "when yandex music album link given and yandex music album not found",
+			input:        "https://music.yandex.com/album/0",
 			expectedText: "Link is invalid",
 			fixturesMap:  fixture.FixturesMap{},
 		},

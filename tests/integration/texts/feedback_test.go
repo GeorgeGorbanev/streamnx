@@ -45,7 +45,7 @@ func TestText_Feedback(t *testing.T) {
 				},
 				{
 					To:   &feedbackAuthor,
-					Text: "Your feedback will be delivered to the author. Thank you! 🙏",
+					Text: "Your feedback will be delivered to the human. Thank you! 🙏",
 				},
 			},
 		},

@@ -26,6 +26,13 @@ func (vs *Vibeshare) feedbackCommand(inMsg *telebot.Message) {
 	vs.send(&telegram.Message{To: inMsg.Sender, Text: text})
 }
 
+func (vs *Vibeshare) whatLinks(inMsg *telebot.Message) {
+	vs.send(&telegram.Message{To: inMsg.Sender, Text: templates.WhatLinksResponse, ReplyMarkup: whatLinksMenu()})
+}
+
+func (vs *Vibeshare) skip(_ *telebot.Message) {
+}
+
 func (vs *Vibeshare) appleTrackLink(inMsg *telebot.Message) {
 	vs.trackLink(music.Apple, inMsg)
 }
@@ -59,7 +66,7 @@ func (vs *Vibeshare) youtubeAlbumLink(inMsg *telebot.Message) {
 }
 
 func (vs *Vibeshare) textNotFoundHandler(inMsg *telebot.Message) {
-	vs.send(&telegram.Message{To: inMsg.Sender, Text: "No supported link found"})
+	vs.send(&telegram.Message{To: inMsg.Sender, Text: templates.NotFound, ReplyMarkup: notFoundMenu()})
 }
 
 func (vs *Vibeshare) trackLink(provider *music.Provider, inMsg *telebot.Message) {

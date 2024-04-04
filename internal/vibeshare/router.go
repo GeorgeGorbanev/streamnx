@@ -9,6 +9,7 @@ import (
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/music"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/templates"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/yandex"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/youtube"
 )
@@ -46,6 +47,10 @@ func (vs *Vibeshare) setupVibeshareRouter() {
 
 			{Re: youtube.VideoRe, HandlerFunc: vs.youtubeTrackLink},
 			{Re: youtube.PlaylistRe, HandlerFunc: vs.youtubeAlbumLink},
+
+			{Re: templates.WhatLinksButtonRe, HandlerFunc: vs.whatLinks},
+			{Re: templates.SkipRe, HandlerFunc: vs.skip},
+			{Re: templates.SkipDemonstrationRe, HandlerFunc: vs.skip},
 		},
 		CallbackHandlers: []*telegram.CallbackHandler{
 			{Route: convertTrackCallbackRoute, HandlerFunc: vs.convertTrack},

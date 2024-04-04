@@ -4,25 +4,24 @@ import (
 	"testing"
 
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/templates"
 	"github.com/GeorgeGorbanev/vibeshare/tests/utils"
 
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"
 )
 
-func TestText_FeedbackCommand(t *testing.T) {
+func TestText_WhatLinks(t *testing.T) {
 	user := &telebot.User{Username: "sample_username"}
-	msg := &telebot.Message{Sender: user, Text: `/feedback`}
+	msg := &telebot.Message{Sender: user, Text: templates.WhatLinksButton}
 
 	senderMock := utils.NewTelegramSenderMock()
-	vs, err := vibeshare.NewVibeshare(&vibeshare.Input{},
-		vibeshare.WithVibeshareSender(senderMock),
-		vibeshare.WithFeedbackBotName("feedback_bot"))
+	vs, err := vibeshare.NewVibeshare(&vibeshare.Input{}, vibeshare.WithVibeshareSender(senderMock))
 	require.NoError(t, err)
 
 	vs.TextHandler(msg)
 
 	require.NotNil(t, senderMock.Response)
 	require.Equal(t, user, senderMock.Response.To)
-	require.Equal(t, `Tap <a href="https://t.me/feedback_bot">here</a> to open feedback dialogue`, senderMock.Response.Text)
+	require.Equal(t, templates.WhatLinksResponse, senderMock.Response.Text)
 }

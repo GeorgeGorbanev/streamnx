@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/templates"
 	"github.com/GeorgeGorbanev/vibeshare/tests/utils"
 
 	"github.com/stretchr/testify/require"
@@ -21,4 +22,17 @@ func TestText_NotFound(t *testing.T) {
 	vs.TextHandler(&msg)
 
 	require.Equal(t, "No supported link found", senderMock.Response.Text)
+	require.Equal(t, &telebot.ReplyMarkup{
+		OneTimeKeyboard: true,
+		ReplyKeyboard: [][]telebot.ReplyButton{
+			{
+				{
+					Text: templates.WhatLinksButton,
+				},
+				{
+					Text: templates.Skip,
+				},
+			},
+		},
+	}, senderMock.Response.ReplyMarkup)
 }

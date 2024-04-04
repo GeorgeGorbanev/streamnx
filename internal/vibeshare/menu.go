@@ -3,6 +3,7 @@ package vibeshare
 import (
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/music"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/templates"
 
 	"github.com/tucnak/telebot"
 )
@@ -69,4 +70,36 @@ func convertAlbumMenu(album *music.Album) (*telebot.ReplyMarkup, error) {
 			buttons,
 		},
 	}, nil
+}
+
+func notFoundMenu() *telebot.ReplyMarkup {
+	return &telebot.ReplyMarkup{
+		OneTimeKeyboard: true,
+		ReplyKeyboard: [][]telebot.ReplyButton{
+			{
+				{
+					Text: templates.WhatLinksButton,
+				},
+				{
+					Text: templates.Skip,
+				},
+			},
+		},
+	}
+}
+
+func whatLinksMenu() *telebot.ReplyMarkup {
+	return &telebot.ReplyMarkup{
+		OneTimeKeyboard: true,
+		ReplyKeyboard: [][]telebot.ReplyButton{
+			{
+				{
+					Text: templates.SkipDemonstration,
+				},
+				{
+					Text: templates.ExampleTrack,
+				},
+			},
+		},
+	}
 }

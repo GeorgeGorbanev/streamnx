@@ -3,6 +3,7 @@ package links
 import (
 	"testing"
 
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/templates"
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
 
 	"github.com/stretchr/testify/require"
@@ -78,10 +79,22 @@ func TestText_YoutubeAlbumLink(t *testing.T) {
 			},
 		},
 		{
-			name:                "when youtube album regular link given and album found",
-			input:               "https://www.youtube.com/watch?v=notFound",
-			expectedText:        "No supported link found",
-			expectedReplyMarkup: nil,
+			name:         "when youtube album regular link given and album found",
+			input:        "https://www.youtube.com/watch?v=notFound",
+			expectedText: "No supported link found",
+			expectedReplyMarkup: &telebot.ReplyMarkup{
+				OneTimeKeyboard: true,
+				ReplyKeyboard: [][]telebot.ReplyButton{
+					{
+						{
+							Text: templates.WhatLinksButton,
+						},
+						{
+							Text: templates.Skip,
+						},
+					},
+				},
+			},
 			fixturesMap: fixture.FixturesMap{
 				YoutubeTracks: map[string][]byte{
 					"notFound": fixture.Read("youtube/not_found.json"),

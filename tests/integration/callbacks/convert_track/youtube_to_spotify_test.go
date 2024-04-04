@@ -25,8 +25,7 @@ func TestCallback_ConvertTrackYoutubeToSpotify(t *testing.T) {
 					"hbe3CQamF8k": fixture.Read("youtube/get_track_massive_attack_angel.json"),
 				},
 				SpotifySearchTracks: map[string][]byte{
-					// TODO: fix query
-					"artist:Massive Attack - Angel track:": fixture.Read("spotify/search_track_massive_attack_angel.json"),
+					"artist:Massive Attack track:Angel": fixture.Read("spotify/search_track_massive_attack_angel.json"),
 				},
 			},
 		},

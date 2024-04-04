@@ -24,9 +24,8 @@ func TestCallback_ConvertAlbumYoutubeToYandex(t *testing.T) {
 				YoutubeAlbums: map[string][]byte{
 					"PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C": fixture.Read("youtube/get_album_radiohead_amnesiac.json"),
 				},
-				// TODO: fix adapter query
 				YandexSearchAlbums: map[string][]byte{
-					"radiohead amnesiac (2001) – ": fixture.Read("yandex/search_album_radiohead_amnesiac.json"),
+					"radiohead – amnesiac": fixture.Read("yandex/search_album_radiohead_amnesiac.json"),
 				},
 			},
 		},

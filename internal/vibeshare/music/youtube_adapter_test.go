@@ -284,3 +284,63 @@ func TestYoutubeAdapter_SearchAlbum(t *testing.T) {
 		})
 	}
 }
+
+func TestYoutubeAdapter_cleanAndSplitTitle(t *testing.T) {
+	tests := []struct {
+		title          string
+		expectedArtist string
+		expectedEntity string
+	}{
+		{
+			title:          "rick astley - never gonna give you up",
+			expectedArtist: "rick astley",
+			expectedEntity: "never gonna give you up",
+		},
+		{
+			title:          "radiohead amnesiac (2001)",
+			expectedArtist: "radiohead",
+			expectedEntity: "amnesiac",
+		},
+		{
+			title:          "artist | title [official music video]",
+			expectedArtist: "artist",
+			expectedEntity: "title",
+		},
+		{
+			title:          "band {live} - song",
+			expectedArtist: "band",
+			expectedEntity: "song",
+		},
+		{
+			title:          "Michael Jackson - Billie Jean",
+			expectedArtist: "Michael Jackson",
+			expectedEntity: "Billie Jean",
+		},
+		{
+			title:          "queen – bohemian rhapsody (official video)",
+			expectedArtist: "queen",
+			expectedEntity: "bohemian rhapsody",
+		},
+		{
+			title:          "adele | someone like you",
+			expectedArtist: "adele",
+			expectedEntity: "someone like you",
+		},
+		{
+			title:          "the beatles - hey jude [HQ]",
+			expectedArtist: "the beatles",
+			expectedEntity: "hey jude",
+		},
+		{
+			title:          "coldplay – yellow (official video)",
+			expectedArtist: "coldplay",
+			expectedEntity: "yellow",
+		},
+	}
+	for _, test := range tests {
+		adapter := &YoutubeAdapter{}
+		artist, entity := adapter.cleanAndSplitTitle(test.title)
+		require.Equal(t, test.expectedArtist, artist)
+		require.Equal(t, test.expectedEntity, entity)
+	}
+}

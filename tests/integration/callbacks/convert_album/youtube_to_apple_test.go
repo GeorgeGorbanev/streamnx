@@ -24,9 +24,8 @@ func TestCallback_ConvertAlbumYoutubeToApple(t *testing.T) {
 				YoutubeAlbums: map[string][]byte{
 					"PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C": fixture.Read("youtube/get_album_radiohead_amnesiac.json"),
 				},
-				// TODO: fix adapter query
 				AppleSearchAlbums: map[string][]byte{
-					"Radiohead Amnesiac (2001) ": fixture.Read("apple/search_album_radiohead_amnesiac.json"),
+					"Radiohead Amnesiac": fixture.Read("apple/search_album_radiohead_amnesiac.json"),
 				},
 			},
 		},

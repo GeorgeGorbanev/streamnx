@@ -24,9 +24,8 @@ func TestCallback_ConvertAlbumYoutubeToSpotify(t *testing.T) {
 				YoutubeAlbums: map[string][]byte{
 					"PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C": fixture.Read("youtube/get_album_radiohead_amnesiac.json"),
 				},
-				// TODO: fix adapter query
 				SpotifySearchAlbums: map[string][]byte{
-					"artist:Radiohead Amnesiac (2001) album:": fixture.Read("spotify/search_album_radiohead_amnesiac.json"),
+					"artist:Radiohead album:Amnesiac": fixture.Read("spotify/search_album_radiohead_amnesiac.json"),
 				},
 			},
 		},

@@ -25,8 +25,7 @@ func TestCallback_ConvertTrackYoutubeToYandex(t *testing.T) {
 					"hbe3CQamF8k": fixture.Read("youtube/get_track_massive_attack_angel.json"),
 				},
 				YandexSearchTracks: map[string][]byte{
-					// TODO: fix query
-					"massive attack - angel – ": fixture.Read("yandex/search_track_massive_attack_angel.json"),
+					"massive attack – angel": fixture.Read("yandex/search_track_massive_attack_angel.json"),
 				},
 			},
 		},

@@ -25,7 +25,7 @@ func TestCallback_ConvertTrackYoutubeToApple(t *testing.T) {
 					"hbe3CQamF8k": fixture.Read("youtube/get_track_massive_attack_angel.json"),
 				},
 				AppleSearchTracks: map[string][]byte{
-					"Massive Attack - Angel ": fixture.Read("apple/search_track_massive_attack_angel.json"),
+					"Massive Attack Angel": fixture.Read("apple/search_track_massive_attack_angel.json"),
 				},
 			},
 		},

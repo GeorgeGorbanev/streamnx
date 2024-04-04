@@ -2,6 +2,7 @@ package music
 
 import (
 	"fmt"
+	"regexp"
 	"strings"
 
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/youtube"
@@ -10,6 +11,8 @@ import (
 type YoutubeAdapter struct {
 	client youtube.Client
 }
+
+var nonTitleContentRe = regexp.MustCompile(`\s*\[.*?\]|\s*\{.*?\}|\s*\(.*?\)`)
 
 func newYoutubeAdapter(client youtube.Client) *YoutubeAdapter {
 	return &YoutubeAdapter{
@@ -80,7 +83,7 @@ func (a *YoutubeAdapter) SearchAlbum(artistName, albumName string) (*Album, erro
 }
 
 func (a *YoutubeAdapter) adaptTrack(video *youtube.Video) *Track {
-	artist, track := a.parseTitle(video.Title)
+	artist, track := a.cleanAndSplitTitle(video.Title)
 
 	return &Track{
 		ID:       video.ID,
@@ -92,7 +95,7 @@ func (a *YoutubeAdapter) adaptTrack(video *youtube.Video) *Track {
 }
 
 func (a *YoutubeAdapter) adaptAlbum(playlist *youtube.Playlist) *Album {
-	artist, album := a.parseTitle(playlist.Title)
+	artist, album := a.cleanAndSplitTitle(playlist.Title)
 
 	return &Album{
 		ID:       playlist.ID,
@@ -103,10 +106,21 @@ func (a *YoutubeAdapter) adaptAlbum(playlist *youtube.Playlist) *Album {
 	}
 }
 
-func (a *YoutubeAdapter) parseTitle(input string) (string, string) {
-	splitted := strings.Split(input, " – ")
-	if len(splitted) != 2 {
-		return input, ""
+func (a *YoutubeAdapter) cleanAndSplitTitle(title string) (artist, entity string) {
+	cleanTitle := nonTitleContentRe.ReplaceAllString(title, "")
+
+	separators := []string{" - ", " – ", " — ", "|"}
+	for _, sep := range separators {
+		if strings.Contains(cleanTitle, sep) {
+			parts := strings.Split(cleanTitle, sep)
+			return strings.TrimSpace(parts[0]), strings.TrimSpace(parts[1])
+		}
 	}
-	return splitted[0], splitted[1]
+
+	words := strings.Fields(cleanTitle)
+	if len(words) > 1 {
+		return strings.TrimSpace(words[0]), strings.TrimSpace(strings.Join(words[1:], " "))
+	}
+
+	return cleanTitle, ""
 }

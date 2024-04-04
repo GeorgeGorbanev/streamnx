@@ -1,10 +1,12 @@
 package vibeshare
 
 import (
+	"fmt"
 	"log/slog"
 
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/music"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/templates"
 	"github.com/tucnak/telebot"
 )
 
@@ -12,11 +14,16 @@ func (vs *Vibeshare) TextHandler(inMsg *telebot.Message) {
 	slog.Info("handling text message",
 		slog.String("from", inMsg.Sender.Username),
 		slog.String("text", inMsg.Text))
-	vs.telegramRouter.RouteText(inMsg)
+	vs.vibeshareRouter.RouteText(inMsg)
 }
 
-func (vs *Vibeshare) start(inMsg *telebot.Message) {
-	vs.respond(&telegram.Message{To: inMsg.Sender, Text: startResponse})
+func (vs *Vibeshare) startCommand(inMsg *telebot.Message) {
+	vs.send(&telegram.Message{To: inMsg.Sender, Text: templates.Start})
+}
+
+func (vs *Vibeshare) feedbackCommand(inMsg *telebot.Message) {
+	text := fmt.Sprintf(templates.FeedbackCommand, vs.feedbackBotName)
+	vs.send(&telegram.Message{To: inMsg.Sender, Text: text})
 }
 
 func (vs *Vibeshare) appleTrackLink(inMsg *telebot.Message) {
@@ -52,7 +59,7 @@ func (vs *Vibeshare) youtubeAlbumLink(inMsg *telebot.Message) {
 }
 
 func (vs *Vibeshare) textNotFoundHandler(inMsg *telebot.Message) {
-	vs.respond(&telegram.Message{To: inMsg.Sender, Text: "No supported link found"})
+	vs.send(&telegram.Message{To: inMsg.Sender, Text: "No supported link found"})
 }
 
 func (vs *Vibeshare) trackLink(provider *music.Provider, inMsg *telebot.Message) {
@@ -63,7 +70,7 @@ func (vs *Vibeshare) trackLink(provider *music.Provider, inMsg *telebot.Message)
 		return
 	}
 	if track == nil {
-		vs.respond(&telegram.Message{To: inMsg.Sender, Text: "Link is invalid"})
+		vs.send(&telegram.Message{To: inMsg.Sender, Text: "Link is invalid"})
 		return
 	}
 
@@ -73,7 +80,7 @@ func (vs *Vibeshare) trackLink(provider *music.Provider, inMsg *telebot.Message)
 		return
 	}
 
-	vs.respond(&telegram.Message{To: inMsg.Sender, Text: "Select target link provider", ReplyMarkup: menu})
+	vs.send(&telegram.Message{To: inMsg.Sender, Text: "Select target link provider", ReplyMarkup: menu})
 }
 
 func (vs *Vibeshare) albumLink(provider *music.Provider, inMsg *telebot.Message) {
@@ -84,7 +91,7 @@ func (vs *Vibeshare) albumLink(provider *music.Provider, inMsg *telebot.Message)
 		return
 	}
 	if album == nil {
-		vs.respond(&telegram.Message{To: inMsg.Sender, Text: "Link is invalid"})
+		vs.send(&telegram.Message{To: inMsg.Sender, Text: "Link is invalid"})
 		return
 	}
 
@@ -94,5 +101,5 @@ func (vs *Vibeshare) albumLink(provider *music.Provider, inMsg *telebot.Message)
 		return
 	}
 
-	vs.respond(&telegram.Message{To: inMsg.Sender, Text: "Select target link provider", ReplyMarkup: menu})
+	vs.send(&telegram.Message{To: inMsg.Sender, Text: "Select target link provider", ReplyMarkup: menu})
 }

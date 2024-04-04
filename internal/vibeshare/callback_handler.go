@@ -12,7 +12,7 @@ func (vs *Vibeshare) CallbackHandler(cb *telebot.Callback) {
 	slog.Info("handling callback",
 		slog.String("from", cb.Sender.Username),
 		slog.String("data", cb.Data))
-	vs.telegramRouter.RouteCallback(cb)
+	vs.vibeshareRouter.RouteCallback(cb)
 }
 
 func (vs *Vibeshare) convertTrack(callback *telegram.Callback) {
@@ -39,11 +39,11 @@ func (vs *Vibeshare) convertTrack(callback *telegram.Callback) {
 	}
 	if track == nil {
 		text := fmt.Sprintf("Track not found in %s", params.Target.Name)
-		vs.respond(&telegram.Message{To: callback.Sender, Text: text})
+		vs.send(&telegram.Message{To: callback.Sender, Text: text})
 		return
 	}
 
-	vs.respond(&telegram.Message{To: callback.Sender, Text: track.URL})
+	vs.send(&telegram.Message{To: callback.Sender, Text: track.URL})
 }
 
 func (vs *Vibeshare) convertAlbum(callback *telegram.Callback) {
@@ -70,11 +70,11 @@ func (vs *Vibeshare) convertAlbum(callback *telegram.Callback) {
 	}
 	if album == nil {
 		text := fmt.Sprintf("Album not found in %s", params.Target.Name)
-		vs.respond(&telegram.Message{To: callback.Sender, Text: text})
+		vs.send(&telegram.Message{To: callback.Sender, Text: text})
 		return
 	}
 
-	vs.respond(&telegram.Message{To: callback.Sender, Text: album.URL})
+	vs.send(&telegram.Message{To: callback.Sender, Text: album.URL})
 }
 
 func (vs *Vibeshare) callbackNotFoundHandler(callback *telegram.Callback) {

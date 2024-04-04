@@ -1,16 +1,11 @@
 package vibeshare
 
 import (
-	_ "embed"
-
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/music"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
 
 	"github.com/tucnak/telebot"
 )
-
-//go:embed start.txt
-var startResponse string
 
 func convertTrackMenu(track *music.Track) (*telebot.ReplyMarkup, error) {
 	buttonsParams := make([]convertParams, 0, len(music.Providers)-1)

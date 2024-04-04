@@ -1,79 +1,100 @@
 package vibeshare
 
 import (
-	"log/slog"
-	"regexp"
+	"fmt"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/apple"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/music"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/yandex"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/youtube"
 )
-
-const (
-	convertTrackCallbackRoute = "cnvtr"
-	convertAlbumCallbackRoute = "cnval"
-)
-
-var (
-	startCommand = regexp.MustCompile("/start")
-)
-
-type Vibeshare struct {
-	musicRegistry  *music.Registry
-	telegramRouter *telegram.Router
-	telegramSender telegram.Sender
-}
 
 type Input struct {
-	MusicRegistry  *music.Registry
-	TelegramSender telegram.Sender
+	MusicRegistry      *music.Registry
+	VibeshareBotToken  string
+	FeedbackBotToken   string
+	FeedbackReceiverID int
 }
 
-func NewVibeshare(input *Input) *Vibeshare {
-	vs := Vibeshare{
-		musicRegistry:  input.MusicRegistry,
-		telegramSender: input.TelegramSender,
+type Vibeshare struct {
+	musicRegistry *music.Registry
+
+	vibeshareBot    *telegram.Bot
+	vibeshareSender telegram.Sender
+	vibeshareRouter *telegram.Router
+
+	feedbackBot        *telegram.Bot
+	feedbackSender     telegram.Sender
+	feedbackRouter     *telegram.Router
+	feedbackBotName    string
+	feedbackReceiverID int
+}
+
+func NewVibeshare(input *Input, opts ...Option) (vs Vibeshare, err error) {
+	vs.musicRegistry = input.MusicRegistry
+	vs.feedbackReceiverID = input.FeedbackReceiverID
+
+	if err = vs.setupVibeshareBot(input); err != nil {
+		return vs, err
 	}
-	vs.telegramRouter = vs.makeRouter()
-	return &vs
+	if err = vs.setupFeedbackBot(input); err != nil {
+		return vs, err
+	}
+
+	for _, opt := range opts {
+		opt(&vs)
+	}
+
+	vs.setupVibeshareRouter()
+	vs.setupFeedbackRouter()
+
+	return vs, nil
 }
 
-func (vs *Vibeshare) makeRouter() *telegram.Router {
-	router := telegram.NewRouter()
-
-	router.HandleText(startCommand, vs.start)
-
-	router.HandleText(apple.TrackRe, vs.appleTrackLink)
-	router.HandleText(apple.AlbumRe, vs.appleAlbumLink)
-
-	router.HandleText(spotify.TrackRe, vs.spotifyTrackLink)
-	router.HandleText(spotify.AlbumRe, vs.spotifyAlbumLink)
-
-	router.HandleText(yandex.TrackRe, vs.yandexTrackLink)
-	router.HandleText(yandex.AlbumRe, vs.yandexAlbumLink)
-
-	router.HandleText(youtube.VideoRe, vs.youtubeTrackLink)
-	router.HandleText(youtube.PlaylistRe, vs.youtubeAlbumLink)
-
-	router.HandleTextNotFound(vs.textNotFoundHandler)
-
-	router.HandleCallback(convertTrackCallbackRoute, vs.convertTrack)
-	router.HandleCallback(convertAlbumCallbackRoute, vs.convertAlbum)
-	router.HandleCallbackNotFound(vs.callbackNotFoundHandler)
-
-	return router
+func (vs *Vibeshare) Run() {
+	if vs.feedbackBot != nil {
+		go vs.feedbackBot.Run()
+	}
+	if vs.vibeshareBot != nil {
+		vs.vibeshareBot.Run()
+	}
 }
 
-func (vs *Vibeshare) respond(response *telegram.Message) {
-	_, err := vs.telegramSender.Send(response)
+func (vs *Vibeshare) Stop() {
+	if vs.feedbackBot != nil {
+		vs.feedbackBot.Stop()
+	}
+	if vs.vibeshareBot != nil {
+		vs.vibeshareBot.Stop()
+	}
+}
+
+func (vs *Vibeshare) setupVibeshareBot(input *Input) error {
+	if input.VibeshareBotToken == "" {
+		return nil
+	}
+	bot, err := telegram.NewBot(input.VibeshareBotToken)
 	if err != nil {
-		slog.Error("failed to send message", slog.Any("error", err))
-		return
+		return fmt.Errorf("failed to create vibeshare bot: %w", err)
 	}
-	slog.Info("sent message",
-		slog.String("to", response.To.Recipient()),
-		slog.String("text", response.Text))
+	bot.HandleText(vs.TextHandler)
+	bot.HandleCallback(vs.CallbackHandler)
+
+	vs.vibeshareSender = bot.Sender()
+	vs.vibeshareBot = bot
+	return nil
+}
+
+func (vs *Vibeshare) setupFeedbackBot(input *Input) error {
+	if input.FeedbackBotToken == "" {
+		return nil
+	}
+	bot, err := telegram.NewBot(input.FeedbackBotToken)
+	if err != nil {
+		return fmt.Errorf("failed to create feedback bot: %w", err)
+	}
+	bot.HandleText(vs.FeedbackTextHandler)
+
+	vs.feedbackSender = bot.Sender()
+	vs.feedbackBotName = bot.Name()
+	vs.feedbackBot = bot
+	return nil
 }

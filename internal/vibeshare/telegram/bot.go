@@ -2,6 +2,7 @@ package telegram
 
 import (
 	"fmt"
+	"log/slog"
 	"time"
 
 	"github.com/tucnak/telebot"
@@ -19,7 +20,7 @@ func NewBot(token string) (*Bot, error) {
 		Poller: &telebot.LongPoller{Timeout: timeout},
 	})
 	if err != nil {
-		return nil, fmt.Errorf("error creating telebot bot: %w", err)
+		return nil, fmt.Errorf("error creating telebot: %w", err)
 	}
 	return &Bot{
 		telebotBot: telebotBot,
@@ -38,7 +39,12 @@ func (b *Bot) HandleCallback(handler func(callback *telebot.Callback)) {
 	b.telebotBot.Handle(telebot.OnCallback, handler)
 }
 
-func (b *Bot) Start() {
+func (b *Bot) Name() string {
+	return b.telebotBot.Me.Username
+}
+
+func (b *Bot) Run() {
+	slog.Info("Bot started", slog.String("bot_name", b.Name()))
 	b.telebotBot.Start()
 }
 

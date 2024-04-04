@@ -49,15 +49,18 @@ func TestMain(m *testing.M) {
 	youtubeClient := youtube.NewHTTPClient(utils.YoutubeAPIKey, youtube.WithAPIURL(youtubeMockServer.URL))
 	yandexClient := yandex.NewHTTPClient(yandex.WithAPIURL(yandexMockServer.URL))
 
-	vs = vibeshare.NewVibeshare(&vibeshare.Input{
+	app, err := vibeshare.NewVibeshare(&vibeshare.Input{
 		MusicRegistry: music.NewRegistry(&music.RegistryInput{
 			AppleClient:   appleClient,
 			SpotifyClient: spotifyClient,
 			YandexClient:  yandexClient,
 			YoutubeClient: youtubeClient,
 		}),
-		TelegramSender: senderMock,
-	})
+	}, vibeshare.WithVibeshareSender(senderMock))
+	if err != nil {
+		panic(err)
+	}
+	vs = &app
 
 	code := m.Run()
 

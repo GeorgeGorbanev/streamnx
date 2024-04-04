@@ -31,6 +31,8 @@ jobs:
               -e SPOTIFY_CLIENT_ID=${{ secrets.SPOTIFY_CLIENT_ID }}\
               -e SPOTIFY_CLIENT_SECRET=${{ secrets.SPOTIFY_CLIENT_SECRET }}\
               -e YOUTUBE_API_KEY=${{ secrets.YOUTUBE_API_KEY }}\
+              -e FEEDBACK_TOKEN=${{ secrets.FEEDBACK_TOKEN }}\
+              -e FEEDBACK_RECEIVER_ID=${{ secrets.FEEDBACK_RECEIVER_ID }}\
               -v ~/logs:/app/logs \
               ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPO }}:latest \
               /bin/sh -c 'exec vibeshare > /app/logs/$(date "+%Y-%m-%d_%H-%M-%S").log 2>&1'

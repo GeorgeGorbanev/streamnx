@@ -7,51 +7,36 @@ import (
 	"github.com/tucnak/telebot"
 )
 
+type TextHandler struct {
+	Re          *regexp.Regexp
+	HandlerFunc TextHandlerFunc
+}
+
+type CallbackHandler struct {
+	Route       string
+	HandlerFunc CallbackHandlerFunc
+}
+
+type TextHandlerFunc func(inMsg *telebot.Message)
+
+type CallbackHandlerFunc func(callback *Callback)
+
 type Router struct {
-	textHandlers            []*textHandler
-	textNotFoundHandler     TextHandlerFunc
-	callbackHandlers        []*callbackHandler
-	callbackHandlerNotFound CallbackHandlerFunc
-}
-
-func NewRouter() *Router {
-	return &Router{
-		textHandlers:     make([]*textHandler, 0),
-		callbackHandlers: make([]*callbackHandler, 0),
-	}
-}
-
-func (r *Router) HandleText(re *regexp.Regexp, hf TextHandlerFunc) {
-	r.textHandlers = append(r.textHandlers, &textHandler{
-		re:          re,
-		handlerFunc: hf,
-	})
-}
-
-func (r *Router) HandleCallback(route string, hf CallbackHandlerFunc) {
-	r.callbackHandlers = append(r.callbackHandlers, &callbackHandler{
-		route:       route,
-		handlerFunc: hf,
-	})
-}
-
-func (r *Router) HandleTextNotFound(hf TextHandlerFunc) {
-	r.textNotFoundHandler = hf
-}
-
-func (r *Router) HandleCallbackNotFound(hf CallbackHandlerFunc) {
-	r.callbackHandlerNotFound = hf
+	TextHandlers            []*TextHandler
+	TextNotFoundHandler     TextHandlerFunc
+	CallbackHandlers        []*CallbackHandler
+	CallbackHandlerNotFound CallbackHandlerFunc
 }
 
 func (r *Router) RouteText(inMsg *telebot.Message) {
-	for _, h := range r.textHandlers {
-		if h.re.MatchString(inMsg.Text) {
-			h.handlerFunc(inMsg)
+	for _, h := range r.TextHandlers {
+		if h.Re.MatchString(inMsg.Text) {
+			h.HandlerFunc(inMsg)
 			return
 		}
 	}
-	if r.textNotFoundHandler != nil {
-		r.textNotFoundHandler(inMsg)
+	if r.TextNotFoundHandler != nil {
+		r.TextNotFoundHandler(inMsg)
 	}
 }
 
@@ -65,13 +50,13 @@ func (r *Router) RouteCallback(callback *telebot.Callback) {
 		},
 	}
 
-	for _, h := range r.callbackHandlers {
-		if h.route == cb.Data.Route {
-			h.handlerFunc(&cb)
+	for _, h := range r.CallbackHandlers {
+		if h.Route == cb.Data.Route {
+			h.HandlerFunc(&cb)
 			return
 		}
 	}
-	if r.callbackHandlerNotFound != nil {
-		r.callbackHandlerNotFound(&cb)
+	if r.CallbackHandlerNotFound != nil {
+		r.CallbackHandlerNotFound(&cb)
 	}
 }

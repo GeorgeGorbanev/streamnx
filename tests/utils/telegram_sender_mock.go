@@ -8,6 +8,7 @@ import (
 
 type TelegramSenderMock struct {
 	Response *telegram.Message
+	AllSent  []*telegram.Message
 }
 
 func NewTelegramSenderMock() *TelegramSenderMock {
@@ -16,7 +17,8 @@ func NewTelegramSenderMock() *TelegramSenderMock {
 
 func (t *TelegramSenderMock) Send(msg *telegram.Message) (*telebot.Message, error) {
 	t.Response = msg
-	return &telebot.Message{}, nil
+	t.AllSent = append(t.AllSent, msg)
+	return nil, nil
 }
 
 func (t *TelegramSenderMock) Reset() {

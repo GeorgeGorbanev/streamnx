@@ -16,10 +16,10 @@ var (
 		ClientID:     "sampleClientID",
 		ClientSecret: "sampleClientSecret",
 	}
-	SpotifyToken = spotify.Token{
-		AccessToken: "mock_access_token",
-		TokenType:   "Bearer",
-		ExpiresIn:   360,
+	SpotifyToken = map[string]any{
+		"access_token": "mock_access_token",
+		"token_type":   "Bearer",
+		"expires_in":   360,
 	}
 	SpotifyBasicAuth = "Basic c2FtcGxlQ2xpZW50SUQ6c2FtcGxlQ2xpZW50U2VjcmV0"
 )
@@ -35,11 +35,7 @@ func NewSpotifyAuthServerMock() *httptest.Server {
 			return
 		}
 
-		err := json.NewEncoder(w).Encode(map[string]any{
-			"access_token": SpotifyToken.AccessToken,
-			"token_type":   SpotifyToken.TokenType,
-			"expires_in":   SpotifyToken.ExpiresIn,
-		})
+		err := json.NewEncoder(w).Encode(SpotifyToken)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 		}

@@ -94,10 +94,10 @@ func whatLinksMenu() *telebot.ReplyMarkup {
 		ReplyKeyboard: [][]telebot.ReplyButton{
 			{
 				{
-					Text: templates.SkipDemonstration,
+					Text: templates.ExampleTrack,
 				},
 				{
-					Text: templates.ExampleTrack,
+					Text: templates.SkipDemonstration,
 				},
 			},
 		},

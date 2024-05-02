@@ -24,4 +24,17 @@ func TestText_WhatLinks(t *testing.T) {
 	require.NotNil(t, senderMock.Response)
 	require.Equal(t, user, senderMock.Response.To)
 	require.Equal(t, templates.WhatLinksResponse, senderMock.Response.Text)
+	require.Equal(t, &telebot.ReplyMarkup{
+		OneTimeKeyboard: true,
+		ReplyKeyboard: [][]telebot.ReplyButton{
+			{
+				{
+					Text: "Convert example track https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+				},
+				{
+					Text: "Skip demonstration",
+				},
+			},
+		},
+	}, senderMock.Response.ReplyMarkup)
 }

@@ -3,6 +3,7 @@ package convert_album
 import (
 	"testing"
 
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
 
 	"github.com/stretchr/testify/require"
@@ -11,15 +12,20 @@ import (
 
 func TestCallback_ConvertAlbumYandexToSpotify(t *testing.T) {
 	tests := []struct {
-		name         string
-		input        string
-		expectedText string
-		fixturesMap  fixture.FixturesMap
+		name             string
+		input            string
+		expectedMessages []*telegram.Message
+		fixturesMap      fixture.FixturesMap
 	}{
 		{
-			name:         "when yandex album link given and spotify album found",
-			input:        "cnval/ya/3389008/sf",
-			expectedText: "https://open.spotify.com/album/1HrMmB5useeZ0F5lHrMvl0",
+			name:  "when yandex album link given and spotify album found",
+			input: "cnval/ya/3389008/sf",
+			expectedMessages: []*telegram.Message{
+				{
+					To:   user,
+					Text: "https://open.spotify.com/album/1HrMmB5useeZ0F5lHrMvl0",
+				},
+			},
 			fixturesMap: fixture.FixturesMap{
 				YandexAlbums: map[string][]byte{
 					"3389008": fixture.Read("yandex/get_album_radiohead_amnesiac.json"),
@@ -30,9 +36,14 @@ func TestCallback_ConvertAlbumYandexToSpotify(t *testing.T) {
 			},
 		},
 		{
-			name:         "when yandex album link given and spotify album not found",
-			input:        "cnval/ya/3389008/sf",
-			expectedText: "Album not found in Spotify",
+			name:  "when yandex album link given and spotify album not found",
+			input: "cnval/ya/3389008/sf",
+			expectedMessages: []*telegram.Message{
+				{
+					To:   user,
+					Text: "Album not found in Spotify",
+				},
+			},
 			fixturesMap: fixture.FixturesMap{
 				YandexAlbums: map[string][]byte{
 					"3389008": fixture.Read("yandex/get_album_radiohead_amnesiac.json"),
@@ -41,9 +52,9 @@ func TestCallback_ConvertAlbumYandexToSpotify(t *testing.T) {
 			},
 		},
 		{
-			name:         "when yandex album not found",
-			input:        "cnval/ya/3389008/sf",
-			expectedText: "",
+			name:             "when yandex album not found",
+			input:            "cnval/ya/3389008/sf",
+			expectedMessages: []*telegram.Message{},
 			fixturesMap: fixture.FixturesMap{
 				SpotifyAlbums:      map[string][]byte{},
 				YandexSearchAlbums: map[string][]byte{},
@@ -63,13 +74,7 @@ func TestCallback_ConvertAlbumYandexToSpotify(t *testing.T) {
 
 			vs.CallbackHandler(&callback)
 
-			if tt.expectedText == "" {
-				require.Nil(t, senderMock.Response)
-			} else {
-				require.NotNil(t, senderMock.Response)
-				require.Equal(t, user, senderMock.Response.To)
-				require.Equal(t, tt.expectedText, senderMock.Response.Text)
-			}
+			require.Equal(t, tt.expectedMessages, senderMock.AllSent)
 		})
 	}
 }

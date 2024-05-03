@@ -1,34 +1,51 @@
 package vibeshare
 
 import (
-	"fmt"
 	"log/slog"
 	"regexp"
 
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/apple"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/music"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/templates"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/yandex"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/youtube"
+
+	"github.com/tucnak/telebot"
 )
 
 const (
 	convertTrackCallbackRoute = "cnvtr"
 	convertAlbumCallbackRoute = "cnval"
+	trackRegionCallbackRoute  = "regtr"
+	albumRegionCallbackRoute  = "regal"
 )
-
-type convertParams struct {
-	ID     string
-	Source *music.Provider
-	Target *music.Provider
-}
 
 var (
 	startCommand    = regexp.MustCompile("/start")
 	feedbackCommand = regexp.MustCompile("/feedback")
 )
+
+func (vs *Vibeshare) TextHandler(inMsg *telebot.Message) {
+	slog.Info("handling text message",
+		slog.String("from", inMsg.Sender.Username),
+		slog.String("text", inMsg.Text))
+	vs.vibeshareRouter.RouteText(inMsg)
+}
+
+func (vs *Vibeshare) CallbackHandler(cb *telebot.Callback) {
+	slog.Info("handling callback",
+		slog.String("from", cb.Sender.Username),
+		slog.String("data", cb.Data))
+	vs.vibeshareRouter.RouteCallback(cb)
+}
+
+func (vs *Vibeshare) FeedbackTextHandler(inMsg *telebot.Message) {
+	slog.Info("handling feedback message",
+		slog.String("from", inMsg.Sender.Username),
+		slog.String("text", inMsg.Text))
+	vs.feedbackRouter.RouteText(inMsg)
+}
 
 func (vs *Vibeshare) setupVibeshareRouter() {
 	vs.vibeshareRouter = &telegram.Router{
@@ -55,6 +72,8 @@ func (vs *Vibeshare) setupVibeshareRouter() {
 		CallbackHandlers: []*telegram.CallbackHandler{
 			{Route: convertTrackCallbackRoute, HandlerFunc: vs.convertTrack},
 			{Route: convertAlbumCallbackRoute, HandlerFunc: vs.convertAlbum},
+			{Route: trackRegionCallbackRoute, HandlerFunc: vs.trackRegion},
+			{Route: albumRegionCallbackRoute, HandlerFunc: vs.albumRegion},
 		},
 		TextNotFoundHandler:     vs.textNotFoundHandler,
 		CallbackHandlerNotFound: vs.callbackNotFoundHandler,
@@ -70,42 +89,16 @@ func (vs *Vibeshare) setupFeedbackRouter() {
 	}
 }
 
-func (vs *Vibeshare) send(response *telegram.Message) {
-	_, err := vs.vibeshareSender.Send(response)
-	if err != nil {
-		slog.Error("failed to send message",
-			slog.Any("error", err))
-		return
+func (vs *Vibeshare) send(messages ...*telegram.Message) {
+	for _, message := range messages {
+		_, err := vs.vibeshareSender.Send(message)
+		if err != nil {
+			slog.Error("failed to send message",
+				slog.Any("error", err))
+			return
+		}
+		slog.Info("sent message",
+			slog.String("to", message.To.Recipient()),
+			slog.String("text", message.Text))
 	}
-	slog.Info("sent message",
-		slog.String("to", response.To.Recipient()),
-		slog.String("text", response.Text))
-}
-
-func (p *convertParams) marshal() []string {
-	return []string{
-		p.Source.Code,
-		p.ID,
-		p.Target.Code,
-	}
-}
-
-func (p *convertParams) unmarshal(s []string) error {
-	if len(s) != 3 {
-		return fmt.Errorf("invalid convert params: %s", s)
-	}
-	sourceProvider := music.FindProviderByCode(s[0])
-	if sourceProvider == nil {
-		return fmt.Errorf("invalid source provider: %s", s[0])
-	}
-	targetProvider := music.FindProviderByCode(s[2])
-	if targetProvider == nil {
-		return fmt.Errorf("invalid target provider: %s", s[2])
-	}
-
-	p.Source = sourceProvider
-	p.ID = s[1]
-	p.Target = targetProvider
-
-	return nil
 }

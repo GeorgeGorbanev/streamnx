@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/music"
+
 	"github.com/stretchr/testify/require"
 )
 

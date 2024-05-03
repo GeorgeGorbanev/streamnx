@@ -17,10 +17,16 @@ type Artist struct {
 	Name string `json:"name"`
 }
 
-var TrackRe = regexp.MustCompile(`https://music\.yandex\.(ru|com)/album/\d+/track/(\d+)`)
+var (
+	TrackRe = regexp.MustCompile(
+		fmt.Sprintf(
+			`https://music\.yandex\.(%s)/album/\d+/track/(\d+)`, allDomainZonesRe(),
+		),
+	)
+)
 
 func (t *Track) URL() string {
-	return fmt.Sprintf("https://music.yandex.com/album/%d/track/%s", t.Albums[0].ID, t.IDString())
+	return fmt.Sprintf("https://music.yandex.%s/album/%d/track/%s", defaultDomainZone, t.Albums[0].ID, t.IDString())
 }
 
 func (t *Track) IDString() string {

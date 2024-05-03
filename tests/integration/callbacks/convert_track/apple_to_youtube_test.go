@@ -3,6 +3,7 @@ package convert_track
 import (
 	"testing"
 
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
 
 	"github.com/stretchr/testify/require"
@@ -11,15 +12,20 @@ import (
 
 func TestCallback_ConvertTrackAppleToYoutube(t *testing.T) {
 	tests := []struct {
-		name         string
-		input        string
-		expectedText string
-		fixturesMap  fixture.FixturesMap
+		name             string
+		input            string
+		expectedMessages []*telegram.Message
+		fixturesMap      fixture.FixturesMap
 	}{
 		{
-			name:         "when apple track link given and youtube track found",
-			input:        "cnvtr/ap/724466660/yt",
-			expectedText: "https://www.youtube.com/watch?v=hbe3CQamF8k",
+			name:  "when apple track link given and youtube track found",
+			input: "cnvtr/ap/724466660/yt",
+			expectedMessages: []*telegram.Message{
+				{
+					To:   user,
+					Text: "https://www.youtube.com/watch?v=hbe3CQamF8k",
+				},
+			},
 			fixturesMap: fixture.FixturesMap{
 				AppleTracks: map[string][]byte{
 					"724466660": fixture.Read("apple/get_track_massive_attack_angel.json"),
@@ -30,9 +36,14 @@ func TestCallback_ConvertTrackAppleToYoutube(t *testing.T) {
 			},
 		},
 		{
-			name:         "when apple track link given and youtube track not found",
-			input:        "cnvtr/ap/724466660/yt",
-			expectedText: "Track not found in Youtube",
+			name:  "when apple track link given and youtube track not found",
+			input: "cnvtr/ap/724466660/yt",
+			expectedMessages: []*telegram.Message{
+				{
+					To:   user,
+					Text: "Track not found in Youtube",
+				},
+			},
 			fixturesMap: fixture.FixturesMap{
 				AppleTracks: map[string][]byte{
 					"724466660": fixture.Read("apple/get_track_massive_attack_angel.json"),
@@ -41,9 +52,9 @@ func TestCallback_ConvertTrackAppleToYoutube(t *testing.T) {
 			},
 		},
 		{
-			name:         "when apple track not found",
-			input:        "cnvtr/ap/724466660/yt",
-			expectedText: "",
+			name:             "when apple track not found",
+			input:            "cnvtr/ap/724466660/yt",
+			expectedMessages: []*telegram.Message{},
 			fixturesMap: fixture.FixturesMap{
 				AppleTracks:         map[string][]byte{},
 				YoutubeSearchTracks: map[string][]byte{},
@@ -63,13 +74,7 @@ func TestCallback_ConvertTrackAppleToYoutube(t *testing.T) {
 
 			vs.CallbackHandler(&callback)
 
-			if tt.expectedText == "" {
-				require.Nil(t, senderMock.Response)
-			} else {
-				require.NotNil(t, senderMock.Response)
-				require.Equal(t, user, senderMock.Response.To)
-				require.Equal(t, tt.expectedText, senderMock.Response.Text)
-			}
+			require.Equal(t, tt.expectedMessages, senderMock.AllSent)
 		})
 	}
 }

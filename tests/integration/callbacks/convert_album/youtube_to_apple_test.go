@@ -3,6 +3,7 @@ package convert_album
 import (
 	"testing"
 
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
 
 	"github.com/stretchr/testify/require"
@@ -11,15 +12,20 @@ import (
 
 func TestCallback_ConvertAlbumYoutubeToApple(t *testing.T) {
 	tests := []struct {
-		name         string
-		input        string
-		expectedText string
-		fixturesMap  fixture.FixturesMap
+		name             string
+		input            string
+		expectedMessages []*telegram.Message
+		fixturesMap      fixture.FixturesMap
 	}{
 		{
-			name:         "when youtube album link given and apple album found",
-			input:        "cnval/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/ap",
-			expectedText: "https://music.apple.com/us/album/amnesiac/1097864180",
+			name:  "when youtube album link given and apple album found",
+			input: "cnval/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/ap",
+			expectedMessages: []*telegram.Message{
+				{
+					To:   user,
+					Text: "https://music.apple.com/us/album/amnesiac/1097864180",
+				},
+			},
 			fixturesMap: fixture.FixturesMap{
 				YoutubeAlbums: map[string][]byte{
 					"PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C": fixture.Read("youtube/get_album_radiohead_amnesiac.json"),
@@ -30,9 +36,14 @@ func TestCallback_ConvertAlbumYoutubeToApple(t *testing.T) {
 			},
 		},
 		{
-			name:         "when youtube album link given and apple album not found",
-			input:        "cnval/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/ap",
-			expectedText: "Album not found in Apple",
+			name:  "when youtube album link given and apple album not found",
+			input: "cnval/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/ap",
+			expectedMessages: []*telegram.Message{
+				{
+					To:   user,
+					Text: "Album not found in Apple",
+				},
+			},
 			fixturesMap: fixture.FixturesMap{
 				YoutubeAlbums: map[string][]byte{
 					"PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C": fixture.Read("youtube/get_album_radiohead_amnesiac.json"),
@@ -41,9 +52,9 @@ func TestCallback_ConvertAlbumYoutubeToApple(t *testing.T) {
 			},
 		},
 		{
-			name:         "when youtube album not found",
-			input:        "cnval/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/ap",
-			expectedText: "",
+			name:             "when youtube album not found",
+			input:            "cnval/yt/PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C/ap",
+			expectedMessages: []*telegram.Message{},
 			fixturesMap: fixture.FixturesMap{
 				YoutubeAlbums:     map[string][]byte{},
 				AppleSearchAlbums: map[string][]byte{},
@@ -63,13 +74,7 @@ func TestCallback_ConvertAlbumYoutubeToApple(t *testing.T) {
 
 			vs.CallbackHandler(&callback)
 
-			if tt.expectedText == "" {
-				require.Nil(t, senderMock.Response)
-			} else {
-				require.NotNil(t, senderMock.Response)
-				require.Equal(t, user, senderMock.Response.To)
-				require.Equal(t, tt.expectedText, senderMock.Response.Text)
-			}
+			require.Equal(t, tt.expectedMessages, senderMock.AllSent)
 		})
 	}
 }

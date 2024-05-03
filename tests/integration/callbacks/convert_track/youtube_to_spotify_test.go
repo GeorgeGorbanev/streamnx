@@ -3,6 +3,7 @@ package convert_track
 import (
 	"testing"
 
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
 
 	"github.com/stretchr/testify/require"
@@ -11,15 +12,22 @@ import (
 
 func TestCallback_ConvertTrackYoutubeToSpotify(t *testing.T) {
 	tests := []struct {
-		name         string
-		input        string
-		expectedText string
-		fixturesMap  fixture.FixturesMap
+		name             string
+		input            string
+		expectedText     string
+		expectedMessages []*telegram.Message
+		fixturesMap      fixture.FixturesMap
 	}{
 		{
 			name:         "when youtube track link given and spotify track found",
 			input:        "cnvtr/yt/hbe3CQamF8k/sf",
 			expectedText: "https://open.spotify.com/track/7uv632EkfwYhXoqf8rhYrg",
+			expectedMessages: []*telegram.Message{
+				{
+					To:   user,
+					Text: "https://open.spotify.com/track/7uv632EkfwYhXoqf8rhYrg",
+				},
+			},
 			fixturesMap: fixture.FixturesMap{
 				YoutubeTracks: map[string][]byte{
 					"hbe3CQamF8k": fixture.Read("youtube/get_track_massive_attack_angel.json"),
@@ -30,9 +38,14 @@ func TestCallback_ConvertTrackYoutubeToSpotify(t *testing.T) {
 			},
 		},
 		{
-			name:         "when youtube track link given and spotify track not found",
-			input:        "cnvtr/yt/hbe3CQamF8k/sf",
-			expectedText: "Track not found in Spotify",
+			name:  "when youtube track link given and spotify track not found",
+			input: "cnvtr/yt/hbe3CQamF8k/sf",
+			expectedMessages: []*telegram.Message{
+				{
+					To:   user,
+					Text: "Track not found in Spotify",
+				},
+			},
 			fixturesMap: fixture.FixturesMap{
 				YoutubeTracks: map[string][]byte{
 					"hbe3CQamF8k": fixture.Read("youtube/get_track_massive_attack_angel.json"),
@@ -41,9 +54,9 @@ func TestCallback_ConvertTrackYoutubeToSpotify(t *testing.T) {
 			},
 		},
 		{
-			name:         "when youtube track not found",
-			input:        "cnvtr/yt/hbe3CQamF8k/sf",
-			expectedText: "",
+			name:             "when youtube track not found",
+			input:            "cnvtr/yt/hbe3CQamF8k/sf",
+			expectedMessages: []*telegram.Message{},
 			fixturesMap: fixture.FixturesMap{
 				YoutubeTracks:       map[string][]byte{},
 				SpotifySearchTracks: map[string][]byte{},
@@ -63,13 +76,7 @@ func TestCallback_ConvertTrackYoutubeToSpotify(t *testing.T) {
 
 			vs.CallbackHandler(&callback)
 
-			if tt.expectedText == "" {
-				require.Nil(t, senderMock.Response)
-			} else {
-				require.NotNil(t, senderMock.Response)
-				require.Equal(t, user, senderMock.Response.To)
-				require.Equal(t, tt.expectedText, senderMock.Response.Text)
-			}
+			require.Equal(t, tt.expectedMessages, senderMock.AllSent)
 		})
 	}
 }

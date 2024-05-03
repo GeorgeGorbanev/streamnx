@@ -11,8 +11,14 @@ type Album struct {
 	Artists []Artist `json:"artists"`
 }
 
-var AlbumRe = regexp.MustCompile(`https://music\.yandex\.(ru|com)/album/(\d+)`)
+var (
+	AlbumRe = regexp.MustCompile(
+		fmt.Sprintf(
+			`https://music\.yandex\.(%s)/album/(\d+)`, allDomainZonesRe(),
+		),
+	)
+)
 
 func (a *Album) URL() string {
-	return fmt.Sprintf("https://music.yandex.com/album/%d", a.ID)
+	return fmt.Sprintf("https://music.yandex.%s/album/%d", defaultDomainZone, a.ID)
 }

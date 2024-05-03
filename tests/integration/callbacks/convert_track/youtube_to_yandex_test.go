@@ -3,6 +3,8 @@ package convert_track
 import (
 	"testing"
 
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/templates"
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
 
 	"github.com/stretchr/testify/require"
@@ -11,15 +13,52 @@ import (
 
 func TestCallback_ConvertTrackYoutubeToYandex(t *testing.T) {
 	tests := []struct {
-		name         string
-		input        string
-		expectedText string
-		fixturesMap  fixture.FixturesMap
+		name             string
+		input            string
+		expectedMessages []*telegram.Message
+		fixturesMap      fixture.FixturesMap
 	}{
 		{
-			name:         "when youtube track link given and yandex track found",
-			input:        "cnvtr/yt/hbe3CQamF8k/ya",
-			expectedText: "https://music.yandex.com/album/35627/track/354093",
+			name:  "when youtube track link given and yandex track found",
+			input: "cnvtr/yt/hbe3CQamF8k/ya",
+			expectedMessages: []*telegram.Message{
+				{
+					To:   user,
+					Text: "https://music.yandex.com/album/35627/track/354093",
+				},
+				{
+					To:   user,
+					Text: templates.SpecifyRegion,
+					ReplyMarkup: &telebot.ReplyMarkup{
+						InlineKeyboard: [][]telebot.InlineButton{
+							{
+								{
+									Text: "🇧🇾 Belarus",
+									Data: "regtr/354093/by",
+								},
+							},
+							{
+								{
+									Text: "🇰🇿 Kazakhstan",
+									Data: "regtr/354093/kz",
+								},
+							},
+							{
+								{
+									Text: "🇷🇺 Russia",
+									Data: "regtr/354093/ru",
+								},
+							},
+							{
+								{
+									Text: "🇺🇿 Uzbekistan",
+									Data: "regtr/354093/uz",
+								},
+							},
+						},
+					},
+				},
+			},
 			fixturesMap: fixture.FixturesMap{
 				YoutubeTracks: map[string][]byte{
 					"hbe3CQamF8k": fixture.Read("youtube/get_track_massive_attack_angel.json"),
@@ -30,9 +69,14 @@ func TestCallback_ConvertTrackYoutubeToYandex(t *testing.T) {
 			},
 		},
 		{
-			name:         "when youtube track link given and yandex track not found",
-			input:        "cnvtr/yt/hbe3CQamF8k/ya",
-			expectedText: "Track not found in Yandex",
+			name:  "when youtube track link given and yandex track not found",
+			input: "cnvtr/yt/hbe3CQamF8k/ya",
+			expectedMessages: []*telegram.Message{
+				{
+					To:   user,
+					Text: "Track not found in Yandex",
+				},
+			},
 			fixturesMap: fixture.FixturesMap{
 				YoutubeTracks: map[string][]byte{
 					"hbe3CQamF8k": fixture.Read("youtube/get_track_massive_attack_angel.json"),
@@ -41,9 +85,9 @@ func TestCallback_ConvertTrackYoutubeToYandex(t *testing.T) {
 			},
 		},
 		{
-			name:         "when youtube track not found",
-			input:        "cnvtr/yt/hbe3CQamF8k/ya",
-			expectedText: "",
+			name:             "when youtube track not found",
+			input:            "cnvtr/yt/hbe3CQamF8k/ya",
+			expectedMessages: []*telegram.Message{},
 			fixturesMap: fixture.FixturesMap{
 				SpotifyTracks:      map[string][]byte{},
 				YandexSearchTracks: map[string][]byte{},
@@ -63,13 +107,7 @@ func TestCallback_ConvertTrackYoutubeToYandex(t *testing.T) {
 
 			vs.CallbackHandler(&callback)
 
-			if tt.expectedText == "" {
-				require.Nil(t, senderMock.Response)
-			} else {
-				require.NotNil(t, senderMock.Response)
-				require.Equal(t, user, senderMock.Response.To)
-				require.Equal(t, tt.expectedText, senderMock.Response.Text)
-			}
+			require.Equal(t, tt.expectedMessages, senderMock.AllSent)
 		})
 	}
 }

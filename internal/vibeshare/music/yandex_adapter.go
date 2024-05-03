@@ -61,7 +61,7 @@ func (a *YandexAdapter) SearchTrack(artistName, trackName string) (*Track, error
 			return a.adaptTrack(yandexTrack), nil
 		}
 
-		translitedArtist := translit.CyrillicToLatin(artist)
+		translitedArtist := translit.CyrillicToLatin(foundLowcasedArtist)
 		if artist == translitedArtist {
 			return a.adaptTrack(yandexTrack), nil
 		}

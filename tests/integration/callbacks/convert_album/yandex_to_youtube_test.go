@@ -3,6 +3,7 @@ package convert_album
 import (
 	"testing"
 
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"
@@ -10,15 +11,20 @@ import (
 
 func TestCallback_ConvertAlbumYandexToYoutube(t *testing.T) {
 	tests := []struct {
-		name         string
-		input        string
-		expectedText string
-		fixturesMap  fixture.FixturesMap
+		name             string
+		input            string
+		expectedMessages []*telegram.Message
+		fixturesMap      fixture.FixturesMap
 	}{
 		{
-			name:         "when yandex album link given and youtube album found",
-			input:        "cnval/ya/3389008/yt",
-			expectedText: "https://www.youtube.com/playlist?list=PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C",
+			name:  "when yandex album link given and youtube album found",
+			input: "cnval/ya/3389008/yt",
+			expectedMessages: []*telegram.Message{
+				{
+					To:   user,
+					Text: "https://www.youtube.com/playlist?list=PLAV7kVdctKCbILB72QeXGTVe9DhgnsL0C",
+				},
+			},
 			fixturesMap: fixture.FixturesMap{
 				YandexAlbums: map[string][]byte{
 					"3389008": fixture.Read("yandex/get_album_radiohead_amnesiac.json"),
@@ -29,9 +35,14 @@ func TestCallback_ConvertAlbumYandexToYoutube(t *testing.T) {
 			},
 		},
 		{
-			name:         "when yandex album link given and youtube album not found",
-			input:        "cnval/ya/3389008/yt",
-			expectedText: "Album not found in Youtube",
+			name:  "when yandex album link given and youtube album not found",
+			input: "cnval/ya/3389008/yt",
+			expectedMessages: []*telegram.Message{
+				{
+					To:   user,
+					Text: "Album not found in Youtube",
+				},
+			},
 			fixturesMap: fixture.FixturesMap{
 				YandexAlbums: map[string][]byte{
 					"3389008": fixture.Read("yandex/get_album_radiohead_amnesiac.json"),
@@ -40,9 +51,9 @@ func TestCallback_ConvertAlbumYandexToYoutube(t *testing.T) {
 			},
 		},
 		{
-			name:         "when yandex album not found",
-			input:        "cnval/ya/3389008/sf",
-			expectedText: "",
+			name:             "when yandex album not found",
+			input:            "cnval/ya/3389008/sf",
+			expectedMessages: []*telegram.Message{},
 			fixturesMap: fixture.FixturesMap{
 				YandexAlbums:        map[string][]byte{},
 				YoutubeSearchAlbums: map[string][]byte{},
@@ -62,13 +73,7 @@ func TestCallback_ConvertAlbumYandexToYoutube(t *testing.T) {
 
 			vs.CallbackHandler(&callback)
 
-			if tt.expectedText == "" {
-				require.Nil(t, senderMock.Response)
-			} else {
-				require.NotNil(t, senderMock.Response)
-				require.Equal(t, user, senderMock.Response.To)
-				require.Equal(t, tt.expectedText, senderMock.Response.Text)
-			}
+			require.Equal(t, tt.expectedMessages, senderMock.AllSent)
 		})
 	}
 }

@@ -10,13 +10,6 @@ import (
 	"github.com/tucnak/telebot"
 )
 
-func (vs *Vibeshare) FeedbackTextHandler(inMsg *telebot.Message) {
-	slog.Info("handling feedback message",
-		slog.String("from", inMsg.Sender.Username),
-		slog.String("text", inMsg.Text))
-	vs.feedbackRouter.RouteText(inMsg)
-}
-
 func (vs *Vibeshare) feedbackStart(inMsg *telebot.Message) {
 	vs.respondToFeedback(&telegram.Message{To: inMsg.Sender, Text: templates.FeedbackStart})
 }

@@ -3,23 +3,29 @@ package convert_album
 import (
 	"testing"
 
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
-
 	"github.com/stretchr/testify/require"
+
 	"github.com/tucnak/telebot"
 )
 
 func TestCallback_ConvertAlbumSpotifyToApple(t *testing.T) {
 	tests := []struct {
-		name         string
-		input        string
-		expectedText string
-		fixturesMap  fixture.FixturesMap
+		name             string
+		input            string
+		expectedMessages []*telegram.Message
+		fixturesMap      fixture.FixturesMap
 	}{
 		{
-			name:         "when spotify album link given and apple album found",
-			input:        "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ap",
-			expectedText: "https://music.apple.com/us/album/amnesiac/1097864180",
+			name:  "when spotify album link given and apple album found",
+			input: "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ap",
+			expectedMessages: []*telegram.Message{
+				{
+					To:   user,
+					Text: "https://music.apple.com/us/album/amnesiac/1097864180",
+				},
+			},
 			fixturesMap: fixture.FixturesMap{
 				SpotifyAlbums: map[string][]byte{
 					"1HrMmB5useeZ0F5lHrMvl0": fixture.Read("spotify/get_album_radiohead_amnesiac.json"),
@@ -30,9 +36,14 @@ func TestCallback_ConvertAlbumSpotifyToApple(t *testing.T) {
 			},
 		},
 		{
-			name:         "when spotify album link given and apple album not found",
-			input:        "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ap",
-			expectedText: "Album not found in Apple",
+			name:  "when spotify album link given and apple album not found",
+			input: "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ap",
+			expectedMessages: []*telegram.Message{
+				{
+					To:   user,
+					Text: "Album not found in Apple",
+				},
+			},
 			fixturesMap: fixture.FixturesMap{
 				SpotifyAlbums: map[string][]byte{
 					"1HrMmB5useeZ0F5lHrMvl0": fixture.Read("spotify/get_album_radiohead_amnesiac.json"),
@@ -41,9 +52,9 @@ func TestCallback_ConvertAlbumSpotifyToApple(t *testing.T) {
 			},
 		},
 		{
-			name:         "when spotify album not found",
-			input:        "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ap",
-			expectedText: "",
+			name:             "when spotify album not found",
+			input:            "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ap",
+			expectedMessages: []*telegram.Message{},
 			fixturesMap: fixture.FixturesMap{
 				SpotifyAlbums:     map[string][]byte{},
 				AppleSearchAlbums: map[string][]byte{},
@@ -63,13 +74,7 @@ func TestCallback_ConvertAlbumSpotifyToApple(t *testing.T) {
 
 			vs.CallbackHandler(&callback)
 
-			if tt.expectedText == "" {
-				require.Nil(t, senderMock.Response)
-			} else {
-				require.NotNil(t, senderMock.Response)
-				require.Equal(t, user, senderMock.Response.To)
-				require.Equal(t, tt.expectedText, senderMock.Response.Text)
-			}
+			require.Equal(t, tt.expectedMessages, senderMock.AllSent)
 		})
 	}
 }

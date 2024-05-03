@@ -6,7 +6,16 @@ import (
 )
 
 const (
-	Start = `🎶 Welcome to Vibeshare! 🎶
+	ExampleTrack      = "Convert example track https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+	FeedbackCommand   = `Tap <a href="https://t.me/%s">here</a> to open feedback dialogue`
+	FeedbackStart     = "Here you can send feedback to the author of this bot. Just type your message and it will be delivered to the author directly. 🙏"
+	FeedbackThanks    = "Your feedback will be delivered to the human. Thank you! 🙏"
+	FeedbackReceived  = "From @%s (%d): %s"
+	NotFound          = `No supported link found`
+	Skip              = "Skip"
+	SkipDemonstration = "Skip demonstration"
+	SpecifyRegion     = "This link has <code>.com</code> domain. You can specify country of recipient to be sure link accessible in recipients`s region"
+	Start             = `🎶 Welcome to Vibeshare! 🎶
 
 I'm here to help you share your favorite music tracks and albums with friends, no matter which streaming platforms they use. With just one click, you can provide them with direct access to the music you want to share, without the need for searching.
 
@@ -19,14 +28,6 @@ Here's how to get started:
 <b>3) Share the Music:</b> <i>Once you've got the link for your desired platform, share it with your friends and enjoy the music together!</i>
 
 Let's spread the vibes! ☮️`
-	ExampleTrack      = "Convert example track https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-	FeedbackCommand   = `Tap <a href="https://t.me/%s">here</a> to open feedback dialogue`
-	FeedbackStart     = "Here you can send feedback to the author of this bot. Just type your message and it will be delivered to the author directly. 🙏"
-	FeedbackThanks    = "Your feedback will be delivered to the human. Thank you! 🙏"
-	FeedbackReceived  = "From @%s (%d): %s"
-	NotFound          = `No supported link found`
-	Skip              = "Skip"
-	SkipDemonstration = "Skip demonstration"
 	WhatLinksButton   = "What links do you support?"
 	WhatLinksResponse = `I support the following music platforms links:
 <code>

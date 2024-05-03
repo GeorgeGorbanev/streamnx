@@ -3,6 +3,8 @@ package convert_album
 import (
 	"testing"
 
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/templates"
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
 
 	"github.com/stretchr/testify/require"
@@ -11,15 +13,52 @@ import (
 
 func TestCallback_ConvertAlbumSpotifyToYandex(t *testing.T) {
 	tests := []struct {
-		name         string
-		input        string
-		expectedText string
-		fixturesMap  fixture.FixturesMap
+		name             string
+		input            string
+		expectedMessages []*telegram.Message
+		fixturesMap      fixture.FixturesMap
 	}{
 		{
-			name:         "when spotify album link given and yandex album found",
-			input:        "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ya",
-			expectedText: "https://music.yandex.com/album/3389008",
+			name:  "when spotify album link given and yandex album found",
+			input: "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ya",
+			expectedMessages: []*telegram.Message{
+				{
+					To:   user,
+					Text: "https://music.yandex.com/album/3389008",
+				},
+				{
+					To:   user,
+					Text: templates.SpecifyRegion,
+					ReplyMarkup: &telebot.ReplyMarkup{
+						InlineKeyboard: [][]telebot.InlineButton{
+							{
+								{
+									Text: "🇧🇾 Belarus",
+									Data: "regal/3389008/by",
+								},
+							},
+							{
+								{
+									Text: "🇰🇿 Kazakhstan",
+									Data: "regal/3389008/kz",
+								},
+							},
+							{
+								{
+									Text: "🇷🇺 Russia",
+									Data: "regal/3389008/ru",
+								},
+							},
+							{
+								{
+									Text: "🇺🇿 Uzbekistan",
+									Data: "regal/3389008/uz",
+								},
+							},
+						},
+					},
+				},
+			},
 			fixturesMap: fixture.FixturesMap{
 				SpotifyAlbums: map[string][]byte{
 					"1HrMmB5useeZ0F5lHrMvl0": fixture.Read("spotify/get_album_radiohead_amnesiac.json"),
@@ -30,9 +69,14 @@ func TestCallback_ConvertAlbumSpotifyToYandex(t *testing.T) {
 			},
 		},
 		{
-			name:         "when spotify album link given and yandex album not found",
-			input:        "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ya",
-			expectedText: "Album not found in Yandex",
+			name:  "when spotify album link given and yandex album not found",
+			input: "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ya",
+			expectedMessages: []*telegram.Message{
+				{
+					To:   user,
+					Text: "Album not found in Yandex",
+				},
+			},
 			fixturesMap: fixture.FixturesMap{
 				SpotifyAlbums: map[string][]byte{
 					"1HrMmB5useeZ0F5lHrMvl0": fixture.Read("spotify/get_album_radiohead_amnesiac.json"),
@@ -41,9 +85,9 @@ func TestCallback_ConvertAlbumSpotifyToYandex(t *testing.T) {
 			},
 		},
 		{
-			name:         "when spotify album not found",
-			input:        "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ya",
-			expectedText: "",
+			name:             "when spotify album not found",
+			input:            "cnval/sf/1HrMmB5useeZ0F5lHrMvl0/ya",
+			expectedMessages: []*telegram.Message{},
 			fixturesMap: fixture.FixturesMap{
 				SpotifyAlbums:      map[string][]byte{},
 				YandexSearchAlbums: map[string][]byte{},
@@ -63,13 +107,7 @@ func TestCallback_ConvertAlbumSpotifyToYandex(t *testing.T) {
 
 			vs.CallbackHandler(&callback)
 
-			if tt.expectedText == "" {
-				require.Nil(t, senderMock.Response)
-			} else {
-				require.NotNil(t, senderMock.Response)
-				require.Equal(t, user, senderMock.Response.To)
-				require.Equal(t, tt.expectedText, senderMock.Response.Text)
-			}
+			require.Equal(t, tt.expectedMessages, senderMock.AllSent)
 		})
 	}
 }

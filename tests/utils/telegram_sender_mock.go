@@ -23,4 +23,5 @@ func (t *TelegramSenderMock) Send(msg *telegram.Message) (*telebot.Message, erro
 
 func (t *TelegramSenderMock) Reset() {
 	t.Response = nil
+	t.AllSent = []*telegram.Message{}
 }

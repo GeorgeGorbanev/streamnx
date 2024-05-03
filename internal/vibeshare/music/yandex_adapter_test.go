@@ -75,8 +75,28 @@ func TestYandexAdapter_DetectTrackID(t *testing.T) {
 		wantID string
 	}{
 		{
-			name:   "Valid Track URL",
+			name:   "Valid Track URL – .com",
+			url:    "https://music.yandex.com/album/3192570/track/1197793",
+			wantID: "1197793",
+		},
+		{
+			name:   "Valid Track URL – .ru",
 			url:    "https://music.yandex.ru/album/3192570/track/1197793",
+			wantID: "1197793",
+		},
+		{
+			name:   "Valid Track URL – .by",
+			url:    "https://music.yandex.by/album/3192570/track/1197793",
+			wantID: "1197793",
+		},
+		{
+			name:   "Valid Track URL – .kz",
+			url:    "https://music.yandex.kz/album/3192570/track/1197793",
+			wantID: "1197793",
+		},
+		{
+			name:   "Valid Track URL – .uz",
+			url:    "https://music.yandex.uz/album/3192570/track/1197793",
 			wantID: "1197793",
 		},
 		{
@@ -112,7 +132,22 @@ func TestYandexAdapter_DetectAlbumID(t *testing.T) {
 		wantID string
 	}{
 		{
-			name:   "Valid album URL",
+			name:   "Valid album URL – .by",
+			url:    "https://music.yandex.by/album/1197793",
+			wantID: "1197793",
+		},
+		{
+			name:   "Valid album URL – .kz",
+			url:    "https://music.yandex.kz/album/1197793",
+			wantID: "1197793",
+		},
+		{
+			name:   "Valid album URL – .uz",
+			url:    "https://music.yandex.uz/album/1197793",
+			wantID: "1197793",
+		},
+		{
+			name:   "Valid album URL – .ru",
 			url:    "https://music.yandex.ru/album/1197793",
 			wantID: "1197793",
 		},

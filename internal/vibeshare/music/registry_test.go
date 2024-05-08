@@ -8,7 +8,7 @@ import (
 
 func TestRegistry_Adapter(t *testing.T) {
 	spotifyAdapter := newSpotifyAdapter(nil)
-	yandexAdapter := newYandexAdapter(nil)
+	yandexAdapter := newYandexAdapter(nil, nil)
 	youtubeAdapter := newYoutubeAdapter(nil)
 
 	registry := Registry{

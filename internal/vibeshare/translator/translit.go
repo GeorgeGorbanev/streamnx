@@ -1,4 +1,4 @@
-package translit
+package translator
 
 import (
 	"strings"
@@ -34,17 +34,17 @@ var (
 	)
 )
 
-func CyrillicToLatin(input string) string {
+func TranslitCyrToLat(input string) string {
 	return cyryllicToLatinReplacer.Replace(input)
 }
 
-func LatinToCyrillic(input string) string {
+func TranslitLatToCyr(input string) string {
 	return singleLatinToCyrillicReplacer.Replace(
 		multipleLatinToCyrillicReplacer.Replace(input),
 	)
 }
 
-func Translitable(s string) bool {
+func HasCyrillic(s string) bool {
 	for _, char := range s {
 		if unicode.Is(unicode.Cyrillic, char) {
 			return true

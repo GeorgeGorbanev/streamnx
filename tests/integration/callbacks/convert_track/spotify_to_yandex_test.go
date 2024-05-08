@@ -6,6 +6,7 @@ import (
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/templates"
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
+	"github.com/GeorgeGorbanev/vibeshare/tests/utils"
 
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"
@@ -15,6 +16,7 @@ func TestCallback_ConvertTrackSpotifyToYandex(t *testing.T) {
 	tests := []struct {
 		name             string
 		input            string
+		translatorMock   utils.TranslatorMock
 		expectedMessages []*telegram.Message
 		fixturesMap      fixture.FixturesMap
 	}{
@@ -211,10 +213,66 @@ func TestCallback_ConvertTrackSpotifyToYandex(t *testing.T) {
 				},
 			},
 		},
+		{
+			name:  "when spotify track link given, track found and artist name is translated",
+			input: "cnvtr/sf/7m4RjyO6bsM4HlHCWZDUcM/ya",
+			expectedMessages: []*telegram.Message{
+				{
+					To:   user,
+					Text: "https://music.yandex.com/album/3879329/track/31920275",
+				},
+				{
+					To:   user,
+					Text: templates.SpecifyRegion,
+					ReplyMarkup: &telebot.ReplyMarkup{
+						InlineKeyboard: [][]telebot.InlineButton{
+							{
+								{
+									Text: "🇧🇾 Belarus",
+									Data: "regtr/31920275/by",
+								},
+							},
+							{
+								{
+									Text: "🇰🇿 Kazakhstan",
+									Data: "regtr/31920275/kz",
+								},
+							},
+							{
+								{
+									Text: "🇷🇺 Russia",
+									Data: "regtr/31920275/ru",
+								},
+							},
+							{
+								{
+									Text: "🇺🇿 Uzbekistan",
+									Data: "regtr/31920275/uz",
+								},
+							},
+						},
+					},
+				},
+			},
+			fixturesMap: fixture.FixturesMap{
+				SpotifyTracks: map[string][]byte{
+					"7m4RjyO6bsM4HlHCWZDUcM": fixture.Read("spotify/get_track_dolphin_sumerki.json"),
+				},
+				YandexSearchTracks: map[string][]byte{
+					"dolphin – сумерки": fixture.Read("yandex/search_track_dolphin_sumerki.json"),
+				},
+			},
+			translatorMock: utils.TranslatorMock{
+				EnToRu: map[string]string{
+					"dolphin": "дельфин",
+				},
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			fixturesMap.Merge(&tt.fixturesMap)
+			translatorMock.EnToRu = tt.translatorMock.EnToRu
 			defer fixturesMap.Reset()
 			defer senderMock.Reset()
 

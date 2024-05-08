@@ -60,7 +60,7 @@ func TestMain(m *testing.M) {
 	if err != nil {
 		panic(err)
 	}
-	vs = &app
+	vs = app
 
 	code := m.Run()
 

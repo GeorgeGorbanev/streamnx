@@ -28,19 +28,20 @@ type Vibeshare struct {
 	feedbackReceiverID int
 }
 
-func NewVibeshare(input *Input, opts ...Option) (vs Vibeshare, err error) {
+func NewVibeshare(input *Input, opts ...Option) (*Vibeshare, error) {
+	vs := &Vibeshare{}
 	vs.musicRegistry = input.MusicRegistry
 	vs.feedbackReceiverID = input.FeedbackReceiverID
 
-	if err = vs.setupVibeshareBot(input); err != nil {
+	if err := vs.setupVibeshareBot(input); err != nil {
 		return vs, err
 	}
-	if err = vs.setupFeedbackBot(input); err != nil {
+	if err := vs.setupFeedbackBot(input); err != nil {
 		return vs, err
 	}
 
 	for _, opt := range opts {
-		opt(&vs)
+		opt(vs)
 	}
 
 	vs.setupVibeshareRouter()
@@ -64,6 +65,9 @@ func (vs *Vibeshare) Stop() {
 	}
 	if vs.vibeshareBot != nil {
 		vs.vibeshareBot.Stop()
+	}
+	if vs.musicRegistry != nil {
+		vs.musicRegistry.Close()
 	}
 }
 

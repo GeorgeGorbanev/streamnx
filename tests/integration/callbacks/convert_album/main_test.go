@@ -17,9 +17,10 @@ import (
 )
 
 var (
-	fixturesMap *fixture.FixturesMap
-	senderMock  *utils.TelegramSenderMock
-	vs          *vibeshare.Vibeshare
+	fixturesMap    *fixture.FixturesMap
+	senderMock     *utils.TelegramSenderMock
+	translatorMock utils.TranslatorMock
+	vs             *vibeshare.Vibeshare
 
 	user = &telebot.User{
 		Username: "sample_username",
@@ -55,12 +56,13 @@ func TestMain(m *testing.M) {
 			SpotifyClient: spotifyClient,
 			YandexClient:  yandexClient,
 			YoutubeClient: youtubeClient,
+			Translator:    &translatorMock,
 		}),
 	}, vibeshare.WithVibeshareSender(senderMock))
 	if err != nil {
 		panic(err)
 	}
-	vs = &app
+	vs = app
 
 	code := m.Run()
 

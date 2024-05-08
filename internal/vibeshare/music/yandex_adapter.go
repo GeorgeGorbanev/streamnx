@@ -1,21 +1,24 @@
 package music
 
 import (
+	"context"
 	"fmt"
 	"strconv"
 	"strings"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/translit"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/translator"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/yandex"
 )
 
 type YandexAdapter struct {
-	client yandex.Client
+	client     yandex.Client
+	translator translator.Translator
 }
 
-func newYandexAdapter(client yandex.Client) *YandexAdapter {
+func newYandexAdapter(c yandex.Client, t translator.Translator) *YandexAdapter {
 	return &YandexAdapter{
-		client: client,
+		client:     c,
+		translator: t,
 	}
 }
 
@@ -47,36 +50,16 @@ func (a *YandexAdapter) GetTrack(id string) (*Track, error) {
 	return a.adaptTrack(yandexTrack), nil
 }
 
-func (a *YandexAdapter) SearchTrack(artistName, trackName string) (*Track, error) {
-	artist := strings.ToLower(artistName)
-	track := strings.ToLower(trackName)
+func (a *YandexAdapter) SearchTrack(artist, track string) (*Track, error) {
+	lowcasedArtist := strings.ToLower(artist)
+	lowcasedTrack := strings.ToLower(track)
 
-	yandexTrack, err := a.client.SearchTrack(artist, track)
+	foundTrack, err := a.findTrack(lowcasedArtist, lowcasedTrack)
 	if err != nil {
-		return nil, fmt.Errorf("error searching track: %w", err)
+		return nil, err
 	}
-	if yandexTrack != nil {
-		foundLowcasedArtist := strings.ToLower(yandexTrack.Artists[0].Name)
-		if artist == foundLowcasedArtist {
-			return a.adaptTrack(yandexTrack), nil
-		}
-
-		translitedArtist := translit.CyrillicToLatin(foundLowcasedArtist)
-		if artist == translitedArtist {
-			return a.adaptTrack(yandexTrack), nil
-		}
-		return nil, nil
-	}
-
-	if translit.Translitable(artist) || translit.Translitable(track) {
-		translitedArtist := translit.LatinToCyrillic(artist)
-		yandexTrack, err = a.client.SearchTrack(translitedArtist, track)
-		if err != nil {
-			return nil, fmt.Errorf("error searching yandex track: %w", err)
-		}
-	}
-	if yandexTrack != nil {
-		return a.adaptTrack(yandexTrack), nil
+	if foundTrack != nil {
+		return a.adaptTrack(foundTrack), nil
 	}
 
 	return nil, nil
@@ -95,15 +78,76 @@ func (a *YandexAdapter) GetAlbum(id string) (*Album, error) {
 }
 
 func (a *YandexAdapter) SearchAlbum(artistName, albumName string) (*Album, error) {
-	yandexAlbum, err := a.client.SearchAlbum(artistName, albumName)
+	lowcasedArtist := strings.ToLower(artistName)
+	lowcasedAlbum := strings.ToLower(albumName)
+
+	foundAlbum, err := a.findAlbum(lowcasedArtist, lowcasedAlbum)
 	if err != nil {
-		return nil, fmt.Errorf("failed to search album on yandex music: %w", err)
+		return nil, err
 	}
-	if yandexAlbum == nil {
-		return nil, nil
+	if foundAlbum != nil {
+		return a.adaptAlbum(foundAlbum), nil
 	}
 
-	return a.adaptAlbum(yandexAlbum), nil
+	return nil, nil
+}
+
+func (a *YandexAdapter) findTrack(artist, track string) (*yandex.Track, error) {
+	foundTrack, err := a.client.SearchTrack(artist, track)
+	if err != nil {
+		return nil, fmt.Errorf("error searching track: %w", err)
+	}
+	if foundTrack != nil {
+		artistMatch, err := a.artistMatch(foundTrack.Artists[0].Name, artist)
+		if err != nil {
+			return nil, fmt.Errorf("failed to check artist match: %w", err)
+		}
+		if artistMatch {
+			return foundTrack, nil
+		}
+	}
+
+	if translator.HasCyrillic(track) {
+		translited := translator.TranslitLatToCyr(artist)
+		foundTranslitedTrack, err := a.client.SearchTrack(translited, track)
+		if err != nil {
+			return nil, fmt.Errorf("error searching yandex track: %w", err)
+		}
+		if foundTranslitedTrack != nil {
+			return foundTranslitedTrack, nil
+		}
+	}
+
+	return nil, nil
+}
+
+func (a *YandexAdapter) findAlbum(artist, album string) (*yandex.Album, error) {
+	foundAlbum, err := a.client.SearchAlbum(artist, album)
+	if err != nil {
+		return nil, fmt.Errorf("error searching album: %w", err)
+	}
+	if foundAlbum != nil {
+		artistMatch, err := a.artistMatch(foundAlbum.Artists[0].Name, artist)
+		if err != nil {
+			return nil, fmt.Errorf("failed to check artist match: %w", err)
+		}
+		if artistMatch {
+			return foundAlbum, nil
+		}
+	}
+
+	if translator.HasCyrillic(album) {
+		translited := translator.TranslitLatToCyr(artist)
+		foundTranslitedAlbum, err := a.client.SearchAlbum(translited, album)
+		if err != nil {
+			return nil, fmt.Errorf("error searching yandex album: %w", err)
+		}
+		if foundTranslitedAlbum != nil {
+			return foundTranslitedAlbum, nil
+		}
+	}
+
+	return nil, nil
 }
 
 func (a *YandexAdapter) adaptTrack(yandexTrack *yandex.Track) *Track {
@@ -124,4 +168,28 @@ func (a *YandexAdapter) adaptAlbum(yandexAlbum *yandex.Album) *Album {
 		URL:      yandexAlbum.URL(),
 		Provider: Yandex,
 	}
+}
+
+func (a *YandexAdapter) artistMatch(foundArtist, artistName string) (bool, error) {
+	lowcasedFoundArtist := strings.ToLower(foundArtist)
+	if artistName == lowcasedFoundArtist {
+		return true, nil
+	}
+
+	translitedFoundArtist := translator.TranslitCyrToLat(lowcasedFoundArtist)
+	if artistName == translitedFoundArtist {
+		return true, nil
+	}
+
+	if translator.HasCyrillic(foundArtist) {
+		translatedArtist, err := a.translator.TranslateEnToRu(context.Background(), artistName)
+		if err != nil {
+			return false, fmt.Errorf("failed to translate artist name: %w", err)
+		}
+		if translatedArtist == lowcasedFoundArtist {
+			return true, nil
+		}
+	}
+
+	return false, nil
 }

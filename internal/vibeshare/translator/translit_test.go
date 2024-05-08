@@ -1,4 +1,4 @@
-package translit
+package translator
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestCyrillicToLatin(t *testing.T) {
+func TestTranslitCyrToLat(t *testing.T) {
 	tests := []struct {
 		input  string
 		output string
@@ -39,12 +39,12 @@ func TestCyrillicToLatin(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(fmt.Sprintf("%s => %s", tt.input, tt.output), func(t *testing.T) {
-			require.Equal(t, tt.output, CyrillicToLatin(tt.input))
+			require.Equal(t, tt.output, TranslitCyrToLat(tt.input))
 		})
 	}
 }
 
-func TestLatinToCyrillic(t *testing.T) {
+func TestTranslitLatToCyr(t *testing.T) {
 	tests := []struct {
 		input  string
 		output string
@@ -76,7 +76,7 @@ func TestLatinToCyrillic(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(fmt.Sprintf("%s => %s", tt.input, tt.output), func(t *testing.T) {
-			require.Equal(t, tt.output, LatinToCyrillic(tt.input))
+			require.Equal(t, tt.output, TranslitLatToCyr(tt.input))
 		})
 	}
 }
@@ -101,7 +101,7 @@ func TestTranslitable(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.trackName, func(t *testing.T) {
-			result := Translitable(tt.trackName)
+			result := HasCyrillic(tt.trackName)
 			require.Equal(t, tt.want, result)
 		})
 	}

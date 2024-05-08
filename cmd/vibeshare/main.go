@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log/slog"
 	"os"
@@ -10,19 +11,21 @@ import (
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/apple"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/music"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
+	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/translator"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/yandex"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/youtube"
-
 	"github.com/joho/godotenv"
 )
 
 type config struct {
-	telegramToken       string
-	spotifyClientID     string
-	spotifyClientSecret string
-	youtubeAPIKey       string
-	feedbackToken       string
-	feedbackReceiverID  int
+	googleCloudProjectID       string
+	googleTranslatorAPIKeyJSON string
+	telegramToken              string
+	spotifyClientID            string
+	spotifyClientSecret        string
+	youtubeAPIKey              string
+	feedbackToken              string
+	feedbackReceiverID         int
 }
 
 func main() {
@@ -33,9 +36,11 @@ func main() {
 		return
 	}
 
-	vs, err := newVibeshare(cfg)
+	ctx := context.Background()
+
+	vs, err := newVibeshare(ctx, cfg)
 	if err != nil {
-		slog.Error("failed to create vibeshare", slog.Any("error", err))
+		slog.Error("failed to start vibeshare", slog.Any("error", err))
 		return
 	}
 	defer vs.Stop()
@@ -67,30 +72,41 @@ func loadConfig() (*config, error) {
 	}
 
 	return &config{
-		telegramToken:       os.Getenv("TELEGRAM_TOKEN"),
-		spotifyClientID:     os.Getenv("SPOTIFY_CLIENT_ID"),
-		spotifyClientSecret: os.Getenv("SPOTIFY_CLIENT_SECRET"),
-		youtubeAPIKey:       os.Getenv("YOUTUBE_API_KEY"),
-		feedbackToken:       os.Getenv("FEEDBACK_TOKEN"),
-		feedbackReceiverID:  fbReceiverID,
+		telegramToken:              os.Getenv("TELEGRAM_TOKEN"),
+		googleCloudProjectID:       os.Getenv("GOOGLE_CLOUD_PROJECT_ID"),
+		googleTranslatorAPIKeyJSON: os.Getenv("GOOGLE_TRANSLATOR_KEY_JSON"),
+		spotifyClientID:            os.Getenv("SPOTIFY_CLIENT_ID"),
+		spotifyClientSecret:        os.Getenv("SPOTIFY_CLIENT_SECRET"),
+		youtubeAPIKey:              os.Getenv("YOUTUBE_API_KEY"),
+		feedbackToken:              os.Getenv("FEEDBACK_TOKEN"),
+		feedbackReceiverID:         fbReceiverID,
 	}, nil
 }
 
-func newVibeshare(cfg *config) (vibeshare.Vibeshare, error) {
+func newVibeshare(ctx context.Context, cfg *config) (*vibeshare.Vibeshare, error) {
+	googleClient, err := translator.NewGoogleClient(ctx, &translator.GoogleCredentials{
+		APIKeyJSON: cfg.googleTranslatorAPIKeyJSON,
+		ProjectID:  cfg.googleCloudProjectID,
+	})
+	if err != nil {
+		return nil, fmt.Errorf("failed to create google translator client: %w", err)
+	}
+
 	return vibeshare.NewVibeshare(&vibeshare.Input{
 		VibeshareBotToken:  cfg.telegramToken,
 		FeedbackBotToken:   cfg.feedbackToken,
 		FeedbackReceiverID: cfg.feedbackReceiverID,
 		MusicRegistry: music.NewRegistry(&music.RegistryInput{
-			AppleClient: apple.NewHTTPClient(),
-			SpotifyClient: spotify.NewHTTPClient(&spotify.Credentials{
-				ClientID:     cfg.spotifyClientID,
-				ClientSecret: cfg.spotifyClientSecret,
-			}),
+			AppleClient:  apple.NewHTTPClient(),
 			YandexClient: yandex.NewHTTPClient(),
 			YoutubeClient: youtube.NewHTTPClient(
 				cfg.youtubeAPIKey,
 			),
+			SpotifyClient: spotify.NewHTTPClient(&spotify.Credentials{
+				ClientID:     cfg.spotifyClientID,
+				ClientSecret: cfg.spotifyClientSecret,
+			}),
+			Translator: googleClient,
 		}),
 	})
 }

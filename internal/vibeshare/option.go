@@ -1,6 +1,6 @@
 package vibeshare
 
-import "github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
+import "github.com/GeorgeGorbanev/vibeshare/internal/telegram"
 
 type Option func(vs *Vibeshare)
 

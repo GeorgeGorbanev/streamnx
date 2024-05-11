@@ -3,8 +3,8 @@ package texts
 import (
 	"testing"
 
+	"github.com/GeorgeGorbanev/vibeshare/internal/telegram"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
 	"github.com/GeorgeGorbanev/vibeshare/tests/utils"
 
 	"github.com/stretchr/testify/require"

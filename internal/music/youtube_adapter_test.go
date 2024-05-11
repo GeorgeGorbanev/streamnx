@@ -3,7 +3,7 @@ package music
 import (
 	"testing"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/youtube"
+	"github.com/GeorgeGorbanev/vibeshare/internal/youtube"
 	"github.com/stretchr/testify/require"
 )
 

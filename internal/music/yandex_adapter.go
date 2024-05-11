@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/translator"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/yandex"
+	"github.com/GeorgeGorbanev/vibeshare/internal/translator"
+	"github.com/GeorgeGorbanev/vibeshare/internal/yandex"
 )
 
 type YandexAdapter struct {

@@ -3,7 +3,7 @@ package links
 import (
 	"testing"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/templates"
+	"github.com/GeorgeGorbanev/vibeshare/internal/templates"
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
 
 	"github.com/stretchr/testify/require"

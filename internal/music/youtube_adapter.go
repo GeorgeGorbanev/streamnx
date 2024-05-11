@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/youtube"
+	"github.com/GeorgeGorbanev/vibeshare/internal/youtube"
 )
 
 type YoutubeAdapter struct {

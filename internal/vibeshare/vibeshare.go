@@ -3,8 +3,8 @@ package vibeshare
 import (
 	"fmt"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/music"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
+	"github.com/GeorgeGorbanev/vibeshare/internal/music"
+	"github.com/GeorgeGorbanev/vibeshare/internal/telegram"
 )
 
 type Input struct {

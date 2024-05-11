@@ -3,7 +3,7 @@ package vibeshare
 import (
 	"testing"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/music"
+	"github.com/GeorgeGorbanev/vibeshare/internal/music"
 
 	"github.com/stretchr/testify/require"
 )

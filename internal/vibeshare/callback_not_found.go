@@ -3,7 +3,7 @@ package vibeshare
 import (
 	"log/slog"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
+	"github.com/GeorgeGorbanev/vibeshare/internal/telegram"
 )
 
 func (vs *Vibeshare) callbackNotFoundHandler(callback *telegram.Callback) {

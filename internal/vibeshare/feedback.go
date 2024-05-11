@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log/slog"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/templates"
+	"github.com/GeorgeGorbanev/vibeshare/internal/telegram"
+	"github.com/GeorgeGorbanev/vibeshare/internal/templates"
 
 	"github.com/tucnak/telebot"
 )

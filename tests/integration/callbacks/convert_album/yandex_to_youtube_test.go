@@ -3,7 +3,7 @@ package convert_album
 import (
 	"testing"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
+	"github.com/GeorgeGorbanev/vibeshare/internal/telegram"
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
 	"github.com/stretchr/testify/require"
 	"github.com/tucnak/telebot"

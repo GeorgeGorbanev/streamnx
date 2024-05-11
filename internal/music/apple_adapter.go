@@ -3,7 +3,7 @@ package music
 import (
 	"fmt"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/apple"
+	"github.com/GeorgeGorbanev/vibeshare/internal/apple"
 )
 
 type AppleAdapter struct {

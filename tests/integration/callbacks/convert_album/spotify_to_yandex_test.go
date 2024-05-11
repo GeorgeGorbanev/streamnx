@@ -3,8 +3,8 @@ package convert_album
 import (
 	"testing"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/templates"
+	"github.com/GeorgeGorbanev/vibeshare/internal/telegram"
+	"github.com/GeorgeGorbanev/vibeshare/internal/templates"
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
 	"github.com/GeorgeGorbanev/vibeshare/tests/utils"
 

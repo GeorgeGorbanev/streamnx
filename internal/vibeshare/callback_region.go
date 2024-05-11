@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"log/slog"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/music"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/yandex"
+	"github.com/GeorgeGorbanev/vibeshare/internal/music"
+	"github.com/GeorgeGorbanev/vibeshare/internal/telegram"
+	"github.com/GeorgeGorbanev/vibeshare/internal/yandex"
 )
 
 type regionParams struct {

@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
+	"github.com/GeorgeGorbanev/vibeshare/internal/telegram"
 
 	"github.com/tucnak/telebot"
 )

@@ -3,7 +3,7 @@ package music
 import (
 	"fmt"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
+	"github.com/GeorgeGorbanev/vibeshare/internal/spotify"
 )
 
 type SpotifyAdapter struct {

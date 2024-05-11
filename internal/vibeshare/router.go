@@ -4,12 +4,12 @@ import (
 	"log/slog"
 	"regexp"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/apple"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/telegram"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/templates"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/yandex"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/youtube"
+	"github.com/GeorgeGorbanev/vibeshare/internal/apple"
+	"github.com/GeorgeGorbanev/vibeshare/internal/spotify"
+	"github.com/GeorgeGorbanev/vibeshare/internal/telegram"
+	"github.com/GeorgeGorbanev/vibeshare/internal/templates"
+	"github.com/GeorgeGorbanev/vibeshare/internal/yandex"
+	"github.com/GeorgeGorbanev/vibeshare/internal/youtube"
 
 	"github.com/tucnak/telebot"
 )

@@ -7,13 +7,14 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/GeorgeGorbanev/vibeshare/internal/apple"
+	"github.com/GeorgeGorbanev/vibeshare/internal/music"
+	"github.com/GeorgeGorbanev/vibeshare/internal/spotify"
+	"github.com/GeorgeGorbanev/vibeshare/internal/translator"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/apple"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/music"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/spotify"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/translator"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/yandex"
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/youtube"
+	"github.com/GeorgeGorbanev/vibeshare/internal/yandex"
+	"github.com/GeorgeGorbanev/vibeshare/internal/youtube"
+
 	"github.com/joho/godotenv"
 )
 

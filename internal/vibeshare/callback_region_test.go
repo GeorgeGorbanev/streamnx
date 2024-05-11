@@ -3,7 +3,7 @@ package vibeshare
 import (
 	"testing"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare/yandex"
+	"github.com/GeorgeGorbanev/vibeshare/internal/yandex"
 
 	"github.com/stretchr/testify/require"
 )

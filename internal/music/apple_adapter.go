@@ -17,22 +17,28 @@ func newAppleAdapter(client apple.Client) *AppleAdapter {
 }
 
 func (a *AppleAdapter) DetectTrackID(trackURL string) (string, error) {
-	matches := apple.AlbumTrackRe.FindStringSubmatch(trackURL)
-	if len(matches) > 2 {
-		return matches[2], nil
+	storeFront, id := trackReMatches(trackURL)
+	if storeFront == "" || id == "" {
+		return "", IDNotFoundError
 	}
-	matches = apple.SongRe.FindStringSubmatch(trackURL)
-	if len(matches) > 1 {
-		return matches[1], nil
+	if !apple.IsValidStorefront(storeFront) {
+		return "", IDNotFoundError
 	}
-	return "", IDNotFoundError
+
+	return id, nil
 }
 
 func (a *AppleAdapter) DetectAlbumID(albumURL string) (string, error) {
-	if matches := apple.AlbumRe.FindStringSubmatch(albumURL); len(matches) > 1 {
-		return matches[1], nil
+	matches := apple.AlbumRe.FindStringSubmatch(albumURL)
+	if len(matches) < 2 {
+		return "", IDNotFoundError
 	}
-	return "", IDNotFoundError
+
+	regionCode := matches[1]
+	if !apple.IsValidStorefront(regionCode) {
+		return "", IDNotFoundError
+	}
+	return matches[2], nil
 }
 
 func (a *AppleAdapter) GetTrack(id string) (*Track, error) {
@@ -99,4 +105,16 @@ func (a *AppleAdapter) adaptAlbum(album *apple.MusicEntity) *Album {
 		URL:      album.Attributes.URL,
 		Provider: Apple,
 	}
+}
+
+func trackReMatches(trackURL string) (string, string) {
+	matches := apple.AlbumTrackRe.FindStringSubmatch(trackURL)
+	if len(matches) > 3 {
+		return matches[1], matches[3]
+	}
+	matches = apple.SongRe.FindStringSubmatch(trackURL)
+	if len(matches) > 2 {
+		return matches[1], matches[2]
+	}
+	return "", ""
 }

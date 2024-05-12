@@ -14,8 +14,8 @@ type Attributes struct {
 }
 
 var (
-	AlbumRe      = regexp.MustCompile(`music\.apple\.com/.*/album/.*/(\d+)`)
-	AlbumTrackRe = regexp.MustCompile(`music\.apple\.com/.*/album/.*/(\d+)\?i=(\d+)`)
-	SongRe       = regexp.MustCompile(`music\.apple\.com/.*/song/.*/(\d+)`)
+	AlbumRe      = regexp.MustCompile(`music\.apple\.com/(\w+)/album/.*/(\d+)`)
+	AlbumTrackRe = regexp.MustCompile(`music\.apple\.com/(\w+)/album/.*/(\d+)\?i=(\d+)`)
+	SongRe       = regexp.MustCompile(`music\.apple\.com/(\w+)/song/.*/(\d+)`)
 	TrackRe      = regexp.MustCompile(AlbumTrackRe.String() + "|" + SongRe.String())
 )

@@ -19,14 +19,26 @@ func TestAppleAdapter_DetectTrackID(t *testing.T) {
 			expected: "987654321",
 		},
 		{
-			name:     "valid URL with track ID and th locale",
+			name:     "valid URL with track ID and th storefront",
 			input:    "https://music.apple.com/th/album/song-name/1234567890?i=987654321",
 			expected: "987654321",
+		},
+		{
+			name:          "valid URL with track ID and invalid iso3611 storefront",
+			input:         "https://music.apple.com/invalidstorefront/album/song-name/1234567890?i=987654321",
+			expected:      "",
+			expectedError: IDNotFoundError,
 		},
 		{
 			name:     "valid URL without album",
 			input:    "https://music.apple.com/us/song/angel/724466660",
 			expected: "724466660",
+		},
+		{
+			name:          "valid URL without album and invalid storefront",
+			input:         "https://music.apple.com/invalidstorefront/song/angel/724466660",
+			expected:      "",
+			expectedError: IDNotFoundError,
 		},
 		{
 			name:          "URL without track ID",
@@ -79,6 +91,12 @@ func TestAppleAdapter_DetectAlbumID(t *testing.T) {
 			name:     "valid URL with album ID and gb locale",
 			input:    "https://music.apple.com/gb/album/another-album/987654321",
 			expected: "987654321",
+		},
+		{
+			name:          "valid URL with album ID and invalid iso3611 storefront",
+			input:         "https://music.apple.com/invalidstorefront/album/another-album/987654321",
+			expected:      "",
+			expectedError: IDNotFoundError,
 		},
 		{
 			name:          "URL without album ID",

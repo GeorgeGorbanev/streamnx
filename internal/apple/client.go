@@ -55,20 +55,8 @@ type searchResources struct {
 }
 
 func (c *HTTPClient) GetTrack(id string) (*MusicEntity, error) {
-	if c.token == "" {
-		token, err := c.fetchToken()
-		if err != nil {
-			return nil, fmt.Errorf("failed to fetch token: %s", err)
-		}
-		c.token = token
-	}
-
-	req, err := c.newAPIRequest(fmt.Sprintf(`%s/v1/catalog/us/songs/%s`, c.apiURL, id))
-	if err != nil {
-		return nil, err
-	}
-
-	response, err := c.httpClient.Do(req)
+	url := fmt.Sprintf(`%s/v1/catalog/us/songs/%s`, c.apiURL, id)
+	response, err := c.getAPI(url)
 	if err != nil {
 		return nil, fmt.Errorf("failed to perform get request: %s", err)
 	}
@@ -78,46 +66,23 @@ func (c *HTTPClient) GetTrack(id string) (*MusicEntity, error) {
 		return nil, nil
 	}
 
-	body, err := io.ReadAll(response.Body)
-	if err != nil {
-		return nil, fmt.Errorf("failed to read response body: %s", err)
-	}
-
 	gr := getResponse{}
-	if err := json.Unmarshal(body, &gr); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal search response: %s", err)
+	if err := json.NewDecoder(response.Body).Decode(&gr); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal get response: %s", err)
 	}
 	return gr.Data[0], nil
 }
 
 func (c *HTTPClient) SearchTrack(artistName, trackName string) (*MusicEntity, error) {
-	if c.token == "" {
-		token, err := c.fetchToken()
-		if err != nil {
-			return nil, fmt.Errorf("failed to fetch token: %s", err)
-		}
-		c.token = token
-	}
-
-	searchURL := fmt.Sprintf(`%s/v1/catalog/us/search?%s`, c.apiURL, searchQuery(artistName+" "+trackName))
-	req, err := c.newAPIRequest(searchURL)
-	if err != nil {
-		return nil, err
-	}
-
-	response, err := c.httpClient.Do(req)
+	url := fmt.Sprintf(`%s/v1/catalog/us/search?%s`, c.apiURL, searchQuery(artistName+" "+trackName))
+	response, err := c.getAPI(url)
 	if err != nil {
 		return nil, fmt.Errorf("failed to perform get request: %s", err)
 	}
 	defer response.Body.Close()
 
-	body, err := io.ReadAll(response.Body)
-	if err != nil {
-		return nil, fmt.Errorf("failed to read response body: %s", err)
-	}
-
 	sr := searchResponse{}
-	if err := json.Unmarshal(body, &sr); err != nil {
+	if err := json.NewDecoder(response.Body).Decode(&sr); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal search response: %s", err)
 	}
 	for _, song := range sr.Resources.Songs {
@@ -126,20 +91,8 @@ func (c *HTTPClient) SearchTrack(artistName, trackName string) (*MusicEntity, er
 	return nil, nil
 }
 func (c *HTTPClient) GetAlbum(id string) (*MusicEntity, error) {
-	if c.token == "" {
-		token, err := c.fetchToken()
-		if err != nil {
-			return nil, fmt.Errorf("failed to fetch token: %s", err)
-		}
-		c.token = token
-	}
-
-	req, err := c.newAPIRequest(fmt.Sprintf(`%s/v1/catalog/us/albums/%s`, c.apiURL, id))
-	if err != nil {
-		return nil, err
-	}
-
-	response, err := c.httpClient.Do(req)
+	url := fmt.Sprintf(`%s/v1/catalog/us/albums/%s`, c.apiURL, id)
+	response, err := c.getAPI(url)
 	if err != nil {
 		return nil, fmt.Errorf("failed to perform get request: %s", err)
 	}
@@ -148,19 +101,31 @@ func (c *HTTPClient) GetAlbum(id string) (*MusicEntity, error) {
 	if response.StatusCode == http.StatusNotFound {
 		return nil, nil
 	}
-
-	body, err := io.ReadAll(response.Body)
-	if err != nil {
-		return nil, fmt.Errorf("failed to read response body: %s", err)
-	}
-
 	gr := getResponse{}
-	if err := json.Unmarshal(body, &gr); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal search response: %s", err)
+	if err := json.NewDecoder(response.Body).Decode(&gr); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal get response: %s", err)
 	}
 	return gr.Data[0], nil
 }
 func (c *HTTPClient) SearchAlbum(artistName, albumName string) (*MusicEntity, error) {
+	url := fmt.Sprintf(`%s/v1/catalog/us/search?%s`, c.apiURL, searchQuery(artistName+" "+albumName))
+	response, err := c.getAPI(url)
+	if err != nil {
+		return nil, fmt.Errorf("failed to perform get request: %s", err)
+	}
+	defer response.Body.Close()
+
+	sr := searchResponse{}
+	if err := json.NewDecoder(response.Body).Decode(&sr); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal search response: %s", err)
+	}
+	for _, album := range sr.Resources.Albums {
+		return album, nil
+	}
+	return nil, nil
+}
+
+func (c *HTTPClient) getAPI(reqURL string) (*http.Response, error) {
 	if c.token == "" {
 		token, err := c.fetchToken()
 		if err != nil {
@@ -169,31 +134,15 @@ func (c *HTTPClient) SearchAlbum(artistName, albumName string) (*MusicEntity, er
 		c.token = token
 	}
 
-	searchURL := fmt.Sprintf(`%s/v1/catalog/us/search?%s`, c.apiURL, searchQuery(artistName+" "+albumName))
-	req, err := c.newAPIRequest(searchURL)
+	req, err := http.NewRequest(http.MethodGet, reqURL, nil)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to create request: %s", err)
 	}
 
-	response, err := c.httpClient.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("failed to perform get request: %s", err)
-	}
-	defer response.Body.Close()
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.token))
+	req.Header.Set("Origin", defaulWebPlayerURL)
 
-	body, err := io.ReadAll(response.Body)
-	if err != nil {
-		return nil, fmt.Errorf("failed to read response body: %s", err)
-	}
-
-	sr := searchResponse{}
-	if err := json.Unmarshal(body, &sr); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal search response: %s", err)
-	}
-	for _, album := range sr.Resources.Albums {
-		return album, nil
-	}
-	return nil, nil
+	return c.httpClient.Do(req)
 }
 
 func (c *HTTPClient) fetchToken() (string, error) {
@@ -236,16 +185,6 @@ func (c *HTTPClient) fetchWebPlayerJS(bundleName string) ([]byte, error) {
 	}
 	defer response.Body.Close()
 	return io.ReadAll(response.Body)
-}
-
-func (c *HTTPClient) newAPIRequest(reqURL string) (*http.Request, error) {
-	req, err := http.NewRequest(http.MethodGet, reqURL, nil)
-	if err != nil {
-		return nil, fmt.Errorf("failed to create request: %s", err)
-	}
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.token))
-	req.Header.Set("Origin", defaulWebPlayerURL)
-	return req, nil
 }
 
 func searchQuery(term string) string {

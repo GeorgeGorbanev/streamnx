@@ -13,16 +13,6 @@ type Registry struct {
 	translator translator.Translator
 }
 
-type Adapter interface {
-	DetectTrackID(link string) string
-	GetTrack(id string) (*Track, error)
-	SearchTrack(artistName, trackName string) (*Track, error)
-
-	DetectAlbumID(link string) string
-	GetAlbum(id string) (*Album, error)
-	SearchAlbum(artistName, albumName string) (*Album, error)
-}
-
 type Track struct {
 	ID       string
 	Title    string

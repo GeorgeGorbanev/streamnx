@@ -64,9 +64,10 @@ func (c *spotifyClientMock) SearchAlbum(artistName, albumName string) (*spotify.
 
 func TestSpotifyAdapter_DetectTrackID(t *testing.T) {
 	tests := []struct {
-		name     string
-		inputURL string
-		expected string
+		name          string
+		inputURL      string
+		expected      string
+		expectedError error
 	}{
 		{
 			name:     "Valid URL",
@@ -74,24 +75,28 @@ func TestSpotifyAdapter_DetectTrackID(t *testing.T) {
 			expected: "7uv632EkfwYhXoqf8rhYrg",
 		},
 		{
-			name:     "Invalid URL - Album",
-			inputURL: "https://open.spotify.com/album/3hARuIUZqAIAKSuNvW5dGh",
-			expected: "",
+			name:          "Invalid URL - Album",
+			inputURL:      "https://open.spotify.com/album/3hARuIUZqAIAKSuNvW5dGh",
+			expected:      "",
+			expectedError: IDNotFoundError,
 		},
 		{
-			name:     "Empty URL",
-			inputURL: "",
-			expected: "",
+			name:          "Empty URL",
+			inputURL:      "",
+			expected:      "",
+			expectedError: IDNotFoundError,
 		},
 		{
-			name:     "Non-Spotify URL",
-			inputURL: "https://example.com/track/7uv632EkfwYhXoqf8rhYrg",
-			expected: "",
+			name:          "Non-Spotify URL",
+			inputURL:      "https://example.com/track/7uv632EkfwYhXoqf8rhYrg",
+			expected:      "",
+			expectedError: IDNotFoundError,
 		},
 		{
-			name:     "URL without ID",
-			inputURL: "https://open.spotify.com/track/",
-			expected: "",
+			name:          "URL without ID",
+			inputURL:      "https://open.spotify.com/track/",
+			expected:      "",
+			expectedError: IDNotFoundError,
 		},
 		{
 			name:     "Valid URL with query",
@@ -105,20 +110,27 @@ func TestSpotifyAdapter_DetectTrackID(t *testing.T) {
 		},
 	}
 
-	for _, tc := range tests {
-		t.Run(tc.name, func(t *testing.T) {
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
 			adapter := newSpotifyAdapter(nil)
-			result := adapter.DetectTrackID(tc.inputURL)
-			require.Equal(t, tc.expected, result)
+			result, err := adapter.DetectTrackID(tt.inputURL)
+			require.Equal(t, tt.expected, result)
+
+			if tt.expectedError != nil {
+				require.ErrorAs(t, err, &tt.expectedError)
+			} else {
+				require.NoError(t, err)
+			}
 		})
 	}
 }
 
 func TestSpotifyAdapter_DetectAlbumID(t *testing.T) {
 	tests := []struct {
-		name     string
-		inputURL string
-		expected string
+		name          string
+		inputURL      string
+		expected      string
+		expectedError error
 	}{
 		{
 			name:     "Valid URL",
@@ -126,24 +138,28 @@ func TestSpotifyAdapter_DetectAlbumID(t *testing.T) {
 			expected: "7uv632EkfwYhXoqf8rhYrg",
 		},
 		{
-			name:     "Invalid URL - Track",
-			inputURL: "https://open.spotify.com/track/3hARuIUZqAIAKSuNvW5dGh",
-			expected: "",
+			name:          "Invalid URL - Track",
+			inputURL:      "https://open.spotify.com/track/3hARuIUZqAIAKSuNvW5dGh",
+			expected:      "",
+			expectedError: IDNotFoundError,
 		},
 		{
-			name:     "Empty URL",
-			inputURL: "",
-			expected: "",
+			name:          "Empty URL",
+			inputURL:      "",
+			expected:      "",
+			expectedError: IDNotFoundError,
 		},
 		{
-			name:     "Non-Spotify URL",
-			inputURL: "https://example.com/album/7uv632EkfwYhXoqf8rhYrg",
-			expected: "",
+			name:          "Non-Spotify URL",
+			inputURL:      "https://example.com/album/7uv632EkfwYhXoqf8rhYrg",
+			expected:      "",
+			expectedError: IDNotFoundError,
 		},
 		{
-			name:     "URL without ID",
-			inputURL: "https://open.spotify.com/album/",
-			expected: "",
+			name:          "URL without ID",
+			inputURL:      "https://open.spotify.com/album/",
+			expected:      "",
+			expectedError: IDNotFoundError,
 		},
 		{
 			name:     "Valid URL with query",
@@ -157,11 +173,17 @@ func TestSpotifyAdapter_DetectAlbumID(t *testing.T) {
 		},
 	}
 
-	for _, tc := range tests {
-		t.Run(tc.name, func(t *testing.T) {
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
 			adapter := newSpotifyAdapter(nil)
-			result := adapter.DetectAlbumID(tc.inputURL)
-			require.Equal(t, tc.expected, result)
+			result, err := adapter.DetectAlbumID(tt.inputURL)
+			require.Equal(t, tt.expected, result)
+
+			if tt.expectedError != nil {
+				require.ErrorAs(t, err, &tt.expectedError)
+			} else {
+				require.NoError(t, err)
+			}
 		})
 	}
 }

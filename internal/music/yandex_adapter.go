@@ -22,20 +22,20 @@ func newYandexAdapter(c yandex.Client, t translator.Translator) *YandexAdapter {
 	}
 }
 
-func (a *YandexAdapter) DetectTrackID(trackURL string) string {
+func (a *YandexAdapter) DetectTrackID(trackURL string) (string, error) {
 	match := yandex.TrackRe.FindStringSubmatch(trackURL)
 	if match == nil || len(match) < 3 {
-		return ""
+		return "", IDNotFoundError
 	}
-	return match[2]
+	return match[2], nil
 }
 
-func (a *YandexAdapter) DetectAlbumID(albumURL string) string {
+func (a *YandexAdapter) DetectAlbumID(albumURL string) (string, error) {
 	match := yandex.AlbumRe.FindStringSubmatch(albumURL)
 	if match == nil || len(match) < 3 {
-		return ""
+		return "", IDNotFoundError
 	}
-	return match[2]
+	return match[2], nil
 }
 
 func (a *YandexAdapter) GetTrack(id string) (*Track, error) {

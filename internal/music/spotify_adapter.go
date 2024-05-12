@@ -16,20 +16,20 @@ func newSpotifyAdapter(client spotify.Client) *SpotifyAdapter {
 	}
 }
 
-func (a *SpotifyAdapter) DetectTrackID(trackURL string) string {
+func (a *SpotifyAdapter) DetectTrackID(trackURL string) (string, error) {
 	match := spotify.TrackRe.FindStringSubmatch(trackURL)
 	if match == nil || len(match) < 2 {
-		return ""
+		return "", IDNotFoundError
 	}
-	return match[1]
+	return match[1], nil
 }
 
-func (a *SpotifyAdapter) DetectAlbumID(albumURL string) string {
+func (a *SpotifyAdapter) DetectAlbumID(albumURL string) (string, error) {
 	match := spotify.AlbumRe.FindStringSubmatch(albumURL)
 	if match == nil || len(match) < 2 {
-		return ""
+		return "", IDNotFoundError
 	}
-	return match[1]
+	return match[1], nil
 }
 
 func (a *SpotifyAdapter) GetTrack(id string) (*Track, error) {

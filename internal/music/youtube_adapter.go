@@ -20,18 +20,18 @@ func newYoutubeAdapter(client youtube.Client) *YoutubeAdapter {
 	}
 }
 
-func (a *YoutubeAdapter) DetectTrackID(trackURL string) string {
+func (a *YoutubeAdapter) DetectTrackID(trackURL string) (string, error) {
 	if matches := youtube.VideoRe.FindStringSubmatch(trackURL); len(matches) > 1 {
-		return matches[1]
+		return matches[1], nil
 	}
-	return ""
+	return "", IDNotFoundError
 }
 
-func (a *YoutubeAdapter) DetectAlbumID(albumURL string) string {
+func (a *YoutubeAdapter) DetectAlbumID(albumURL string) (string, error) {
 	if matches := youtube.PlaylistRe.FindStringSubmatch(albumURL); len(matches) > 1 {
-		return matches[1]
+		return matches[1], nil
 	}
-	return ""
+	return "", IDNotFoundError
 }
 
 func (a *YoutubeAdapter) GetTrack(id string) (*Track, error) {

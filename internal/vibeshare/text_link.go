@@ -42,7 +42,12 @@ func (vs *Vibeshare) youtubeAlbumLink(inMsg *telebot.Message) {
 }
 
 func (vs *Vibeshare) trackLink(provider *music.Provider, inMsg *telebot.Message) {
-	trackID := vs.musicRegistry.Adapter(provider).DetectTrackID(inMsg.Text)
+	trackID, err := vs.musicRegistry.Adapter(provider).DetectTrackID(inMsg.Text)
+	if err != nil {
+		vs.send(&telegram.Message{To: inMsg.Sender, Text: "Link is invalid"})
+		return
+	}
+
 	track, err := vs.musicRegistry.Adapter(provider).GetTrack(trackID)
 	if err != nil {
 		slog.Error("error fetching track", slog.Any("error", err))
@@ -61,7 +66,11 @@ func (vs *Vibeshare) trackLink(provider *music.Provider, inMsg *telebot.Message)
 }
 
 func (vs *Vibeshare) albumLink(provider *music.Provider, inMsg *telebot.Message) {
-	albumID := vs.musicRegistry.Adapter(provider).DetectAlbumID(inMsg.Text)
+	albumID, err := vs.musicRegistry.Adapter(provider).DetectAlbumID(inMsg.Text)
+	if err != nil {
+		vs.send(&telegram.Message{To: inMsg.Sender, Text: "Link is invalid"})
+		return
+	}
 	album, err := vs.musicRegistry.Adapter(provider).GetAlbum(albumID)
 	if err != nil {
 		slog.Error("error fetching album", slog.Any("error", err))

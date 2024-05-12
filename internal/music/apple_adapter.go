@@ -16,23 +16,23 @@ func newAppleAdapter(client apple.Client) *AppleAdapter {
 	}
 }
 
-func (a *AppleAdapter) DetectTrackID(trackURL string) string {
+func (a *AppleAdapter) DetectTrackID(trackURL string) (string, error) {
 	matches := apple.AlbumTrackRe.FindStringSubmatch(trackURL)
 	if len(matches) > 2 {
-		return matches[2]
+		return matches[2], nil
 	}
 	matches = apple.SongRe.FindStringSubmatch(trackURL)
 	if len(matches) > 1 {
-		return matches[1]
+		return matches[1], nil
 	}
-	return ""
+	return "", IDNotFoundError
 }
 
-func (a *AppleAdapter) DetectAlbumID(trackURL string) string {
-	if matches := apple.AlbumRe.FindStringSubmatch(trackURL); len(matches) > 1 {
-		return matches[1]
+func (a *AppleAdapter) DetectAlbumID(albumURL string) (string, error) {
+	if matches := apple.AlbumRe.FindStringSubmatch(albumURL); len(matches) > 1 {
+		return matches[1], nil
 	}
-	return ""
+	return "", IDNotFoundError
 }
 
 func (a *AppleAdapter) GetTrack(id string) (*Track, error) {

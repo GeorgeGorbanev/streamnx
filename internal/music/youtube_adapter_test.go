@@ -52,9 +52,10 @@ func (c *youtubeClientMock) SearchPlaylist(query string) (*youtube.Playlist, err
 
 func TestYoutubeAdapter_DetectTrackID(t *testing.T) {
 	tests := []struct {
-		name     string
-		input    string
-		expected string
+		name          string
+		input         string
+		expected      string
+		expectedError error
 	}{
 		{
 			name:     "Short URL",
@@ -72,36 +73,46 @@ func TestYoutubeAdapter_DetectTrackID(t *testing.T) {
 			expected: "dQw4w9WgXcQ",
 		},
 		{
-			name:     "Invalid URL",
-			input:    "https://www.youtube.com/watch?v=",
-			expected: "",
+			name:          "Invalid URL",
+			input:         "https://www.youtube.com/watch?v=",
+			expected:      "",
+			expectedError: IDNotFoundError,
 		},
 		{
-			name:     "Non-YouTube URL",
-			input:    "https://www.example.com/watch?v=dQw4w9WgXcQ",
-			expected: "",
+			name:          "Non-YouTube URL",
+			input:         "https://www.example.com/watch?v=dQw4w9WgXcQ",
+			expected:      "",
+			expectedError: IDNotFoundError,
 		},
 		{
-			name:     "Empty string",
-			input:    "",
-			expected: "",
+			name:          "Empty string",
+			input:         "",
+			expected:      "",
+			expectedError: IDNotFoundError,
 		},
 	}
 
-	for _, test := range tests {
-		t.Run(test.name, func(t *testing.T) {
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
 			adapter := newYoutubeAdapter(nil)
-			result := adapter.DetectTrackID(test.input)
-			require.Equal(t, test.expected, result)
+			result, err := adapter.DetectTrackID(tt.input)
+			require.Equal(t, tt.expected, result)
+
+			if tt.expectedError != nil {
+				require.ErrorAs(t, err, &tt.expectedError)
+			} else {
+				require.NoError(t, err)
+			}
 		})
 	}
 }
 
 func TestYoutubeAdapter_DetectAlbumID(t *testing.T) {
 	tests := []struct {
-		name     string
-		input    string
-		expected string
+		name          string
+		input         string
+		expected      string
+		expectedError error
 	}{
 		{
 			name:     "Standard URL",
@@ -119,22 +130,30 @@ func TestYoutubeAdapter_DetectAlbumID(t *testing.T) {
 			expected: "PLMC9KNkIncKtPzgY-5rmhvj7fax8fdxoj",
 		},
 		{
-			name:     "Invalid URL",
-			input:    "https://www.example.com/playlist?list=PLMC9KNkIncKtPzgY-5rmhvj7fax8fdxoj",
-			expected: "",
+			name:          "Invalid URL",
+			input:         "https://www.example.com/playlist?list=PLMC9KNkIncKtPzgY-5rmhvj7fax8fdxoj",
+			expected:      "",
+			expectedError: IDNotFoundError,
 		},
 		{
-			name:     "Empty string",
-			input:    "",
-			expected: "",
+			name:          "Empty string",
+			input:         "",
+			expected:      "",
+			expectedError: IDNotFoundError,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			adapter := newYoutubeAdapter(nil)
-			result := adapter.DetectAlbumID(tt.input)
+			result, err := adapter.DetectAlbumID(tt.input)
 			require.Equal(t, tt.expected, result)
+
+			if tt.expectedError != nil {
+				require.ErrorAs(t, err, &tt.expectedError)
+			} else {
+				require.NoError(t, err)
+			}
 		})
 	}
 }

@@ -51,9 +51,10 @@ func (t *translatorMock) Close() error {
 
 func TestYandexAdapter_DetectTrackID(t *testing.T) {
 	tests := []struct {
-		name   string
-		url    string
-		wantID string
+		name          string
+		url           string
+		wantID        string
+		expectedError error
 	}{
 		{
 			name:   "Valid Track URL – .com",
@@ -81,36 +82,46 @@ func TestYandexAdapter_DetectTrackID(t *testing.T) {
 			wantID: "1197793",
 		},
 		{
-			name:   "Invalid URL - Missing track ID",
-			url:    "https://music.yandex.ru/album/3192570/track/",
-			wantID: "",
+			name:          "Invalid URL - Missing track ID",
+			url:           "https://music.yandex.ru/album/3192570/track/",
+			wantID:        "",
+			expectedError: IDNotFoundError,
 		},
 		{
-			name:   "Invalid URL - Non-numeric track ID",
-			url:    "https://music.yandex.ru/album/3192570/track/abc",
-			wantID: "",
+			name:          "Invalid URL - Non-numeric track ID",
+			url:           "https://music.yandex.ru/album/3192570/track/abc",
+			wantID:        "",
+			expectedError: IDNotFoundError,
 		},
 		{
-			name:   "Invalid URL - Incorrect format",
-			url:    "https://example.com/album/3192570/track/1197793",
-			wantID: "",
+			name:          "Invalid URL - Incorrect format",
+			url:           "https://example.com/album/3192570/track/1197793",
+			wantID:        "",
+			expectedError: IDNotFoundError,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			adapter := newYandexAdapter(nil, nil)
-			result := adapter.DetectTrackID(tt.url)
+			result, err := adapter.DetectTrackID(tt.url)
 			require.Equal(t, tt.wantID, result)
+
+			if tt.expectedError != nil {
+				require.ErrorAs(t, err, &tt.expectedError)
+			} else {
+				require.NoError(t, err)
+			}
 		})
 	}
 }
 
 func TestYandexAdapter_DetectAlbumID(t *testing.T) {
 	tests := []struct {
-		name   string
-		url    string
-		wantID string
+		name          string
+		url           string
+		wantID        string
+		expectedError error
 	}{
 		{
 			name:   "Valid album URL – .by",
@@ -133,27 +144,36 @@ func TestYandexAdapter_DetectAlbumID(t *testing.T) {
 			wantID: "1197793",
 		},
 		{
-			name:   "Invalid URL - Missing album ID",
-			url:    "https://music.yandex.ru/album/",
-			wantID: "",
+			name:          "Invalid URL - Missing album ID",
+			url:           "https://music.yandex.ru/album/",
+			wantID:        "",
+			expectedError: IDNotFoundError,
 		},
 		{
-			name:   "Invalid URL - Non-numeric album ID",
-			url:    "https://music.yandex.ru/album/letters",
-			wantID: "",
+			name:          "Invalid URL - Non-numeric album ID",
+			url:           "https://music.yandex.ru/album/letters",
+			wantID:        "",
+			expectedError: IDNotFoundError,
 		},
 		{
-			name:   "Invalid URL - Incorrect host",
-			url:    "https://example.com/album/3192570",
-			wantID: "",
+			name:          "Invalid URL - Incorrect host",
+			url:           "https://example.com/album/3192570",
+			wantID:        "",
+			expectedError: IDNotFoundError,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			adapter := newYandexAdapter(nil, nil)
-			result := adapter.DetectAlbumID(tt.url)
+			result, err := adapter.DetectAlbumID(tt.url)
 			require.Equal(t, tt.wantID, result)
+
+			if tt.expectedError != nil {
+				require.ErrorAs(t, err, &tt.expectedError)
+			} else {
+				require.NoError(t, err)
+			}
 		})
 	}
 }

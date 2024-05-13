@@ -20,7 +20,7 @@ func TestCallback_ConvertAlbumAppleToYandex(t *testing.T) {
 	}{
 		{
 			name:  "when apple album link given and yandex album found",
-			input: "cnval/ap/1097864180/ya",
+			input: "cnval/ap/us-1097864180/ya",
 			expectedMessages: []*telegram.Message{
 				{
 					To:   user,
@@ -61,7 +61,7 @@ func TestCallback_ConvertAlbumAppleToYandex(t *testing.T) {
 			},
 			fixturesMap: fixture.FixturesMap{
 				AppleAlbums: map[string][]byte{
-					"1097864180": fixture.Read("apple/get_album_radiohead_amnesiac.json"),
+					"us-1097864180": fixture.Read("apple/get_album_radiohead_amnesiac.json"),
 				},
 				YandexSearchAlbums: map[string][]byte{
 					"radiohead – amnesiac": fixture.Read("yandex/search_album_radiohead_amnesiac.json"),
@@ -70,7 +70,7 @@ func TestCallback_ConvertAlbumAppleToYandex(t *testing.T) {
 		},
 		{
 			name:  "when apple album link given and yandex album not found",
-			input: "cnval/ap/1097864180/ya",
+			input: "cnval/ap/us-1097864180/ya",
 			expectedMessages: []*telegram.Message{
 				{
 					To:   user,
@@ -79,14 +79,14 @@ func TestCallback_ConvertAlbumAppleToYandex(t *testing.T) {
 			},
 			fixturesMap: fixture.FixturesMap{
 				AppleAlbums: map[string][]byte{
-					"1097864180": fixture.Read("apple/get_album_radiohead_amnesiac.json"),
+					"us-1097864180": fixture.Read("apple/get_album_radiohead_amnesiac.json"),
 				},
 				YandexSearchAlbums: map[string][]byte{},
 			},
 		},
 		{
 			name:             "when apple album not found",
-			input:            "cnval/ap/1097864180/ya",
+			input:            "cnval/ap/us-1097864180/ya",
 			expectedMessages: []*telegram.Message{},
 			fixturesMap: fixture.FixturesMap{
 				AppleAlbums:        map[string][]byte{},

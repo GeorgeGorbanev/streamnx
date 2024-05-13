@@ -20,7 +20,7 @@ func TestCallback_ConvertTrackAppleToYandex(t *testing.T) {
 	}{
 		{
 			name:  "when apple track link given and yandex track found",
-			input: "cnvtr/ap/724466660/ya",
+			input: "cnvtr/ap/us-724466660/ya",
 			expectedMessages: []*telegram.Message{
 				{
 					To:   user,
@@ -61,7 +61,7 @@ func TestCallback_ConvertTrackAppleToYandex(t *testing.T) {
 			},
 			fixturesMap: fixture.FixturesMap{
 				AppleTracks: map[string][]byte{
-					"724466660": fixture.Read("apple/get_track_massive_attack_angel.json"),
+					"us-724466660": fixture.Read("apple/get_track_massive_attack_angel.json"),
 				},
 				YandexSearchTracks: map[string][]byte{
 					"massive attack – angel": fixture.Read("yandex/search_track_massive_attack_angel.json"),
@@ -70,7 +70,7 @@ func TestCallback_ConvertTrackAppleToYandex(t *testing.T) {
 		},
 		{
 			name:  "when apple track link given and yandex track not found",
-			input: "cnvtr/ap/724466660/ya",
+			input: "cnvtr/ap/us-724466660/ya",
 			expectedMessages: []*telegram.Message{
 				{
 					To:   user,
@@ -79,14 +79,14 @@ func TestCallback_ConvertTrackAppleToYandex(t *testing.T) {
 			},
 			fixturesMap: fixture.FixturesMap{
 				AppleTracks: map[string][]byte{
-					"724466660": fixture.Read("apple/get_track_massive_attack_angel.json"),
+					"us-724466660": fixture.Read("apple/get_track_massive_attack_angel.json"),
 				},
 				YandexSearchTracks: map[string][]byte{},
 			},
 		},
 		{
 			name:             "when apple track not found",
-			input:            "cnvtr/ap/724466660/ya",
+			input:            "cnvtr/ap/us-724466660/ya",
 			expectedMessages: []*telegram.Message{},
 			fixturesMap: fixture.FixturesMap{
 				AppleTracks:        map[string][]byte{},

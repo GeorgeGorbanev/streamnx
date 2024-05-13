@@ -17,32 +17,34 @@ func newAppleAdapter(client apple.Client) *AppleAdapter {
 }
 
 func (a *AppleAdapter) DetectTrackID(trackURL string) (string, error) {
-	storeFront, id := trackReMatches(trackURL)
-	if storeFront == "" || id == "" {
-		return "", IDNotFoundError
-	}
-	if !apple.IsValidStorefront(storeFront) {
+	ck := apple.CompositeKey{}
+	ck.ParseFromTrackURL(trackURL)
+
+	if ck.Storefront == "" || ck.ID == "" || !apple.IsValidStorefront(ck.Storefront) {
 		return "", IDNotFoundError
 	}
 
-	return id, nil
+	return ck.Marshal(), nil
 }
 
 func (a *AppleAdapter) DetectAlbumID(albumURL string) (string, error) {
-	matches := apple.AlbumRe.FindStringSubmatch(albumURL)
-	if len(matches) < 2 {
+	ck := apple.CompositeKey{}
+	ck.ParseFromAlbumURL(albumURL)
+
+	if ck.Storefront == "" || ck.ID == "" || !apple.IsValidStorefront(ck.Storefront) {
 		return "", IDNotFoundError
 	}
 
-	regionCode := matches[1]
-	if !apple.IsValidStorefront(regionCode) {
-		return "", IDNotFoundError
-	}
-	return matches[2], nil
+	return ck.Marshal(), nil
 }
 
 func (a *AppleAdapter) GetTrack(id string) (*Track, error) {
-	track, err := a.client.GetTrack(id)
+	ck := apple.CompositeKey{}
+	if err := ck.Unmarshal(id); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal track id: %w", err)
+	}
+
+	track, err := a.client.GetTrack(ck.ID, ck.Storefront)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get track from apple: %w", err)
 	}
@@ -65,7 +67,12 @@ func (a *AppleAdapter) SearchTrack(artistName, trackName string) (*Track, error)
 }
 
 func (a *AppleAdapter) GetAlbum(id string) (*Album, error) {
-	album, err := a.client.GetAlbum(id)
+	ck := apple.CompositeKey{}
+	if err := ck.Unmarshal(id); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal album id: %w", err)
+	}
+
+	album, err := a.client.GetAlbum(ck.ID, ck.Storefront)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get album from apple: %w", err)
 	}
@@ -88,8 +95,11 @@ func (a *AppleAdapter) SearchAlbum(artistName, albumName string) (*Album, error)
 }
 
 func (a *AppleAdapter) adaptTrack(track *apple.MusicEntity) *Track {
+	ck := apple.CompositeKey{}
+	ck.ParseFromTrackURL(track.Attributes.URL)
+
 	return &Track{
-		ID:       track.ID,
+		ID:       ck.Marshal(),
 		Title:    track.Attributes.Name,
 		Artist:   track.Attributes.ArtistName,
 		URL:      track.Attributes.URL,
@@ -98,23 +108,14 @@ func (a *AppleAdapter) adaptTrack(track *apple.MusicEntity) *Track {
 }
 
 func (a *AppleAdapter) adaptAlbum(album *apple.MusicEntity) *Album {
+	ck := apple.CompositeKey{}
+	ck.ParseFromAlbumURL(album.Attributes.URL)
+
 	return &Album{
-		ID:       album.ID,
+		ID:       ck.Marshal(),
 		Title:    album.Attributes.Name,
 		Artist:   album.Attributes.ArtistName,
 		URL:      album.Attributes.URL,
 		Provider: Apple,
 	}
-}
-
-func trackReMatches(trackURL string) (string, string) {
-	matches := apple.AlbumTrackRe.FindStringSubmatch(trackURL)
-	if len(matches) > 3 {
-		return matches[1], matches[3]
-	}
-	matches = apple.SongRe.FindStringSubmatch(trackURL)
-	if len(matches) > 2 {
-		return matches[1], matches[2]
-	}
-	return "", ""
 }

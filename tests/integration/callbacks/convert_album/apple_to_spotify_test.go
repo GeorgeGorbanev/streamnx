@@ -19,7 +19,7 @@ func TestCallback_ConvertAlbumAppleToSpotify(t *testing.T) {
 	}{
 		{
 			name:  "when apple album link given and spotify album found",
-			input: "cnval/ap/1097864180/sf",
+			input: "cnval/ap/us-1097864180/sf",
 			expectedMessages: []*telegram.Message{
 				{
 					To:   user,
@@ -28,7 +28,7 @@ func TestCallback_ConvertAlbumAppleToSpotify(t *testing.T) {
 			},
 			fixturesMap: fixture.FixturesMap{
 				AppleAlbums: map[string][]byte{
-					"1097864180": fixture.Read("apple/get_album_radiohead_amnesiac.json"),
+					"us-1097864180": fixture.Read("apple/get_album_radiohead_amnesiac.json"),
 				},
 				SpotifySearchAlbums: map[string][]byte{
 					"artist:Radiohead album:Amnesiac": fixture.Read("spotify/search_album_radiohead_amnesiac.json"),
@@ -37,7 +37,7 @@ func TestCallback_ConvertAlbumAppleToSpotify(t *testing.T) {
 		},
 		{
 			name:  "when apple album link given and spotify album not found",
-			input: "cnval/ap/1097864180/sf",
+			input: "cnval/ap/us-1097864180/sf",
 			expectedMessages: []*telegram.Message{
 				{
 					To:   user,
@@ -46,14 +46,14 @@ func TestCallback_ConvertAlbumAppleToSpotify(t *testing.T) {
 			},
 			fixturesMap: fixture.FixturesMap{
 				AppleAlbums: map[string][]byte{
-					"1097864180": fixture.Read("apple/get_album_radiohead_amnesiac.json"),
+					"us-1097864180": fixture.Read("apple/get_album_radiohead_amnesiac.json"),
 				},
 				SpotifySearchAlbums: map[string][]byte{},
 			},
 		},
 		{
 			name:             "when apple album not found",
-			input:            "cnval/ap/1097864180/sf",
+			input:            "cnval/ap/us-1097864180/sf",
 			expectedMessages: []*telegram.Message{},
 			fixturesMap: fixture.FixturesMap{
 				AppleAlbums:        map[string][]byte{},

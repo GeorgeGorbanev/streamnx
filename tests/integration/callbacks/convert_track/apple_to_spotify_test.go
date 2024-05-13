@@ -19,7 +19,7 @@ func TestCallback_ConvertTrackAppleToSpotify(t *testing.T) {
 	}{
 		{
 			name:  "when apple track link given and spotify track found",
-			input: "cnvtr/ap/724466660/sf",
+			input: "cnvtr/ap/us-724466660/sf",
 			expectedMessages: []*telegram.Message{
 				{
 					To:   user,
@@ -28,7 +28,7 @@ func TestCallback_ConvertTrackAppleToSpotify(t *testing.T) {
 			},
 			fixturesMap: fixture.FixturesMap{
 				AppleTracks: map[string][]byte{
-					"724466660": fixture.Read("apple/get_track_massive_attack_angel.json"),
+					"us-724466660": fixture.Read("apple/get_track_massive_attack_angel.json"),
 				},
 				SpotifySearchTracks: map[string][]byte{
 					"artist:Massive Attack track:Angel": fixture.Read("spotify/search_track_massive_attack_angel.json"),
@@ -37,7 +37,7 @@ func TestCallback_ConvertTrackAppleToSpotify(t *testing.T) {
 		},
 		{
 			name:  "when apple track link given and spotify track not found",
-			input: "cnvtr/ap/724466660/sf",
+			input: "cnvtr/ap/us-724466660/sf",
 			expectedMessages: []*telegram.Message{
 				{
 					To:   user,
@@ -46,14 +46,14 @@ func TestCallback_ConvertTrackAppleToSpotify(t *testing.T) {
 			},
 			fixturesMap: fixture.FixturesMap{
 				AppleTracks: map[string][]byte{
-					"724466660": fixture.Read("apple/get_track_massive_attack_angel.json"),
+					"us-724466660": fixture.Read("apple/get_track_massive_attack_angel.json"),
 				},
 				SpotifySearchTracks: map[string][]byte{},
 			},
 		},
 		{
 			name:             "when apple track not found",
-			input:            "cnvtr/ap/724466660/sf",
+			input:            "cnvtr/ap/us-724466660/sf",
 			expectedMessages: []*telegram.Message{},
 			fixturesMap: fixture.FixturesMap{
 				AppleTracks:         map[string][]byte{},

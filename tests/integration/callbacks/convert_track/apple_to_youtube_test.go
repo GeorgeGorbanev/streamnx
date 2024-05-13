@@ -19,7 +19,7 @@ func TestCallback_ConvertTrackAppleToYoutube(t *testing.T) {
 	}{
 		{
 			name:  "when apple track link given and youtube track found",
-			input: "cnvtr/ap/724466660/yt",
+			input: "cnvtr/ap/us-724466660/yt",
 			expectedMessages: []*telegram.Message{
 				{
 					To:   user,
@@ -28,7 +28,7 @@ func TestCallback_ConvertTrackAppleToYoutube(t *testing.T) {
 			},
 			fixturesMap: fixture.FixturesMap{
 				AppleTracks: map[string][]byte{
-					"724466660": fixture.Read("apple/get_track_massive_attack_angel.json"),
+					"us-724466660": fixture.Read("apple/get_track_massive_attack_angel.json"),
 				},
 				YoutubeSearchTracks: map[string][]byte{
 					"Massive Attack – Angel": fixture.Read("youtube/search_track_massive_attack_angel.json"),
@@ -37,7 +37,7 @@ func TestCallback_ConvertTrackAppleToYoutube(t *testing.T) {
 		},
 		{
 			name:  "when apple track link given and youtube track not found",
-			input: "cnvtr/ap/724466660/yt",
+			input: "cnvtr/ap/us-724466660/yt",
 			expectedMessages: []*telegram.Message{
 				{
 					To:   user,
@@ -46,14 +46,14 @@ func TestCallback_ConvertTrackAppleToYoutube(t *testing.T) {
 			},
 			fixturesMap: fixture.FixturesMap{
 				AppleTracks: map[string][]byte{
-					"724466660": fixture.Read("apple/get_track_massive_attack_angel.json"),
+					"us-724466660": fixture.Read("apple/get_track_massive_attack_angel.json"),
 				},
 				YoutubeSearchTracks: map[string][]byte{},
 			},
 		},
 		{
 			name:             "when apple track not found",
-			input:            "cnvtr/ap/724466660/yt",
+			input:            "cnvtr/ap/us-724466660/yt",
 			expectedMessages: []*telegram.Message{},
 			fixturesMap: fixture.FixturesMap{
 				AppleTracks:         map[string][]byte{},

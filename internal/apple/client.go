@@ -14,9 +14,9 @@ const (
 )
 
 type Client interface {
-	GetTrack(id string) (*MusicEntity, error)
+	GetTrack(id, storefront string) (*MusicEntity, error)
 	SearchTrack(artistName, trackName string) (*MusicEntity, error)
-	GetAlbum(id string) (*MusicEntity, error)
+	GetAlbum(id, storefront string) (*MusicEntity, error)
 	SearchAlbum(artistName, albumName string) (*MusicEntity, error)
 }
 
@@ -54,8 +54,8 @@ type searchResources struct {
 	Albums map[string]*MusicEntity `json:"albums"`
 }
 
-func (c *HTTPClient) GetTrack(id string) (*MusicEntity, error) {
-	url := fmt.Sprintf(`%s/v1/catalog/us/songs/%s`, c.apiURL, id)
+func (c *HTTPClient) GetTrack(id, storefront string) (*MusicEntity, error) {
+	url := fmt.Sprintf(`%s/v1/catalog/%s/songs/%s`, c.apiURL, storefront, id)
 	response, err := c.getAPI(url)
 	if err != nil {
 		return nil, fmt.Errorf("failed to perform get request: %s", err)
@@ -90,8 +90,8 @@ func (c *HTTPClient) SearchTrack(artistName, trackName string) (*MusicEntity, er
 	}
 	return nil, nil
 }
-func (c *HTTPClient) GetAlbum(id string) (*MusicEntity, error) {
-	url := fmt.Sprintf(`%s/v1/catalog/us/albums/%s`, c.apiURL, id)
+func (c *HTTPClient) GetAlbum(id, storefront string) (*MusicEntity, error) {
+	url := fmt.Sprintf(`%s/v1/catalog/%s/albums/%s`, c.apiURL, storefront, id)
 	response, err := c.getAPI(url)
 	if err != nil {
 		return nil, fmt.Errorf("failed to perform get request: %s", err)

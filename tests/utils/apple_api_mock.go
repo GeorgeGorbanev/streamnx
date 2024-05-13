@@ -6,6 +6,7 @@ import (
 	"net/http/httptest"
 	"regexp"
 
+	"github.com/GeorgeGorbanev/vibeshare/internal/apple"
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
 )
 
@@ -42,8 +43,8 @@ func NewAppleWebPlayerServerMock() *httptest.Server {
 
 func NewAppleAPIServerMock(fm *fixture.FixturesMap) *httptest.Server {
 	authHeader := fmt.Sprintf("Bearer %s", AppleToken)
-	trackRe := regexp.MustCompile(`^/v1/catalog/us/songs/(\d+)$`)
-	albumRe := regexp.MustCompile(`^/v1/catalog/us/albums/(\d+)$`)
+	trackRe := regexp.MustCompile(`^/v1/catalog/(\w+)/songs/(\d+)$`)
+	albumRe := regexp.MustCompile(`^/v1/catalog/(\w+)/albums/(\d+)$`)
 
 	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Header.Get("Authorization") != authHeader || r.Header.Get("Origin") != "https://music.apple.com" {
@@ -59,9 +60,13 @@ func NewAppleAPIServerMock(fm *fixture.FixturesMap) *httptest.Server {
 
 		switch {
 		case trackRe.MatchString(r.URL.Path):
-			trackID := trackRe.FindSubmatch([]byte(r.URL.Path))[1]
+			matches := trackRe.FindStringSubmatch(r.URL.Path)
+			ck := apple.CompositeKey{
+				ID:         matches[2],
+				Storefront: matches[1],
+			}
 
-			if response, ok = fm.AppleTracks[string(trackID)]; !ok {
+			if response, ok = fm.AppleTracks[ck.Marshal()]; !ok {
 				status = http.StatusNotFound
 			}
 		case r.URL.Path == "/v1/catalog/us/search":
@@ -76,9 +81,13 @@ func NewAppleAPIServerMock(fm *fixture.FixturesMap) *httptest.Server {
 				response = fixture.Read("apple/not_found.json")
 			}
 		case albumRe.MatchString(r.URL.Path):
-			albumID := albumRe.FindSubmatch([]byte(r.URL.Path))[1]
+			matches := albumRe.FindStringSubmatch(r.URL.Path)
+			ck := apple.CompositeKey{
+				ID:         matches[2],
+				Storefront: matches[1],
+			}
 
-			if response, ok = fm.AppleAlbums[string(albumID)]; !ok {
+			if response, ok = fm.AppleAlbums[ck.Marshal()]; !ok {
 				status = http.StatusNotFound
 			}
 		default:

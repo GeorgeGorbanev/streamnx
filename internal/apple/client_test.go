@@ -11,13 +11,15 @@ import (
 
 func TestHTTPClient_GetTrack(t *testing.T) {
 	tests := []struct {
-		name    string
-		trackID string
-		want    *MusicEntity
+		name       string
+		trackID    string
+		storeFront string
+		want       *MusicEntity
 	}{
 		{
-			name:    "when track found",
-			trackID: "foundId",
+			name:       "when track found",
+			trackID:    "foundId",
+			storeFront: "us",
 			want: &MusicEntity{
 				ID: "foundID",
 				Attributes: Attributes{
@@ -28,9 +30,10 @@ func TestHTTPClient_GetTrack(t *testing.T) {
 			},
 		},
 		{
-			name:    "when track not found",
-			trackID: "notFoundId",
-			want:    nil,
+			name:       "when track not found",
+			trackID:    "notFoundId",
+			storeFront: "nevermind",
+			want:       nil,
 		},
 	}
 	for _, tt := range tests {
@@ -55,7 +58,7 @@ func TestHTTPClient_GetTrack(t *testing.T) {
 					]
 				}`))
 					require.NoError(t, err)
-				case "/v1/catalog/us/songs/notFoundId":
+				case "/v1/catalog/nevermind/songs/notFoundId":
 					w.WriteHeader(http.StatusNotFound)
 				default:
 					require.Fail(t, "unexpected path: %s", r.URL.Path)
@@ -69,7 +72,7 @@ func TestHTTPClient_GetTrack(t *testing.T) {
 				httpClient: &http.Client{},
 			}
 
-			result, err := client.GetTrack(tt.trackID)
+			result, err := client.GetTrack(tt.trackID, tt.storeFront)
 			require.NoError(t, err)
 			require.Equal(t, tt.want, result)
 		})
@@ -172,13 +175,15 @@ func TestHTTPClient_SearchTrack(t *testing.T) {
 
 func TestHTTPClient_GetAlbum(t *testing.T) {
 	tests := []struct {
-		name    string
-		albumID string
-		want    *MusicEntity
+		name       string
+		albumID    string
+		storeFront string
+		want       *MusicEntity
 	}{
 		{
-			name:    "when album found",
-			albumID: "foundId",
+			name:       "when album found",
+			albumID:    "foundId",
+			storeFront: "us",
 			want: &MusicEntity{
 				ID: "foundID",
 				Attributes: Attributes{
@@ -189,9 +194,10 @@ func TestHTTPClient_GetAlbum(t *testing.T) {
 			},
 		},
 		{
-			name:    "when album not found",
-			albumID: "notFoundId",
-			want:    nil,
+			name:       "when album not found",
+			albumID:    "notFoundId",
+			storeFront: "nevermind",
+			want:       nil,
 		},
 	}
 	for _, tt := range tests {
@@ -216,7 +222,7 @@ func TestHTTPClient_GetAlbum(t *testing.T) {
 					]
 				}`))
 					require.NoError(t, err)
-				case "/v1/catalog/us/albums/notFoundId":
+				case "/v1/catalog/nevermind/albums/notFoundId":
 					w.WriteHeader(http.StatusNotFound)
 				default:
 					require.Fail(t, "unexpected path: %s", r.URL.Path)
@@ -230,7 +236,7 @@ func TestHTTPClient_GetAlbum(t *testing.T) {
 				httpClient: &http.Client{},
 			}
 
-			result, err := client.GetAlbum(tt.albumID)
+			result, err := client.GetAlbum(tt.albumID, tt.storeFront)
 			require.NoError(t, err)
 			require.Equal(t, tt.want, result)
 		})

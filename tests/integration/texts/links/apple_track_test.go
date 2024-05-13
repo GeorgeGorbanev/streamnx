@@ -26,22 +26,22 @@ func TestText_AppleTrackLink(t *testing.T) {
 					{
 						{
 							Text: "Spotify",
-							Data: "cnvtr/ap/724466660/sf",
+							Data: "cnvtr/ap/us-724466660/sf",
 						},
 						{
 							Text: "Yandex",
-							Data: "cnvtr/ap/724466660/ya",
+							Data: "cnvtr/ap/us-724466660/ya",
 						},
 						{
 							Text: "Youtube",
-							Data: "cnvtr/ap/724466660/yt",
+							Data: "cnvtr/ap/us-724466660/yt",
 						},
 					},
 				},
 			},
 			fixturesMap: fixture.FixturesMap{
 				AppleTracks: map[string][]byte{
-					"724466660": fixture.Read("apple/get_track_massive_attack_angel.json"),
+					"us-724466660": fixture.Read("apple/get_track_massive_attack_angel.json"),
 				},
 			},
 		},

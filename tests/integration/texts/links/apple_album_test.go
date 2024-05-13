@@ -26,22 +26,22 @@ func TestText_AppleAlbumLink(t *testing.T) {
 					{
 						{
 							Text: "Spotify",
-							Data: "cnval/ap/1097864180/sf",
+							Data: "cnval/ap/us-1097864180/sf",
 						},
 						{
 							Text: "Yandex",
-							Data: "cnval/ap/1097864180/ya",
+							Data: "cnval/ap/us-1097864180/ya",
 						},
 						{
 							Text: "Youtube",
-							Data: "cnval/ap/1097864180/yt",
+							Data: "cnval/ap/us-1097864180/yt",
 						},
 					},
 				},
 			},
 			fixturesMap: fixture.FixturesMap{
 				AppleAlbums: map[string][]byte{
-					"1097864180": fixture.Read("apple/get_album_radiohead_amnesiac.json"),
+					"us-1097864180": fixture.Read("apple/get_album_radiohead_amnesiac.json"),
 				},
 			},
 		},

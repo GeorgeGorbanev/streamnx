@@ -104,6 +104,16 @@ func TestSpotifyAdapter_DetectTrackID(t *testing.T) {
 			expected: "7uv632EkfwYhXoqf8rhYrg",
 		},
 		{
+			name:     "Valid URL with intl path",
+			inputURL: "https://open.spotify.com/intl-pt/track/2xmQMKTjiOdkdGVgqDzezo",
+			expected: "2xmQMKTjiOdkdGVgqDzezo",
+		},
+		{
+			name:     "Valid URL with intl path and query",
+			inputURL: "https://open.spotify.com/intl-pt/track/2xmQMKTjiOdkdGVgqDzezo?sample=query",
+			expected: "2xmQMKTjiOdkdGVgqDzezo",
+		},
+		{
 			name:     "Valid URL with prefix and suffix",
 			inputURL: "prefix https://open.spotify.com/track/7uv632EkfwYhXoqf8rhYrg?test=123 suffix",
 			expected: "7uv632EkfwYhXoqf8rhYrg",
@@ -135,6 +145,11 @@ func TestSpotifyAdapter_DetectAlbumID(t *testing.T) {
 		{
 			name:     "Valid URL",
 			inputURL: "https://open.spotify.com/album/7uv632EkfwYhXoqf8rhYrg",
+			expected: "7uv632EkfwYhXoqf8rhYrg",
+		},
+		{
+			name:     "Valid URL with intl path",
+			inputURL: "https://open.spotify.com/intl-pt/album/7uv632EkfwYhXoqf8rhYrg",
 			expected: "7uv632EkfwYhXoqf8rhYrg",
 		},
 		{

@@ -11,7 +11,7 @@ type Album struct {
 	Artists []Artist `json:"artists"`
 }
 
-var AlbumRe = regexp.MustCompile(`https://open\.spotify\.com/album/([a-zA-Z0-9]+)(?:\?.*)?`)
+var AlbumRe = regexp.MustCompile(`https://open\.spotify\.com/(?:[\w-]+/)?album/([a-zA-Z0-9]+)(?:\?.*)?`)
 
 func (a *Album) URL() string {
 	return fmt.Sprintf("https://open.spotify.com/album/%s", a.ID)

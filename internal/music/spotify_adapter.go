@@ -18,7 +18,7 @@ func newSpotifyAdapter(client spotify.Client) *SpotifyAdapter {
 
 func (a *SpotifyAdapter) DetectTrackID(trackURL string) (string, error) {
 	match := spotify.TrackRe.FindStringSubmatch(trackURL)
-	if match == nil || len(match) < 2 {
+	if len(match) < 2 {
 		return "", IDNotFoundError
 	}
 	return match[1], nil
@@ -26,7 +26,7 @@ func (a *SpotifyAdapter) DetectTrackID(trackURL string) (string, error) {
 
 func (a *SpotifyAdapter) DetectAlbumID(albumURL string) (string, error) {
 	match := spotify.AlbumRe.FindStringSubmatch(albumURL)
-	if match == nil || len(match) < 2 {
+	if len(match) < 2 {
 		return "", IDNotFoundError
 	}
 	return match[1], nil

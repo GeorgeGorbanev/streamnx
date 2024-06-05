@@ -27,6 +27,33 @@ type HTTPClient struct {
 	httpClient   *http.Client
 }
 
+type searchResponse struct {
+	Resources searchResources `json:"resources"`
+	Results   searchResults   `json:"results"`
+}
+
+type searchResults struct {
+	Top searchTop `json:"top"`
+}
+
+type searchTop struct {
+	Data []searchDataItem `json:"data"`
+}
+
+type searchDataItem struct {
+	ID   string `json:"id"`
+	Type string `json:"type"`
+}
+
+type getResponse struct {
+	Data []*MusicEntity `json:"data"`
+}
+
+type searchResources struct {
+	Songs  map[string]*MusicEntity `json:"songs"`
+	Albums map[string]*MusicEntity `json:"albums"`
+}
+
 func NewHTTPClient(opts ...ClientOption) *HTTPClient {
 	c := HTTPClient{
 		httpClient:   &http.Client{},
@@ -39,19 +66,6 @@ func NewHTTPClient(opts ...ClientOption) *HTTPClient {
 	}
 
 	return &c
-}
-
-type searchResponse struct {
-	Resources searchResources `json:"resources"`
-}
-
-type getResponse struct {
-	Data []*MusicEntity `json:"data"`
-}
-
-type searchResources struct {
-	Songs  map[string]*MusicEntity `json:"songs"`
-	Albums map[string]*MusicEntity `json:"albums"`
 }
 
 func (c *HTTPClient) GetTrack(id, storefront string) (*MusicEntity, error) {
@@ -85,8 +99,10 @@ func (c *HTTPClient) SearchTrack(artistName, trackName string) (*MusicEntity, er
 	if err := json.NewDecoder(response.Body).Decode(&sr); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal search response: %s", err)
 	}
-	for _, song := range sr.Resources.Songs {
-		return song, nil
+	for _, topResult := range sr.Results.Top.Data {
+		if topResult.Type == "songs" {
+			return sr.Resources.Songs[topResult.ID], nil
+		}
 	}
 	return nil, nil
 }
@@ -119,8 +135,10 @@ func (c *HTTPClient) SearchAlbum(artistName, albumName string) (*MusicEntity, er
 	if err := json.NewDecoder(response.Body).Decode(&sr); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal search response: %s", err)
 	}
-	for _, album := range sr.Resources.Albums {
-		return album, nil
+	for _, topResult := range sr.Results.Top.Data {
+		if topResult.Type == "albums" {
+			return sr.Resources.Albums[topResult.ID], nil
+		}
 	}
 	return nil, nil
 }

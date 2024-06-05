@@ -16,10 +16,11 @@ type FixturesMap struct {
 	YandexSearchTracks map[string][]byte
 	YandexSearchAlbums map[string][]byte
 
-	YoutubeTracks       map[string][]byte
-	YoutubeAlbums       map[string][]byte
-	YoutubeSearchTracks map[string][]byte
-	YoutubeSearchAlbums map[string][]byte
+	YoutubeTracks        map[string][]byte
+	YoutubeAlbums        map[string][]byte
+	YoutubeSearchTracks  map[string][]byte
+	YoutubeSearchAlbums  map[string][]byte
+	YoutubePlaylistItems map[string][]byte
 }
 
 func (fm *FixturesMap) Merge(mergeFm *FixturesMap) {
@@ -42,6 +43,7 @@ func (fm *FixturesMap) Merge(mergeFm *FixturesMap) {
 	fm.YoutubeTracks = mergeFm.YoutubeTracks
 	fm.YoutubeSearchAlbums = mergeFm.YoutubeSearchAlbums
 	fm.YoutubeSearchTracks = mergeFm.YoutubeSearchTracks
+	fm.YoutubePlaylistItems = mergeFm.YoutubePlaylistItems
 }
 
 func (fm *FixturesMap) Reset() {
@@ -64,4 +66,5 @@ func (fm *FixturesMap) Reset() {
 	fm.YoutubeTracks = map[string][]byte{}
 	fm.YoutubeSearchAlbums = map[string][]byte{}
 	fm.YoutubeSearchTracks = map[string][]byte{}
+	fm.YoutubePlaylistItems = map[string][]byte{}
 }

@@ -49,6 +49,12 @@ func NewYoutubeAPIServerMock(fm *fixture.FixturesMap) *httptest.Server {
 			if response, ok = fm.YoutubeAlbums[albumID]; !ok {
 				response = fixture.Read("youtube/not_found.json")
 			}
+		case "/youtube/v3/playlistItems":
+			albumID := r.URL.Query().Get("playlistId")
+
+			if response, ok = fm.YoutubePlaylistItems[albumID]; !ok {
+				response = fixture.Read("youtube/not_found.json")
+			}
 		default:
 			panic("unexpected request")
 		}

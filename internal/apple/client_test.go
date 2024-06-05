@@ -139,6 +139,16 @@ func TestHTTPClient_SearchTrack(t *testing.T) {
 				var resp string
 				if q.Get("term") == "foundArtistName foundTrackName" {
 					resp = `{
+						"results": {
+							"top": {
+								"data": [
+									{
+										"id": "foundId",
+										"type": "songs"
+									}
+								]		
+	 	                     }
+						},	
 						"resources": {
 							"songs": {
 								"foundId": {
@@ -303,6 +313,16 @@ func TestHTTPClient_SearchAlbum(t *testing.T) {
 				var resp string
 				if q.Get("term") == "foundArtistName foundAlbumName" {
 					resp = `{
+						"results": {
+							"top": {
+								"data": [
+									{
+										"id": "foundId",
+										"type": "albums"
+									}
+								]		
+	 	                     }
+						},	
 						"resources": {
 							"albums": {
 								"foundId": {

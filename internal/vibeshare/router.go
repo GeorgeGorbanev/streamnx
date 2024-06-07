@@ -49,43 +49,43 @@ func (vs *Vibeshare) FeedbackTextHandler(inMsg *telebot.Message) {
 
 func (vs *Vibeshare) setupVibeshareRouter() {
 	vs.vibeshareRouter = &telegram.Router{
-		TextHandlers: []*telegram.TextHandler{
-			{Re: startCommand, HandlerFunc: vs.startCommand},
-			{Re: feedbackCommand, HandlerFunc: vs.feedbackCommand},
+		TextRoutes: []*telegram.TextRoute{
+			{Pattern: startCommand, Handler: vs.startCommand},
+			{Pattern: feedbackCommand, Handler: vs.feedbackCommand},
 
-			{Re: apple.TrackRe, HandlerFunc: vs.appleTrackLink},
-			{Re: apple.AlbumRe, HandlerFunc: vs.appleAlbumLink},
+			{Pattern: apple.TrackRe, Handler: vs.appleTrackLink},
+			{Pattern: apple.AlbumRe, Handler: vs.appleAlbumLink},
 
-			{Re: spotify.TrackRe, HandlerFunc: vs.spotifyTrackLink},
-			{Re: spotify.AlbumRe, HandlerFunc: vs.spotifyAlbumLink},
+			{Pattern: spotify.TrackRe, Handler: vs.spotifyTrackLink},
+			{Pattern: spotify.AlbumRe, Handler: vs.spotifyAlbumLink},
 
-			{Re: yandex.TrackRe, HandlerFunc: vs.yandexTrackLink},
-			{Re: yandex.AlbumRe, HandlerFunc: vs.yandexAlbumLink},
+			{Pattern: yandex.TrackRe, Handler: vs.yandexTrackLink},
+			{Pattern: yandex.AlbumRe, Handler: vs.yandexAlbumLink},
 
-			{Re: youtube.VideoRe, HandlerFunc: vs.youtubeTrackLink},
-			{Re: youtube.PlaylistRe, HandlerFunc: vs.youtubeAlbumLink},
+			{Pattern: youtube.VideoRe, Handler: vs.youtubeTrackLink},
+			{Pattern: youtube.PlaylistRe, Handler: vs.youtubeAlbumLink},
 
-			{Re: templates.WhatLinksButtonRe, HandlerFunc: vs.whatLinks},
-			{Re: templates.SkipRe, HandlerFunc: vs.skip},
-			{Re: templates.SkipDemonstrationRe, HandlerFunc: vs.skip},
+			{Pattern: templates.WhatLinksButtonRe, Handler: vs.whatLinks},
+			{Pattern: templates.SkipRe, Handler: vs.skip},
+			{Pattern: templates.SkipDemonstrationRe, Handler: vs.skip},
 		},
-		CallbackHandlers: []*telegram.CallbackHandler{
-			{Route: convertTrackCallbackRoute, HandlerFunc: vs.convertTrack},
-			{Route: convertAlbumCallbackRoute, HandlerFunc: vs.convertAlbum},
-			{Route: trackRegionCallbackRoute, HandlerFunc: vs.trackRegion},
-			{Route: albumRegionCallbackRoute, HandlerFunc: vs.albumRegion},
+		CallbackRoutes: []*telegram.CallbackRoute{
+			{Address: convertTrackCallbackRoute, Handler: vs.convertTrack},
+			{Address: convertAlbumCallbackRoute, Handler: vs.convertAlbum},
+			{Address: trackRegionCallbackRoute, Handler: vs.trackRegion},
+			{Address: albumRegionCallbackRoute, Handler: vs.albumRegion},
 		},
-		TextNotFoundHandler:     vs.textNotFoundHandler,
-		CallbackHandlerNotFound: vs.callbackNotFoundHandler,
+		TextNotFound:     vs.textNotFoundHandler,
+		CallbackNotFound: vs.callbackNotFoundHandler,
 	}
 }
 
 func (vs *Vibeshare) setupFeedbackRouter() {
 	vs.feedbackRouter = &telegram.Router{
-		TextHandlers: []*telegram.TextHandler{
-			{Re: startCommand, HandlerFunc: vs.feedbackStart},
+		TextRoutes: []*telegram.TextRoute{
+			{Pattern: startCommand, Handler: vs.feedbackStart},
 		},
-		TextNotFoundHandler: vs.feedback,
+		TextNotFound: vs.feedback,
 	}
 }
 

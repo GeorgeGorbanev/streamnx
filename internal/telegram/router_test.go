@@ -52,10 +52,10 @@ func TestRouter_RouteText(t *testing.T) {
 			notFoundCalled := false
 
 			router := Router{
-				TextHandlers: []*TextHandler{
+				TextRoutes: []*TextRoute{
 					{
-						Re: startRe,
-						HandlerFunc: func(inMsg *telebot.Message) {
+						Pattern: startRe,
+						Handler: func(inMsg *telebot.Message) {
 							startCalled = true
 						},
 					},
@@ -63,7 +63,7 @@ func TestRouter_RouteText(t *testing.T) {
 			}
 
 			if tt.handleNotFound {
-				router.TextNotFoundHandler = func(inMsg *telebot.Message) {
+				router.TextNotFound = func(inMsg *telebot.Message) {
 					notFoundCalled = true
 				}
 			}
@@ -111,10 +111,10 @@ func TestRouter_RouteCallback(t *testing.T) {
 			notFoundCalled := false
 
 			router := Router{
-				CallbackHandlers: []*CallbackHandler{
+				CallbackRoutes: []*CallbackRoute{
 					{
-						Route: "sample_callback",
-						HandlerFunc: func(callback *Callback) {
+						Address: "sample_callback",
+						Handler: func(callback *Callback) {
 							sampleCallbackCalled = true
 						},
 					},
@@ -122,7 +122,7 @@ func TestRouter_RouteCallback(t *testing.T) {
 			}
 
 			if tt.handleNotFound {
-				router.CallbackHandlerNotFound = func(callback *Callback) {
+				router.CallbackNotFound = func(callback *Callback) {
 					notFoundCalled = true
 				}
 			}

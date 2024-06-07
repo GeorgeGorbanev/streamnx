@@ -7,36 +7,37 @@ import (
 	"github.com/tucnak/telebot"
 )
 
-type TextHandler struct {
-	Re          *regexp.Regexp
-	HandlerFunc TextHandlerFunc
+type TextRoute struct {
+	Pattern *regexp.Regexp
+	Handler TextHandler
 }
 
-type CallbackHandler struct {
-	Route       string
-	HandlerFunc CallbackHandlerFunc
+type CallbackRoute struct {
+	Address string
+	Handler CallbackHandler
 }
 
-type TextHandlerFunc func(inMsg *telebot.Message)
+type TextHandler func(inMsg *telebot.Message)
 
-type CallbackHandlerFunc func(callback *Callback)
+type CallbackHandler func(callback *Callback)
 
 type Router struct {
-	TextHandlers            []*TextHandler
-	TextNotFoundHandler     TextHandlerFunc
-	CallbackHandlers        []*CallbackHandler
-	CallbackHandlerNotFound CallbackHandlerFunc
+	TextRoutes   []*TextRoute
+	TextNotFound TextHandler
+
+	CallbackRoutes   []*CallbackRoute
+	CallbackNotFound CallbackHandler
 }
 
 func (r *Router) RouteText(inMsg *telebot.Message) {
-	for _, h := range r.TextHandlers {
-		if h.Re.MatchString(inMsg.Text) {
-			h.HandlerFunc(inMsg)
+	for _, route := range r.TextRoutes {
+		if route.Pattern.MatchString(inMsg.Text) {
+			route.Handler(inMsg)
 			return
 		}
 	}
-	if r.TextNotFoundHandler != nil {
-		r.TextNotFoundHandler(inMsg)
+	if r.TextNotFound != nil {
+		r.TextNotFound(inMsg)
 	}
 }
 
@@ -50,13 +51,13 @@ func (r *Router) RouteCallback(callback *telebot.Callback) {
 		},
 	}
 
-	for _, h := range r.CallbackHandlers {
-		if h.Route == cb.Data.Route {
-			h.HandlerFunc(&cb)
+	for _, route := range r.CallbackRoutes {
+		if route.Address == cb.Data.Route {
+			route.Handler(&cb)
 			return
 		}
 	}
-	if r.CallbackHandlerNotFound != nil {
-		r.CallbackHandlerNotFound(&cb)
+	if r.CallbackNotFound != nil {
+		r.CallbackNotFound(&cb)
 	}
 }

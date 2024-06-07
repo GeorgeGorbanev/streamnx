@@ -38,15 +38,19 @@ Let's spread the vibes! ☮️`
 			- https://music.apple.com/*/album/*	
 🎵 Spotify
 			- https://open.spotify.com/track/*	
-			- https://open.spotify.com/album/*	
+			- https://open.spotify.com/album/*
+			- https://open.spotify.com/*/track/*
+			- https://open.spotify.com/*/album/*
 🔊 Yandex Music
-			- https://music.yandex.(com|ru)/album/*/track/*
-			- https://music.yandex.(com|ru)/album/*	
+			- https://music.yandex.(com|ru|by|kz|uz)/album/*/track/*
+			- https://music.yandex.(com|ru|by|kz|uz)/album/*
 📺 YouTube
 			- https://www.youtube.com/watch?v=*
 			- https://www.youtu.be/*"
+            - https://music.youtube.com/watch?v=*
 			- https://www.youtube.com/playlist?list=*
 			- https://www.youtu.be/playlist?list=*
+			- https://music.youtube.com/playlist?list=*
 </code>
 Send me any of them and I'll convert it to the other platforms for you`
 )

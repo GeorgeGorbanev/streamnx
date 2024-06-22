@@ -3,7 +3,7 @@ package vibeshare
 import (
 	"testing"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/music"
+	"github.com/GeorgeGorbanev/vibeshare/internal/streaminx"
 
 	"github.com/stretchr/testify/require"
 )
@@ -11,8 +11,8 @@ import (
 func TestConvertParamsMarshal(t *testing.T) {
 	params := convertParams{
 		ID:     "123",
-		Source: music.Spotify,
-		Target: music.Yandex,
+		Source: streaminx.Spotify,
+		Target: streaminx.Yandex,
 	}
 	require.Equal(t, []string{"sf", "123", "ya"}, params.marshal())
 }
@@ -29,8 +29,8 @@ func TestConvertParamsUnmarshal(t *testing.T) {
 			input: []string{"sf", "123", "ya"},
 			want: convertParams{
 				ID:     "123",
-				Source: music.Spotify,
-				Target: music.Yandex,
+				Source: streaminx.Spotify,
+				Target: streaminx.Yandex,
 			},
 			wantErr: false,
 		},

@@ -3,19 +3,19 @@ package vibeshare
 import (
 	"fmt"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/music"
+	"github.com/GeorgeGorbanev/vibeshare/internal/streaminx"
 	"github.com/GeorgeGorbanev/vibeshare/internal/telegram"
 )
 
 type Input struct {
-	MusicRegistry      *music.Registry
+	StreaminxRegistry  *streaminx.Registry
 	VibeshareBotToken  string
 	FeedbackBotToken   string
 	FeedbackReceiverID int
 }
 
 type Vibeshare struct {
-	musicRegistry *music.Registry
+	streaminxRegistry *streaminx.Registry
 
 	vibeshareBot    *telegram.Bot
 	vibeshareSender telegram.Sender
@@ -30,7 +30,7 @@ type Vibeshare struct {
 
 func NewVibeshare(input *Input, opts ...Option) (*Vibeshare, error) {
 	vs := &Vibeshare{}
-	vs.musicRegistry = input.MusicRegistry
+	vs.streaminxRegistry = input.StreaminxRegistry
 	vs.feedbackReceiverID = input.FeedbackReceiverID
 
 	if err := vs.setupVibeshareBot(input); err != nil {
@@ -66,8 +66,8 @@ func (vs *Vibeshare) Stop() {
 	if vs.vibeshareBot != nil {
 		vs.vibeshareBot.Stop()
 	}
-	if vs.musicRegistry != nil {
-		vs.musicRegistry.Close()
+	if vs.streaminxRegistry != nil {
+		vs.streaminxRegistry.Close()
 	}
 }
 

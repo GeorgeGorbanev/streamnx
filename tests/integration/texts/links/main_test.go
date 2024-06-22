@@ -5,8 +5,8 @@ import (
 	"testing"
 
 	"github.com/GeorgeGorbanev/vibeshare/internal/apple"
-	"github.com/GeorgeGorbanev/vibeshare/internal/music"
 	"github.com/GeorgeGorbanev/vibeshare/internal/spotify"
+	"github.com/GeorgeGorbanev/vibeshare/internal/streaminx"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare"
 	"github.com/GeorgeGorbanev/vibeshare/internal/yandex"
 	"github.com/GeorgeGorbanev/vibeshare/internal/youtube"
@@ -50,7 +50,7 @@ func TestMain(m *testing.M) {
 	yandexClient := yandex.NewHTTPClient(yandex.WithAPIURL(yandexMockServer.URL))
 
 	app, err := vibeshare.NewVibeshare(&vibeshare.Input{
-		MusicRegistry: music.NewRegistry(&music.RegistryInput{
+		StreaminxRegistry: streaminx.NewRegistry(&streaminx.RegistryInput{
 			AppleClient:   appleClient,
 			SpotifyClient: spotifyClient,
 			YandexClient:  yandexClient,

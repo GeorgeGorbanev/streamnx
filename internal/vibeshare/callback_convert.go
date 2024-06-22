@@ -4,15 +4,15 @@ import (
 	"fmt"
 	"log/slog"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/music"
+	"github.com/GeorgeGorbanev/vibeshare/internal/streaminx"
 	"github.com/GeorgeGorbanev/vibeshare/internal/telegram"
 	"github.com/GeorgeGorbanev/vibeshare/internal/templates"
 )
 
 type convertParams struct {
 	ID     string
-	Source *music.Provider
-	Target *music.Provider
+	Source *streaminx.Provider
+	Target *streaminx.Provider
 }
 
 func (p *convertParams) marshal() []string {
@@ -27,11 +27,11 @@ func (p *convertParams) unmarshal(s []string) error {
 	if len(s) != 3 {
 		return fmt.Errorf("invalid convert params: %s", s)
 	}
-	sourceProvider := music.FindProviderByCode(s[0])
+	sourceProvider := streaminx.FindProviderByCode(s[0])
 	if sourceProvider == nil {
 		return fmt.Errorf("invalid source provider: %s", s[0])
 	}
-	targetProvider := music.FindProviderByCode(s[2])
+	targetProvider := streaminx.FindProviderByCode(s[2])
 	if targetProvider == nil {
 		return fmt.Errorf("invalid target provider: %s", s[2])
 	}
@@ -50,7 +50,7 @@ func (vs *Vibeshare) convertTrack(callback *telegram.Callback) {
 		return
 	}
 
-	sourceTrack, err := vs.musicRegistry.Adapter(params.Source).GetTrack(params.ID)
+	sourceTrack, err := vs.streaminxRegistry.Adapter(params.Source).GetTrack(params.ID)
 	if err != nil {
 		slog.Error("failed to search track", slog.Any("error", err))
 		return
@@ -60,7 +60,7 @@ func (vs *Vibeshare) convertTrack(callback *telegram.Callback) {
 		return
 	}
 
-	track, err := vs.musicRegistry.Adapter(params.Target).SearchTrack(sourceTrack.Artist, sourceTrack.Title)
+	track, err := vs.streaminxRegistry.Adapter(params.Target).SearchTrack(sourceTrack.Artist, sourceTrack.Title)
 	if err != nil {
 		slog.Error("failed to search track", slog.Any("error", err))
 		return
@@ -74,7 +74,7 @@ func (vs *Vibeshare) convertTrack(callback *telegram.Callback) {
 	} else {
 		response = append(response, &telegram.Message{To: callback.Sender, Text: track.URL})
 
-		if params.Target == music.Yandex {
+		if params.Target == streaminx.Yandex {
 			response = append(response, &telegram.Message{
 				To:          callback.Sender,
 				Text:        templates.SpecifyRegion,
@@ -93,7 +93,7 @@ func (vs *Vibeshare) convertAlbum(callback *telegram.Callback) {
 		return
 	}
 
-	sourceAlbum, err := vs.musicRegistry.Adapter(params.Source).GetAlbum(params.ID)
+	sourceAlbum, err := vs.streaminxRegistry.Adapter(params.Source).GetAlbum(params.ID)
 	if err != nil {
 		slog.Error("failed to search album", slog.Any("error", err))
 		return
@@ -103,7 +103,7 @@ func (vs *Vibeshare) convertAlbum(callback *telegram.Callback) {
 		return
 	}
 
-	album, err := vs.musicRegistry.Adapter(params.Target).SearchAlbum(sourceAlbum.Artist, sourceAlbum.Title)
+	album, err := vs.streaminxRegistry.Adapter(params.Target).SearchAlbum(sourceAlbum.Artist, sourceAlbum.Title)
 	if err != nil {
 		slog.Error("failed to search album", slog.Any("error", err))
 		return
@@ -117,7 +117,7 @@ func (vs *Vibeshare) convertAlbum(callback *telegram.Callback) {
 	} else {
 		response = append(response, &telegram.Message{To: callback.Sender, Text: album.URL})
 
-		if params.Target == music.Yandex {
+		if params.Target == streaminx.Yandex {
 			response = append(response, &telegram.Message{
 				To:          callback.Sender,
 				Text:        templates.SpecifyRegion,

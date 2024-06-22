@@ -3,52 +3,52 @@ package vibeshare
 import (
 	"log/slog"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/music"
+	"github.com/GeorgeGorbanev/vibeshare/internal/streaminx"
 	"github.com/GeorgeGorbanev/vibeshare/internal/telegram"
 
 	"github.com/tucnak/telebot"
 )
 
 func (vs *Vibeshare) appleTrackLink(inMsg *telebot.Message) {
-	vs.trackLink(music.Apple, inMsg)
+	vs.trackLink(streaminx.Apple, inMsg)
 }
 
 func (vs *Vibeshare) appleAlbumLink(inMsg *telebot.Message) {
-	vs.albumLink(music.Apple, inMsg)
+	vs.albumLink(streaminx.Apple, inMsg)
 }
 
 func (vs *Vibeshare) spotifyTrackLink(inMsg *telebot.Message) {
-	vs.trackLink(music.Spotify, inMsg)
+	vs.trackLink(streaminx.Spotify, inMsg)
 }
 
 func (vs *Vibeshare) spotifyAlbumLink(inMsg *telebot.Message) {
-	vs.albumLink(music.Spotify, inMsg)
+	vs.albumLink(streaminx.Spotify, inMsg)
 }
 
 func (vs *Vibeshare) yandexTrackLink(inMsg *telebot.Message) {
-	vs.trackLink(music.Yandex, inMsg)
+	vs.trackLink(streaminx.Yandex, inMsg)
 }
 
 func (vs *Vibeshare) yandexAlbumLink(inMsg *telebot.Message) {
-	vs.albumLink(music.Yandex, inMsg)
+	vs.albumLink(streaminx.Yandex, inMsg)
 }
 
 func (vs *Vibeshare) youtubeTrackLink(inMsg *telebot.Message) {
-	vs.trackLink(music.Youtube, inMsg)
+	vs.trackLink(streaminx.Youtube, inMsg)
 }
 
 func (vs *Vibeshare) youtubeAlbumLink(inMsg *telebot.Message) {
-	vs.albumLink(music.Youtube, inMsg)
+	vs.albumLink(streaminx.Youtube, inMsg)
 }
 
-func (vs *Vibeshare) trackLink(provider *music.Provider, inMsg *telebot.Message) {
-	trackID, err := vs.musicRegistry.Adapter(provider).DetectTrackID(inMsg.Text)
+func (vs *Vibeshare) trackLink(provider *streaminx.Provider, inMsg *telebot.Message) {
+	trackID, err := vs.streaminxRegistry.Adapter(provider).DetectTrackID(inMsg.Text)
 	if err != nil {
 		vs.send(&telegram.Message{To: inMsg.Sender, Text: "Link is invalid"})
 		return
 	}
 
-	track, err := vs.musicRegistry.Adapter(provider).GetTrack(trackID)
+	track, err := vs.streaminxRegistry.Adapter(provider).GetTrack(trackID)
 	if err != nil {
 		slog.Error("error fetching track", slog.Any("error", err))
 		return
@@ -65,13 +65,13 @@ func (vs *Vibeshare) trackLink(provider *music.Provider, inMsg *telebot.Message)
 	})
 }
 
-func (vs *Vibeshare) albumLink(provider *music.Provider, inMsg *telebot.Message) {
-	albumID, err := vs.musicRegistry.Adapter(provider).DetectAlbumID(inMsg.Text)
+func (vs *Vibeshare) albumLink(provider *streaminx.Provider, inMsg *telebot.Message) {
+	albumID, err := vs.streaminxRegistry.Adapter(provider).DetectAlbumID(inMsg.Text)
 	if err != nil {
 		vs.send(&telegram.Message{To: inMsg.Sender, Text: "Link is invalid"})
 		return
 	}
-	album, err := vs.musicRegistry.Adapter(provider).GetAlbum(albumID)
+	album, err := vs.streaminxRegistry.Adapter(provider).GetAlbum(albumID)
 	if err != nil {
 		slog.Error("error fetching album", slog.Any("error", err))
 		return

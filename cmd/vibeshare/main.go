@@ -8,8 +8,8 @@ import (
 	"strconv"
 
 	"github.com/GeorgeGorbanev/vibeshare/internal/apple"
-	"github.com/GeorgeGorbanev/vibeshare/internal/music"
 	"github.com/GeorgeGorbanev/vibeshare/internal/spotify"
+	"github.com/GeorgeGorbanev/vibeshare/internal/streaminx"
 	"github.com/GeorgeGorbanev/vibeshare/internal/translator"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare"
 	"github.com/GeorgeGorbanev/vibeshare/internal/yandex"
@@ -97,7 +97,7 @@ func newVibeshare(ctx context.Context, cfg *config) (*vibeshare.Vibeshare, error
 		VibeshareBotToken:  cfg.telegramToken,
 		FeedbackBotToken:   cfg.feedbackToken,
 		FeedbackReceiverID: cfg.feedbackReceiverID,
-		MusicRegistry: music.NewRegistry(&music.RegistryInput{
+		StreaminxRegistry: streaminx.NewRegistry(&streaminx.RegistryInput{
 			AppleClient:  apple.NewHTTPClient(),
 			YandexClient: yandex.NewHTTPClient(),
 			YoutubeClient: youtube.NewHTTPClient(

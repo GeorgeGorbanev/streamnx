@@ -1,4 +1,4 @@
-package music
+package streaminx
 
 type Provider struct {
 	Name string

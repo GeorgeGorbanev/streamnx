@@ -1,7 +1,7 @@
 package vibeshare
 
 import (
-	"github.com/GeorgeGorbanev/vibeshare/internal/music"
+	"github.com/GeorgeGorbanev/vibeshare/internal/streaminx"
 	"github.com/GeorgeGorbanev/vibeshare/internal/telegram"
 	"github.com/GeorgeGorbanev/vibeshare/internal/templates"
 	"github.com/GeorgeGorbanev/vibeshare/internal/yandex"
@@ -9,9 +9,9 @@ import (
 	"github.com/tucnak/telebot"
 )
 
-func convertTrackMenu(track *music.Track) *telebot.ReplyMarkup {
-	buttonsParams := make([]convertParams, 0, len(music.Providers)-1)
-	for _, provider := range music.Providers {
+func convertTrackMenu(track *streaminx.Track) *telebot.ReplyMarkup {
+	buttonsParams := make([]convertParams, 0, len(streaminx.Providers)-1)
+	for _, provider := range streaminx.Providers {
 		if provider.Code != track.Provider.Code {
 			buttonsParams = append(buttonsParams, convertParams{
 				ID:     track.ID,
@@ -41,9 +41,9 @@ func convertTrackMenu(track *music.Track) *telebot.ReplyMarkup {
 	}
 }
 
-func convertAlbumMenu(album *music.Album) *telebot.ReplyMarkup {
-	buttonsParams := make([]convertParams, 0, len(music.Providers)-1)
-	for _, provider := range music.Providers {
+func convertAlbumMenu(album *streaminx.Album) *telebot.ReplyMarkup {
+	buttonsParams := make([]convertParams, 0, len(streaminx.Providers)-1)
+	for _, provider := range streaminx.Providers {
 		if provider != album.Provider {
 			buttonsParams = append(buttonsParams, convertParams{
 				ID:     album.ID,
@@ -73,7 +73,7 @@ func convertAlbumMenu(album *music.Album) *telebot.ReplyMarkup {
 	}
 }
 
-func trackRegionMenu(track *music.Track) *telebot.ReplyMarkup {
+func trackRegionMenu(track *streaminx.Track) *telebot.ReplyMarkup {
 	buttonsParams := make([]regionParams, 0, len(yandex.Regions))
 	for _, locale := range yandex.Regions {
 		buttonsParams = append(buttonsParams, regionParams{
@@ -102,7 +102,7 @@ func trackRegionMenu(track *music.Track) *telebot.ReplyMarkup {
 	}
 }
 
-func albumRegionMenu(album *music.Album) *telebot.ReplyMarkup {
+func albumRegionMenu(album *streaminx.Album) *telebot.ReplyMarkup {
 	buttonsParams := make([]regionParams, 0, len(yandex.Regions))
 	for _, locale := range yandex.Regions {
 		buttonsParams = append(buttonsParams, regionParams{

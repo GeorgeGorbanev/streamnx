@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log/slog"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/music"
+	"github.com/GeorgeGorbanev/vibeshare/internal/streaminx"
 	"github.com/GeorgeGorbanev/vibeshare/internal/telegram"
 	"github.com/GeorgeGorbanev/vibeshare/internal/yandex"
 )
@@ -44,7 +44,7 @@ func (vs *Vibeshare) trackRegion(callback *telegram.Callback) {
 		return
 	}
 
-	track, err := vs.musicRegistry.Adapter(music.Yandex).GetTrack(params.EntityID)
+	track, err := vs.streaminxRegistry.Adapter(streaminx.Yandex).GetTrack(params.EntityID)
 	if err != nil {
 		slog.Error("failed to search track", slog.Any("error", err))
 		return
@@ -66,7 +66,7 @@ func (vs *Vibeshare) albumRegion(callback *telegram.Callback) {
 		return
 	}
 
-	album, err := vs.musicRegistry.Adapter(music.Yandex).GetAlbum(params.EntityID)
+	album, err := vs.streaminxRegistry.Adapter(streaminx.Yandex).GetAlbum(params.EntityID)
 	if err != nil {
 		slog.Error("failed to search album", slog.Any("error", err))
 		return

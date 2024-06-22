@@ -14,6 +14,7 @@ type Provider struct {
 	Code    string
 	TrackRe *regexp.Regexp
 	AlbumRe *regexp.Regexp
+	Regions []string
 }
 
 var (
@@ -22,6 +23,7 @@ var (
 		Code:    "ap",
 		TrackRe: apple.TrackRe,
 		AlbumRe: apple.AlbumRe,
+		Regions: apple.ISO3166codes,
 	}
 	Spotify = &Provider{
 		Name:    "Spotify",
@@ -34,6 +36,7 @@ var (
 		Code:    "ya",
 		TrackRe: yandex.TrackRe,
 		AlbumRe: yandex.AlbumRe,
+		Regions: yandex.Regions,
 	}
 	Youtube = &Provider{
 		Name:    "Youtube",

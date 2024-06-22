@@ -4,9 +4,16 @@ import (
 	"github.com/GeorgeGorbanev/vibeshare/internal/streaminx"
 	"github.com/GeorgeGorbanev/vibeshare/internal/telegram"
 	"github.com/GeorgeGorbanev/vibeshare/internal/templates"
-	"github.com/GeorgeGorbanev/vibeshare/internal/yandex"
-
 	"github.com/tucnak/telebot"
+)
+
+var (
+	regionsLabels = map[string]string{
+		"by": "🇧🇾 Belarus",
+		"kz": "🇰🇿 Kazakhstan",
+		"ru": "🇷🇺 Russia",
+		"uz": "🇺🇿 Uzbekistan",
+	}
 )
 
 func convertTrackMenu(track *streaminx.Track) *telebot.ReplyMarkup {
@@ -74,8 +81,8 @@ func convertAlbumMenu(album *streaminx.Album) *telebot.ReplyMarkup {
 }
 
 func trackRegionMenu(track *streaminx.Track) *telebot.ReplyMarkup {
-	buttonsParams := make([]regionParams, 0, len(yandex.Regions))
-	for _, locale := range yandex.Regions {
+	buttonsParams := make([]regionParams, 0, len(streaminx.Yandex.Regions))
+	for _, locale := range streaminx.Yandex.Regions {
 		buttonsParams = append(buttonsParams, regionParams{
 			EntityID: track.ID,
 			Region:   locale,
@@ -91,7 +98,7 @@ func trackRegionMenu(track *streaminx.Track) *telebot.ReplyMarkup {
 
 		buttons = append(buttons, []telebot.InlineButton{
 			{
-				Text: buttonParams.Region.Label,
+				Text: regionsLabels[buttonParams.Region],
 				Data: cbData.Marshal(),
 			},
 		})
@@ -103,11 +110,11 @@ func trackRegionMenu(track *streaminx.Track) *telebot.ReplyMarkup {
 }
 
 func albumRegionMenu(album *streaminx.Album) *telebot.ReplyMarkup {
-	buttonsParams := make([]regionParams, 0, len(yandex.Regions))
-	for _, locale := range yandex.Regions {
+	buttonsParams := make([]regionParams, 0, len(streaminx.Yandex.Regions))
+	for _, r := range streaminx.Yandex.Regions {
 		buttonsParams = append(buttonsParams, regionParams{
 			EntityID: album.ID,
-			Region:   locale,
+			Region:   r,
 		})
 	}
 
@@ -120,7 +127,7 @@ func albumRegionMenu(album *streaminx.Album) *telebot.ReplyMarkup {
 
 		buttons = append(buttons, []telebot.InlineButton{
 			{
-				Text: buttonParams.Region.Label,
+				Text: regionsLabels[buttonParams.Region],
 				Data: cbData.Marshal(),
 			},
 		})

@@ -20,5 +20,5 @@ var (
 )
 
 func (a *Album) URL() string {
-	return fmt.Sprintf("https://music.yandex.%s/album/%d", defaultDomainZone, a.ID)
+	return fmt.Sprintf("https://music.yandex.%s/album/%d", noRegionDomainZone, a.ID)
 }

@@ -3,15 +3,13 @@ package vibeshare
 import (
 	"testing"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/yandex"
-
 	"github.com/stretchr/testify/require"
 )
 
 func TestRegionParamsMarshal(t *testing.T) {
 	params := regionParams{
 		EntityID: "123",
-		Region:   yandex.RegionRussia,
+		Region:   "ru",
 	}
 	require.Equal(t, []string{"123", "ru"}, params.marshal())
 }
@@ -28,7 +26,7 @@ func TestRegionParamsUnmarshal(t *testing.T) {
 			input: []string{"123", "ru"},
 			want: regionParams{
 				EntityID: "123",
-				Region:   yandex.RegionRussia,
+				Region:   "ru",
 			},
 			wantErr: false,
 		},

@@ -3,21 +3,23 @@ package vibeshare
 import (
 	"fmt"
 	"log/slog"
+	"net/url"
+	"slices"
+	"strings"
 
 	"github.com/GeorgeGorbanev/vibeshare/internal/streaminx"
 	"github.com/GeorgeGorbanev/vibeshare/internal/telegram"
-	"github.com/GeorgeGorbanev/vibeshare/internal/yandex"
 )
 
 type regionParams struct {
 	EntityID string
-	Region   *yandex.Region
+	Region   string
 }
 
 func (rp *regionParams) marshal() []string {
 	return []string{
 		rp.EntityID,
-		rp.Region.DomainZone,
+		rp.Region,
 	}
 }
 
@@ -26,13 +28,12 @@ func (rp *regionParams) unmarshal(s []string) error {
 		return fmt.Errorf("invalid spicfy locale params: %s", s)
 	}
 
-	locale := yandex.FindRegionByDomainZone(s[1])
-	if !locale.IsValid() {
+	if !slices.Contains(streaminx.Yandex.Regions, s[1]) {
 		return fmt.Errorf("invalid locale: %s", s[1])
 	}
 
 	rp.EntityID = s[0]
-	rp.Region = locale
+	rp.Region = s[1]
 
 	return nil
 }
@@ -54,7 +55,7 @@ func (vs *Vibeshare) trackRegion(callback *telegram.Callback) {
 		return
 	}
 
-	link := params.Region.LocalizeLink(track.URL)
+	link := changeDomain(track.URL, params.Region)
 	response := &telegram.Message{To: callback.Sender, Text: link}
 	vs.send(response)
 }
@@ -76,7 +77,20 @@ func (vs *Vibeshare) albumRegion(callback *telegram.Callback) {
 		return
 	}
 
-	link := params.Region.LocalizeLink(album.URL)
+	link := changeDomain(album.URL, params.Region)
 	response := &telegram.Message{To: callback.Sender, Text: link}
 	vs.send(response)
+}
+
+func changeDomain(link, domain string) string {
+	u, err := url.Parse(link)
+	if err != nil {
+		return link
+	}
+
+	hostParts := strings.Split(u.Host, ".")
+	hostParts[len(hostParts)-1] = domain
+	u.Host = strings.Join(hostParts, ".")
+
+	return u.String()
 }

@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	iso3166codes = []string{
+	ISO3166codes = []string{
 		"af", "ax", "al", "dz", "as", "ad", "ao", "ai", "aq", "ag", "ar", "am", "aw", "au", "at", "az",
 		"bs", "bh", "bd", "bb", "by", "be", "bz", "bj", "bm", "bt", "bo", "bq", "ba", "bw", "bv", "br", "io", "bn", "bg", "bf", "bi",
 		"cv", "kh", "cm", "ca", "ky", "cf", "td", "cl", "cn", "cx", "cc", "co", "km", "cg", "cd", "ck", "cr", "ci", "hr", "cu", "cw", "cy", "cz",
@@ -35,5 +35,5 @@ var (
 
 func IsValidStorefront(input string) bool {
 	lowcaseInput := strings.ToLower(input)
-	return slices.Contains(iso3166codes, lowcaseInput)
+	return slices.Contains(ISO3166codes, lowcaseInput)
 }

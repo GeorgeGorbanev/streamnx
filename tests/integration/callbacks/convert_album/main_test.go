@@ -1,15 +1,13 @@
 package convert_album
 
 import (
+	"context"
+	"log/slog"
 	"os"
 	"testing"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/apple"
-	"github.com/GeorgeGorbanev/vibeshare/internal/spotify"
 	"github.com/GeorgeGorbanev/vibeshare/internal/streaminx"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare"
-	"github.com/GeorgeGorbanev/vibeshare/internal/yandex"
-	"github.com/GeorgeGorbanev/vibeshare/internal/youtube"
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
 	"github.com/GeorgeGorbanev/vibeshare/tests/utils"
 
@@ -38,29 +36,35 @@ func TestMain(m *testing.M) {
 	youtubeMockServer := utils.NewYoutubeAPIServerMock(fixturesMap)
 	yandexMockServer := utils.NewYandexAPIServerMock(fixturesMap)
 
-	appleClient := apple.NewHTTPClient(
-		apple.WithAPIURL(appleAPIServerMock.URL),
-		apple.WithWebPlayerURL(appleWebPlayerServerMock.URL),
+	streaminxRegistry, err := streaminx.NewRegistry(
+		context.Background(),
+		streaminx.Credentials{
+			SpotifyClientID:     utils.SpotifyCredentials.ClientID,
+			SpotifyClientSecret: utils.SpotifyCredentials.ClientSecret,
+			YoutubeAPIKey:       utils.YoutubeAPIKey,
+		},
+		streaminx.WithAppleAPIURL(appleAPIServerMock.URL),
+		streaminx.WithAppleWebPlayerURL(appleWebPlayerServerMock.URL),
+		streaminx.WithSpotifyAuthURL(spotifyAuthServerMock.URL),
+		streaminx.WithSpotifyAPIURL(spotifyAPIServerMock.URL),
+		streaminx.WithYandexAPIURL(yandexMockServer.URL),
+		streaminx.WithYoutubeAPIURL(youtubeMockServer.URL),
+		streaminx.WithTranslator(&translatorMock),
 	)
-	spotifyClient := spotify.NewHTTPClient(
-		&utils.SpotifyCredentials,
-		spotify.WithAuthURL(spotifyAuthServerMock.URL),
-		spotify.WithAPIURL(spotifyAPIServerMock.URL),
-	)
-	youtubeClient := youtube.NewHTTPClient(utils.YoutubeAPIKey, youtube.WithAPIURL(youtubeMockServer.URL))
-	yandexClient := yandex.NewHTTPClient(yandex.WithAPIURL(yandexMockServer.URL))
-
-	app, err := vibeshare.NewVibeshare(&vibeshare.Input{
-		StreaminxRegistry: streaminx.NewRegistry(&streaminx.RegistryInput{
-			AppleClient:   appleClient,
-			SpotifyClient: spotifyClient,
-			YandexClient:  yandexClient,
-			YoutubeClient: youtubeClient,
-			Translator:    &translatorMock,
-		}),
-	}, vibeshare.WithVibeshareSender(senderMock))
 	if err != nil {
-		panic(err)
+		slog.Error("failed to build streaminx registry", slog.Any("error", err))
+		os.Exit(1)
+	}
+
+	app, err := vibeshare.NewVibeshare(
+		&vibeshare.Input{
+			StreaminxRegistry: streaminxRegistry,
+		},
+		vibeshare.WithVibeshareSender(senderMock),
+	)
+	if err != nil {
+		slog.Error("failed to build vibeshare", slog.Any("error", err))
+		os.Exit(1)
 	}
 	vs = app
 

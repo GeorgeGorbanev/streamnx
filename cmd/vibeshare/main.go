@@ -7,14 +7,8 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/apple"
-	"github.com/GeorgeGorbanev/vibeshare/internal/spotify"
 	"github.com/GeorgeGorbanev/vibeshare/internal/streaminx"
-	"github.com/GeorgeGorbanev/vibeshare/internal/translator"
 	"github.com/GeorgeGorbanev/vibeshare/internal/vibeshare"
-	"github.com/GeorgeGorbanev/vibeshare/internal/yandex"
-	"github.com/GeorgeGorbanev/vibeshare/internal/youtube"
-
 	"github.com/joho/godotenv"
 )
 
@@ -85,9 +79,12 @@ func loadConfig() (*config, error) {
 }
 
 func newVibeshare(ctx context.Context, cfg *config) (*vibeshare.Vibeshare, error) {
-	googleClient, err := translator.NewGoogleClient(ctx, &translator.GoogleCredentials{
-		APIKeyJSON: cfg.googleTranslatorAPIKeyJSON,
-		ProjectID:  cfg.googleCloudProjectID,
+	streaminxRegistry, err := streaminx.NewRegistry(ctx, streaminx.Credentials{
+		GoogleTranslatorAPIKeyJSON: cfg.googleTranslatorAPIKeyJSON,
+		GoogleTranslatorProjectID:  cfg.googleCloudProjectID,
+		YoutubeAPIKey:              cfg.youtubeAPIKey,
+		SpotifyClientID:            cfg.spotifyClientID,
+		SpotifyClientSecret:        cfg.spotifyClientSecret,
 	})
 	if err != nil {
 		return nil, fmt.Errorf("failed to create google translator client: %w", err)
@@ -97,17 +94,6 @@ func newVibeshare(ctx context.Context, cfg *config) (*vibeshare.Vibeshare, error
 		VibeshareBotToken:  cfg.telegramToken,
 		FeedbackBotToken:   cfg.feedbackToken,
 		FeedbackReceiverID: cfg.feedbackReceiverID,
-		StreaminxRegistry: streaminx.NewRegistry(&streaminx.RegistryInput{
-			AppleClient:  apple.NewHTTPClient(),
-			YandexClient: yandex.NewHTTPClient(),
-			YoutubeClient: youtube.NewHTTPClient(
-				cfg.youtubeAPIKey,
-			),
-			SpotifyClient: spotify.NewHTTPClient(&spotify.Credentials{
-				ClientID:     cfg.spotifyClientID,
-				ClientSecret: cfg.spotifyClientSecret,
-			}),
-			Translator: googleClient,
-		}),
+		StreaminxRegistry:  streaminxRegistry,
 	})
 }

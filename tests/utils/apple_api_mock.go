@@ -6,7 +6,6 @@ import (
 	"net/http/httptest"
 	"regexp"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/apple"
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
 )
 
@@ -61,12 +60,9 @@ func NewAppleAPIServerMock(fm *fixture.FixturesMap) *httptest.Server {
 		switch {
 		case trackRe.MatchString(r.URL.Path):
 			matches := trackRe.FindStringSubmatch(r.URL.Path)
-			ck := apple.CompositeKey{
-				ID:         matches[2],
-				Storefront: matches[1],
-			}
+			key := fmt.Sprintf("%s-%s", matches[1], matches[2])
 
-			if response, ok = fm.AppleTracks[ck.Marshal()]; !ok {
+			if response, ok = fm.AppleTracks[key]; !ok {
 				status = http.StatusNotFound
 			}
 		case r.URL.Path == "/v1/catalog/us/search":
@@ -82,12 +78,9 @@ func NewAppleAPIServerMock(fm *fixture.FixturesMap) *httptest.Server {
 			}
 		case albumRe.MatchString(r.URL.Path):
 			matches := albumRe.FindStringSubmatch(r.URL.Path)
-			ck := apple.CompositeKey{
-				ID:         matches[2],
-				Storefront: matches[1],
-			}
+			key := fmt.Sprintf("%s-%s", matches[1], matches[2])
 
-			if response, ok = fm.AppleAlbums[ck.Marshal()]; !ok {
+			if response, ok = fm.AppleAlbums[key]; !ok {
 				status = http.StatusNotFound
 			}
 		default:

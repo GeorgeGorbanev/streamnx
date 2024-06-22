@@ -4,13 +4,9 @@ import (
 	"log/slog"
 	"regexp"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/apple"
-	"github.com/GeorgeGorbanev/vibeshare/internal/spotify"
+	"github.com/GeorgeGorbanev/vibeshare/internal/streaminx"
 	"github.com/GeorgeGorbanev/vibeshare/internal/telegram"
 	"github.com/GeorgeGorbanev/vibeshare/internal/templates"
-	"github.com/GeorgeGorbanev/vibeshare/internal/yandex"
-	"github.com/GeorgeGorbanev/vibeshare/internal/youtube"
-
 	"github.com/tucnak/telebot"
 )
 
@@ -53,17 +49,17 @@ func (vs *Vibeshare) setupVibeshareRouter() {
 			{Pattern: startCommand, Handler: vs.startCommand},
 			{Pattern: feedbackCommand, Handler: vs.feedbackCommand},
 
-			{Pattern: apple.TrackRe, Handler: vs.appleTrackLink},
-			{Pattern: apple.AlbumRe, Handler: vs.appleAlbumLink},
+			{Pattern: streaminx.Apple.TrackRe, Handler: vs.appleTrackLink},
+			{Pattern: streaminx.Apple.AlbumRe, Handler: vs.appleAlbumLink},
 
-			{Pattern: spotify.TrackRe, Handler: vs.spotifyTrackLink},
-			{Pattern: spotify.AlbumRe, Handler: vs.spotifyAlbumLink},
+			{Pattern: streaminx.Spotify.TrackRe, Handler: vs.spotifyTrackLink},
+			{Pattern: streaminx.Spotify.AlbumRe, Handler: vs.spotifyAlbumLink},
 
-			{Pattern: yandex.TrackRe, Handler: vs.yandexTrackLink},
-			{Pattern: yandex.AlbumRe, Handler: vs.yandexAlbumLink},
+			{Pattern: streaminx.Yandex.TrackRe, Handler: vs.yandexTrackLink},
+			{Pattern: streaminx.Yandex.AlbumRe, Handler: vs.yandexAlbumLink},
 
-			{Pattern: youtube.VideoRe, Handler: vs.youtubeTrackLink},
-			{Pattern: youtube.PlaylistRe, Handler: vs.youtubeAlbumLink},
+			{Pattern: streaminx.Youtube.TrackRe, Handler: vs.youtubeTrackLink},
+			{Pattern: streaminx.Youtube.AlbumRe, Handler: vs.youtubeAlbumLink},
 
 			{Pattern: templates.WhatLinksButtonRe, Handler: vs.whatLinks},
 			{Pattern: templates.SkipRe, Handler: vs.skip},

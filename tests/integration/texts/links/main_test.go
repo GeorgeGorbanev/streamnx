@@ -39,8 +39,8 @@ func TestMain(m *testing.M) {
 	streaminxRegistry, err := streaminx.NewRegistry(
 		context.Background(),
 		streaminx.Credentials{
-			SpotifyClientID:     utils.SpotifyCredentials.ClientID,
-			SpotifyClientSecret: utils.SpotifyCredentials.ClientSecret,
+			SpotifyClientID:     utils.SpotifyClientID,
+			SpotifyClientSecret: utils.SpotifyClientSecret,
 			YoutubeAPIKey:       utils.YoutubeAPIKey,
 		},
 		streaminx.WithAppleAPIURL(appleAPIServerMock.URL),

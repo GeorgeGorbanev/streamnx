@@ -7,21 +7,21 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/GeorgeGorbanev/vibeshare/internal/spotify"
 	"github.com/GeorgeGorbanev/vibeshare/tests/fixture"
 )
 
+const (
+	SpotifyBasicAuth    = "Basic c2FtcGxlQ2xpZW50SUQ6c2FtcGxlQ2xpZW50U2VjcmV0"
+	SpotifyClientID     = "sampleClientID"
+	SpotifyClientSecret = "sampleClientSecret"
+)
+
 var (
-	SpotifyCredentials = spotify.Credentials{
-		ClientID:     "sampleClientID",
-		ClientSecret: "sampleClientSecret",
-	}
 	SpotifyToken = map[string]any{
 		"access_token": "mock_access_token",
 		"token_type":   "Bearer",
 		"expires_in":   360,
 	}
-	SpotifyBasicAuth = "Basic c2FtcGxlQ2xpZW50SUQ6c2FtcGxlQ2xpZW50U2VjcmV0"
 )
 
 func NewSpotifyAuthServerMock() *httptest.Server {

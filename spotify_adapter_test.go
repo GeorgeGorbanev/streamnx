@@ -1,7 +1,9 @@
 package streaminx
 
 import (
+	"context"
 	"testing"
+	"time"
 
 	"github.com/GeorgeGorbanev/streaminx/internal/spotify"
 	"github.com/stretchr/testify/require"
@@ -9,7 +11,7 @@ import (
 
 type spotifyClientMock struct{}
 
-func (c *spotifyClientMock) GetTrack(id string) (*spotify.Track, error) {
+func (c *spotifyClientMock) GetTrack(_ context.Context, id string) (*spotify.Track, error) {
 	if id != "sampleID" {
 		return nil, nil
 	}
@@ -22,7 +24,7 @@ func (c *spotifyClientMock) GetTrack(id string) (*spotify.Track, error) {
 	}, nil
 }
 
-func (c *spotifyClientMock) SearchTrack(artistName, trackName string) (*spotify.Track, error) {
+func (c *spotifyClientMock) SearchTrack(_ context.Context, artistName, trackName string) (*spotify.Track, error) {
 	if artistName != "sample artist" || trackName != "sample name" {
 		return nil, nil
 	}
@@ -36,7 +38,7 @@ func (c *spotifyClientMock) SearchTrack(artistName, trackName string) (*spotify.
 	}, nil
 }
 
-func (c *spotifyClientMock) GetAlbum(id string) (*spotify.Album, error) {
+func (c *spotifyClientMock) GetAlbum(_ context.Context, id string) (*spotify.Album, error) {
 	if id != "sampleID" {
 		return nil, nil
 	}
@@ -49,7 +51,7 @@ func (c *spotifyClientMock) GetAlbum(id string) (*spotify.Album, error) {
 	}, nil
 }
 
-func (c *spotifyClientMock) SearchAlbum(artistName, albumName string) (*spotify.Album, error) {
+func (c *spotifyClientMock) SearchAlbum(_ context.Context, artistName, albumName string) (*spotify.Album, error) {
 	if artistName != "sample artist" || albumName != "sample name" {
 		return nil, nil
 	}
@@ -228,9 +230,12 @@ func TestSpotifyAdapter_GetTrack(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
+
 			a := newSpotifyAdapter(&spotifyClientMock{})
 
-			result, err := a.GetTrack(tt.id)
+			result, err := a.GetTrack(ctx, tt.id)
 
 			require.NoError(t, err)
 			require.Equal(t, tt.expectedTrack, result)
@@ -266,9 +271,12 @@ func TestSpotifyAdapter_SearchTrack(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
+
 			a := newSpotifyAdapter(&spotifyClientMock{})
 
-			result, err := a.SearchTrack(tt.artistName, tt.searchName)
+			result, err := a.SearchTrack(ctx, tt.artistName, tt.searchName)
 
 			require.NoError(t, err)
 			require.Equal(t, tt.expectedTrack, result)
@@ -301,9 +309,12 @@ func TestSpotifyAdapter_GetAlbum(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
+
 			a := newSpotifyAdapter(&spotifyClientMock{})
 
-			result, err := a.GetAlbum(tt.id)
+			result, err := a.GetAlbum(ctx, tt.id)
 
 			require.NoError(t, err)
 			require.Equal(t, tt.expectedTrack, result)
@@ -339,9 +350,12 @@ func TestSpotifyAdapter_SearchAlbum(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
+
 			a := newSpotifyAdapter(&spotifyClientMock{})
 
-			result, err := a.SearchAlbum(tt.artistName, tt.searchName)
+			result, err := a.SearchAlbum(ctx, tt.artistName, tt.searchName)
 
 			require.NoError(t, err)
 			require.Equal(t, tt.expectedTrack, result)

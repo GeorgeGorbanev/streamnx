@@ -1,6 +1,7 @@
 package youtube
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -11,11 +12,11 @@ import (
 const defaultAPIURL = "https://www.googleapis.com"
 
 type Client interface {
-	GetVideo(string) (*Video, error)
-	SearchVideo(string) (*Video, error)
-	GetPlaylist(string) (*Playlist, error)
-	SearchPlaylist(string) (*Playlist, error)
-	GetPlaylistItems(string) ([]Video, error)
+	GetVideo(ctx context.Context, id string) (*Video, error)
+	SearchVideo(ctx context.Context, term string) (*Video, error)
+	GetPlaylist(ctx context.Context, id string) (*Playlist, error)
+	SearchPlaylist(ctx context.Context, term string) (*Playlist, error)
+	GetPlaylistItems(ctx context.Context, id string) ([]Video, error)
 }
 
 type HTTPClient struct {
@@ -64,8 +65,8 @@ func NewHTTPClient(apiKey string, opts ...ClientOption) *HTTPClient {
 }
 
 // https://developers.google.com/youtube/v3/docs/videos/list
-func (c *HTTPClient) GetVideo(id string) (*Video, error) {
-	body, err := c.getWithKey("/youtube/v3/videos", url.Values{
+func (c *HTTPClient) GetVideo(ctx context.Context, id string) (*Video, error) {
+	body, err := c.getWithKey(ctx, "/youtube/v3/videos", url.Values{
 		"part": {"snippet"},
 		"id":   {id},
 	})
@@ -90,8 +91,8 @@ func (c *HTTPClient) GetVideo(id string) (*Video, error) {
 }
 
 // https://developers.google.com/youtube/v3/docs/search/list
-func (c *HTTPClient) SearchVideo(query string) (*Video, error) {
-	body, err := c.getWithKey("/youtube/v3/search", url.Values{
+func (c *HTTPClient) SearchVideo(ctx context.Context, query string) (*Video, error) {
+	body, err := c.getWithKey(ctx, "/youtube/v3/search", url.Values{
 		"q":               {query},
 		"part":            {"snippet"},
 		"type":            {"video"},
@@ -120,8 +121,8 @@ func (c *HTTPClient) SearchVideo(query string) (*Video, error) {
 }
 
 // https://developers.google.com/youtube/v3/docs/playlists/list
-func (c *HTTPClient) GetPlaylist(id string) (*Playlist, error) {
-	body, err := c.getWithKey("/youtube/v3/playlists", url.Values{
+func (c *HTTPClient) GetPlaylist(ctx context.Context, id string) (*Playlist, error) {
+	body, err := c.getWithKey(ctx, "/youtube/v3/playlists", url.Values{
 		"part": {"snippet"},
 		"id":   {id},
 	})
@@ -146,8 +147,8 @@ func (c *HTTPClient) GetPlaylist(id string) (*Playlist, error) {
 }
 
 // https://developers.google.com/youtube/v3/docs/search/list
-func (c *HTTPClient) SearchPlaylist(query string) (*Playlist, error) {
-	body, err := c.getWithKey("/youtube/v3/search", url.Values{
+func (c *HTTPClient) SearchPlaylist(ctx context.Context, query string) (*Playlist, error) {
+	body, err := c.getWithKey(ctx, "/youtube/v3/search", url.Values{
 		"q":          {query},
 		"part":       {"snippet"},
 		"type":       {"playlist"},
@@ -173,8 +174,8 @@ func (c *HTTPClient) SearchPlaylist(query string) (*Playlist, error) {
 }
 
 // https://developers.google.com/youtube/v3/docs/playlistItems/list
-func (c *HTTPClient) GetPlaylistItems(id string) ([]Video, error) {
-	body, err := c.getWithKey("/youtube/v3/playlistItems", url.Values{
+func (c *HTTPClient) GetPlaylistItems(ctx context.Context, id string) ([]Video, error) {
+	body, err := c.getWithKey(ctx, "/youtube/v3/playlistItems", url.Values{
 		"part":       {"snippet"},
 		"playlistId": {id},
 	})
@@ -199,11 +200,15 @@ func (c *HTTPClient) GetPlaylistItems(id string) ([]Video, error) {
 	return videos, nil
 }
 
-func (c *HTTPClient) getWithKey(path string, values url.Values) ([]byte, error) {
+func (c *HTTPClient) getWithKey(ctx context.Context, path string, values url.Values) ([]byte, error) {
 	values.Set("key", c.apiKey)
 	u := fmt.Sprintf("%s%s?%s", c.apiURL, path, values.Encode())
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, u, nil)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create request: %w", err)
+	}
 
-	response, err := c.httpClient.Get(u)
+	response, err := c.httpClient.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to perform get request: %w", err)
 	}

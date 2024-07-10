@@ -1,6 +1,7 @@
 package spotify
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
@@ -48,7 +49,10 @@ func TestHTTPClient_GetTrack(t *testing.T) {
 		WithAPIURL(mockAPIServer.URL),
 	)
 
-	track, err := client.GetTrack("sampletrackid")
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	track, err := client.GetTrack(ctx, "sampletrackid")
 	require.NoError(t, err)
 	require.Equal(t, &Track{
 		ID: "sampletrackid",
@@ -91,7 +95,10 @@ func TestHTTPClient_SearchTrack(t *testing.T) {
 		WithAPIURL(mockAPIServer.URL),
 	)
 
-	track, err := client.SearchTrack("Sample Artist", "Sample Track")
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	track, err := client.SearchTrack(ctx, "Sample Artist", "Sample Track")
 	require.NoError(t, err)
 	require.Equal(t, &Track{
 		ID: "sampletrackid",
@@ -129,7 +136,10 @@ func TestHTTPClient_GetAlbum(t *testing.T) {
 		WithAPIURL(mockAPIServer.URL),
 	)
 
-	album, err := client.GetAlbum("samplealbumid")
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	album, err := client.GetAlbum(ctx, "samplealbumid")
 	require.NoError(t, err)
 	require.Equal(t, &Album{
 		ID:   "samplealbumid",
@@ -172,7 +182,10 @@ func TestHTTPClient_SearchAlbum(t *testing.T) {
 		WithAPIURL(mockAPIServer.URL),
 	)
 
-	album, err := client.SearchAlbum("Sample Artist", "Sample Album")
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	album, err := client.SearchAlbum(ctx, "Sample Artist", "Sample Album")
 	require.NoError(t, err)
 	require.Equal(t, &Album{
 		ID:   "samplealbumid",
@@ -211,7 +224,10 @@ func TestHTTPClient_TokenNotExpired(t *testing.T) {
 		AccessToken: "mock_access_token",
 	}
 
-	track, err := client.GetTrack("sampletrackid")
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	track, err := client.GetTrack(ctx, "sampletrackid")
 	require.NoError(t, err)
 	require.Equal(t, &Track{
 		ID: "sampletrackid",
@@ -253,7 +269,10 @@ func TestHTTPClient_RefreshTokenWhenExpired(t *testing.T) {
 		ExpiresIn: 1,
 	}
 
-	track, err := client.GetTrack("sampletrackid")
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	track, err := client.GetTrack(ctx, "sampletrackid")
 	require.NoError(t, err)
 	require.Equal(t, &Track{
 		ID: "sampletrackid",
@@ -300,7 +319,10 @@ func TestHTTPClient_RefreshTokenWhenUnauthorized(t *testing.T) {
 		AccessToken: "not_expired_token_to_refresh",
 	}
 
-	track, err := client.GetTrack("sampletrackid")
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	track, err := client.GetTrack(ctx, "sampletrackid")
 	require.NoError(t, err)
 	require.Equal(t, &Track{
 		ID: "sampletrackid",

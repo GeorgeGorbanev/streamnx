@@ -1,6 +1,9 @@
 package streaminx
 
-import "fmt"
+import (
+	"context"
+	"fmt"
+)
 
 var (
 	IDNotFoundError = fmt.Errorf("invalid id")
@@ -8,10 +11,10 @@ var (
 
 type Adapter interface {
 	DetectTrackID(trackURL string) (string, error)
-	GetTrack(id string) (*Track, error)
-	SearchTrack(artistName, trackName string) (*Track, error)
+	GetTrack(ctx context.Context, id string) (*Track, error)
+	SearchTrack(ctx context.Context, artistName, trackName string) (*Track, error)
 
 	DetectAlbumID(albumURL string) (string, error)
-	GetAlbum(id string) (*Album, error)
-	SearchAlbum(artistName, albumName string) (*Album, error)
+	GetAlbum(ctx context.Context, id string) (*Album, error)
+	SearchAlbum(ctx context.Context, artistName, albumName string) (*Album, error)
 }

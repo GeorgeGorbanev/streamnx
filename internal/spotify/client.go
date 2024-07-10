@@ -2,6 +2,7 @@ package spotify
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -17,10 +18,10 @@ const (
 )
 
 type Client interface {
-	GetTrack(id string) (*Track, error)
-	SearchTrack(artistName, trackName string) (*Track, error)
-	GetAlbum(id string) (*Album, error)
-	SearchAlbum(artistName, albumName string) (*Album, error)
+	GetTrack(ctx context.Context, id string) (*Track, error)
+	SearchTrack(ctx context.Context, artistName, trackName string) (*Track, error)
+	GetAlbum(ctx context.Context, id string) (*Album, error)
+	SearchAlbum(ctx context.Context, artistName, albumName string) (*Album, error)
 }
 
 type HTTPClient struct {
@@ -62,9 +63,9 @@ func NewHTTPClient(credentials *Credentials, opts ...ClientOption) *HTTPClient {
 }
 
 // https://developer.spotify.com/documentation/web-api/reference/get-track
-func (c *HTTPClient) GetTrack(id string) (*Track, error) {
+func (c *HTTPClient) GetTrack(ctx context.Context, id string) (*Track, error) {
 	path := fmt.Sprintf("/v1/tracks/%s", id)
-	body, err := c.getAPI(path, nil)
+	body, err := c.getAPI(ctx, path, nil)
 	if err != nil {
 		if errors.Is(err, InvalidIDError) {
 			return nil, nil
@@ -81,9 +82,9 @@ func (c *HTTPClient) GetTrack(id string) (*Track, error) {
 }
 
 // https://developer.spotify.com/documentation/web-api/reference/search
-func (c *HTTPClient) SearchTrack(artistName, trackName string) (*Track, error) {
+func (c *HTTPClient) SearchTrack(ctx context.Context, artistName, trackName string) (*Track, error) {
 	q := fmt.Sprintf("artist:%s track:%s", artistName, trackName)
-	body, err := c.getAPI("/v1/search", url.Values{
+	body, err := c.getAPI(ctx, "/v1/search", url.Values{
 		"q":     []string{q},
 		"type":  []string{"track"},
 		"limit": []string{"1"},
@@ -104,9 +105,9 @@ func (c *HTTPClient) SearchTrack(artistName, trackName string) (*Track, error) {
 }
 
 // https://developer.spotify.com/documentation/web-api/reference/get-an-album
-func (c *HTTPClient) GetAlbum(id string) (*Album, error) {
+func (c *HTTPClient) GetAlbum(ctx context.Context, id string) (*Album, error) {
 	path := fmt.Sprintf("/v1/albums/%s", id)
-	body, err := c.getAPI(path, nil)
+	body, err := c.getAPI(ctx, path, nil)
 	if err != nil {
 		if errors.Is(err, InvalidIDError) {
 			return nil, nil
@@ -123,9 +124,9 @@ func (c *HTTPClient) GetAlbum(id string) (*Album, error) {
 }
 
 // https://developer.spotify.com/documentation/web-api/reference/search
-func (c *HTTPClient) SearchAlbum(artistName, albumName string) (*Album, error) {
+func (c *HTTPClient) SearchAlbum(ctx context.Context, artistName, albumName string) (*Album, error) {
 	q := fmt.Sprintf("artist:%s album:%s", artistName, albumName)
-	body, err := c.getAPI("/v1/search", url.Values{
+	body, err := c.getAPI(ctx, "/v1/search", url.Values{
 		"q":     []string{q},
 		"type":  []string{"album"},
 		"limit": []string{"1"},
@@ -145,9 +146,9 @@ func (c *HTTPClient) SearchAlbum(artistName, albumName string) (*Album, error) {
 	return sr.Albums.Items[0], nil
 }
 
-func (c *HTTPClient) getAPI(path string, query url.Values) ([]byte, error) {
+func (c *HTTPClient) getAPI(ctx context.Context, path string, query url.Values) ([]byte, error) {
 	u := fmt.Sprintf("%s%s?%s", c.apiURL, path, query.Encode())
-	resp, err := c.requestWithToken(u)
+	resp, err := c.requestWithToken(ctx, u)
 	if err != nil {
 		return nil, fmt.Errorf("failed to send request: %w", err)
 	}
@@ -155,7 +156,7 @@ func (c *HTTPClient) getAPI(path string, query url.Values) ([]byte, error) {
 
 	if resp.StatusCode == http.StatusUnauthorized {
 		c.token = nil
-		resp, err = c.requestWithToken(u)
+		resp, err = c.requestWithToken(ctx, u)
 		if err != nil {
 			return nil, fmt.Errorf("failed to send request: %w", err)
 		}
@@ -174,10 +175,10 @@ func (c *HTTPClient) getAPI(path string, query url.Values) ([]byte, error) {
 }
 
 // https://developer.spotify.com/documentation/web-api/tutorials/client-credentials-flow
-func (c *HTTPClient) fetchToken() (*token, error) {
+func (c *HTTPClient) fetchToken(ctx context.Context) (*token, error) {
 	url := fmt.Sprintf("%s/api/token", c.authURL)
 	form := bytes.NewBuffer([]byte("grant_type=client_credentials"))
-	req, err := http.NewRequest(http.MethodPost, url, form)
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, form)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
@@ -203,14 +204,14 @@ func (c *HTTPClient) fetchToken() (*token, error) {
 	return &result, nil
 }
 
-func (c *HTTPClient) requestWithToken(url string) (*http.Response, error) {
-	req, err := http.NewRequest(http.MethodGet, url, nil)
+func (c *HTTPClient) requestWithToken(ctx context.Context, url string) (*http.Response, error) {
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
 
 	if c.token == nil || c.token.isExpired() {
-		c.token, err = c.fetchToken()
+		c.token, err = c.fetchToken(ctx)
 		if err != nil {
 			return nil, fmt.Errorf("failed to fetch token: %w", err)
 		}

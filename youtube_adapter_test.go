@@ -1,7 +1,9 @@
 package streaminx
 
 import (
+	"context"
 	"testing"
+	"time"
 
 	"github.com/GeorgeGorbanev/streaminx/internal/youtube"
 
@@ -16,23 +18,23 @@ type youtubeClientMock struct {
 	getPlaylistItems map[string][]youtube.Video
 }
 
-func (c *youtubeClientMock) GetVideo(id string) (*youtube.Video, error) {
+func (c *youtubeClientMock) GetVideo(_ context.Context, id string) (*youtube.Video, error) {
 	return c.getVideo[id], nil
 }
 
-func (c *youtubeClientMock) SearchVideo(query string) (*youtube.Video, error) {
+func (c *youtubeClientMock) SearchVideo(_ context.Context, query string) (*youtube.Video, error) {
 	return c.searchVideo[query], nil
 }
 
-func (c *youtubeClientMock) GetPlaylist(id string) (*youtube.Playlist, error) {
+func (c *youtubeClientMock) GetPlaylist(_ context.Context, id string) (*youtube.Playlist, error) {
 	return c.getPlaylist[id], nil
 }
 
-func (c *youtubeClientMock) SearchPlaylist(query string) (*youtube.Playlist, error) {
+func (c *youtubeClientMock) SearchPlaylist(_ context.Context, query string) (*youtube.Playlist, error) {
 	return c.searchPlaylist[query], nil
 }
 
-func (c *youtubeClientMock) GetPlaylistItems(id string) ([]youtube.Video, error) {
+func (c *youtubeClientMock) GetPlaylistItems(_ context.Context, id string) ([]youtube.Video, error) {
 	return c.getPlaylistItems[id], nil
 }
 
@@ -212,7 +214,10 @@ func TestYoutubeAdapter_GetTrack(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			a := newYoutubeAdapter(&tt.youtubeClientMock)
 
-			result, err := a.GetTrack(tt.id)
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
+
+			result, err := a.GetTrack(ctx, tt.id)
 
 			require.NoError(t, err)
 			require.Equal(t, tt.expectedTrack, result)
@@ -260,7 +265,10 @@ func TestYoutubeAdapter_SearchTrack(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			a := newYoutubeAdapter(&tt.youtubeClientMock)
 
-			result, err := a.SearchTrack(tt.artistName, tt.searchName)
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
+
+			result, err := a.SearchTrack(ctx, tt.artistName, tt.searchName)
 
 			require.NoError(t, err)
 			require.Equal(t, tt.expectedTrack, result)
@@ -385,7 +393,10 @@ func TestYoutubeAdapter_GetAlbum(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			a := newYoutubeAdapter(&tt.youtubeClientMock)
 
-			result, err := a.GetAlbum(tt.id)
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
+
+			result, err := a.GetAlbum(ctx, tt.id)
 
 			require.NoError(t, err)
 			require.Equal(t, tt.expectedAlbum, result)
@@ -432,7 +443,10 @@ func TestYoutubeAdapter_SearchAlbum(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			a := newYoutubeAdapter(&tt.youtubeClientMock)
 
-			result, err := a.SearchAlbum(tt.artistName, tt.searchName)
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
+
+			result, err := a.SearchAlbum(ctx, tt.artistName, tt.searchName)
 
 			require.NoError(t, err)
 			require.Equal(t, tt.expectedAlbum, result)

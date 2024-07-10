@@ -1,6 +1,7 @@
 package streaminx
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/GeorgeGorbanev/streaminx/internal/apple"
@@ -38,13 +39,13 @@ func (a *AppleAdapter) DetectAlbumID(albumURL string) (string, error) {
 	return ck.Marshal(), nil
 }
 
-func (a *AppleAdapter) GetTrack(id string) (*Track, error) {
+func (a *AppleAdapter) GetTrack(ctx context.Context, id string) (*Track, error) {
 	ck := apple.CompositeKey{}
 	if err := ck.Unmarshal(id); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal track id: %w", err)
 	}
 
-	track, err := a.client.GetTrack(ck.ID, ck.Storefront)
+	track, err := a.client.GetTrack(ctx, ck.ID, ck.Storefront)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get track from apple: %w", err)
 	}
@@ -55,8 +56,8 @@ func (a *AppleAdapter) GetTrack(id string) (*Track, error) {
 	return a.adaptTrack(track), nil
 }
 
-func (a *AppleAdapter) SearchTrack(artistName, trackName string) (*Track, error) {
-	track, err := a.client.SearchTrack(artistName, trackName)
+func (a *AppleAdapter) SearchTrack(ctx context.Context, artistName, trackName string) (*Track, error) {
+	track, err := a.client.SearchTrack(ctx, artistName, trackName)
 	if err != nil {
 		return nil, fmt.Errorf("failed to search track from apple: %w", err)
 	}
@@ -66,13 +67,13 @@ func (a *AppleAdapter) SearchTrack(artistName, trackName string) (*Track, error)
 	return a.adaptTrack(track), nil
 }
 
-func (a *AppleAdapter) GetAlbum(id string) (*Album, error) {
+func (a *AppleAdapter) GetAlbum(ctx context.Context, id string) (*Album, error) {
 	ck := apple.CompositeKey{}
 	if err := ck.Unmarshal(id); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal album id: %w", err)
 	}
 
-	album, err := a.client.GetAlbum(ck.ID, ck.Storefront)
+	album, err := a.client.GetAlbum(ctx, ck.ID, ck.Storefront)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get album from apple: %w", err)
 	}
@@ -83,8 +84,8 @@ func (a *AppleAdapter) GetAlbum(id string) (*Album, error) {
 	return a.adaptAlbum(album), nil
 }
 
-func (a *AppleAdapter) SearchAlbum(artistName, albumName string) (*Album, error) {
-	album, err := a.client.SearchAlbum(artistName, albumName)
+func (a *AppleAdapter) SearchAlbum(ctx context.Context, artistName, albumName string) (*Album, error) {
+	album, err := a.client.SearchAlbum(ctx, artistName, albumName)
 	if err != nil {
 		return nil, fmt.Errorf("failed to search album from apple: %w", err)
 	}

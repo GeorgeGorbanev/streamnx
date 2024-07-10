@@ -1,6 +1,7 @@
 package yandex
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -11,14 +12,15 @@ import (
 const defaultAPIURL = "https://api.music.yandex.net"
 
 type Client interface {
-	GetTrack(id string) (*Track, error)
-	SearchTrack(artistName, trackName string) (*Track, error)
-	GetAlbum(id string) (*Album, error)
-	SearchAlbum(artistName, albumName string) (*Album, error)
+	GetTrack(ctx context.Context, id string) (*Track, error)
+	SearchTrack(ctx context.Context, artistName, trackName string) (*Track, error)
+	GetAlbum(ctx context.Context, id string) (*Album, error)
+	SearchAlbum(ctx context.Context, artistName, albumName string) (*Album, error)
 }
 
 type HTTPClient struct {
-	apiURL string
+	apiURL     string
+	httpClient *http.Client
 }
 
 type trackResponse struct {
@@ -48,7 +50,8 @@ type albumsSection struct {
 
 func NewHTTPClient(opts ...ClientOption) *HTTPClient {
 	c := HTTPClient{
-		apiURL: defaultAPIURL,
+		apiURL:     defaultAPIURL,
+		httpClient: &http.Client{},
 	}
 
 	for _, opt := range opts {
@@ -58,17 +61,11 @@ func NewHTTPClient(opts ...ClientOption) *HTTPClient {
 	return &c
 }
 
-func (c *HTTPClient) GetTrack(trackID string) (*Track, error) {
-	u := fmt.Sprintf("%s/tracks/%s", c.apiURL, trackID)
-	response, err := http.Get(u)
+func (c *HTTPClient) GetTrack(ctx context.Context, trackID string) (*Track, error) {
+	path := fmt.Sprintf("/tracks/%s", trackID)
+	body, err := c.getAPI(ctx, path, url.Values{})
 	if err != nil {
-		return nil, fmt.Errorf("failed to perform get request: %s", err)
-	}
-	defer response.Body.Close()
-
-	body, err := io.ReadAll(response.Body)
-	if err != nil {
-		return nil, fmt.Errorf("failed to read response body: %s", err)
+		return nil, fmt.Errorf("failed to get api: %s", err)
 	}
 
 	tr := trackResponse{}
@@ -83,20 +80,14 @@ func (c *HTTPClient) GetTrack(trackID string) (*Track, error) {
 	return &tr.Result[0], nil
 }
 
-func (c *HTTPClient) SearchTrack(artistName, trackName string) (*Track, error) {
-	u := fmt.Sprintf("%s/search?type=track&page=0&text=", c.apiURL)
-	encodedQuery := url.QueryEscape(fmt.Sprintf("%s – %s", artistName, trackName))
-	fullUrl := u + encodedQuery
-
-	response, err := http.Get(fullUrl)
+func (c *HTTPClient) SearchTrack(ctx context.Context, artistName, trackName string) (*Track, error) {
+	body, err := c.getAPI(ctx, "/search", url.Values{
+		"type": []string{"track"},
+		"page": []string{"0"},
+		"text": []string{fmt.Sprintf("%s – %s", artistName, trackName)},
+	})
 	if err != nil {
-		return nil, fmt.Errorf("failed to perform get request: %s", err)
-	}
-	defer response.Body.Close()
-
-	body, err := io.ReadAll(response.Body)
-	if err != nil {
-		return nil, fmt.Errorf("failed to read response body: %s", err)
+		return nil, fmt.Errorf("failed to get api: %s", err)
 	}
 
 	sr := searchResponse{}
@@ -111,17 +102,11 @@ func (c *HTTPClient) SearchTrack(artistName, trackName string) (*Track, error) {
 	return &sr.Result.Tracks.Results[0], nil
 }
 
-func (c *HTTPClient) GetAlbum(albumID string) (*Album, error) {
-	u := fmt.Sprintf("%s/albums/%s", c.apiURL, albumID)
-	response, err := http.Get(u)
+func (c *HTTPClient) GetAlbum(ctx context.Context, albumID string) (*Album, error) {
+	path := fmt.Sprintf("/albums/%s", albumID)
+	body, err := c.getAPI(ctx, path, url.Values{})
 	if err != nil {
-		return nil, fmt.Errorf("failed to perform get request: %s", err)
-	}
-	defer response.Body.Close()
-
-	body, err := io.ReadAll(response.Body)
-	if err != nil {
-		return nil, fmt.Errorf("failed to read response body: %s", err)
+		return nil, fmt.Errorf("failed to get api: %s", err)
 	}
 
 	ar := albumResponse{}
@@ -132,20 +117,14 @@ func (c *HTTPClient) GetAlbum(albumID string) (*Album, error) {
 	return ar.Result, nil
 }
 
-func (c *HTTPClient) SearchAlbum(artistName, albumName string) (*Album, error) {
-	u := fmt.Sprintf("%s/search?type=album&page=0&text=", c.apiURL)
-	encodedQuery := url.QueryEscape(fmt.Sprintf("%s – %s", artistName, albumName))
-	fullUrl := u + encodedQuery
-
-	response, err := http.Get(fullUrl)
+func (c *HTTPClient) SearchAlbum(ctx context.Context, artistName, albumName string) (*Album, error) {
+	body, err := c.getAPI(ctx, "/search", url.Values{
+		"type": []string{"album"},
+		"page": []string{"0"},
+		"text": []string{fmt.Sprintf("%s – %s", artistName, albumName)},
+	})
 	if err != nil {
-		return nil, fmt.Errorf("failed to perform get request: %s", err)
-	}
-	defer response.Body.Close()
-
-	body, err := io.ReadAll(response.Body)
-	if err != nil {
-		return nil, fmt.Errorf("failed to read response body: %s", err)
+		return nil, fmt.Errorf("failed to get api: %s", err)
 	}
 
 	sr := searchResponse{}
@@ -158,6 +137,21 @@ func (c *HTTPClient) SearchAlbum(artistName, albumName string) (*Album, error) {
 	}
 
 	return &sr.Result.Albums.Results[0], nil
+}
+
+func (c *HTTPClient) getAPI(ctx context.Context, path string, query url.Values) ([]byte, error) {
+	u := fmt.Sprintf("%s%s?%s", c.apiURL, path, query.Encode())
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, u, nil)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create request: %s", err)
+	}
+	resp, err := c.httpClient.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("failed to send request: %s", err)
+	}
+	defer resp.Body.Close()
+
+	return io.ReadAll(resp.Body)
 }
 
 func (ar *albumResponse) UnmarshalJSON(data []byte) error {

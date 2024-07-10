@@ -1,10 +1,12 @@
 package youtube
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/require"
 )
@@ -63,7 +65,10 @@ func TestHTTPClient_GetVideo(t *testing.T) {
 
 			client := NewHTTPClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
 
-			video, err := client.GetVideo(tt.inputID)
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
+
+			video, err := client.GetVideo(ctx, tt.inputID)
 			require.NoError(t, err)
 			require.Equal(t, tt.expectedVideo, video)
 		})
@@ -127,7 +132,10 @@ func TestHTTPClient_SearchVideo(t *testing.T) {
 
 			client := NewHTTPClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
 
-			video, err := client.SearchVideo(tt.query)
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
+
+			video, err := client.SearchVideo(ctx, tt.query)
 			require.NoError(t, err)
 			require.Equal(t, tt.expectedVideo, video)
 		})
@@ -186,7 +194,10 @@ func TestHTTPClient_GetPlaylist(t *testing.T) {
 
 			client := NewHTTPClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
 
-			playlist, err := client.GetPlaylist(tt.inputID)
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
+
+			playlist, err := client.GetPlaylist(ctx, tt.inputID)
 			require.NoError(t, err)
 			require.Equal(t, tt.expectedPlaylist, playlist)
 		})
@@ -249,7 +260,10 @@ func TestHTTPClient_SearchPlaylist(t *testing.T) {
 
 			client := NewHTTPClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
 
-			video, err := client.SearchPlaylist(tt.query)
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
+
+			video, err := client.SearchPlaylist(ctx, tt.query)
 			require.NoError(t, err)
 			require.Equal(t, tt.expectedPlaylist, video)
 		})
@@ -320,7 +334,10 @@ func TestHTTPClient_GetPlaylistItems(t *testing.T) {
 
 			client := NewHTTPClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
 
-			videos, err := client.GetPlaylistItems(tt.inputID)
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
+
+			videos, err := client.GetPlaylistItems(ctx, tt.inputID)
 
 			if tt.expectedError != nil {
 				require.Error(t, tt.expectedError, err)

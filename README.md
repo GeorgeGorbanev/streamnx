@@ -75,7 +75,7 @@ Here is an example of how to convert a link from Spotify to YouTube:
 
 ``` golang
 
-func convert(link string) string {
+func convert(ctx context.Context, link string) string {
     spotify := registry.Adapter(streaminx.Spotify)
     id, err := spotify.DetectTrackID(link)
     if err != nil {
@@ -86,7 +86,7 @@ func convert(link string) string {
         // Handle error
     }
 
-    convertedTrack, err := registry.Adapter(streaminx.Youtube).SearchTrack(track.Artist, track.Name)
+    convertedTrack, err := registry.Adapter(streaminx.Youtube).SearchTrack(ctx, track.Artist, track.Name)
     if err != nil {
         // Handle error
     }
@@ -126,13 +126,13 @@ Each adapter implements the `Adapter` interface, which provides methods for work
 
 ``` golang
 type Adapter interface {
-	DetectTrackID(trackURL string) (string, error)
-	GetTrack(id string) (*Track, error)
-	SearchTrack(artistName, trackName string) (*Track, error)
+	DetectTrackID(ctx context.Context, trackURL string) (string, error)
+	GetTrack(ctx context.Context, id string) (*Track, error)
+	SearchTrack(ctx context.Context, artistName, trackName string) (*Track, error)
 
-	DetectAlbumID(albumURL string) (string, error)
-	GetAlbum(id string) (*Album, error)
-	SearchAlbum(artistName, albumName string) (*Album, error)
+	DetectAlbumID(ctx context.Context, albumURL string) (string, error)
+	GetAlbum(ctx context.Context, id string) (*Album, error)
+	SearchAlbum(ctx context.Context, artistName, albumName string) (*Album, error)
 }
 ```
 

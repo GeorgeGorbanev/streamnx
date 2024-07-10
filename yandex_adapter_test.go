@@ -3,6 +3,7 @@ package streaminx
 import (
 	"context"
 	"testing"
+	"time"
 
 	"github.com/GeorgeGorbanev/streaminx/internal/yandex"
 	"github.com/stretchr/testify/require"
@@ -15,22 +16,22 @@ type yandexClientMock struct {
 	searchAlbum map[string]map[string]*yandex.Album
 }
 
-func (c *yandexClientMock) GetTrack(id string) (*yandex.Track, error) {
+func (c *yandexClientMock) GetTrack(_ context.Context, id string) (*yandex.Track, error) {
 	return c.getTrack[id], nil
 }
 
-func (c *yandexClientMock) SearchTrack(artistName, trackName string) (*yandex.Track, error) {
+func (c *yandexClientMock) SearchTrack(_ context.Context, artistName, trackName string) (*yandex.Track, error) {
 	if tracks, ok := c.searchTrack[artistName]; ok {
 		return tracks[trackName], nil
 	}
 	return nil, nil
 }
 
-func (c *yandexClientMock) GetAlbum(id string) (*yandex.Album, error) {
+func (c *yandexClientMock) GetAlbum(_ context.Context, id string) (*yandex.Album, error) {
 	return c.getAlbum[id], nil
 }
 
-func (c *yandexClientMock) SearchAlbum(artistName, albumName string) (*yandex.Album, error) {
+func (c *yandexClientMock) SearchAlbum(_ context.Context, artistName, albumName string) (*yandex.Album, error) {
 	if albums, ok := c.searchAlbum[artistName]; ok {
 		return albums[albumName], nil
 	}
@@ -221,7 +222,10 @@ func TestYandexAdapter_GetTrack(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			a := newYandexAdapter(&tt.yandexClientMock, nil)
 
-			result, err := a.GetTrack(tt.id)
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
+
+			result, err := a.GetTrack(ctx, tt.id)
 
 			require.NoError(t, err)
 			require.Equal(t, tt.expectedTrack, result)
@@ -388,7 +392,10 @@ func TestYandexAdapter_SearchTrack(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			a := newYandexAdapter(&tt.yandexClientMock, &tt.translatorMock)
 
-			result, err := a.SearchTrack(tt.artistName, tt.searchName)
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
+
+			result, err := a.SearchTrack(ctx, tt.artistName, tt.searchName)
 
 			require.NoError(t, err)
 			require.Equal(t, tt.expectedTrack, result)
@@ -435,7 +442,10 @@ func TestYandexAdapter_GetAlbum(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			a := newYandexAdapter(&tt.yandexClientMock, nil)
 
-			result, err := a.GetAlbum(tt.id)
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
+
+			result, err := a.GetAlbum(ctx, tt.id)
 
 			require.NoError(t, err)
 			require.Equal(t, tt.expectedTrack, result)
@@ -587,7 +597,10 @@ func TestYandexAdapter_SearchAlbum(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			a := newYandexAdapter(&tt.yandexClientMock, &tt.translatorMock)
 
-			result, err := a.SearchAlbum(tt.artistName, tt.searchName)
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
+
+			result, err := a.SearchAlbum(ctx, tt.artistName, tt.searchName)
 
 			require.NoError(t, err)
 			require.Equal(t, tt.expectedAlbum, result)

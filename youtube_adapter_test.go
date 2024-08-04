@@ -19,19 +19,35 @@ type youtubeClientMock struct {
 }
 
 func (c *youtubeClientMock) GetVideo(_ context.Context, id string) (*youtube.Video, error) {
-	return c.getVideo[id], nil
+	video, ok := c.getVideo[id]
+	if !ok {
+		return nil, youtube.NotFoundError
+	}
+	return video, nil
 }
 
 func (c *youtubeClientMock) SearchVideo(_ context.Context, query string) (*youtube.Video, error) {
-	return c.searchVideo[query], nil
+	video, ok := c.searchVideo[query]
+	if !ok {
+		return nil, youtube.NotFoundError
+	}
+	return video, nil
 }
 
 func (c *youtubeClientMock) GetPlaylist(_ context.Context, id string) (*youtube.Playlist, error) {
-	return c.getPlaylist[id], nil
+	playlist, ok := c.getPlaylist[id]
+	if !ok {
+		return nil, youtube.NotFoundError
+	}
+	return playlist, nil
 }
 
 func (c *youtubeClientMock) SearchPlaylist(_ context.Context, query string) (*youtube.Playlist, error) {
-	return c.searchPlaylist[query], nil
+	playlist, ok := c.searchPlaylist[query]
+	if !ok {
+		return nil, youtube.NotFoundError
+	}
+	return playlist, nil
 }
 
 func (c *youtubeClientMock) GetPlaylistItems(_ context.Context, id string) ([]youtube.Video, error) {
@@ -44,6 +60,7 @@ func TestYoutubeAdapter_FetchTrack(t *testing.T) {
 		id                string
 		youtubeClientMock youtubeClientMock
 		expectedTrack     *Entity
+		expectedErr       error
 	}{
 		{
 			name: "found ID",
@@ -92,6 +109,7 @@ func TestYoutubeAdapter_FetchTrack(t *testing.T) {
 			id:                "notFoundID",
 			youtubeClientMock: youtubeClientMock{},
 			expectedTrack:     nil,
+			expectedErr:       EntityNotFoundError,
 		},
 	}
 	for _, tt := range tests {
@@ -103,8 +121,12 @@ func TestYoutubeAdapter_FetchTrack(t *testing.T) {
 
 			result, err := a.FetchTrack(ctx, tt.id)
 
-			require.NoError(t, err)
-			require.Equal(t, tt.expectedTrack, result)
+			if tt.expectedErr != nil {
+				require.ErrorIs(t, err, tt.expectedErr)
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, tt.expectedTrack, result)
+			}
 		})
 	}
 }
@@ -116,6 +138,7 @@ func TestYoutubeAdapter_SearchTrack(t *testing.T) {
 		searchName        string
 		youtubeClientMock youtubeClientMock
 		expectedTrack     *Entity
+		expectedErr       error
 	}{
 		{
 			name:       "found query",
@@ -144,6 +167,7 @@ func TestYoutubeAdapter_SearchTrack(t *testing.T) {
 			searchName:        "not found name",
 			youtubeClientMock: youtubeClientMock{},
 			expectedTrack:     nil,
+			expectedErr:       EntityNotFoundError,
 		},
 	}
 	for _, tt := range tests {
@@ -155,8 +179,12 @@ func TestYoutubeAdapter_SearchTrack(t *testing.T) {
 
 			result, err := a.SearchTrack(ctx, tt.artistName, tt.searchName)
 
-			require.NoError(t, err)
-			require.Equal(t, tt.expectedTrack, result)
+			if tt.expectedErr != nil {
+				require.ErrorIs(t, err, tt.expectedErr)
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, tt.expectedTrack, result)
+			}
 		})
 	}
 }
@@ -167,6 +195,7 @@ func TestYoutubeAdapter_FetchAlbum(t *testing.T) {
 		id                string
 		youtubeClientMock youtubeClientMock
 		expectedAlbum     *Entity
+		expectedErr       error
 	}{
 		{
 			name: "found ID",
@@ -276,6 +305,7 @@ func TestYoutubeAdapter_FetchAlbum(t *testing.T) {
 			id:                "notFoundID",
 			youtubeClientMock: youtubeClientMock{},
 			expectedAlbum:     nil,
+			expectedErr:       EntityNotFoundError,
 		},
 	}
 	for _, tt := range tests {
@@ -287,8 +317,12 @@ func TestYoutubeAdapter_FetchAlbum(t *testing.T) {
 
 			result, err := a.FetchAlbum(ctx, tt.id)
 
-			require.NoError(t, err)
-			require.Equal(t, tt.expectedAlbum, result)
+			if tt.expectedErr != nil {
+				require.ErrorIs(t, err, tt.expectedErr)
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, tt.expectedAlbum, result)
+			}
 		})
 	}
 }
@@ -300,6 +334,7 @@ func TestYoutubeAdapter_SearchAlbum(t *testing.T) {
 		searchName        string
 		youtubeClientMock youtubeClientMock
 		expectedAlbum     *Entity
+		expectedErr       error
 	}{
 		{
 			name:       "found query",
@@ -327,6 +362,7 @@ func TestYoutubeAdapter_SearchAlbum(t *testing.T) {
 			artistName:    "not found artist",
 			searchName:    "not found name",
 			expectedAlbum: nil,
+			expectedErr:   EntityNotFoundError,
 		},
 	}
 	for _, tt := range tests {
@@ -338,8 +374,12 @@ func TestYoutubeAdapter_SearchAlbum(t *testing.T) {
 
 			result, err := a.SearchAlbum(ctx, tt.artistName, tt.searchName)
 
-			require.NoError(t, err)
-			require.Equal(t, tt.expectedAlbum, result)
+			if tt.expectedErr != nil {
+				require.ErrorIs(t, err, tt.expectedErr)
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, tt.expectedAlbum, result)
+			}
 		})
 	}
 }

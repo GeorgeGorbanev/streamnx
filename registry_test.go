@@ -15,19 +15,42 @@ type adapterMock struct {
 }
 
 func (a *adapterMock) FetchTrack(_ context.Context, id string) (*Entity, error) {
-	return a.fetchTrack[id], nil
+	entity, ok := a.fetchTrack[id]
+	if !ok {
+		return nil, EntityNotFoundError
+	}
+	return entity, nil
 }
 
 func (a *adapterMock) SearchTrack(_ context.Context, artistName, trackName string) (*Entity, error) {
-	return a.searchTrack[artistName][trackName], nil
+	if tracks, ok := a.searchTrack[artistName]; ok {
+		track, ok := tracks[trackName]
+		if !ok {
+			return nil, EntityNotFoundError
+		}
+		return track, nil
+	}
+	return nil, EntityNotFoundError
 }
 
 func (a *adapterMock) FetchAlbum(_ context.Context, id string) (*Entity, error) {
-	return a.fetchAlbum[id], nil
+	entity, ok := a.fetchAlbum[id]
+	if !ok {
+		return nil, EntityNotFoundError
+	}
+	return entity, nil
 }
 
 func (a *adapterMock) SearchAlbum(_ context.Context, artistName, albumName string) (*Entity, error) {
-	return a.searchAlbum[artistName][albumName], nil
+	if albums, ok := a.searchAlbum[artistName]; ok {
+		album, ok := albums[albumName]
+		if !ok {
+			return nil, EntityNotFoundError
+		}
+		return album, nil
+
+	}
+	return nil, EntityNotFoundError
 }
 
 func TestRegistry_Fetch(t *testing.T) {
@@ -81,7 +104,8 @@ func TestRegistry_Fetch(t *testing.T) {
 				et: Track,
 				id: "1",
 			},
-			want: nil,
+			want:    nil,
+			wantErr: EntityNotFoundError,
 		},
 		{
 			name: "album not found",
@@ -90,7 +114,8 @@ func TestRegistry_Fetch(t *testing.T) {
 				et: Album,
 				id: "1",
 			},
-			want: nil,
+			want:    nil,
+			wantErr: EntityNotFoundError,
 		},
 		{
 			name: "invalid provider",
@@ -201,7 +226,8 @@ func TestRegistry_Search(t *testing.T) {
 				artist: "artist",
 				name:   "name",
 			},
-			want: nil,
+			want:    nil,
+			wantErr: EntityNotFoundError,
 		},
 		{
 			name: "album not found",
@@ -211,7 +237,8 @@ func TestRegistry_Search(t *testing.T) {
 				artist: "artist",
 				name:   "name",
 			},
-			want: nil,
+			want:    nil,
+			wantErr: EntityNotFoundError,
 		},
 		{
 			name: "invalid provider",

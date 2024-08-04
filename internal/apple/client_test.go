@@ -17,6 +17,7 @@ func TestHTTPClient_FetchTrack(t *testing.T) {
 		trackID    string
 		storeFront string
 		want       *Entity
+		wantErr    error
 	}{
 		{
 			name:       "when track found",
@@ -35,7 +36,7 @@ func TestHTTPClient_FetchTrack(t *testing.T) {
 			name:       "when track not found",
 			trackID:    "notFoundId",
 			storeFront: "nevermind",
-			want:       nil,
+			wantErr:    NotFoundError,
 		},
 	}
 	for _, tt := range tests {
@@ -78,8 +79,12 @@ func TestHTTPClient_FetchTrack(t *testing.T) {
 			defer cancel()
 
 			result, err := client.FetchTrack(ctx, tt.trackID, tt.storeFront)
-			require.NoError(t, err)
-			require.Equal(t, tt.want, result)
+			if tt.wantErr != nil {
+				require.ErrorIs(t, err, tt.wantErr)
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, tt.want, result)
+			}
 		})
 	}
 }
@@ -90,6 +95,7 @@ func TestHTTPClient_SearchTrack(t *testing.T) {
 		artistName string
 		trackName  string
 		want       *Entity
+		wantErr    error
 	}{
 		{
 			name:       "when track found",
@@ -108,7 +114,7 @@ func TestHTTPClient_SearchTrack(t *testing.T) {
 			name:       "when track not found",
 			artistName: "notFoundArtistName",
 			trackName:  "notFoundTrackName",
-			want:       nil,
+			wantErr:    NotFoundError,
 		},
 	}
 	for _, tt := range tests {
@@ -185,8 +191,12 @@ func TestHTTPClient_SearchTrack(t *testing.T) {
 			defer cancel()
 
 			result, err := client.SearchTrack(ctx, tt.artistName, tt.trackName)
-			require.NoError(t, err)
-			require.Equal(t, tt.want, result)
+			if tt.wantErr != nil {
+				require.ErrorIs(t, err, tt.wantErr)
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, tt.want, result)
+			}
 		})
 	}
 }
@@ -197,6 +207,7 @@ func TestHTTPClient_FetchAlbum(t *testing.T) {
 		albumID    string
 		storeFront string
 		want       *Entity
+		wantErr    error
 	}{
 		{
 			name:       "when album found",
@@ -215,7 +226,7 @@ func TestHTTPClient_FetchAlbum(t *testing.T) {
 			name:       "when album not found",
 			albumID:    "notFoundId",
 			storeFront: "nevermind",
-			want:       nil,
+			wantErr:    NotFoundError,
 		},
 	}
 	for _, tt := range tests {
@@ -258,8 +269,12 @@ func TestHTTPClient_FetchAlbum(t *testing.T) {
 			defer cancel()
 
 			result, err := client.FetchAlbum(ctx, tt.albumID, tt.storeFront)
-			require.NoError(t, err)
-			require.Equal(t, tt.want, result)
+			if tt.wantErr != nil {
+				require.ErrorIs(t, err, tt.wantErr)
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, tt.want, result)
+			}
 		})
 	}
 }
@@ -270,6 +285,7 @@ func TestHTTPClient_SearchAlbum(t *testing.T) {
 		artistName string
 		albumName  string
 		want       *Entity
+		wantErr    error
 	}{
 		{
 			name:       "when album found",
@@ -288,7 +304,7 @@ func TestHTTPClient_SearchAlbum(t *testing.T) {
 			name:       "when album not found",
 			artistName: "notFoundArtistName",
 			albumName:  "notFoundAlbumName",
-			want:       nil,
+			wantErr:    NotFoundError,
 		},
 	}
 	for _, tt := range tests {
@@ -365,8 +381,12 @@ func TestHTTPClient_SearchAlbum(t *testing.T) {
 			defer cancel()
 
 			result, err := client.SearchAlbum(ctx, tt.artistName, tt.albumName)
-			require.NoError(t, err)
-			require.Equal(t, tt.want, result)
+			if tt.wantErr != nil {
+				require.ErrorIs(t, err, tt.wantErr)
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, tt.want, result)
+			}
 		})
 	}
 }

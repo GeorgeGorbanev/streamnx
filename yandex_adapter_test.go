@@ -18,25 +18,41 @@ type yandexClientMock struct {
 }
 
 func (c *yandexClientMock) FetchTrack(_ context.Context, id string) (*yandex.Track, error) {
-	return c.fetchTrack[id], nil
+	track, ok := c.fetchTrack[id]
+	if !ok {
+		return nil, yandex.NotFoundError
+	}
+	return track, nil
 }
 
 func (c *yandexClientMock) SearchTrack(_ context.Context, artistName, trackName string) (*yandex.Track, error) {
 	if tracks, ok := c.searchTrack[artistName]; ok {
-		return tracks[trackName], nil
+		track, ok := tracks[trackName]
+		if !ok {
+			return nil, yandex.NotFoundError
+		}
+		return track, nil
 	}
-	return nil, nil
+	return nil, yandex.NotFoundError
 }
 
 func (c *yandexClientMock) FetchAlbum(_ context.Context, id string) (*yandex.Album, error) {
-	return c.fetchAlbum[id], nil
+	album, ok := c.fetchAlbum[id]
+	if !ok {
+		return nil, yandex.NotFoundError
+	}
+	return album, nil
 }
 
 func (c *yandexClientMock) SearchAlbum(_ context.Context, artistName, albumName string) (*yandex.Album, error) {
 	if albums, ok := c.searchAlbum[artistName]; ok {
-		return albums[albumName], nil
+		album, ok := albums[albumName]
+		if !ok {
+			return nil, yandex.NotFoundError
+		}
+		return album, nil
 	}
-	return nil, nil
+	return nil, yandex.NotFoundError
 }
 
 type translatorMock struct {
@@ -57,6 +73,7 @@ func TestYandexAdapter_FetchTrack(t *testing.T) {
 		id               string
 		yandexClientMock yandexClientMock
 		expectedTrack    *Entity
+		expectedErr      error
 	}{
 		{
 			name: "found ID",
@@ -89,6 +106,7 @@ func TestYandexAdapter_FetchTrack(t *testing.T) {
 			id:               "notFoundID",
 			yandexClientMock: yandexClientMock{},
 			expectedTrack:    nil,
+			expectedErr:      EntityNotFoundError,
 		},
 	}
 	for _, tt := range tests {
@@ -100,8 +118,12 @@ func TestYandexAdapter_FetchTrack(t *testing.T) {
 
 			result, err := a.FetchTrack(ctx, tt.id)
 
-			require.NoError(t, err)
-			require.Equal(t, tt.expectedTrack, result)
+			if tt.expectedErr != nil {
+				require.ErrorIs(t, err, tt.expectedErr)
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, tt.expectedTrack, result)
+			}
 		})
 	}
 }
@@ -114,6 +136,7 @@ func TestYandexAdapter_SearchTrack(t *testing.T) {
 		yandexClientMock yandexClientMock
 		translatorMock   translatorMock
 		expectedTrack    *Entity
+		expectedErr      error
 	}{
 		{
 			name:       "found query",
@@ -165,6 +188,7 @@ func TestYandexAdapter_SearchTrack(t *testing.T) {
 				},
 			},
 			expectedTrack: nil,
+			expectedErr:   EntityNotFoundError,
 		},
 		{
 			name:       "found query matching translit",
@@ -263,6 +287,7 @@ func TestYandexAdapter_SearchTrack(t *testing.T) {
 			artistName:    "not found artist",
 			searchName:    "not found name",
 			expectedTrack: nil,
+			expectedErr:   EntityNotFoundError,
 		},
 	}
 	for _, tt := range tests {
@@ -274,8 +299,12 @@ func TestYandexAdapter_SearchTrack(t *testing.T) {
 
 			result, err := a.SearchTrack(ctx, tt.artistName, tt.searchName)
 
-			require.NoError(t, err)
-			require.Equal(t, tt.expectedTrack, result)
+			if tt.expectedErr != nil {
+				require.ErrorIs(t, err, tt.expectedErr)
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, tt.expectedTrack, result)
+			}
 		})
 	}
 }
@@ -285,7 +314,8 @@ func TestYandexAdapter_FetchAlbum(t *testing.T) {
 		name             string
 		id               string
 		yandexClientMock yandexClientMock
-		expectedTrack    *Entity
+		expectedAlbum    *Entity
+		expectedErr      error
 	}{
 		{
 			name: "found id",
@@ -301,7 +331,7 @@ func TestYandexAdapter_FetchAlbum(t *testing.T) {
 					},
 				},
 			},
-			expectedTrack: &Entity{
+			expectedAlbum: &Entity{
 				ID:       "42",
 				Title:    "sample name",
 				Artist:   "sample artist",
@@ -313,7 +343,8 @@ func TestYandexAdapter_FetchAlbum(t *testing.T) {
 		{
 			name:          "not found ID",
 			id:            "notFoundID",
-			expectedTrack: nil,
+			expectedAlbum: nil,
+			expectedErr:   EntityNotFoundError,
 		},
 	}
 	for _, tt := range tests {
@@ -325,8 +356,12 @@ func TestYandexAdapter_FetchAlbum(t *testing.T) {
 
 			result, err := a.FetchAlbum(ctx, tt.id)
 
-			require.NoError(t, err)
-			require.Equal(t, tt.expectedTrack, result)
+			if tt.expectedErr != nil {
+				require.ErrorIs(t, err, tt.expectedErr)
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, tt.expectedAlbum, result)
+			}
 		})
 	}
 }
@@ -339,6 +374,7 @@ func TestYandexAdapter_SearchAlbum(t *testing.T) {
 		yandexClientMock yandexClientMock
 		translatorMock   translatorMock
 		expectedAlbum    *Entity
+		expectedErr      error
 	}{
 		{
 			name:       "found query",
@@ -384,6 +420,7 @@ func TestYandexAdapter_SearchAlbum(t *testing.T) {
 				},
 			},
 			expectedAlbum: nil,
+			expectedErr:   EntityNotFoundError,
 		},
 		{
 			name:       "found query matching translit",
@@ -473,6 +510,7 @@ func TestYandexAdapter_SearchAlbum(t *testing.T) {
 			artistName:    "not found artist",
 			searchName:    "not found name",
 			expectedAlbum: nil,
+			expectedErr:   EntityNotFoundError,
 		},
 	}
 	for _, tt := range tests {
@@ -484,8 +522,12 @@ func TestYandexAdapter_SearchAlbum(t *testing.T) {
 
 			result, err := a.SearchAlbum(ctx, tt.artistName, tt.searchName)
 
-			require.NoError(t, err)
-			require.Equal(t, tt.expectedAlbum, result)
+			if tt.expectedErr != nil {
+				require.ErrorIs(t, err, tt.expectedErr)
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, tt.expectedAlbum, result)
+			}
 		})
 	}
 }

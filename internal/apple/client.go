@@ -3,6 +3,7 @@ package apple
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -12,6 +13,10 @@ import (
 const (
 	defaultAPIURL      = "https://amp-api-edge.music.apple.com"
 	defaulWebPlayerURL = "https://music.apple.com"
+)
+
+var (
+	NotFoundError = errors.New("not found")
 )
 
 type Client interface {
@@ -78,7 +83,7 @@ func (c *HTTPClient) FetchTrack(ctx context.Context, id, storefront string) (*En
 	defer response.Body.Close()
 
 	if response.StatusCode == http.StatusNotFound {
-		return nil, nil
+		return nil, NotFoundError
 	}
 
 	gr := getResponse{}
@@ -105,7 +110,7 @@ func (c *HTTPClient) SearchTrack(ctx context.Context, artistName, trackName stri
 			return sr.Resources.Songs[topResult.ID], nil
 		}
 	}
-	return nil, nil
+	return nil, NotFoundError
 }
 func (c *HTTPClient) FetchAlbum(ctx context.Context, id, storefront string) (*Entity, error) {
 	url := fmt.Sprintf(`%s/v1/catalog/%s/albums/%s`, c.apiURL, storefront, id)
@@ -116,7 +121,7 @@ func (c *HTTPClient) FetchAlbum(ctx context.Context, id, storefront string) (*En
 	defer response.Body.Close()
 
 	if response.StatusCode == http.StatusNotFound {
-		return nil, nil
+		return nil, NotFoundError
 	}
 	gr := getResponse{}
 	if err := json.NewDecoder(response.Body).Decode(&gr); err != nil {
@@ -141,7 +146,7 @@ func (c *HTTPClient) SearchAlbum(ctx context.Context, artistName, albumName stri
 			return sr.Resources.Albums[topResult.ID], nil
 		}
 	}
-	return nil, nil
+	return nil, NotFoundError
 }
 
 func (c *HTTPClient) getAPI(ctx context.Context, reqURL string) (*http.Response, error) {

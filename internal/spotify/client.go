@@ -17,6 +17,11 @@ const (
 	defaultAPIURL  = "https://api.spotify.com"
 )
 
+var (
+	invalidIDError = fmt.Errorf("invalid id")
+	NotFoundError  = errors.New("not found")
+)
+
 type Client interface {
 	FetchTrack(ctx context.Context, id string) (*Track, error)
 	SearchTrack(ctx context.Context, artistName, trackName string) (*Track, error)
@@ -45,8 +50,6 @@ type albumsSection struct {
 	Items []*Album `json:"items"`
 }
 
-var InvalidIDError = fmt.Errorf("invalid id")
-
 func NewHTTPClient(credentials *Credentials, opts ...ClientOption) *HTTPClient {
 	c := HTTPClient{
 		authURL:     defaultAuthURL,
@@ -67,8 +70,8 @@ func (c *HTTPClient) FetchTrack(ctx context.Context, id string) (*Track, error) 
 	path := fmt.Sprintf("/v1/tracks/%s", id)
 	body, err := c.getAPI(ctx, path, nil)
 	if err != nil {
-		if errors.Is(err, InvalidIDError) {
-			return nil, nil
+		if errors.Is(err, invalidIDError) {
+			return nil, NotFoundError
 		}
 		return nil, fmt.Errorf("failed to send request: %w", err)
 	}
@@ -98,7 +101,7 @@ func (c *HTTPClient) SearchTrack(ctx context.Context, artistName, trackName stri
 		return nil, fmt.Errorf("failed to unmarshal response body: %w", err)
 	}
 	if len(sr.Tracks.Items) == 0 {
-		return nil, nil
+		return nil, NotFoundError
 	}
 
 	return sr.Tracks.Items[0], nil
@@ -109,8 +112,8 @@ func (c *HTTPClient) FetchAlbum(ctx context.Context, id string) (*Album, error) 
 	path := fmt.Sprintf("/v1/albums/%s", id)
 	body, err := c.getAPI(ctx, path, nil)
 	if err != nil {
-		if errors.Is(err, InvalidIDError) {
-			return nil, nil
+		if errors.Is(err, invalidIDError) {
+			return nil, NotFoundError
 		}
 		return nil, fmt.Errorf("failed to send request: %w", err)
 	}
@@ -140,7 +143,7 @@ func (c *HTTPClient) SearchAlbum(ctx context.Context, artistName, albumName stri
 		return nil, fmt.Errorf("failed to unmarshal response body: %w", err)
 	}
 	if len(sr.Albums.Items) == 0 {
-		return nil, nil
+		return nil, NotFoundError
 	}
 
 	return sr.Albums.Items[0], nil
@@ -163,7 +166,7 @@ func (c *HTTPClient) getAPI(ctx context.Context, path string, query url.Values) 
 	}
 
 	if resp.StatusCode == http.StatusBadRequest {
-		return nil, InvalidIDError
+		return nil, invalidIDError
 	}
 
 	body, err := io.ReadAll(resp.Body)

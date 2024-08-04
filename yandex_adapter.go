@@ -2,6 +2,7 @@ package streaminx
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strconv"
 	"strings"
@@ -25,10 +26,10 @@ func newYandexAdapter(c yandex.Client, t translator.Translator) *YandexAdapter {
 func (a *YandexAdapter) FetchTrack(ctx context.Context, id string) (*Entity, error) {
 	yandexTrack, err := a.client.FetchTrack(ctx, id)
 	if err != nil {
+		if errors.Is(err, yandex.NotFoundError) {
+			return nil, EntityNotFoundError
+		}
 		return nil, fmt.Errorf("failed to get track from yandex music: %w", err)
-	}
-	if yandexTrack == nil {
-		return nil, nil
 	}
 
 	return a.adaptTrack(yandexTrack), nil
@@ -40,22 +41,22 @@ func (a *YandexAdapter) SearchTrack(ctx context.Context, artist, track string) (
 
 	foundTrack, err := a.findTrack(ctx, lowcasedArtist, lowcasedTrack)
 	if err != nil {
+		if errors.Is(err, yandex.NotFoundError) {
+			return nil, EntityNotFoundError
+		}
 		return nil, err
 	}
-	if foundTrack != nil {
-		return a.adaptTrack(foundTrack), nil
-	}
 
-	return nil, nil
+	return a.adaptTrack(foundTrack), nil
 }
 
 func (a *YandexAdapter) FetchAlbum(ctx context.Context, id string) (*Entity, error) {
 	yandexAlbum, err := a.client.FetchAlbum(ctx, id)
 	if err != nil {
+		if errors.Is(err, yandex.NotFoundError) {
+			return nil, EntityNotFoundError
+		}
 		return nil, fmt.Errorf("failed to get album from yandex music: %w", err)
-	}
-	if yandexAlbum == nil {
-		return nil, nil
 	}
 
 	return a.adaptAlbum(yandexAlbum), nil
@@ -67,18 +68,18 @@ func (a *YandexAdapter) SearchAlbum(ctx context.Context, artistName, albumName s
 
 	foundAlbum, err := a.findAlbum(ctx, lowcasedArtist, lowcasedAlbum)
 	if err != nil {
+		if errors.Is(err, yandex.NotFoundError) {
+			return nil, EntityNotFoundError
+		}
 		return nil, err
 	}
-	if foundAlbum != nil {
-		return a.adaptAlbum(foundAlbum), nil
-	}
 
-	return nil, nil
+	return a.adaptAlbum(foundAlbum), nil
 }
 
 func (a *YandexAdapter) findTrack(ctx context.Context, artist, track string) (*yandex.Track, error) {
 	foundTrack, err := a.client.SearchTrack(ctx, artist, track)
-	if err != nil {
+	if err != nil && !errors.Is(err, yandex.NotFoundError) {
 		return nil, fmt.Errorf("error searching track: %w", err)
 	}
 	if foundTrack != nil {
@@ -102,12 +103,12 @@ func (a *YandexAdapter) findTrack(ctx context.Context, artist, track string) (*y
 		}
 	}
 
-	return nil, nil
+	return nil, yandex.NotFoundError
 }
 
 func (a *YandexAdapter) findAlbum(ctx context.Context, artist, album string) (*yandex.Album, error) {
 	foundAlbum, err := a.client.SearchAlbum(ctx, artist, album)
-	if err != nil {
+	if err != nil && !errors.Is(err, yandex.NotFoundError) {
 		return nil, fmt.Errorf("error searching album: %w", err)
 	}
 	if foundAlbum != nil {
@@ -131,7 +132,7 @@ func (a *YandexAdapter) findAlbum(ctx context.Context, artist, album string) (*y
 		}
 	}
 
-	return nil, nil
+	return nil, yandex.NotFoundError
 }
 
 func (a *YandexAdapter) adaptTrack(yandexTrack *yandex.Track) *Entity {

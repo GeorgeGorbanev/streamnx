@@ -19,6 +19,7 @@ func TestHTTPClient_GetVideo(t *testing.T) {
 		inputID       string
 		responseMock  string
 		expectedVideo *Video
+		expectedErr   error
 	}{
 		{
 			name:    "when video found",
@@ -47,6 +48,7 @@ func TestHTTPClient_GetVideo(t *testing.T) {
 				"items": []
 			}`,
 			expectedVideo: nil,
+			expectedErr:   NotFoundError,
 		},
 	}
 	for _, tt := range tests {
@@ -69,8 +71,12 @@ func TestHTTPClient_GetVideo(t *testing.T) {
 			defer cancel()
 
 			video, err := client.GetVideo(ctx, tt.inputID)
-			require.NoError(t, err)
-			require.Equal(t, tt.expectedVideo, video)
+			if tt.expectedErr != nil {
+				require.ErrorIs(t, err, tt.expectedErr)
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, tt.expectedVideo, video)
+			}
 		})
 	}
 }
@@ -81,6 +87,7 @@ func TestHTTPClient_SearchVideo(t *testing.T) {
 		query         string
 		responseMock  string
 		expectedVideo *Video
+		expectedErr   error
 	}{
 		{
 			name:  "when video found",
@@ -111,6 +118,7 @@ func TestHTTPClient_SearchVideo(t *testing.T) {
 				"items": []
 			}`,
 			expectedVideo: nil,
+			expectedErr:   NotFoundError,
 		},
 	}
 	for _, tt := range tests {
@@ -136,8 +144,12 @@ func TestHTTPClient_SearchVideo(t *testing.T) {
 			defer cancel()
 
 			video, err := client.SearchVideo(ctx, tt.query)
-			require.NoError(t, err)
-			require.Equal(t, tt.expectedVideo, video)
+			if tt.expectedErr != nil {
+				require.ErrorIs(t, err, tt.expectedErr)
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, tt.expectedVideo, video)
+			}
 		})
 	}
 }
@@ -148,6 +160,7 @@ func TestHTTPClient_GetPlaylist(t *testing.T) {
 		inputID          string
 		responseMock     string
 		expectedPlaylist *Playlist
+		expectedErr      error
 	}{
 		{
 			name:    "when playlist found",
@@ -176,6 +189,7 @@ func TestHTTPClient_GetPlaylist(t *testing.T) {
 				"items": []
 			}`,
 			expectedPlaylist: nil,
+			expectedErr:      NotFoundError,
 		},
 	}
 	for _, tt := range tests {
@@ -198,8 +212,12 @@ func TestHTTPClient_GetPlaylist(t *testing.T) {
 			defer cancel()
 
 			playlist, err := client.GetPlaylist(ctx, tt.inputID)
-			require.NoError(t, err)
-			require.Equal(t, tt.expectedPlaylist, playlist)
+			if tt.expectedErr != nil {
+				require.ErrorIs(t, err, tt.expectedErr)
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, tt.expectedPlaylist, playlist)
+			}
 		})
 	}
 }
@@ -210,6 +228,7 @@ func TestHTTPClient_SearchPlaylist(t *testing.T) {
 		query            string
 		responseMock     string
 		expectedPlaylist *Playlist
+		expectedErr      error
 	}{
 		{
 			name:  "when playlist found",
@@ -240,6 +259,7 @@ func TestHTTPClient_SearchPlaylist(t *testing.T) {
 				"items": []
 			}`,
 			expectedPlaylist: nil,
+			expectedErr:      NotFoundError,
 		},
 	}
 	for _, tt := range tests {
@@ -264,8 +284,12 @@ func TestHTTPClient_SearchPlaylist(t *testing.T) {
 			defer cancel()
 
 			video, err := client.SearchPlaylist(ctx, tt.query)
-			require.NoError(t, err)
-			require.Equal(t, tt.expectedPlaylist, video)
+			if tt.expectedErr != nil {
+				require.ErrorIs(t, err, tt.expectedErr)
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, tt.expectedPlaylist, video)
+			}
 		})
 	}
 }

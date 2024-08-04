@@ -18,25 +18,41 @@ type appleClientMock struct {
 }
 
 func (c *appleClientMock) FetchTrack(_ context.Context, id, storefront string) (*apple.Entity, error) {
-	return c.fetchTrack[storefront+"-"+id], nil
+	track, ok := c.fetchTrack[storefront+"-"+id]
+	if !ok {
+		return nil, apple.NotFoundError
+	}
+	return track, nil
 }
 
 func (c *appleClientMock) SearchTrack(_ context.Context, artistName, trackName string) (*apple.Entity, error) {
 	if tracks, ok := c.searchTrack[artistName]; ok {
-		return tracks[trackName], nil
+		track, ok := tracks[trackName]
+		if !ok {
+			return nil, apple.NotFoundError
+		}
+		return track, nil
 	}
-	return nil, nil
+	return nil, apple.NotFoundError
 }
 
 func (c *appleClientMock) FetchAlbum(_ context.Context, id, storefront string) (*apple.Entity, error) {
-	return c.fetchAlbum[storefront+"-"+id], nil
+	album, ok := c.fetchAlbum[storefront+"-"+id]
+	if !ok {
+		return nil, apple.NotFoundError
+	}
+	return album, nil
 }
 
 func (c *appleClientMock) SearchAlbum(_ context.Context, artistName, albumName string) (*apple.Entity, error) {
 	if albums, ok := c.searchAlbum[artistName]; ok {
-		return albums[albumName], nil
+		album, ok := albums[albumName]
+		if !ok {
+			return nil, apple.NotFoundError
+		}
+		return album, nil
 	}
-	return nil, nil
+	return nil, apple.NotFoundError
 }
 
 func TestAppleAdapter_FetchTrack(t *testing.T) {
@@ -45,6 +61,7 @@ func TestAppleAdapter_FetchTrack(t *testing.T) {
 		id            string
 		clientMock    *appleClientMock
 		expectedTrack *Entity
+		expectedErr   error
 	}{
 		{
 			name: "found ID",
@@ -75,6 +92,7 @@ func TestAppleAdapter_FetchTrack(t *testing.T) {
 			id:            "ru-123",
 			clientMock:    &appleClientMock{},
 			expectedTrack: nil,
+			expectedErr:   EntityNotFoundError,
 		},
 	}
 	for _, tt := range tests {
@@ -85,8 +103,12 @@ func TestAppleAdapter_FetchTrack(t *testing.T) {
 			a := newAppleAdapter(tt.clientMock)
 			result, err := a.FetchTrack(ctx, tt.id)
 
-			require.NoError(t, err)
-			require.Equal(t, tt.expectedTrack, result)
+			if tt.expectedErr != nil {
+				require.ErrorIs(t, err, tt.expectedErr)
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, tt.expectedTrack, result)
+			}
 		})
 	}
 }
@@ -98,6 +120,7 @@ func TestAppleAdapter_SearchTrack(t *testing.T) {
 		searchName    string
 		clientMock    *appleClientMock
 		expectedTrack *Entity
+		expectedErr   error
 	}{
 		{
 			name:       "found query",
@@ -132,6 +155,7 @@ func TestAppleAdapter_SearchTrack(t *testing.T) {
 			searchName:    "not found name",
 			clientMock:    &appleClientMock{},
 			expectedTrack: nil,
+			expectedErr:   EntityNotFoundError,
 		},
 	}
 	for _, tt := range tests {
@@ -142,8 +166,12 @@ func TestAppleAdapter_SearchTrack(t *testing.T) {
 			a := newAppleAdapter(tt.clientMock)
 			result, err := a.SearchTrack(ctx, tt.artistName, tt.searchName)
 
-			require.NoError(t, err)
-			require.Equal(t, tt.expectedTrack, result)
+			if tt.expectedErr != nil {
+				require.ErrorIs(t, err, tt.expectedErr)
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, tt.expectedTrack, result)
+			}
 		})
 	}
 }
@@ -155,6 +183,7 @@ func TestAppleAdapter_FetchAlbum(t *testing.T) {
 		storefront    string
 		clientMock    *appleClientMock
 		expectedAlbum *Entity
+		expectedErr   error
 	}{
 		{
 			name:       "found ID",
@@ -187,6 +216,7 @@ func TestAppleAdapter_FetchAlbum(t *testing.T) {
 			storefront:    "notFoundStorefront",
 			clientMock:    &appleClientMock{},
 			expectedAlbum: nil,
+			expectedErr:   EntityNotFoundError,
 		},
 	}
 	for _, tt := range tests {
@@ -197,8 +227,12 @@ func TestAppleAdapter_FetchAlbum(t *testing.T) {
 			a := newAppleAdapter(tt.clientMock)
 			result, err := a.FetchAlbum(ctx, tt.id)
 
-			require.NoError(t, err)
-			require.Equal(t, tt.expectedAlbum, result)
+			if tt.expectedErr != nil {
+				require.ErrorIs(t, err, tt.expectedErr)
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, tt.expectedAlbum, result)
+			}
 		})
 	}
 }
@@ -210,6 +244,7 @@ func TestAppleAdapter_SearchAlbum(t *testing.T) {
 		searchName    string
 		clientMock    *appleClientMock
 		expectedAlbum *Entity
+		expectedErr   error
 	}{
 		{
 			name:       "found query",
@@ -244,6 +279,7 @@ func TestAppleAdapter_SearchAlbum(t *testing.T) {
 			searchName:    "not found name",
 			clientMock:    &appleClientMock{},
 			expectedAlbum: nil,
+			expectedErr:   EntityNotFoundError,
 		},
 	}
 	for _, tt := range tests {
@@ -254,8 +290,12 @@ func TestAppleAdapter_SearchAlbum(t *testing.T) {
 			a := newAppleAdapter(tt.clientMock)
 			result, err := a.SearchAlbum(ctx, tt.artistName, tt.searchName)
 
-			require.NoError(t, err)
-			require.Equal(t, tt.expectedAlbum, result)
+			if tt.expectedErr != nil {
+				require.ErrorIs(t, err, tt.expectedErr)
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, tt.expectedAlbum, result)
+			}
 		})
 	}
 }

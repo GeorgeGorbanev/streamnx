@@ -9,7 +9,13 @@ import (
 	"net/url"
 )
 
-const defaultAPIURL = "https://www.googleapis.com"
+const (
+	defaultAPIURL = "https://www.googleapis.com"
+)
+
+var (
+	NotFoundError = fmt.Errorf("not found")
+)
 
 type Client interface {
 	GetVideo(ctx context.Context, id string) (*Video, error)
@@ -94,7 +100,7 @@ func (c *HTTPClient) GetVideo(ctx context.Context, id string) (*Video, error) {
 		return nil, fmt.Errorf("failed to decode api response: %w", err)
 	}
 	if len(response.Items) == 0 {
-		return nil, nil
+		return nil, NotFoundError
 	}
 
 	return &Video{
@@ -124,7 +130,7 @@ func (c *HTTPClient) SearchVideo(ctx context.Context, query string) (*Video, err
 	}
 
 	if len(response.Items) == 0 {
-		return nil, nil
+		return nil, NotFoundError
 	}
 
 	item := response.Items[0]
@@ -150,7 +156,7 @@ func (c *HTTPClient) GetPlaylist(ctx context.Context, id string) (*Playlist, err
 		return nil, fmt.Errorf("failed to decode api response: %w", err)
 	}
 	if len(response.Items) == 0 {
-		return nil, nil
+		return nil, NotFoundError
 	}
 
 	item := response.Items[0]
@@ -178,7 +184,7 @@ func (c *HTTPClient) SearchPlaylist(ctx context.Context, query string) (*Playlis
 		return nil, fmt.Errorf("failed to decode api response: %w", err)
 	}
 	if len(response.Items) == 0 {
-		return nil, nil
+		return nil, NotFoundError
 	}
 
 	return &Playlist{

@@ -2,6 +2,7 @@ package streaminx
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/GeorgeGorbanev/streaminx/internal/apple"
@@ -25,10 +26,10 @@ func (a *AppleAdapter) FetchTrack(ctx context.Context, id string) (*Entity, erro
 
 	track, err := a.client.FetchTrack(ctx, ck.ID, ck.Storefront)
 	if err != nil {
+		if errors.Is(err, apple.NotFoundError) {
+			return nil, EntityNotFoundError
+		}
 		return nil, fmt.Errorf("failed to get track from apple: %w", err)
-	}
-	if track == nil {
-		return nil, nil
 	}
 
 	res, err := a.adaptTrack(track)
@@ -41,10 +42,10 @@ func (a *AppleAdapter) FetchTrack(ctx context.Context, id string) (*Entity, erro
 func (a *AppleAdapter) SearchTrack(ctx context.Context, artistName, trackName string) (*Entity, error) {
 	track, err := a.client.SearchTrack(ctx, artistName, trackName)
 	if err != nil {
+		if errors.Is(err, apple.NotFoundError) {
+			return nil, EntityNotFoundError
+		}
 		return nil, fmt.Errorf("failed to search track from apple: %w", err)
-	}
-	if track == nil {
-		return nil, nil
 	}
 	res, err := a.adaptTrack(track)
 	if err != nil {
@@ -61,10 +62,10 @@ func (a *AppleAdapter) FetchAlbum(ctx context.Context, id string) (*Entity, erro
 
 	album, err := a.client.FetchAlbum(ctx, ck.ID, ck.Storefront)
 	if err != nil {
+		if errors.Is(err, apple.NotFoundError) {
+			return nil, EntityNotFoundError
+		}
 		return nil, fmt.Errorf("failed to get album from apple: %w", err)
-	}
-	if album == nil {
-		return nil, nil
 	}
 
 	res, err := a.adaptAlbum(album)
@@ -77,10 +78,10 @@ func (a *AppleAdapter) FetchAlbum(ctx context.Context, id string) (*Entity, erro
 func (a *AppleAdapter) SearchAlbum(ctx context.Context, artistName, albumName string) (*Entity, error) {
 	album, err := a.client.SearchAlbum(ctx, artistName, albumName)
 	if err != nil {
+		if errors.Is(err, apple.NotFoundError) {
+			return nil, EntityNotFoundError
+		}
 		return nil, fmt.Errorf("failed to search album from apple: %w", err)
-	}
-	if album == nil {
-		return nil, nil
 	}
 	res, err := a.adaptAlbum(album)
 	if err != nil {

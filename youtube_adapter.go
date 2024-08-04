@@ -2,6 +2,7 @@ package streaminx
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"regexp"
 	"strings"
@@ -23,10 +24,10 @@ func newYoutubeAdapter(client youtube.Client) *YoutubeAdapter {
 func (a *YoutubeAdapter) FetchTrack(ctx context.Context, id string) (*Entity, error) {
 	video, err := a.client.GetVideo(ctx, id)
 	if err != nil {
+		if errors.Is(err, youtube.NotFoundError) {
+			return nil, EntityNotFoundError
+		}
 		return nil, fmt.Errorf("failed to get video from youtube: %w", err)
-	}
-	if video == nil {
-		return nil, nil
 	}
 	return a.adaptTrack(video), nil
 }
@@ -35,10 +36,10 @@ func (a *YoutubeAdapter) SearchTrack(ctx context.Context, artistName, trackName 
 	query := fmt.Sprintf("%s – %s", artistName, trackName)
 	video, err := a.client.SearchVideo(ctx, query)
 	if err != nil {
+		if errors.Is(err, youtube.NotFoundError) {
+			return nil, EntityNotFoundError
+		}
 		return nil, fmt.Errorf("failed to search video on youtube: %w", err)
-	}
-	if video == nil {
-		return nil, nil
 	}
 
 	return a.adaptTrack(video), nil
@@ -47,10 +48,10 @@ func (a *YoutubeAdapter) SearchTrack(ctx context.Context, artistName, trackName 
 func (a *YoutubeAdapter) FetchAlbum(ctx context.Context, id string) (*Entity, error) {
 	album, err := a.client.GetPlaylist(ctx, id)
 	if err != nil {
+		if errors.Is(err, youtube.NotFoundError) {
+			return nil, EntityNotFoundError
+		}
 		return nil, fmt.Errorf("failed to get playlist from youtube: %w", err)
-	}
-	if album == nil {
-		return nil, nil
 	}
 	return a.adaptAlbum(ctx, album)
 }
@@ -59,10 +60,10 @@ func (a *YoutubeAdapter) SearchAlbum(ctx context.Context, artistName, albumName 
 	query := fmt.Sprintf("%s – %s", artistName, albumName)
 	album, err := a.client.SearchPlaylist(ctx, query)
 	if err != nil {
+		if errors.Is(err, youtube.NotFoundError) {
+			return nil, EntityNotFoundError
+		}
 		return nil, fmt.Errorf("failed to search playlist on youtube: %w", err)
-	}
-	if album == nil {
-		return nil, nil
 	}
 
 	return a.adaptAlbum(ctx, album)

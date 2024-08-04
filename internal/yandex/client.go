@@ -3,13 +3,20 @@ package yandex
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
 	"net/url"
 )
 
-const defaultAPIURL = "https://api.music.yandex.net"
+const (
+	defaultAPIURL = "https://api.music.yandex.net"
+)
+
+var (
+	NotFoundError = errors.New("not found")
+)
 
 type Client interface {
 	FetchTrack(ctx context.Context, id string) (*Track, error)
@@ -74,7 +81,7 @@ func (c *HTTPClient) FetchTrack(ctx context.Context, trackID string) (*Track, er
 	}
 
 	if len(tr.Result) < 1 {
-		return nil, nil
+		return nil, NotFoundError
 	}
 
 	return &tr.Result[0], nil
@@ -96,7 +103,7 @@ func (c *HTTPClient) SearchTrack(ctx context.Context, artistName, trackName stri
 	}
 
 	if len(sr.Result.Tracks.Results) == 0 {
-		return nil, nil
+		return nil, NotFoundError
 	}
 
 	return &sr.Result.Tracks.Results[0], nil
@@ -112,6 +119,9 @@ func (c *HTTPClient) FetchAlbum(ctx context.Context, albumID string) (*Album, er
 	ar := albumResponse{}
 	if err = json.Unmarshal(body, &ar); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal response body: %s", err)
+	}
+	if ar.Result == nil {
+		return nil, NotFoundError
 	}
 
 	return ar.Result, nil
@@ -133,7 +143,7 @@ func (c *HTTPClient) SearchAlbum(ctx context.Context, artistName, albumName stri
 	}
 
 	if len(sr.Result.Albums.Results) == 0 {
-		return nil, nil
+		return nil, NotFoundError
 	}
 
 	return &sr.Result.Albums.Results[0], nil

@@ -15,6 +15,7 @@ import (
 var (
 	InvalidProviderError   = errors.New("invalid provider")
 	InvalidEntityTypeError = errors.New("invalid entity type")
+	EntityNotFoundError    = errors.New("entity not found")
 )
 
 type Registry struct {

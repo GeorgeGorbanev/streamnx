@@ -4,7 +4,7 @@ Streamnx is a library that unifies interactions with various music streaming lin
 With Streamnx, you can integrate platforms such as Apple Music, Spotify, YouTube and Yandex Music into your applications using a unified interface for searching and retrieving data about tracks and albums.
 
 - [Motivation](#motivation)
-- [Providers Supported](#providers-supported)
+- [Supported services](#supported-services)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Usage](#usage)

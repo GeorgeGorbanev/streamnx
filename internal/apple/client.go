@@ -15,10 +15,10 @@ const (
 )
 
 type Client interface {
-	GetTrack(ctx context.Context, id, storefront string) (*MusicEntity, error)
-	SearchTrack(ctx context.Context, artistName, trackName string) (*MusicEntity, error)
-	GetAlbum(ctx context.Context, id, storefront string) (*MusicEntity, error)
-	SearchAlbum(ctx context.Context, artistName, albumName string) (*MusicEntity, error)
+	FetchTrack(ctx context.Context, id, storefront string) (*Entity, error)
+	SearchTrack(ctx context.Context, artistName, trackName string) (*Entity, error)
+	FetchAlbum(ctx context.Context, id, storefront string) (*Entity, error)
+	SearchAlbum(ctx context.Context, artistName, albumName string) (*Entity, error)
 }
 
 type HTTPClient struct {
@@ -47,12 +47,12 @@ type searchDataItem struct {
 }
 
 type getResponse struct {
-	Data []*MusicEntity `json:"data"`
+	Data []*Entity `json:"data"`
 }
 
 type searchResources struct {
-	Songs  map[string]*MusicEntity `json:"songs"`
-	Albums map[string]*MusicEntity `json:"albums"`
+	Songs  map[string]*Entity `json:"songs"`
+	Albums map[string]*Entity `json:"albums"`
 }
 
 func NewHTTPClient(opts ...ClientOption) *HTTPClient {
@@ -69,7 +69,7 @@ func NewHTTPClient(opts ...ClientOption) *HTTPClient {
 	return &c
 }
 
-func (c *HTTPClient) GetTrack(ctx context.Context, id, storefront string) (*MusicEntity, error) {
+func (c *HTTPClient) FetchTrack(ctx context.Context, id, storefront string) (*Entity, error) {
 	url := fmt.Sprintf(`%s/v1/catalog/%s/songs/%s`, c.apiURL, storefront, id)
 	response, err := c.getAPI(ctx, url)
 	if err != nil {
@@ -88,7 +88,7 @@ func (c *HTTPClient) GetTrack(ctx context.Context, id, storefront string) (*Musi
 	return gr.Data[0], nil
 }
 
-func (c *HTTPClient) SearchTrack(ctx context.Context, artistName, trackName string) (*MusicEntity, error) {
+func (c *HTTPClient) SearchTrack(ctx context.Context, artistName, trackName string) (*Entity, error) {
 	url := fmt.Sprintf(`%s/v1/catalog/us/search?%s`, c.apiURL, searchQuery(artistName+" "+trackName))
 	response, err := c.getAPI(ctx, url)
 	if err != nil {
@@ -107,7 +107,7 @@ func (c *HTTPClient) SearchTrack(ctx context.Context, artistName, trackName stri
 	}
 	return nil, nil
 }
-func (c *HTTPClient) GetAlbum(ctx context.Context, id, storefront string) (*MusicEntity, error) {
+func (c *HTTPClient) FetchAlbum(ctx context.Context, id, storefront string) (*Entity, error) {
 	url := fmt.Sprintf(`%s/v1/catalog/%s/albums/%s`, c.apiURL, storefront, id)
 	response, err := c.getAPI(ctx, url)
 	if err != nil {
@@ -124,7 +124,7 @@ func (c *HTTPClient) GetAlbum(ctx context.Context, id, storefront string) (*Musi
 	}
 	return gr.Data[0], nil
 }
-func (c *HTTPClient) SearchAlbum(ctx context.Context, artistName, albumName string) (*MusicEntity, error) {
+func (c *HTTPClient) SearchAlbum(ctx context.Context, artistName, albumName string) (*Entity, error) {
 	url := fmt.Sprintf(`%s/v1/catalog/us/search?%s`, c.apiURL, searchQuery(artistName+" "+albumName))
 	response, err := c.getAPI(ctx, url)
 	if err != nil {

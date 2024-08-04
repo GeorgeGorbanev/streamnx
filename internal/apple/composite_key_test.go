@@ -12,19 +12,31 @@ func TestCompositeKey_ParseFromTrackURL(t *testing.T) {
 		name     string
 		trackURL string
 		want     CompositeKey
+		wantErr  error
 	}{
 		{
 			name:     "valid track URL",
-			trackURL: "https://music.apple.com/storefront/album/song-name/1234567890?i=987654321",
-			want:     CompositeKey{ID: "987654321", Storefront: "storefront"},
+			trackURL: "https://music.apple.com/ru/album/song-name/1234567890?i=987654321",
+			want:     CompositeKey{ID: "987654321", Storefront: "ru"},
+		},
+		{
+			name:     "invalid storefront URL",
+			trackURL: "https://music.apple.com/invalid/album/song-name/1234567890?i=987654321",
+			wantErr:  CompositeKeyError,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			k := &CompositeKey{}
-			k.ParseFromTrackURL(tt.trackURL)
-			require.Equal(t, tt.want, *k)
+			err := k.ParseFromTrackURL(tt.trackURL)
+
+			if tt.wantErr != nil {
+				require.ErrorAs(t, err, &tt.wantErr)
+			} else {
+				require.Equal(t, tt.want, *k)
+				require.NoError(t, err)
+			}
 		})
 	}
 }
@@ -34,19 +46,31 @@ func TestCompositeKey_ParseFromAlbumURL(t *testing.T) {
 		name     string
 		albumURL string
 		want     CompositeKey
+		wantErr  error
 	}{
 		{
 			name:     "valid album URL",
-			albumURL: "https://music.apple.com/storefront/album/album-name/123456789",
-			want:     CompositeKey{ID: "123456789", Storefront: "storefront"},
+			albumURL: "https://music.apple.com/us/album/album-name/123456789",
+			want:     CompositeKey{ID: "123456789", Storefront: "us"},
+		},
+		{
+			name:     "invalid storefront URL",
+			albumURL: "https://music.apple.com/invalid/album/album-name/123456789",
+			wantErr:  CompositeKeyError,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			k := &CompositeKey{}
-			k.ParseFromAlbumURL(tt.albumURL)
-			require.Equal(t, tt.want, *k)
+			err := k.ParseFromAlbumURL(tt.albumURL)
+
+			if tt.wantErr != nil {
+				require.ErrorAs(t, err, &tt.wantErr)
+			} else {
+				require.Equal(t, tt.want, *k)
+				require.NoError(t, err)
+			}
 		})
 	}
 }

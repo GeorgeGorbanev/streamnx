@@ -6,18 +6,19 @@ import (
 	"time"
 
 	"github.com/GeorgeGorbanev/streaminx/internal/yandex"
+
 	"github.com/stretchr/testify/require"
 )
 
 type yandexClientMock struct {
-	getTrack    map[string]*yandex.Track
-	getAlbum    map[string]*yandex.Album
+	fetchTrack  map[string]*yandex.Track
+	fetchAlbum  map[string]*yandex.Album
 	searchTrack map[string]map[string]*yandex.Track
 	searchAlbum map[string]map[string]*yandex.Album
 }
 
-func (c *yandexClientMock) GetTrack(_ context.Context, id string) (*yandex.Track, error) {
-	return c.getTrack[id], nil
+func (c *yandexClientMock) FetchTrack(_ context.Context, id string) (*yandex.Track, error) {
+	return c.fetchTrack[id], nil
 }
 
 func (c *yandexClientMock) SearchTrack(_ context.Context, artistName, trackName string) (*yandex.Track, error) {
@@ -27,8 +28,8 @@ func (c *yandexClientMock) SearchTrack(_ context.Context, artistName, trackName 
 	return nil, nil
 }
 
-func (c *yandexClientMock) GetAlbum(_ context.Context, id string) (*yandex.Album, error) {
-	return c.getAlbum[id], nil
+func (c *yandexClientMock) FetchAlbum(_ context.Context, id string) (*yandex.Album, error) {
+	return c.fetchAlbum[id], nil
 }
 
 func (c *yandexClientMock) SearchAlbum(_ context.Context, artistName, albumName string) (*yandex.Album, error) {
@@ -50,147 +51,18 @@ func (t *translatorMock) Close() error {
 	return nil
 }
 
-func TestYandexAdapter_DetectTrackID(t *testing.T) {
-	tests := []struct {
-		name          string
-		url           string
-		wantID        string
-		expectedError error
-	}{
-		{
-			name:   "Valid Track URL – .com",
-			url:    "https://music.yandex.com/album/3192570/track/1197793",
-			wantID: "1197793",
-		},
-		{
-			name:   "Valid Track URL – .ru",
-			url:    "https://music.yandex.ru/album/3192570/track/1197793",
-			wantID: "1197793",
-		},
-		{
-			name:   "Valid Track URL – .by",
-			url:    "https://music.yandex.by/album/3192570/track/1197793",
-			wantID: "1197793",
-		},
-		{
-			name:   "Valid Track URL – .kz",
-			url:    "https://music.yandex.kz/album/3192570/track/1197793",
-			wantID: "1197793",
-		},
-		{
-			name:   "Valid Track URL – .uz",
-			url:    "https://music.yandex.uz/album/3192570/track/1197793",
-			wantID: "1197793",
-		},
-		{
-			name:          "Invalid URL - Missing track ID",
-			url:           "https://music.yandex.ru/album/3192570/track/",
-			wantID:        "",
-			expectedError: IDNotFoundError,
-		},
-		{
-			name:          "Invalid URL - Non-numeric track ID",
-			url:           "https://music.yandex.ru/album/3192570/track/abc",
-			wantID:        "",
-			expectedError: IDNotFoundError,
-		},
-		{
-			name:          "Invalid URL - Incorrect format",
-			url:           "https://example.com/album/3192570/track/1197793",
-			wantID:        "",
-			expectedError: IDNotFoundError,
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			adapter := newYandexAdapter(nil, nil)
-			result, err := adapter.DetectTrackID(tt.url)
-			require.Equal(t, tt.wantID, result)
-
-			if tt.expectedError != nil {
-				require.ErrorAs(t, err, &tt.expectedError)
-			} else {
-				require.NoError(t, err)
-			}
-		})
-	}
-}
-
-func TestYandexAdapter_DetectAlbumID(t *testing.T) {
-	tests := []struct {
-		name          string
-		url           string
-		wantID        string
-		expectedError error
-	}{
-		{
-			name:   "Valid album URL – .by",
-			url:    "https://music.yandex.by/album/1197793",
-			wantID: "1197793",
-		},
-		{
-			name:   "Valid album URL – .kz",
-			url:    "https://music.yandex.kz/album/1197793",
-			wantID: "1197793",
-		},
-		{
-			name:   "Valid album URL – .uz",
-			url:    "https://music.yandex.uz/album/1197793",
-			wantID: "1197793",
-		},
-		{
-			name:   "Valid album URL – .ru",
-			url:    "https://music.yandex.ru/album/1197793",
-			wantID: "1197793",
-		},
-		{
-			name:          "Invalid URL - Missing album ID",
-			url:           "https://music.yandex.ru/album/",
-			wantID:        "",
-			expectedError: IDNotFoundError,
-		},
-		{
-			name:          "Invalid URL - Non-numeric album ID",
-			url:           "https://music.yandex.ru/album/letters",
-			wantID:        "",
-			expectedError: IDNotFoundError,
-		},
-		{
-			name:          "Invalid URL - Incorrect host",
-			url:           "https://example.com/album/3192570",
-			wantID:        "",
-			expectedError: IDNotFoundError,
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			adapter := newYandexAdapter(nil, nil)
-			result, err := adapter.DetectAlbumID(tt.url)
-			require.Equal(t, tt.wantID, result)
-
-			if tt.expectedError != nil {
-				require.ErrorAs(t, err, &tt.expectedError)
-			} else {
-				require.NoError(t, err)
-			}
-		})
-	}
-}
-
-func TestYandexAdapter_GetTrack(t *testing.T) {
+func TestYandexAdapter_FetchTrack(t *testing.T) {
 	tests := []struct {
 		name             string
 		id               string
 		yandexClientMock yandexClientMock
-		expectedTrack    *Track
+		expectedTrack    *Entity
 	}{
 		{
 			name: "found ID",
 			id:   "42",
 			yandexClientMock: yandexClientMock{
-				getTrack: map[string]*yandex.Track{
+				fetchTrack: map[string]*yandex.Track{
 					"42": {
 						ID:    42,
 						Title: "sample name",
@@ -203,12 +75,13 @@ func TestYandexAdapter_GetTrack(t *testing.T) {
 					},
 				},
 			},
-			expectedTrack: &Track{
+			expectedTrack: &Entity{
 				ID:       "42",
 				Title:    "sample name",
 				Artist:   "sample artist",
 				URL:      "https://music.yandex.com/album/41/track/42",
 				Provider: Yandex,
+				Type:     Track,
 			},
 		},
 		{
@@ -225,7 +98,7 @@ func TestYandexAdapter_GetTrack(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
 
-			result, err := a.GetTrack(ctx, tt.id)
+			result, err := a.FetchTrack(ctx, tt.id)
 
 			require.NoError(t, err)
 			require.Equal(t, tt.expectedTrack, result)
@@ -240,7 +113,7 @@ func TestYandexAdapter_SearchTrack(t *testing.T) {
 		searchName       string
 		yandexClientMock yandexClientMock
 		translatorMock   translatorMock
-		expectedTrack    *Track
+		expectedTrack    *Entity
 	}{
 		{
 			name:       "found query",
@@ -262,12 +135,13 @@ func TestYandexAdapter_SearchTrack(t *testing.T) {
 					},
 				},
 			},
-			expectedTrack: &Track{
+			expectedTrack: &Entity{
 				ID:       "42",
 				Title:    "sample name",
 				Artist:   "sample artist",
 				URL:      "https://music.yandex.com/album/41/track/42",
 				Provider: Yandex,
+				Type:     Track,
 			},
 		},
 		{
@@ -312,12 +186,13 @@ func TestYandexAdapter_SearchTrack(t *testing.T) {
 					},
 				},
 			},
-			expectedTrack: &Track{
+			expectedTrack: &Entity{
 				ID:       "42",
 				Title:    "sample name",
 				Artist:   "сампле артист матчинг транслит",
 				URL:      "https://music.yandex.com/album/41/track/42",
 				Provider: Yandex,
+				Type:     Track,
 			},
 		},
 		{
@@ -340,12 +215,13 @@ func TestYandexAdapter_SearchTrack(t *testing.T) {
 					},
 				},
 			},
-			expectedTrack: &Track{
+			expectedTrack: &Entity{
 				ID:       "42",
 				Title:    "sample name",
 				Artist:   "сампле артист афтер транслит",
 				URL:      "https://music.yandex.com/album/41/track/42",
 				Provider: Yandex,
+				Type:     Track,
 			},
 		},
 		{
@@ -373,12 +249,13 @@ func TestYandexAdapter_SearchTrack(t *testing.T) {
 					"translatable artist": "переведенный артист",
 				},
 			},
-			expectedTrack: &Track{
+			expectedTrack: &Entity{
 				ID:       "42",
 				Title:    "sample name",
 				Artist:   "переведенный артист",
 				URL:      "https://music.yandex.com/album/41/track/42",
 				Provider: Yandex,
+				Type:     Track,
 			},
 		},
 		{
@@ -403,18 +280,18 @@ func TestYandexAdapter_SearchTrack(t *testing.T) {
 	}
 }
 
-func TestYandexAdapter_GetAlbum(t *testing.T) {
+func TestYandexAdapter_FetchAlbum(t *testing.T) {
 	tests := []struct {
 		name             string
 		id               string
 		yandexClientMock yandexClientMock
-		expectedTrack    *Album
+		expectedTrack    *Entity
 	}{
 		{
 			name: "found id",
 			id:   "42",
 			yandexClientMock: yandexClientMock{
-				getAlbum: map[string]*yandex.Album{
+				fetchAlbum: map[string]*yandex.Album{
 					"42": {
 						ID:    42,
 						Title: "sample name",
@@ -424,12 +301,13 @@ func TestYandexAdapter_GetAlbum(t *testing.T) {
 					},
 				},
 			},
-			expectedTrack: &Album{
+			expectedTrack: &Entity{
 				ID:       "42",
 				Title:    "sample name",
 				Artist:   "sample artist",
 				URL:      "https://music.yandex.com/album/42",
 				Provider: Yandex,
+				Type:     Album,
 			},
 		},
 		{
@@ -445,7 +323,7 @@ func TestYandexAdapter_GetAlbum(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
 
-			result, err := a.GetAlbum(ctx, tt.id)
+			result, err := a.FetchAlbum(ctx, tt.id)
 
 			require.NoError(t, err)
 			require.Equal(t, tt.expectedTrack, result)
@@ -460,7 +338,7 @@ func TestYandexAdapter_SearchAlbum(t *testing.T) {
 		searchName       string
 		yandexClientMock yandexClientMock
 		translatorMock   translatorMock
-		expectedAlbum    *Album
+		expectedAlbum    *Entity
 	}{
 		{
 			name:       "found query",
@@ -479,12 +357,13 @@ func TestYandexAdapter_SearchAlbum(t *testing.T) {
 					},
 				},
 			},
-			expectedAlbum: &Album{
+			expectedAlbum: &Entity{
 				ID:       "42",
 				Title:    "sample name",
 				Artist:   "sample artist",
 				URL:      "https://music.yandex.com/album/42",
 				Provider: Yandex,
+				Type:     Album,
 			},
 		},
 		{
@@ -523,12 +402,13 @@ func TestYandexAdapter_SearchAlbum(t *testing.T) {
 					},
 				},
 			},
-			expectedAlbum: &Album{
+			expectedAlbum: &Entity{
 				ID:       "42",
 				Title:    "sample name",
 				Artist:   "сампле артист матчинг транслит",
 				URL:      "https://music.yandex.com/album/42",
 				Provider: Yandex,
+				Type:     Album,
 			},
 		},
 		{
@@ -548,12 +428,13 @@ func TestYandexAdapter_SearchAlbum(t *testing.T) {
 					},
 				},
 			},
-			expectedAlbum: &Album{
+			expectedAlbum: &Entity{
 				ID:       "42",
 				Title:    "sample name",
 				Artist:   "сампле артист афтер транслит",
 				URL:      "https://music.yandex.com/album/42",
 				Provider: Yandex,
+				Type:     Album,
 			},
 		},
 		{
@@ -578,12 +459,13 @@ func TestYandexAdapter_SearchAlbum(t *testing.T) {
 					"translatable artist": "переведенный артист",
 				},
 			},
-			expectedAlbum: &Album{
+			expectedAlbum: &Entity{
 				ID:       "42",
 				Title:    "sample name",
 				Artist:   "переведенный артист",
 				URL:      "https://music.yandex.com/album/42",
 				Provider: Yandex,
+				Type:     Album,
 			},
 		},
 		{

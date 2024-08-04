@@ -18,9 +18,9 @@ const (
 )
 
 type Client interface {
-	GetTrack(ctx context.Context, id string) (*Track, error)
+	FetchTrack(ctx context.Context, id string) (*Track, error)
 	SearchTrack(ctx context.Context, artistName, trackName string) (*Track, error)
-	GetAlbum(ctx context.Context, id string) (*Album, error)
+	FetchAlbum(ctx context.Context, id string) (*Album, error)
 	SearchAlbum(ctx context.Context, artistName, albumName string) (*Album, error)
 }
 
@@ -63,7 +63,7 @@ func NewHTTPClient(credentials *Credentials, opts ...ClientOption) *HTTPClient {
 }
 
 // https://developer.spotify.com/documentation/web-api/reference/get-track
-func (c *HTTPClient) GetTrack(ctx context.Context, id string) (*Track, error) {
+func (c *HTTPClient) FetchTrack(ctx context.Context, id string) (*Track, error) {
 	path := fmt.Sprintf("/v1/tracks/%s", id)
 	body, err := c.getAPI(ctx, path, nil)
 	if err != nil {
@@ -105,7 +105,7 @@ func (c *HTTPClient) SearchTrack(ctx context.Context, artistName, trackName stri
 }
 
 // https://developer.spotify.com/documentation/web-api/reference/get-an-album
-func (c *HTTPClient) GetAlbum(ctx context.Context, id string) (*Album, error) {
+func (c *HTTPClient) FetchAlbum(ctx context.Context, id string) (*Album, error) {
 	path := fmt.Sprintf("/v1/albums/%s", id)
 	body, err := c.getAPI(ctx, path, nil)
 	if err != nil {

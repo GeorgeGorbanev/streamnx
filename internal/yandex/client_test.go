@@ -10,7 +10,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestClient_GetTrack(t *testing.T) {
+func TestClient_FetchTrack(t *testing.T) {
 	tests := []struct {
 		name    string
 		trackID string
@@ -81,14 +81,14 @@ func TestClient_GetTrack(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
 
-			result, err := client.GetTrack(ctx, tt.trackID)
+			result, err := client.FetchTrack(ctx, tt.trackID)
 			require.NoError(t, err)
 			require.Equal(t, tt.want, result)
 		})
 	}
 }
 
-func TestClient_GetAlbum(t *testing.T) {
+func TestClient_FetchAlbum(t *testing.T) {
 	tests := []struct {
 		name    string
 		albumID string
@@ -144,7 +144,7 @@ func TestClient_GetAlbum(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
 
-			result, err := client.GetAlbum(ctx, tt.albumID)
+			result, err := client.FetchAlbum(ctx, tt.albumID)
 			require.NoError(t, err)
 			require.Equal(t, tt.want, result)
 		})

@@ -17,24 +17,8 @@ func newSpotifyAdapter(client spotify.Client) *SpotifyAdapter {
 	}
 }
 
-func (a *SpotifyAdapter) DetectTrackID(trackURL string) (string, error) {
-	match := spotify.TrackRe.FindStringSubmatch(trackURL)
-	if len(match) < 2 {
-		return "", IDNotFoundError
-	}
-	return match[1], nil
-}
-
-func (a *SpotifyAdapter) DetectAlbumID(albumURL string) (string, error) {
-	match := spotify.AlbumRe.FindStringSubmatch(albumURL)
-	if len(match) < 2 {
-		return "", IDNotFoundError
-	}
-	return match[1], nil
-}
-
-func (a *SpotifyAdapter) GetTrack(ctx context.Context, id string) (*Track, error) {
-	track, err := a.client.GetTrack(ctx, id)
+func (a *SpotifyAdapter) FetchTrack(ctx context.Context, id string) (*Entity, error) {
+	track, err := a.client.FetchTrack(ctx, id)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get track from spotify: %w", err)
 	}
@@ -45,7 +29,7 @@ func (a *SpotifyAdapter) GetTrack(ctx context.Context, id string) (*Track, error
 	return a.adaptTrack(track), nil
 }
 
-func (a *SpotifyAdapter) SearchTrack(ctx context.Context, artistName, trackName string) (*Track, error) {
+func (a *SpotifyAdapter) SearchTrack(ctx context.Context, artistName, trackName string) (*Entity, error) {
 	track, err := a.client.SearchTrack(ctx, artistName, trackName)
 	if err != nil {
 		return nil, fmt.Errorf("failed to search track on spotify: %w", err)
@@ -57,8 +41,8 @@ func (a *SpotifyAdapter) SearchTrack(ctx context.Context, artistName, trackName 
 	return a.adaptTrack(track), nil
 }
 
-func (a *SpotifyAdapter) GetAlbum(ctx context.Context, id string) (*Album, error) {
-	album, err := a.client.GetAlbum(ctx, id)
+func (a *SpotifyAdapter) FetchAlbum(ctx context.Context, id string) (*Entity, error) {
+	album, err := a.client.FetchAlbum(ctx, id)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get album from spotify: %w", err)
 	}
@@ -69,7 +53,7 @@ func (a *SpotifyAdapter) GetAlbum(ctx context.Context, id string) (*Album, error
 	return a.adaptAlbum(album), nil
 }
 
-func (a *SpotifyAdapter) SearchAlbum(ctx context.Context, artistName, albumName string) (*Album, error) {
+func (a *SpotifyAdapter) SearchAlbum(ctx context.Context, artistName, albumName string) (*Entity, error) {
 	album, err := a.client.SearchAlbum(ctx, artistName, albumName)
 	if err != nil {
 		return nil, fmt.Errorf("failed to search album on spotify: %w", err)
@@ -81,22 +65,24 @@ func (a *SpotifyAdapter) SearchAlbum(ctx context.Context, artistName, albumName 
 	return a.adaptAlbum(album), nil
 }
 
-func (a *SpotifyAdapter) adaptTrack(track *spotify.Track) *Track {
-	return &Track{
+func (a *SpotifyAdapter) adaptTrack(track *spotify.Track) *Entity {
+	return &Entity{
 		ID:       track.ID,
 		Title:    track.Name,
 		Artist:   track.Artists[0].Name,
 		URL:      track.URL(),
 		Provider: Spotify,
+		Type:     Track,
 	}
 }
 
-func (a *SpotifyAdapter) adaptAlbum(album *spotify.Album) *Album {
-	return &Album{
+func (a *SpotifyAdapter) adaptAlbum(album *spotify.Album) *Entity {
+	return &Entity{
 		ID:       album.ID,
 		Title:    album.Name,
 		Artist:   album.Artists[0].Name,
 		URL:      album.URL(),
 		Provider: Spotify,
+		Type:     Album,
 	}
 }

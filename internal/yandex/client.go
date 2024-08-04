@@ -12,9 +12,9 @@ import (
 const defaultAPIURL = "https://api.music.yandex.net"
 
 type Client interface {
-	GetTrack(ctx context.Context, id string) (*Track, error)
+	FetchTrack(ctx context.Context, id string) (*Track, error)
 	SearchTrack(ctx context.Context, artistName, trackName string) (*Track, error)
-	GetAlbum(ctx context.Context, id string) (*Album, error)
+	FetchAlbum(ctx context.Context, id string) (*Album, error)
 	SearchAlbum(ctx context.Context, artistName, albumName string) (*Album, error)
 }
 
@@ -61,7 +61,7 @@ func NewHTTPClient(opts ...ClientOption) *HTTPClient {
 	return &c
 }
 
-func (c *HTTPClient) GetTrack(ctx context.Context, trackID string) (*Track, error) {
+func (c *HTTPClient) FetchTrack(ctx context.Context, trackID string) (*Track, error) {
 	path := fmt.Sprintf("/tracks/%s", trackID)
 	body, err := c.getAPI(ctx, path, url.Values{})
 	if err != nil {
@@ -102,7 +102,7 @@ func (c *HTTPClient) SearchTrack(ctx context.Context, artistName, trackName stri
 	return &sr.Result.Tracks.Results[0], nil
 }
 
-func (c *HTTPClient) GetAlbum(ctx context.Context, albumID string) (*Album, error) {
+func (c *HTTPClient) FetchAlbum(ctx context.Context, albumID string) (*Album, error) {
 	path := fmt.Sprintf("/albums/%s", albumID)
 	body, err := c.getAPI(ctx, path, url.Values{})
 	if err != nil {

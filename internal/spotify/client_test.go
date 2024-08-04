@@ -24,7 +24,7 @@ var (
 	sampleBasicAuth = "Basic c2FtcGxlQ2xpZW50SUQ6c2FtcGxlQ2xpZW50U2VjcmV0"
 )
 
-func TestHTTPClient_GetTrack(t *testing.T) {
+func TestHTTPClient_FetchTrack(t *testing.T) {
 	mockAuthServer := newAuthServerMock(t)
 	defer mockAuthServer.Close()
 
@@ -52,7 +52,7 @@ func TestHTTPClient_GetTrack(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	track, err := client.GetTrack(ctx, "sampletrackid")
+	track, err := client.FetchTrack(ctx, "sampletrackid")
 	require.NoError(t, err)
 	require.Equal(t, &Track{
 		ID: "sampletrackid",
@@ -111,7 +111,7 @@ func TestHTTPClient_SearchTrack(t *testing.T) {
 	}, track)
 }
 
-func TestHTTPClient_GetAlbum(t *testing.T) {
+func TestHTTPClient_FetchAlbum(t *testing.T) {
 	mockAuthServer := newAuthServerMock(t)
 	defer mockAuthServer.Close()
 
@@ -139,7 +139,7 @@ func TestHTTPClient_GetAlbum(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	album, err := client.GetAlbum(ctx, "samplealbumid")
+	album, err := client.FetchAlbum(ctx, "samplealbumid")
 	require.NoError(t, err)
 	require.Equal(t, &Album{
 		ID:   "samplealbumid",
@@ -227,7 +227,7 @@ func TestHTTPClient_TokenNotExpired(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	track, err := client.GetTrack(ctx, "sampletrackid")
+	track, err := client.FetchTrack(ctx, "sampletrackid")
 	require.NoError(t, err)
 	require.Equal(t, &Track{
 		ID: "sampletrackid",
@@ -272,7 +272,7 @@ func TestHTTPClient_RefreshTokenWhenExpired(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	track, err := client.GetTrack(ctx, "sampletrackid")
+	track, err := client.FetchTrack(ctx, "sampletrackid")
 	require.NoError(t, err)
 	require.Equal(t, &Track{
 		ID: "sampletrackid",
@@ -322,7 +322,7 @@ func TestHTTPClient_RefreshTokenWhenUnauthorized(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	track, err := client.GetTrack(ctx, "sampletrackid")
+	track, err := client.FetchTrack(ctx, "sampletrackid")
 	require.NoError(t, err)
 	require.Equal(t, &Track{
 		ID: "sampletrackid",

@@ -17,35 +17,13 @@ func newAppleAdapter(client apple.Client) *AppleAdapter {
 	}
 }
 
-func (a *AppleAdapter) DetectTrackID(trackURL string) (string, error) {
-	ck := apple.CompositeKey{}
-	ck.ParseFromTrackURL(trackURL)
-
-	if ck.Storefront == "" || ck.ID == "" || !apple.IsValidStorefront(ck.Storefront) {
-		return "", IDNotFoundError
-	}
-
-	return ck.Marshal(), nil
-}
-
-func (a *AppleAdapter) DetectAlbumID(albumURL string) (string, error) {
-	ck := apple.CompositeKey{}
-	ck.ParseFromAlbumURL(albumURL)
-
-	if ck.Storefront == "" || ck.ID == "" || !apple.IsValidStorefront(ck.Storefront) {
-		return "", IDNotFoundError
-	}
-
-	return ck.Marshal(), nil
-}
-
-func (a *AppleAdapter) GetTrack(ctx context.Context, id string) (*Track, error) {
+func (a *AppleAdapter) FetchTrack(ctx context.Context, id string) (*Entity, error) {
 	ck := apple.CompositeKey{}
 	if err := ck.Unmarshal(id); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal track id: %w", err)
 	}
 
-	track, err := a.client.GetTrack(ctx, ck.ID, ck.Storefront)
+	track, err := a.client.FetchTrack(ctx, ck.ID, ck.Storefront)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get track from apple: %w", err)
 	}
@@ -53,10 +31,14 @@ func (a *AppleAdapter) GetTrack(ctx context.Context, id string) (*Track, error) 
 		return nil, nil
 	}
 
-	return a.adaptTrack(track), nil
+	res, err := a.adaptTrack(track)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
 }
 
-func (a *AppleAdapter) SearchTrack(ctx context.Context, artistName, trackName string) (*Track, error) {
+func (a *AppleAdapter) SearchTrack(ctx context.Context, artistName, trackName string) (*Entity, error) {
 	track, err := a.client.SearchTrack(ctx, artistName, trackName)
 	if err != nil {
 		return nil, fmt.Errorf("failed to search track from apple: %w", err)
@@ -64,16 +46,20 @@ func (a *AppleAdapter) SearchTrack(ctx context.Context, artistName, trackName st
 	if track == nil {
 		return nil, nil
 	}
-	return a.adaptTrack(track), nil
+	res, err := a.adaptTrack(track)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
 }
 
-func (a *AppleAdapter) GetAlbum(ctx context.Context, id string) (*Album, error) {
+func (a *AppleAdapter) FetchAlbum(ctx context.Context, id string) (*Entity, error) {
 	ck := apple.CompositeKey{}
 	if err := ck.Unmarshal(id); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal album id: %w", err)
 	}
 
-	album, err := a.client.GetAlbum(ctx, ck.ID, ck.Storefront)
+	album, err := a.client.FetchAlbum(ctx, ck.ID, ck.Storefront)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get album from apple: %w", err)
 	}
@@ -81,10 +67,14 @@ func (a *AppleAdapter) GetAlbum(ctx context.Context, id string) (*Album, error) 
 		return nil, nil
 	}
 
-	return a.adaptAlbum(album), nil
+	res, err := a.adaptAlbum(album)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
 }
 
-func (a *AppleAdapter) SearchAlbum(ctx context.Context, artistName, albumName string) (*Album, error) {
+func (a *AppleAdapter) SearchAlbum(ctx context.Context, artistName, albumName string) (*Entity, error) {
 	album, err := a.client.SearchAlbum(ctx, artistName, albumName)
 	if err != nil {
 		return nil, fmt.Errorf("failed to search album from apple: %w", err)
@@ -92,31 +82,41 @@ func (a *AppleAdapter) SearchAlbum(ctx context.Context, artistName, albumName st
 	if album == nil {
 		return nil, nil
 	}
-	return a.adaptAlbum(album), nil
+	res, err := a.adaptAlbum(album)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
 }
 
-func (a *AppleAdapter) adaptTrack(track *apple.MusicEntity) *Track {
+func (a *AppleAdapter) adaptTrack(track *apple.Entity) (*Entity, error) {
 	ck := apple.CompositeKey{}
-	ck.ParseFromTrackURL(track.Attributes.URL)
+	if err := ck.ParseFromTrackURL(track.Attributes.URL); err != nil {
+		return nil, err
+	}
 
-	return &Track{
+	return &Entity{
 		ID:       ck.Marshal(),
 		Title:    track.Attributes.Name,
 		Artist:   track.Attributes.ArtistName,
 		URL:      track.Attributes.URL,
 		Provider: Apple,
-	}
+		Type:     Track,
+	}, nil
 }
 
-func (a *AppleAdapter) adaptAlbum(album *apple.MusicEntity) *Album {
+func (a *AppleAdapter) adaptAlbum(album *apple.Entity) (*Entity, error) {
 	ck := apple.CompositeKey{}
-	ck.ParseFromAlbumURL(album.Attributes.URL)
+	if err := ck.ParseFromAlbumURL(album.Attributes.URL); err != nil {
+		return nil, err
+	}
 
-	return &Album{
+	return &Entity{
 		ID:       ck.Marshal(),
 		Title:    album.Attributes.Name,
 		Artist:   album.Attributes.ArtistName,
 		URL:      album.Attributes.URL,
 		Provider: Apple,
-	}
+		Type:     Album,
+	}, nil
 }

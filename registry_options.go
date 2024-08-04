@@ -10,16 +10,16 @@ import (
 
 type RegistryOption func(registry *Registry)
 
-type registryOptionsMap struct {
-	appleClientOptions   []apple.ClientOption
-	spotifyClientOptions []spotify.ClientOption
-	yandexClientOptions  []yandex.ClientOption
-	youtubeClientOptions []youtube.ClientOption
+type clientOptions struct {
+	apple   []apple.ClientOption
+	spotify []spotify.ClientOption
+	yandex  []yandex.ClientOption
+	youtube []youtube.ClientOption
 }
 
 func WithProviderAdapter(provider *Provider, adapter Adapter) RegistryOption {
 	return func(r *Registry) {
-		r.adapters[provider.Code] = adapter
+		r.adapters[provider.сode] = adapter
 	}
 }
 
@@ -31,36 +31,36 @@ func WithTranslator(translator translator.Translator) RegistryOption {
 
 func WithAppleWebPlayerURL(url string) RegistryOption {
 	return func(r *Registry) {
-		r.options.appleClientOptions = append(r.options.appleClientOptions, apple.WithWebPlayerURL(url))
+		r.clientOptions.apple = append(r.clientOptions.apple, apple.WithWebPlayerURL(url))
 	}
 }
 
 func WithAppleAPIURL(url string) RegistryOption {
 	return func(r *Registry) {
-		r.options.appleClientOptions = append(r.options.appleClientOptions, apple.WithAPIURL(url))
+		r.clientOptions.apple = append(r.clientOptions.apple, apple.WithAPIURL(url))
 	}
 }
 
 func WithSpotifyAuthURL(url string) RegistryOption {
 	return func(r *Registry) {
-		r.options.spotifyClientOptions = append(r.options.spotifyClientOptions, spotify.WithAuthURL(url))
+		r.clientOptions.spotify = append(r.clientOptions.spotify, spotify.WithAuthURL(url))
 	}
 }
 
 func WithSpotifyAPIURL(url string) RegistryOption {
 	return func(r *Registry) {
-		r.options.spotifyClientOptions = append(r.options.spotifyClientOptions, spotify.WithAPIURL(url))
+		r.clientOptions.spotify = append(r.clientOptions.spotify, spotify.WithAPIURL(url))
 	}
 }
 
 func WithYandexAPIURL(url string) RegistryOption {
 	return func(r *Registry) {
-		r.options.yandexClientOptions = append(r.options.yandexClientOptions, yandex.WithAPIURL(url))
+		r.clientOptions.yandex = append(r.clientOptions.yandex, yandex.WithAPIURL(url))
 	}
 }
 
 func WithYoutubeAPIURL(url string) RegistryOption {
 	return func(r *Registry) {
-		r.options.youtubeClientOptions = append(r.options.youtubeClientOptions, youtube.WithAPIURL(url))
+		r.clientOptions.youtube = append(r.clientOptions.youtube, youtube.WithAPIURL(url))
 	}
 }

@@ -20,22 +20,7 @@ func newYoutubeAdapter(client youtube.Client) *YoutubeAdapter {
 		client: client,
 	}
 }
-
-func (a *YoutubeAdapter) DetectTrackID(trackURL string) (string, error) {
-	if matches := youtube.VideoRe.FindStringSubmatch(trackURL); len(matches) > 1 {
-		return matches[1], nil
-	}
-	return "", IDNotFoundError
-}
-
-func (a *YoutubeAdapter) DetectAlbumID(albumURL string) (string, error) {
-	if matches := youtube.PlaylistRe.FindStringSubmatch(albumURL); len(matches) > 1 {
-		return matches[1], nil
-	}
-	return "", IDNotFoundError
-}
-
-func (a *YoutubeAdapter) GetTrack(ctx context.Context, id string) (*Track, error) {
+func (a *YoutubeAdapter) FetchTrack(ctx context.Context, id string) (*Entity, error) {
 	video, err := a.client.GetVideo(ctx, id)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get video from youtube: %w", err)
@@ -46,7 +31,7 @@ func (a *YoutubeAdapter) GetTrack(ctx context.Context, id string) (*Track, error
 	return a.adaptTrack(video), nil
 }
 
-func (a *YoutubeAdapter) SearchTrack(ctx context.Context, artistName, trackName string) (*Track, error) {
+func (a *YoutubeAdapter) SearchTrack(ctx context.Context, artistName, trackName string) (*Entity, error) {
 	query := fmt.Sprintf("%s – %s", artistName, trackName)
 	video, err := a.client.SearchVideo(ctx, query)
 	if err != nil {
@@ -59,7 +44,7 @@ func (a *YoutubeAdapter) SearchTrack(ctx context.Context, artistName, trackName 
 	return a.adaptTrack(video), nil
 }
 
-func (a *YoutubeAdapter) GetAlbum(ctx context.Context, id string) (*Album, error) {
+func (a *YoutubeAdapter) FetchAlbum(ctx context.Context, id string) (*Entity, error) {
 	album, err := a.client.GetPlaylist(ctx, id)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get playlist from youtube: %w", err)
@@ -70,7 +55,7 @@ func (a *YoutubeAdapter) GetAlbum(ctx context.Context, id string) (*Album, error
 	return a.adaptAlbum(ctx, album)
 }
 
-func (a *YoutubeAdapter) SearchAlbum(ctx context.Context, artistName, albumName string) (*Album, error) {
+func (a *YoutubeAdapter) SearchAlbum(ctx context.Context, artistName, albumName string) (*Entity, error) {
 	query := fmt.Sprintf("%s – %s", artistName, albumName)
 	album, err := a.client.SearchPlaylist(ctx, query)
 	if err != nil {
@@ -83,16 +68,17 @@ func (a *YoutubeAdapter) SearchAlbum(ctx context.Context, artistName, albumName 
 	return a.adaptAlbum(ctx, album)
 }
 
-func (a *YoutubeAdapter) adaptTrack(video *youtube.Video) *Track {
+func (a *YoutubeAdapter) adaptTrack(video *youtube.Video) *Entity {
 	trackTitle := a.extractTrackTitle(video)
 	artist, track := a.cleanAndSplitTitle(trackTitle)
 
-	return &Track{
+	return &Entity{
 		ID:       video.ID,
 		Title:    track,
 		Artist:   artist,
 		URL:      video.URL(),
 		Provider: Youtube,
+		Type:     Track,
 	}
 }
 
@@ -103,7 +89,7 @@ func (a *YoutubeAdapter) extractTrackTitle(video *youtube.Video) string {
 	return video.Title
 }
 
-func (a *YoutubeAdapter) adaptAlbum(ctx context.Context, playlist *youtube.Playlist) (*Album, error) {
+func (a *YoutubeAdapter) adaptAlbum(ctx context.Context, playlist *youtube.Playlist) (*Entity, error) {
 	albumTitle, err := a.extractAlbumTitle(ctx, playlist)
 	if err != nil {
 		return nil, fmt.Errorf("failed to extract album title: %w", err)
@@ -111,12 +97,13 @@ func (a *YoutubeAdapter) adaptAlbum(ctx context.Context, playlist *youtube.Playl
 
 	artist, album := a.cleanAndSplitTitle(albumTitle)
 
-	return &Album{
+	return &Entity{
 		ID:       playlist.ID,
 		Title:    album,
 		Artist:   artist,
 		URL:      playlist.URL(),
 		Provider: Youtube,
+		Type:     Album,
 	}, nil
 }
 

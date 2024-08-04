@@ -1,134 +1,261 @@
 package streaminx
 
 import (
+	"context"
 	"testing"
+	"time"
+
+	"github.com/GeorgeGorbanev/streaminx/internal/apple"
 
 	"github.com/stretchr/testify/require"
 )
 
-func TestAppleAdapter_DetectTrackID(t *testing.T) {
+type appleClientMock struct {
+	fetchTrack  map[string]*apple.Entity
+	fetchAlbum  map[string]*apple.Entity
+	searchTrack map[string]map[string]*apple.Entity
+	searchAlbum map[string]map[string]*apple.Entity
+}
+
+func (c *appleClientMock) FetchTrack(_ context.Context, id, storefront string) (*apple.Entity, error) {
+	return c.fetchTrack[storefront+"-"+id], nil
+}
+
+func (c *appleClientMock) SearchTrack(_ context.Context, artistName, trackName string) (*apple.Entity, error) {
+	if tracks, ok := c.searchTrack[artistName]; ok {
+		return tracks[trackName], nil
+	}
+	return nil, nil
+}
+
+func (c *appleClientMock) FetchAlbum(_ context.Context, id, storefront string) (*apple.Entity, error) {
+	return c.fetchAlbum[storefront+"-"+id], nil
+}
+
+func (c *appleClientMock) SearchAlbum(_ context.Context, artistName, albumName string) (*apple.Entity, error) {
+	if albums, ok := c.searchAlbum[artistName]; ok {
+		return albums[albumName], nil
+	}
+	return nil, nil
+}
+
+func TestAppleAdapter_FetchTrack(t *testing.T) {
 	tests := []struct {
 		name          string
-		input         string
-		expected      string
-		expectedError error
+		id            string
+		clientMock    *appleClientMock
+		expectedTrack *Entity
 	}{
 		{
-			name:     "valid URL with track ID",
-			input:    "https://music.apple.com/us/album/song-name/1234567890?i=987654321",
-			expected: "us-987654321",
+			name: "found ID",
+			id:   "ru-123",
+			clientMock: &appleClientMock{
+				fetchTrack: map[string]*apple.Entity{
+					"ru-123": {
+						ID: "ru-123",
+						Attributes: apple.Attributes{
+							ArtistName: "sample artist",
+							Name:       "sample name",
+							URL:        "https://music.apple.com/ru/album/song-name/1234567890?i=123",
+						},
+					},
+				},
+			},
+			expectedTrack: &Entity{
+				ID:       "ru-123",
+				Title:    "sample name",
+				Artist:   "sample artist",
+				URL:      "https://music.apple.com/ru/album/song-name/1234567890?i=123",
+				Provider: Apple,
+				Type:     Track,
+			},
 		},
 		{
-			name:     "valid URL with track ID and th storefront",
-			input:    "https://music.apple.com/th/album/song-name/1234567890?i=987654321",
-			expected: "th-987654321",
-		},
-		{
-			name:          "valid URL with track ID and invalid iso3611 storefront",
-			input:         "https://music.apple.com/invalidstorefront/album/song-name/1234567890?i=987654321",
-			expected:      "",
-			expectedError: IDNotFoundError,
-		},
-		{
-			name:     "valid URL without album",
-			input:    "https://music.apple.com/us/song/angel/724466660",
-			expected: "us-724466660",
-		},
-		{
-			name:          "valid URL without album and invalid storefront",
-			input:         "https://music.apple.com/invalidstorefront/song/angel/724466660",
-			expected:      "",
-			expectedError: IDNotFoundError,
-		},
-		{
-			name:          "URL without track ID",
-			input:         "https://music.apple.com/us/album/song-name/1234567890",
-			expected:      "",
-			expectedError: IDNotFoundError,
-		},
-		{
-			name:          "invalid host URL",
-			input:         "https://music.orange.com/us/album/song-name/1234567890?i=987654321",
-			expected:      "",
-			expectedError: IDNotFoundError,
-		},
-		{
-			name:          "empty string",
-			input:         "",
-			expected:      "",
-			expectedError: IDNotFoundError,
+			name:          "not found ID",
+			id:            "ru-123",
+			clientMock:    &appleClientMock{},
+			expectedTrack: nil,
 		},
 	}
-
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			adapter := newAppleAdapter(nil)
-			result, err := adapter.DetectTrackID(tt.input)
-			require.Equal(t, tt.expected, result)
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
 
-			if tt.expectedError != nil {
-				require.ErrorAs(t, err, &tt.expectedError)
-			} else {
-				require.NoError(t, err)
-			}
+			a := newAppleAdapter(tt.clientMock)
+			result, err := a.FetchTrack(ctx, tt.id)
+
+			require.NoError(t, err)
+			require.Equal(t, tt.expectedTrack, result)
 		})
 	}
 }
 
-func TestAppleAdapter_DetectAlbumID(t *testing.T) {
+func TestAppleAdapter_SearchTrack(t *testing.T) {
 	tests := []struct {
 		name          string
-		input         string
-		expected      string
-		expectedError error
+		artistName    string
+		searchName    string
+		clientMock    *appleClientMock
+		expectedTrack *Entity
 	}{
 		{
-			name:     "valid URL with album ID",
-			input:    "https://music.apple.com/us/album/album-name/123456789",
-			expected: "us-123456789",
+			name:       "found query",
+			artistName: "sample artist",
+			searchName: "sample name",
+			clientMock: &appleClientMock{
+				searchTrack: map[string]map[string]*apple.Entity{
+					"sample artist": {
+						"sample name": {
+							ID: "ru-123",
+							Attributes: apple.Attributes{
+								ArtistName: "sample artist",
+								Name:       "sample name",
+								URL:        "https://music.apple.com/ru/album/song-name/1234567890?i=123",
+							},
+						},
+					},
+				},
+			},
+			expectedTrack: &Entity{
+				ID:       "ru-123",
+				Title:    "sample name",
+				Artist:   "sample artist",
+				URL:      "https://music.apple.com/ru/album/song-name/1234567890?i=123",
+				Provider: Apple,
+				Type:     Track,
+			},
 		},
 		{
-			name:     "valid URL with album ID and gb locale",
-			input:    "https://music.apple.com/gb/album/another-album/987654321",
-			expected: "gb-987654321",
-		},
-		{
-			name:          "valid URL with album ID and invalid iso3611 storefront",
-			input:         "https://music.apple.com/invalidstorefront/album/another-album/987654321",
-			expected:      "",
-			expectedError: IDNotFoundError,
-		},
-		{
-			name:          "URL without album ID",
-			input:         "https://music.apple.com/us/album/album-name",
-			expected:      "",
-			expectedError: IDNotFoundError,
-		},
-		{
-			name:          "invalid host URL",
-			input:         "https://music.orange.com/us/album/album-name/123456789",
-			expected:      "",
-			expectedError: IDNotFoundError,
-		},
-		{
-			name:          "empty string",
-			input:         "",
-			expected:      "",
-			expectedError: IDNotFoundError,
+			name:          "not found query",
+			artistName:    "not found artist",
+			searchName:    "not found name",
+			clientMock:    &appleClientMock{},
+			expectedTrack: nil,
 		},
 	}
-
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			adapter := newAppleAdapter(nil)
-			result, err := adapter.DetectAlbumID(tt.input)
-			require.Equal(t, tt.expected, result)
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
 
-			if tt.expectedError != nil {
-				require.ErrorAs(t, err, &tt.expectedError)
-			} else {
-				require.NoError(t, err)
-			}
+			a := newAppleAdapter(tt.clientMock)
+			result, err := a.SearchTrack(ctx, tt.artistName, tt.searchName)
+
+			require.NoError(t, err)
+			require.Equal(t, tt.expectedTrack, result)
+		})
+	}
+}
+
+func TestAppleAdapter_FetchAlbum(t *testing.T) {
+	tests := []struct {
+		name          string
+		id            string
+		storefront    string
+		clientMock    *appleClientMock
+		expectedAlbum *Entity
+	}{
+		{
+			name:       "found ID",
+			id:         "ru-456",
+			storefront: "sampleStorefront",
+			clientMock: &appleClientMock{
+				fetchAlbum: map[string]*apple.Entity{
+					"ru-456": {
+						ID: "ru-456",
+						Attributes: apple.Attributes{
+							ArtistName: "sample artist",
+							Name:       "sample name",
+							URL:        "https://music.apple.com/ru/album/name/456",
+						},
+					},
+				},
+			},
+			expectedAlbum: &Entity{
+				ID:       "ru-456",
+				Title:    "sample name",
+				Artist:   "sample artist",
+				URL:      "https://music.apple.com/ru/album/name/456",
+				Provider: Apple,
+				Type:     Album,
+			},
+		},
+		{
+			name:          "not found ID",
+			id:            "ru-456",
+			storefront:    "notFoundStorefront",
+			clientMock:    &appleClientMock{},
+			expectedAlbum: nil,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
+
+			a := newAppleAdapter(tt.clientMock)
+			result, err := a.FetchAlbum(ctx, tt.id)
+
+			require.NoError(t, err)
+			require.Equal(t, tt.expectedAlbum, result)
+		})
+	}
+}
+
+func TestAppleAdapter_SearchAlbum(t *testing.T) {
+	tests := []struct {
+		name          string
+		artistName    string
+		searchName    string
+		clientMock    *appleClientMock
+		expectedAlbum *Entity
+	}{
+		{
+			name:       "found query",
+			artistName: "sample artist",
+			searchName: "sample name",
+			clientMock: &appleClientMock{
+				searchAlbum: map[string]map[string]*apple.Entity{
+					"sample artist": {
+						"sample name": {
+							ID: "ru-456",
+							Attributes: apple.Attributes{
+								ArtistName: "sample artist",
+								Name:       "sample name",
+								URL:        "https://music.apple.com/ru/album/name/456",
+							},
+						},
+					},
+				},
+			},
+			expectedAlbum: &Entity{
+				ID:       "ru-456",
+				Title:    "sample name",
+				Artist:   "sample artist",
+				URL:      "https://music.apple.com/ru/album/name/456",
+				Provider: Apple,
+				Type:     Album,
+			},
+		},
+		{
+			name:          "not found query",
+			artistName:    "not found artist",
+			searchName:    "not found name",
+			clientMock:    &appleClientMock{},
+			expectedAlbum: nil,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
+
+			a := newAppleAdapter(tt.clientMock)
+			result, err := a.SearchAlbum(ctx, tt.artistName, tt.searchName)
+
+			require.NoError(t, err)
+			require.Equal(t, tt.expectedAlbum, result)
 		})
 	}
 }

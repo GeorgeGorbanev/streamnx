@@ -22,24 +22,8 @@ func newYandexAdapter(c yandex.Client, t translator.Translator) *YandexAdapter {
 	}
 }
 
-func (a *YandexAdapter) DetectTrackID(trackURL string) (string, error) {
-	match := yandex.TrackRe.FindStringSubmatch(trackURL)
-	if match == nil || len(match) < 3 {
-		return "", IDNotFoundError
-	}
-	return match[2], nil
-}
-
-func (a *YandexAdapter) DetectAlbumID(albumURL string) (string, error) {
-	match := yandex.AlbumRe.FindStringSubmatch(albumURL)
-	if match == nil || len(match) < 3 {
-		return "", IDNotFoundError
-	}
-	return match[2], nil
-}
-
-func (a *YandexAdapter) GetTrack(ctx context.Context, id string) (*Track, error) {
-	yandexTrack, err := a.client.GetTrack(ctx, id)
+func (a *YandexAdapter) FetchTrack(ctx context.Context, id string) (*Entity, error) {
+	yandexTrack, err := a.client.FetchTrack(ctx, id)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get track from yandex music: %w", err)
 	}
@@ -50,7 +34,7 @@ func (a *YandexAdapter) GetTrack(ctx context.Context, id string) (*Track, error)
 	return a.adaptTrack(yandexTrack), nil
 }
 
-func (a *YandexAdapter) SearchTrack(ctx context.Context, artist, track string) (*Track, error) {
+func (a *YandexAdapter) SearchTrack(ctx context.Context, artist, track string) (*Entity, error) {
 	lowcasedArtist := strings.ToLower(artist)
 	lowcasedTrack := strings.ToLower(track)
 
@@ -65,8 +49,8 @@ func (a *YandexAdapter) SearchTrack(ctx context.Context, artist, track string) (
 	return nil, nil
 }
 
-func (a *YandexAdapter) GetAlbum(ctx context.Context, id string) (*Album, error) {
-	yandexAlbum, err := a.client.GetAlbum(ctx, id)
+func (a *YandexAdapter) FetchAlbum(ctx context.Context, id string) (*Entity, error) {
+	yandexAlbum, err := a.client.FetchAlbum(ctx, id)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get album from yandex music: %w", err)
 	}
@@ -77,7 +61,7 @@ func (a *YandexAdapter) GetAlbum(ctx context.Context, id string) (*Album, error)
 	return a.adaptAlbum(yandexAlbum), nil
 }
 
-func (a *YandexAdapter) SearchAlbum(ctx context.Context, artistName, albumName string) (*Album, error) {
+func (a *YandexAdapter) SearchAlbum(ctx context.Context, artistName, albumName string) (*Entity, error) {
 	lowcasedArtist := strings.ToLower(artistName)
 	lowcasedAlbum := strings.ToLower(albumName)
 
@@ -150,23 +134,25 @@ func (a *YandexAdapter) findAlbum(ctx context.Context, artist, album string) (*y
 	return nil, nil
 }
 
-func (a *YandexAdapter) adaptTrack(yandexTrack *yandex.Track) *Track {
-	return &Track{
+func (a *YandexAdapter) adaptTrack(yandexTrack *yandex.Track) *Entity {
+	return &Entity{
 		ID:       yandexTrack.IDString(),
 		Title:    yandexTrack.Title,
 		Artist:   yandexTrack.Artists[0].Name,
 		URL:      yandexTrack.URL(),
 		Provider: Yandex,
+		Type:     Track,
 	}
 }
 
-func (a *YandexAdapter) adaptAlbum(yandexAlbum *yandex.Album) *Album {
-	return &Album{
+func (a *YandexAdapter) adaptAlbum(yandexAlbum *yandex.Album) *Entity {
+	return &Entity{
 		ID:       strconv.Itoa(yandexAlbum.ID),
 		Title:    yandexAlbum.Title,
 		Artist:   yandexAlbum.Artists[0].Name,
 		URL:      yandexAlbum.URL(),
 		Provider: Yandex,
+		Type:     Album,
 	}
 }
 

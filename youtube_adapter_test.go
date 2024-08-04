@@ -38,130 +38,12 @@ func (c *youtubeClientMock) GetPlaylistItems(_ context.Context, id string) ([]yo
 	return c.getPlaylistItems[id], nil
 }
 
-func TestYoutubeAdapter_DetectTrackID(t *testing.T) {
-	tests := []struct {
-		name          string
-		input         string
-		expected      string
-		expectedError error
-	}{
-		{
-			name:     "Short URL",
-			input:    "https://youtu.be/dQw4w9WgXcQ",
-			expected: "dQw4w9WgXcQ",
-		},
-		{
-			name:     "Long URL",
-			input:    "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-			expected: "dQw4w9WgXcQ",
-		},
-		{
-			name:     "URL with extra parameters",
-			input:    "https://www.youtube.com/watch?v=dQw4w9WgXcQ&feature=youtu.be",
-			expected: "dQw4w9WgXcQ",
-		},
-		{
-			name:     "Youtube music URL",
-			input:    "https://music.youtube.com/watch?v=5PgdZDXg0z0&si=LkthPMI6H_I04dhP",
-			expected: "5PgdZDXg0z0",
-		},
-		{
-			name:          "Invalid URL",
-			input:         "https://www.youtube.com/watch?v=",
-			expected:      "",
-			expectedError: IDNotFoundError,
-		},
-		{
-			name:          "Non-YouTube URL",
-			input:         "https://www.example.com/watch?v=dQw4w9WgXcQ",
-			expected:      "",
-			expectedError: IDNotFoundError,
-		},
-		{
-			name:          "Empty string",
-			input:         "",
-			expected:      "",
-			expectedError: IDNotFoundError,
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			adapter := newYoutubeAdapter(nil)
-			result, err := adapter.DetectTrackID(tt.input)
-			require.Equal(t, tt.expected, result)
-
-			if tt.expectedError != nil {
-				require.ErrorAs(t, err, &tt.expectedError)
-			} else {
-				require.NoError(t, err)
-			}
-		})
-	}
-}
-
-func TestYoutubeAdapter_DetectAlbumID(t *testing.T) {
-	tests := []struct {
-		name          string
-		input         string
-		expected      string
-		expectedError error
-	}{
-		{
-			name:     "Standard URL",
-			input:    "https://www.youtube.com/playlist?list=PLMC9KNkIncKtPzgY-5rmhvj7fax8fdxoj",
-			expected: "PLMC9KNkIncKtPzgY-5rmhvj7fax8fdxoj",
-		},
-		{
-			name:     "Shortened URL",
-			input:    "https://youtu.be/playlist?list=PLMC9KNkIncKtPzgY-5rmhvj7fax8fdxoj",
-			expected: "PLMC9KNkIncKtPzgY-5rmhvj7fax8fdxoj",
-		},
-		{
-			name:     "URL with extra parameters",
-			input:    "https://www.youtube.com/playlist?list=PLMC9KNkIncKtPzgY-5rmhvj7fax8fdxoj&feature=share",
-			expected: "PLMC9KNkIncKtPzgY-5rmhvj7fax8fdxoj",
-		},
-		{
-			name:     "Youtube music URL",
-			input:    "https://music.youtube.com/playlist?list=OLAK5uy_n4xauusTJSj6Mtt4cIuq4KZziSfjABYWU",
-			expected: "OLAK5uy_n4xauusTJSj6Mtt4cIuq4KZziSfjABYWU",
-		},
-		{
-			name:          "Invalid URL",
-			input:         "https://www.example.com/playlist?list=PLMC9KNkIncKtPzgY-5rmhvj7fax8fdxoj",
-			expected:      "",
-			expectedError: IDNotFoundError,
-		},
-		{
-			name:          "Empty string",
-			input:         "",
-			expected:      "",
-			expectedError: IDNotFoundError,
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			adapter := newYoutubeAdapter(nil)
-			result, err := adapter.DetectAlbumID(tt.input)
-			require.Equal(t, tt.expected, result)
-
-			if tt.expectedError != nil {
-				require.ErrorAs(t, err, &tt.expectedError)
-			} else {
-				require.NoError(t, err)
-			}
-		})
-	}
-}
-
-func TestYoutubeAdapter_GetTrack(t *testing.T) {
+func TestYoutubeAdapter_FetchTrack(t *testing.T) {
 	tests := []struct {
 		name              string
 		id                string
 		youtubeClientMock youtubeClientMock
-		expectedTrack     *Track
+		expectedTrack     *Entity
 	}{
 		{
 			name: "found ID",
@@ -174,12 +56,13 @@ func TestYoutubeAdapter_GetTrack(t *testing.T) {
 					},
 				},
 			},
-			expectedTrack: &Track{
+			expectedTrack: &Entity{
 				ID:       "sampleID",
 				Title:    "sample track",
 				Artist:   "sample artist",
 				URL:      "https://www.youtube.com/watch?v=sampleID",
 				Provider: Youtube,
+				Type:     Track,
 			},
 		},
 		{
@@ -195,12 +78,13 @@ func TestYoutubeAdapter_GetTrack(t *testing.T) {
 					},
 				},
 			},
-			expectedTrack: &Track{
+			expectedTrack: &Entity{
 				ID:       "sampleID",
 				Title:    "track name",
 				Artist:   "sample artist",
 				URL:      "https://www.youtube.com/watch?v=sampleID",
 				Provider: Youtube,
+				Type:     Track,
 			},
 		},
 		{
@@ -217,7 +101,7 @@ func TestYoutubeAdapter_GetTrack(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
 
-			result, err := a.GetTrack(ctx, tt.id)
+			result, err := a.FetchTrack(ctx, tt.id)
 
 			require.NoError(t, err)
 			require.Equal(t, tt.expectedTrack, result)
@@ -231,7 +115,7 @@ func TestYoutubeAdapter_SearchTrack(t *testing.T) {
 		artistName        string
 		searchName        string
 		youtubeClientMock youtubeClientMock
-		expectedTrack     *Track
+		expectedTrack     *Entity
 	}{
 		{
 			name:       "found query",
@@ -245,12 +129,13 @@ func TestYoutubeAdapter_SearchTrack(t *testing.T) {
 					},
 				},
 			},
-			expectedTrack: &Track{
+			expectedTrack: &Entity{
 				ID:       "sampleID",
 				Title:    "sample track",
 				Artist:   "sample artist",
 				URL:      "https://www.youtube.com/watch?v=sampleID",
 				Provider: Youtube,
+				Type:     Track,
 			},
 		},
 		{
@@ -276,12 +161,12 @@ func TestYoutubeAdapter_SearchTrack(t *testing.T) {
 	}
 }
 
-func TestYoutubeAdapter_GetAlbum(t *testing.T) {
+func TestYoutubeAdapter_FetchAlbum(t *testing.T) {
 	tests := []struct {
 		name              string
 		id                string
 		youtubeClientMock youtubeClientMock
-		expectedAlbum     *Album
+		expectedAlbum     *Entity
 	}{
 		{
 			name: "found ID",
@@ -294,12 +179,13 @@ func TestYoutubeAdapter_GetAlbum(t *testing.T) {
 					},
 				},
 			},
-			expectedAlbum: &Album{
+			expectedAlbum: &Entity{
 				ID:       "sampleID",
 				Title:    "sample album",
 				Artist:   "sample artist",
 				URL:      "https://www.youtube.com/playlist?list=sampleID",
 				Provider: Youtube,
+				Type:     Album,
 			},
 		},
 		{
@@ -323,12 +209,13 @@ func TestYoutubeAdapter_GetAlbum(t *testing.T) {
 					},
 				},
 			},
-			expectedAlbum: &Album{
+			expectedAlbum: &Entity{
 				ID:       "sampleID",
 				Title:    "sample album",
 				Artist:   "sample artist",
 				URL:      "https://www.youtube.com/playlist?list=sampleID",
 				Provider: Youtube,
+				Type:     Album,
 			},
 		},
 		{
@@ -345,12 +232,13 @@ func TestYoutubeAdapter_GetAlbum(t *testing.T) {
 					"sampleID": {},
 				},
 			},
-			expectedAlbum: &Album{
+			expectedAlbum: &Entity{
 				ID:       "sampleID",
 				Title:    "sample album",
 				Artist:   "Album",
 				URL:      "https://www.youtube.com/playlist?list=sampleID",
 				Provider: Youtube,
+				Type:     Album,
 			},
 		},
 		{
@@ -374,12 +262,13 @@ func TestYoutubeAdapter_GetAlbum(t *testing.T) {
 					},
 				},
 			},
-			expectedAlbum: &Album{
+			expectedAlbum: &Entity{
 				ID:       "sampleID",
 				Title:    "sample album",
 				Artist:   "Album",
 				URL:      "https://www.youtube.com/playlist?list=sampleID",
 				Provider: Youtube,
+				Type:     Album,
 			},
 		},
 		{
@@ -396,7 +285,7 @@ func TestYoutubeAdapter_GetAlbum(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
 
-			result, err := a.GetAlbum(ctx, tt.id)
+			result, err := a.FetchAlbum(ctx, tt.id)
 
 			require.NoError(t, err)
 			require.Equal(t, tt.expectedAlbum, result)
@@ -410,7 +299,7 @@ func TestYoutubeAdapter_SearchAlbum(t *testing.T) {
 		artistName        string
 		searchName        string
 		youtubeClientMock youtubeClientMock
-		expectedAlbum     *Album
+		expectedAlbum     *Entity
 	}{
 		{
 			name:       "found query",
@@ -424,12 +313,13 @@ func TestYoutubeAdapter_SearchAlbum(t *testing.T) {
 					},
 				},
 			},
-			expectedAlbum: &Album{
+			expectedAlbum: &Entity{
 				ID:       "sampleID",
 				Title:    "sample album",
 				Artist:   "sample artist",
 				URL:      "https://www.youtube.com/playlist?list=sampleID",
 				Provider: Youtube,
+				Type:     Album,
 			},
 		},
 		{

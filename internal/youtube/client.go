@@ -25,6 +25,14 @@ type HTTPClient struct {
 	httpClient *http.Client
 }
 
+type ClientOption func(client *HTTPClient)
+
+func WithAPIURL(url string) ClientOption {
+	return func(client *HTTPClient) {
+		client.apiURL = url
+	}
+}
+
 type getSnippetResponse struct {
 	Items []*getSnippetItem `json:"items"`
 }
@@ -50,6 +58,13 @@ type searchSnippetID struct {
 
 type getPlaylistItemsResponse struct {
 	Items []*getSnippetItem `json:"items"`
+}
+
+type snippet struct {
+	Title                  string `json:"title"`
+	ChannelTitle           string `json:"channelTitle"`
+	Description            string `json:"description"`
+	VideoOwnerChannelTitle string `json:"videoOwnerChannelTitle"`
 }
 
 func NewHTTPClient(apiKey string, opts ...ClientOption) *HTTPClient {
@@ -219,4 +234,11 @@ func (c *HTTPClient) getWithKey(ctx context.Context, path string, values url.Val
 	}
 
 	return io.ReadAll(response.Body)
+}
+
+func (s *snippet) ownerChannelTitle() string {
+	if s.VideoOwnerChannelTitle != "" {
+		return s.VideoOwnerChannelTitle
+	}
+	return s.ChannelTitle
 }

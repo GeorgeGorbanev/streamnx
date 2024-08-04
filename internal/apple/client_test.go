@@ -11,18 +11,18 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestHTTPClient_GetTrack(t *testing.T) {
+func TestHTTPClient_FetchTrack(t *testing.T) {
 	tests := []struct {
 		name       string
 		trackID    string
 		storeFront string
-		want       *MusicEntity
+		want       *Entity
 	}{
 		{
 			name:       "when track found",
 			trackID:    "foundId",
 			storeFront: "us",
-			want: &MusicEntity{
+			want: &Entity{
 				ID: "foundID",
 				Attributes: Attributes{
 					ArtistName: "sampleArtistName",
@@ -77,7 +77,7 @@ func TestHTTPClient_GetTrack(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
 
-			result, err := client.GetTrack(ctx, tt.trackID, tt.storeFront)
+			result, err := client.FetchTrack(ctx, tt.trackID, tt.storeFront)
 			require.NoError(t, err)
 			require.Equal(t, tt.want, result)
 		})
@@ -89,13 +89,13 @@ func TestHTTPClient_SearchTrack(t *testing.T) {
 		name       string
 		artistName string
 		trackName  string
-		want       *MusicEntity
+		want       *Entity
 	}{
 		{
 			name:       "when track found",
 			artistName: "foundArtistName",
 			trackName:  "foundTrackName",
-			want: &MusicEntity{
+			want: &Entity{
 				ID: "foundID",
 				Attributes: Attributes{
 					ArtistName: "sampleArtistName",
@@ -191,18 +191,18 @@ func TestHTTPClient_SearchTrack(t *testing.T) {
 	}
 }
 
-func TestHTTPClient_GetAlbum(t *testing.T) {
+func TestHTTPClient_FetchAlbum(t *testing.T) {
 	tests := []struct {
 		name       string
 		albumID    string
 		storeFront string
-		want       *MusicEntity
+		want       *Entity
 	}{
 		{
 			name:       "when album found",
 			albumID:    "foundId",
 			storeFront: "us",
-			want: &MusicEntity{
+			want: &Entity{
 				ID: "foundID",
 				Attributes: Attributes{
 					ArtistName: "sampleArtistName",
@@ -257,7 +257,7 @@ func TestHTTPClient_GetAlbum(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
 
-			result, err := client.GetAlbum(ctx, tt.albumID, tt.storeFront)
+			result, err := client.FetchAlbum(ctx, tt.albumID, tt.storeFront)
 			require.NoError(t, err)
 			require.Equal(t, tt.want, result)
 		})
@@ -269,13 +269,13 @@ func TestHTTPClient_SearchAlbum(t *testing.T) {
 		name       string
 		artistName string
 		albumName  string
-		want       *MusicEntity
+		want       *Entity
 	}{
 		{
 			name:       "when album found",
 			artistName: "foundArtistName",
 			albumName:  "foundAlbumName",
-			want: &MusicEntity{
+			want: &Entity{
 				ID: "foundID",
 				Attributes: Attributes{
 					ArtistName: "sampleArtistName",

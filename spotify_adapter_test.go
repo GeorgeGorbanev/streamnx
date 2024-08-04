@@ -6,225 +6,75 @@ import (
 	"time"
 
 	"github.com/GeorgeGorbanev/streaminx/internal/spotify"
+
 	"github.com/stretchr/testify/require"
 )
 
-type spotifyClientMock struct{}
+type spotifyClientMock struct {
+	fetchTrack  map[string]*spotify.Track
+	fetchAlbum  map[string]*spotify.Album
+	searchTrack map[string]map[string]*spotify.Track
+	searchAlbum map[string]map[string]*spotify.Album
+}
 
-func (c *spotifyClientMock) GetTrack(_ context.Context, id string) (*spotify.Track, error) {
-	if id != "sampleID" {
-		return nil, nil
-	}
-	return &spotify.Track{
-		ID:   id,
-		Name: "sample name",
-		Artists: []spotify.Artist{
-			{Name: "sample artist"},
-		},
-	}, nil
+func (c *spotifyClientMock) FetchTrack(_ context.Context, id string) (*spotify.Track, error) {
+	return c.fetchTrack[id], nil
 }
 
 func (c *spotifyClientMock) SearchTrack(_ context.Context, artistName, trackName string) (*spotify.Track, error) {
-	if artistName != "sample artist" || trackName != "sample name" {
-		return nil, nil
+	if tracks, ok := c.searchTrack[artistName]; ok {
+		return tracks[trackName], nil
 	}
-
-	return &spotify.Track{
-		ID:   "sampleID",
-		Name: "sample name",
-		Artists: []spotify.Artist{
-			{Name: "sample artist"},
-		},
-	}, nil
+	return nil, nil
 }
 
-func (c *spotifyClientMock) GetAlbum(_ context.Context, id string) (*spotify.Album, error) {
-	if id != "sampleID" {
-		return nil, nil
-	}
-	return &spotify.Album{
-		ID:   id,
-		Name: "sample name",
-		Artists: []spotify.Artist{
-			{Name: "sample artist"},
-		},
-	}, nil
+func (c *spotifyClientMock) FetchAlbum(_ context.Context, id string) (*spotify.Album, error) {
+	return c.fetchAlbum[id], nil
 }
 
 func (c *spotifyClientMock) SearchAlbum(_ context.Context, artistName, albumName string) (*spotify.Album, error) {
-	if artistName != "sample artist" || albumName != "sample name" {
-		return nil, nil
+	if albums, ok := c.searchAlbum[artistName]; ok {
+		return albums[albumName], nil
 	}
-	return &spotify.Album{
-		ID:   "sampleID",
-		Name: "sample name",
-		Artists: []spotify.Artist{
-			{Name: "sample artist"},
-		},
-	}, nil
+	return nil, nil
 }
 
-func TestSpotifyAdapter_DetectTrackID(t *testing.T) {
-	tests := []struct {
-		name          string
-		inputURL      string
-		expected      string
-		expectedError error
-	}{
-		{
-			name:     "Valid URL",
-			inputURL: "https://open.spotify.com/track/7uv632EkfwYhXoqf8rhYrg",
-			expected: "7uv632EkfwYhXoqf8rhYrg",
-		},
-		{
-			name:          "Invalid URL - Album",
-			inputURL:      "https://open.spotify.com/album/3hARuIUZqAIAKSuNvW5dGh",
-			expected:      "",
-			expectedError: IDNotFoundError,
-		},
-		{
-			name:          "Empty URL",
-			inputURL:      "",
-			expected:      "",
-			expectedError: IDNotFoundError,
-		},
-		{
-			name:          "Non-Spotify URL",
-			inputURL:      "https://example.com/track/7uv632EkfwYhXoqf8rhYrg",
-			expected:      "",
-			expectedError: IDNotFoundError,
-		},
-		{
-			name:          "URL without ID",
-			inputURL:      "https://open.spotify.com/track/",
-			expected:      "",
-			expectedError: IDNotFoundError,
-		},
-		{
-			name:     "Valid URL with query",
-			inputURL: "https://open.spotify.com/track/7uv632EkfwYhXoqf8rhYrg?test=123",
-			expected: "7uv632EkfwYhXoqf8rhYrg",
-		},
-		{
-			name:     "Valid URL with intl path",
-			inputURL: "https://open.spotify.com/intl-pt/track/2xmQMKTjiOdkdGVgqDzezo",
-			expected: "2xmQMKTjiOdkdGVgqDzezo",
-		},
-		{
-			name:     "Valid URL with intl path and query",
-			inputURL: "https://open.spotify.com/intl-pt/track/2xmQMKTjiOdkdGVgqDzezo?sample=query",
-			expected: "2xmQMKTjiOdkdGVgqDzezo",
-		},
-		{
-			name:     "Valid URL with prefix and suffix",
-			inputURL: "prefix https://open.spotify.com/track/7uv632EkfwYhXoqf8rhYrg?test=123 suffix",
-			expected: "7uv632EkfwYhXoqf8rhYrg",
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			adapter := newSpotifyAdapter(nil)
-			result, err := adapter.DetectTrackID(tt.inputURL)
-			require.Equal(t, tt.expected, result)
-
-			if tt.expectedError != nil {
-				require.ErrorAs(t, err, &tt.expectedError)
-			} else {
-				require.NoError(t, err)
-			}
-		})
-	}
-}
-
-func TestSpotifyAdapter_DetectAlbumID(t *testing.T) {
-	tests := []struct {
-		name          string
-		inputURL      string
-		expected      string
-		expectedError error
-	}{
-		{
-			name:     "Valid URL",
-			inputURL: "https://open.spotify.com/album/7uv632EkfwYhXoqf8rhYrg",
-			expected: "7uv632EkfwYhXoqf8rhYrg",
-		},
-		{
-			name:     "Valid URL with intl path",
-			inputURL: "https://open.spotify.com/intl-pt/album/7uv632EkfwYhXoqf8rhYrg",
-			expected: "7uv632EkfwYhXoqf8rhYrg",
-		},
-		{
-			name:          "Invalid URL - Track",
-			inputURL:      "https://open.spotify.com/track/3hARuIUZqAIAKSuNvW5dGh",
-			expected:      "",
-			expectedError: IDNotFoundError,
-		},
-		{
-			name:          "Empty URL",
-			inputURL:      "",
-			expected:      "",
-			expectedError: IDNotFoundError,
-		},
-		{
-			name:          "Non-Spotify URL",
-			inputURL:      "https://example.com/album/7uv632EkfwYhXoqf8rhYrg",
-			expected:      "",
-			expectedError: IDNotFoundError,
-		},
-		{
-			name:          "URL without ID",
-			inputURL:      "https://open.spotify.com/album/",
-			expected:      "",
-			expectedError: IDNotFoundError,
-		},
-		{
-			name:     "Valid URL with query",
-			inputURL: "https://open.spotify.com/album/7uv632EkfwYhXoqf8rhYrg?test=123",
-			expected: "7uv632EkfwYhXoqf8rhYrg",
-		},
-		{
-			name:     "Valid URL with prefix and suffix",
-			inputURL: "prefix https://open.spotify.com/album/7uv632EkfwYhXoqf8rhYrg?test=123 suffix",
-			expected: "7uv632EkfwYhXoqf8rhYrg",
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			adapter := newSpotifyAdapter(nil)
-			result, err := adapter.DetectAlbumID(tt.inputURL)
-			require.Equal(t, tt.expected, result)
-
-			if tt.expectedError != nil {
-				require.ErrorAs(t, err, &tt.expectedError)
-			} else {
-				require.NoError(t, err)
-			}
-		})
-	}
-}
-
-func TestSpotifyAdapter_GetTrack(t *testing.T) {
+func TestSpotifyAdapter_FetchTrack(t *testing.T) {
 	tests := []struct {
 		name          string
 		id            string
-		expectedTrack *Track
+		clientMock    *spotifyClientMock
+		expectedTrack *Entity
 	}{
 		{
 			name: "found ID",
 			id:   "sampleID",
-			expectedTrack: &Track{
+			clientMock: &spotifyClientMock{
+				fetchTrack: map[string]*spotify.Track{
+					"sampleID": {
+						ID:   "sampleID",
+						Name: "sample name",
+						Artists: []spotify.Artist{
+							{
+								Name: "sample artist",
+							},
+						},
+					},
+				},
+			},
+			expectedTrack: &Entity{
 				ID:       "sampleID",
 				Title:    "sample name",
 				Artist:   "sample artist",
 				URL:      "https://open.spotify.com/track/sampleID",
 				Provider: Spotify,
+				Type:     Track,
 			},
 		},
 		{
 			name:          "not found ID",
 			id:            "notFoundID",
+			clientMock:    &spotifyClientMock{},
 			expectedTrack: nil,
 		},
 	}
@@ -233,9 +83,8 @@ func TestSpotifyAdapter_GetTrack(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
 
-			a := newSpotifyAdapter(&spotifyClientMock{})
-
-			result, err := a.GetTrack(ctx, tt.id)
+			a := newSpotifyAdapter(tt.clientMock)
+			result, err := a.FetchTrack(ctx, tt.id)
 
 			require.NoError(t, err)
 			require.Equal(t, tt.expectedTrack, result)
@@ -248,24 +97,42 @@ func TestSpotifyAdapter_SearchTrack(t *testing.T) {
 		name          string
 		artistName    string
 		searchName    string
-		expectedTrack *Track
+		clientMock    *spotifyClientMock
+		expectedTrack *Entity
 	}{
 		{
 			name:       "found query",
 			artistName: "sample artist",
 			searchName: "sample name",
-			expectedTrack: &Track{
+			clientMock: &spotifyClientMock{
+				searchTrack: map[string]map[string]*spotify.Track{
+					"sample artist": {
+						"sample name": {
+							ID:   "sampleID",
+							Name: "sample name",
+							Artists: []spotify.Artist{
+								{
+									Name: "sample artist",
+								},
+							},
+						},
+					},
+				},
+			},
+			expectedTrack: &Entity{
 				ID:       "sampleID",
 				Title:    "sample name",
 				Artist:   "sample artist",
 				URL:      "https://open.spotify.com/track/sampleID",
 				Provider: Spotify,
+				Type:     Track,
 			},
 		},
 		{
 			name:          "not found query",
 			artistName:    "not found artist",
 			searchName:    "not found name",
+			clientMock:    &spotifyClientMock{},
 			expectedTrack: nil,
 		},
 	}
@@ -274,8 +141,7 @@ func TestSpotifyAdapter_SearchTrack(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
 
-			a := newSpotifyAdapter(&spotifyClientMock{})
-
+			a := newSpotifyAdapter(tt.clientMock)
 			result, err := a.SearchTrack(ctx, tt.artistName, tt.searchName)
 
 			require.NoError(t, err)
@@ -284,26 +150,42 @@ func TestSpotifyAdapter_SearchTrack(t *testing.T) {
 	}
 }
 
-func TestSpotifyAdapter_GetAlbum(t *testing.T) {
+func TestSpotifyAdapter_FetchAlbum(t *testing.T) {
 	tests := []struct {
 		name          string
 		id            string
-		expectedTrack *Album
+		clientMock    *spotifyClientMock
+		expectedTrack *Entity
 	}{
 		{
 			name: "found ID",
 			id:   "sampleID",
-			expectedTrack: &Album{
+			clientMock: &spotifyClientMock{
+				fetchAlbum: map[string]*spotify.Album{
+					"sampleID": {
+						ID:   "sampleID",
+						Name: "sample name",
+						Artists: []spotify.Artist{
+							{
+								Name: "sample artist",
+							},
+						},
+					},
+				},
+			},
+			expectedTrack: &Entity{
 				ID:       "sampleID",
 				Title:    "sample name",
 				Artist:   "sample artist",
 				URL:      "https://open.spotify.com/album/sampleID",
 				Provider: Spotify,
+				Type:     Album,
 			},
 		},
 		{
 			name:          "not found ID",
 			id:            "notFoundID",
+			clientMock:    &spotifyClientMock{},
 			expectedTrack: nil,
 		},
 	}
@@ -312,9 +194,8 @@ func TestSpotifyAdapter_GetAlbum(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
 
-			a := newSpotifyAdapter(&spotifyClientMock{})
-
-			result, err := a.GetAlbum(ctx, tt.id)
+			a := newSpotifyAdapter(tt.clientMock)
+			result, err := a.FetchAlbum(ctx, tt.id)
 
 			require.NoError(t, err)
 			require.Equal(t, tt.expectedTrack, result)
@@ -327,24 +208,42 @@ func TestSpotifyAdapter_SearchAlbum(t *testing.T) {
 		name          string
 		artistName    string
 		searchName    string
-		expectedTrack *Album
+		clientMock    *spotifyClientMock
+		expectedTrack *Entity
 	}{
 		{
 			name:       "found query",
 			artistName: "sample artist",
 			searchName: "sample name",
-			expectedTrack: &Album{
+			clientMock: &spotifyClientMock{
+				searchAlbum: map[string]map[string]*spotify.Album{
+					"sample artist": {
+						"sample name": {
+							ID:   "sampleID",
+							Name: "sample name",
+							Artists: []spotify.Artist{
+								{
+									Name: "sample artist",
+								},
+							},
+						},
+					},
+				},
+			},
+			expectedTrack: &Entity{
 				ID:       "sampleID",
 				Title:    "sample name",
 				Artist:   "sample artist",
 				URL:      "https://open.spotify.com/album/sampleID",
 				Provider: Spotify,
+				Type:     Album,
 			},
 		},
 		{
 			name:          "not found query",
 			artistName:    "not found artist",
 			searchName:    "not found name",
+			clientMock:    &spotifyClientMock{},
 			expectedTrack: nil,
 		},
 	}
@@ -353,8 +252,7 @@ func TestSpotifyAdapter_SearchAlbum(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
 
-			a := newSpotifyAdapter(&spotifyClientMock{})
-
+			a := newSpotifyAdapter(tt.clientMock)
 			result, err := a.SearchAlbum(ctx, tt.artistName, tt.searchName)
 
 			require.NoError(t, err)

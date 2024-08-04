@@ -1,4 +1,4 @@
-package streaminx
+package streamnx
 
 const (
 	Track EntityType = "track"

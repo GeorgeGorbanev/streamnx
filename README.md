@@ -1,7 +1,7 @@
-# Streaminx
+# Streamnx
 
-Streaminx is a library that unifies interactions with various music streaming links into a single system.
-With Streaminx, you can integrate platforms such as Apple Music, Spotify, YouTube and Yandex Music into your applications using a unified interface for searching and retrieving data about tracks and albums.
+Streamnx is a library that unifies interactions with various music streaming links into a single system.
+With Streamnx, you can integrate platforms such as Apple Music, Spotify, YouTube and Yandex Music into your applications using a unified interface for searching and retrieving data about tracks and albums.
 
 - [Motivation](#motivation)
 - [Providers Supported](#providers-supported)
@@ -24,7 +24,7 @@ The main user of this library is the Telegram bot [Vibeshare](https://t.me/vibes
 This bot helps users to share song links from the streaming services they use, enabling others to listen to the same songs on different platforms.
 Therefore, the primary use case for this library is *converting links* from one service to another.
 
-## Providers Supported
+## Supported services
 
 The library supports the following music streaming services
 - Apple Music
@@ -34,27 +34,27 @@ The library supports the following music streaming services
 
 ## Installation
 
-You can install the Streaminx library by running the following command in your terminal:
+You can install the Streamnx library by running the following command in your terminal:
 
 ``` bash
-go get github.com/GeorgeGorbanev/streaminx
+go get github.com/GeorgeGorbanev/streamnx
 ```
 
 To include lib in your project, import it in your Go source file:
 
 ``` golang
-import "github.com/GeorgeGorbanev/streaminx"
+import "github.com/GeorgeGorbanev/streamnx"
 ```
 
 ## Configuration
 
-To configure Streaminx, you need to set up the necessary credentials and API keys for the supported music streaming services.
+To configure streamnx, you need to set up the necessary credentials and API keys for the supported music streaming services.
 Here are the steps to configure the library:
 
 1) *Google Translator API.* Obtain the Google Translator API key and project ID from the [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
 2) *YouTube API*. Obtain the YouTube API key from the [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
 3) *Spotify*. Register your application and obtain the Client ID with Client Secret on the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard).
-4) *Build registry*. When you have all the necessary credentials, you can initialize the Streaminx *registry* with the following code.
+4) *Build registry*. When you have all the necessary credentials, you can initialize the streamnx *registry* with the following code.
 
 ``` golang
 package main
@@ -62,12 +62,12 @@ package main
 import (
     "context"
 
-    "github.com/GeorgeGorbanev/streaminx"
+    "github.com/GeorgeGorbanev/streamnx"
 )
 
 func main() {
     ctx := context.Background()
-    registry, err := streaminx.NewRegistry(ctx, streaminx.Credentials{
+    registry, err := streamnx.NewRegistry(ctx, streamnx.Credentials{
         GoogleTranslatorAPIKeyJSON: "[your google translator api key json]",
         GoogleTranslatorProjectID:  "[your google translator project id]",
         YoutubeAPIKey:              "[your youtube api key]",
@@ -91,17 +91,17 @@ Here is an example of how to convert a link from Apple to Spotify:
 ``` golang
 
 func appleTrackToSpotify(ctx context.Context, link string) (string, error) {
-    parsedLink, err := streaminx.ParseLink(link)
+    parsedLink, err := streamnx.ParseLink(link)
     if err != nil {
         // Handle error
     }
         
-    track, err := registry.Fetch(ctx, streaminx.Apple, streaminx.Track, parsedLink.ID)
+    track, err := registry.Fetch(ctx, streamnx.Apple, streamnx.Track, parsedLink.ID)
     if err != nil {
         // Handle error
     }
 
-    converted, err := registry.Search(ctx, streaminx.Spotify, streaminx.Track, track.Artist, track.Name)
+    converted, err := registry.Search(ctx, streamnx.Spotify, streamnx.Track, track.Artist, track.Name)
     if err != nil {
         // Handle error
     }
@@ -120,7 +120,7 @@ func appleTrackToSpotify(ctx context.Context, link string) (string, error) {
 The purpose of the `Registry` is to provide a unified interface for working with streaming services by HTTP API.
 
 It implements two main methods:
-```golang
+``` golang
 // Fetch(...) – allows to get entities by their ID
 entity, err := registry.Fetch(ctx, provider, entityType, entityID)
 
@@ -136,7 +136,7 @@ This methods requires to specify the *provider*, the *entity type* and *identifi
 
 All providers are accessible via the `Providers` enum:
 ``` golang
-for _, provider := range streaminx.Providers {
+for _, provider := range streamnx.Providers {
     fmt.Println(provider.Name())
 }
 
@@ -145,7 +145,7 @@ for _, provider := range streaminx.Providers {
 It implements following methods:
 
 ``` golang
-p := streaminx.Apple
+p := streamnx.Apple
 
 p.Name()  
 // => "Apple" 
@@ -173,8 +173,8 @@ albumID, err := p.DetectAlbumID("https://music.apple.com/us/album/album-name/123
 When you need to define a provider in runtime, you can use the `FindProviderByCode(string)` method:
 
 ``` golang
-provider := streaminx.FindProviderByCode("ap")
-// => streaminx.Apple
+provider := streamnx.FindProviderByCode("ap")
+// => streamnx.Apple
 
 ```
 
@@ -185,10 +185,10 @@ provider := streaminx.FindProviderByCode("ap")
 For now, it has two values: `Track` and `Album`.
 
 ``` golang
-streaminx.Track
+streamnx.Track
 // => "track"
 
-streaminx.Album
+streamnx.Album
 // => "album"
 ```
 
@@ -227,11 +227,11 @@ type Link struct {
 It is returned by the `ParseLink` method:
 
 ``` golang          
-link, err := streaminx.ParseLink("https://music.apple.com/us/album/song-name/1234?i=4567")
+link, err := streamnx.ParseLink("https://music.apple.com/us/album/song-name/1234?i=4567")
 // => Link{
 //      URL: "https://music.apple.com/us/album/song-name/1234?i=4567", 
-//      Provider: streaminx.Apple,
-//      Type: streaminx.Track,
+//      Provider: streamnx.Apple,
+//      Type: streamnx.Track,
 //      ID: "4567",
 //  }, nil
 ```
@@ -240,39 +240,39 @@ link, err := streaminx.ParseLink("https://music.apple.com/us/album/song-name/123
 
 For testing purposes, you can use the `RegistryOption`.
 
-Implement `streaminx.Adapter` interface for provider you want to mock and pass it to `streaminx.NewRegistry` function:
+Implement `streamnx.Adapter` interface for provider you want to mock and pass it to `streamnx.NewRegistry` function:
 
 ``` golang
-registry, err := streaminx.NewRegistry(
+registry, err := streamnx.NewRegistry(
     ctx,
-    streaminx.Credentials{},
-    streaminx.WithProviderAdapter(streaminx.Apple, appleAdapterMock),
-    streaminx.WithProviderAdapter(...)
+    streamnx.Credentials{},
+    streamnx.WithProviderAdapter(streamnx.Apple, appleAdapterMock),
+    streamnx.WithProviderAdapter(...)
 }
 ```
 
 Or if you want to go further and mock HTTP calls:
 
 ``` golang
-registry, err := streaminx.NewRegistry(
+registry, err := streamnx.NewRegistry(
     ctx,
-    streaminx.Credentials{},
-    streaminx.WithAppleAPIURL(appleAPIServerMock.URL),
-    streaminx.WithAppleWebPlayerURL(appleWebPlayerServerMock.URL),
-    streaminx.WithSpotifyAuthURL(spotifyAuthServerMock.URL),
-    streaminx.WithSpotifyAPIURL(spotifyAPIServerMock.URL),
-    streaminx.WithYandexAPIURL(yandexMockServer.URL),
-    streaminx.WithYoutubeAPIURL(youtubeMockServer.URL),
+    streamnx.Credentials{},
+    streamnx.WithAppleAPIURL(appleAPIServerMock.URL),
+    streamnx.WithAppleWebPlayerURL(appleWebPlayerServerMock.URL),
+    streamnx.WithSpotifyAuthURL(spotifyAuthServerMock.URL),
+    streamnx.WithSpotifyAPIURL(spotifyAPIServerMock.URL),
+    streamnx.WithYandexAPIURL(yandexMockServer.URL),
+    streamnx.WithYoutubeAPIURL(youtubeMockServer.URL),
 }
 ```
 
 To mock translator calls you also have option too:
 
 ``` golang
-registry, err := streaminx.NewRegistry(
+registry, err := streamnx.NewRegistry(
     ctx,
-    streaminx.Credentials{},
-    streaminx.WithGoogleTranslatorURL(translatorMockServer.URL),
+    streamnx.Credentials{},
+    streamnx.WithGoogleTranslatorURL(translatorMockServer.URL),
 }
 ```
 

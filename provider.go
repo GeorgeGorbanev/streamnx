@@ -1,10 +1,10 @@
-package streaminx
+package streamnx
 
 import (
-	"github.com/GeorgeGorbanev/streaminx/internal/apple"
-	"github.com/GeorgeGorbanev/streaminx/internal/spotify"
-	"github.com/GeorgeGorbanev/streaminx/internal/yandex"
-	"github.com/GeorgeGorbanev/streaminx/internal/youtube"
+	"github.com/GeorgeGorbanev/streamnx/internal/apple"
+	"github.com/GeorgeGorbanev/streamnx/internal/spotify"
+	"github.com/GeorgeGorbanev/streamnx/internal/yandex"
+	"github.com/GeorgeGorbanev/streamnx/internal/youtube"
 )
 
 var (

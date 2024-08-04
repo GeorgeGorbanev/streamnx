@@ -1,8 +1,8 @@
-package streaminx
+package streamnx
 
 import (
-	"github.com/GeorgeGorbanev/streaminx/internal/spotify"
-	"github.com/GeorgeGorbanev/streaminx/internal/translator"
+	"github.com/GeorgeGorbanev/streamnx/internal/spotify"
+	"github.com/GeorgeGorbanev/streamnx/internal/translator"
 )
 
 type Credentials struct {

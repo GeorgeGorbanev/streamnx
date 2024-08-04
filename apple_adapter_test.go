@@ -1,11 +1,11 @@
-package streaminx
+package streamnx
 
 import (
 	"context"
 	"testing"
 	"time"
 
-	"github.com/GeorgeGorbanev/streaminx/internal/apple"
+	"github.com/GeorgeGorbanev/streamnx/internal/apple"
 
 	"github.com/stretchr/testify/require"
 )

@@ -1,4 +1,4 @@
-package streaminx
+package streamnx
 
 import (
 	"context"
@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/GeorgeGorbanev/streaminx/internal/translator"
-	"github.com/GeorgeGorbanev/streaminx/internal/yandex"
+	"github.com/GeorgeGorbanev/streamnx/internal/translator"
+	"github.com/GeorgeGorbanev/streamnx/internal/yandex"
 )
 
 type YandexAdapter struct {

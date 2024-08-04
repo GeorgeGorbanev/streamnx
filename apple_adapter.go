@@ -1,11 +1,11 @@
-package streaminx
+package streamnx
 
 import (
 	"context"
 	"errors"
 	"fmt"
 
-	"github.com/GeorgeGorbanev/streaminx/internal/apple"
+	"github.com/GeorgeGorbanev/streamnx/internal/apple"
 )
 
 type AppleAdapter struct {

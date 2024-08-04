@@ -1,11 +1,11 @@
-package streaminx
+package streamnx
 
 import (
 	"context"
 	"testing"
 	"time"
 
-	"github.com/GeorgeGorbanev/streaminx/internal/youtube"
+	"github.com/GeorgeGorbanev/streamnx/internal/youtube"
 
 	"github.com/stretchr/testify/require"
 )

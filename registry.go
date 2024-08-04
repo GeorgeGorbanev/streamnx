@@ -1,15 +1,15 @@
-package streaminx
+package streamnx
 
 import (
 	"context"
 	"errors"
 	"fmt"
 
-	"github.com/GeorgeGorbanev/streaminx/internal/apple"
-	"github.com/GeorgeGorbanev/streaminx/internal/spotify"
-	"github.com/GeorgeGorbanev/streaminx/internal/translator"
-	"github.com/GeorgeGorbanev/streaminx/internal/yandex"
-	"github.com/GeorgeGorbanev/streaminx/internal/youtube"
+	"github.com/GeorgeGorbanev/streamnx/internal/apple"
+	"github.com/GeorgeGorbanev/streamnx/internal/spotify"
+	"github.com/GeorgeGorbanev/streamnx/internal/translator"
+	"github.com/GeorgeGorbanev/streamnx/internal/yandex"
+	"github.com/GeorgeGorbanev/streamnx/internal/youtube"
 )
 
 var (

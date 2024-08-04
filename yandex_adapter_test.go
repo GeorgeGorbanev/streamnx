@@ -1,11 +1,11 @@
-package streaminx
+package streamnx
 
 import (
 	"context"
 	"testing"
 	"time"
 
-	"github.com/GeorgeGorbanev/streaminx/internal/yandex"
+	"github.com/GeorgeGorbanev/streamnx/internal/yandex"
 
 	"github.com/stretchr/testify/require"
 )

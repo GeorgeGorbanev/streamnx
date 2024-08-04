@@ -1,4 +1,4 @@
-package streaminx
+package streamnx
 
 import (
 	"testing"

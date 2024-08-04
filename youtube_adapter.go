@@ -1,4 +1,4 @@
-package streaminx
+package streamnx
 
 import (
 	"context"
@@ -7,7 +7,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/GeorgeGorbanev/streaminx/internal/youtube"
+	"github.com/GeorgeGorbanev/streamnx/internal/youtube"
 )
 
 type YoutubeAdapter struct {

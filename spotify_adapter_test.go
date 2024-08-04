@@ -1,11 +1,11 @@
-package streaminx
+package streamnx
 
 import (
 	"context"
 	"testing"
 	"time"
 
-	"github.com/GeorgeGorbanev/streaminx/internal/spotify"
+	"github.com/GeorgeGorbanev/streamnx/internal/spotify"
 
 	"github.com/stretchr/testify/require"
 )

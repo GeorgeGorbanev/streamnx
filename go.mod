@@ -1,4 +1,4 @@
-module github.com/GeorgeGorbanev/streaminx
+module github.com/GeorgeGorbanev/streamnx
 
 go 1.21.5
 

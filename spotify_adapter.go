@@ -1,11 +1,11 @@
-package streaminx
+package streamnx
 
 import (
 	"context"
 	"errors"
 	"fmt"
 
-	"github.com/GeorgeGorbanev/streaminx/internal/spotify"
+	"github.com/GeorgeGorbanev/streamnx/internal/spotify"
 )
 
 type SpotifyAdapter struct {

@@ -50,6 +50,15 @@ type albumsSection struct {
 	Items []*Album `json:"items"`
 }
 
+type apiError struct {
+	Status  int    `json:"status"`
+	Message string `json:"message"`
+}
+
+type errorResponse struct {
+	Error apiError `json:"error"`
+}
+
 func NewHTTPClient(credentials *Credentials, opts ...ClientOption) *HTTPClient {
 	c := HTTPClient{
 		authURL:     defaultAuthURL,
@@ -172,6 +181,14 @@ func (c *HTTPClient) getAPI(ctx context.Context, path string, query url.Values) 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, fmt.Errorf("failed to read response body: %w", err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		er := errorResponse{}
+		if err := json.Unmarshal(body, &er); err != nil {
+			return nil, fmt.Errorf("failed to load error response")
+		}
+		return nil, fmt.Errorf("unexpected API response: %d %s", er.Error.Status, er.Error.Message)
 	}
 
 	return body, nil

@@ -335,6 +335,42 @@ func TestHTTPClient_RefreshTokenWhenUnauthorized(t *testing.T) {
 	}, track)
 }
 
+func TestHTTPClient_APIError(t *testing.T) {
+	mockAuthServer := newAuthServerMock(t)
+	defer mockAuthServer.Close()
+
+	mockAPIServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		require.Equal(t, http.MethodGet, r.Method)
+
+		authorization := r.Header.Get("Authorization")
+		require.Equal(t, authorization, "Bearer mock_access_token")
+		require.Equal(t, r.URL.Path, "/v1/tracks/sampletrackid")
+		w.WriteHeader(http.StatusForbidden)
+		_, err := w.Write([]byte(`{
+			"error" : {
+				"status" : 403,
+				"message" : "Spotify is unavailable in this country"
+			}
+		}`))
+		require.NoError(t, err)
+	}))
+	defer mockAPIServer.Close()
+
+	client := NewHTTPClient(
+		&sampleCredentials,
+		WithAuthURL(mockAuthServer.URL),
+		WithAPIURL(mockAPIServer.URL),
+	)
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	track, err := client.FetchTrack(ctx, "sampletrackid")
+	require.Errorf(t, err,
+		"failed to send request: unexpected API response: 403 Spotify is unavailable in this country")
+	require.Nil(t, track)
+}
+
 func newAuthServerMock(t *testing.T) *httptest.Server {
 	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		require.Equal(t, http.MethodPost, r.Method)

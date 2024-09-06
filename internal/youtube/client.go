@@ -31,14 +31,6 @@ type HTTPClient struct {
 	httpClient *http.Client
 }
 
-type ClientOption func(client *HTTPClient)
-
-func WithAPIURL(url string) ClientOption {
-	return func(client *HTTPClient) {
-		client.apiURL = url
-	}
-}
-
 type getSnippetResponse struct {
 	Items []*getSnippetItem `json:"items"`
 }

@@ -1,6 +1,8 @@
 package streamnx
 
 import (
+	"net/http"
+
 	"github.com/GeorgeGorbanev/streamnx/internal/apple"
 	"github.com/GeorgeGorbanev/streamnx/internal/spotify"
 	"github.com/GeorgeGorbanev/streamnx/internal/translator"
@@ -62,5 +64,29 @@ func WithYandexAPIURL(url string) RegistryOption {
 func WithYoutubeAPIURL(url string) RegistryOption {
 	return func(r *Registry) {
 		r.clientOptions.youtube = append(r.clientOptions.youtube, youtube.WithAPIURL(url))
+	}
+}
+
+func WithAppleHTTPTransport(transport *http.Transport) RegistryOption {
+	return func(r *Registry) {
+		r.clientOptions.apple = append(r.clientOptions.apple, apple.WithHTTPTransport(transport))
+	}
+}
+
+func WithSpotifyHTTPTransport(transport *http.Transport) RegistryOption {
+	return func(r *Registry) {
+		r.clientOptions.spotify = append(r.clientOptions.spotify, spotify.WithHTTPTransport(transport))
+	}
+}
+
+func WithYandexHTTPTransport(transport *http.Transport) RegistryOption {
+	return func(r *Registry) {
+		r.clientOptions.yandex = append(r.clientOptions.yandex, yandex.WithHTTPTransport(transport))
+	}
+}
+
+func WithYoutubeHTTPTransport(transport *http.Transport) RegistryOption {
+	return func(r *Registry) {
+		r.clientOptions.youtube = append(r.clientOptions.youtube, youtube.WithHTTPTransport(transport))
 	}
 }

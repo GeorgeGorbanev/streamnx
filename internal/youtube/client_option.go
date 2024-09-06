@@ -1,4 +1,4 @@
-package yandex
+package youtube
 
 import "net/http"
 

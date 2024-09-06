@@ -1,5 +1,7 @@
 package spotify
 
+import "net/http"
+
 type ClientOption func(client *HTTPClient)
 
 func WithAuthURL(url string) ClientOption {
@@ -11,5 +13,11 @@ func WithAuthURL(url string) ClientOption {
 func WithAPIURL(url string) ClientOption {
 	return func(client *HTTPClient) {
 		client.apiURL = url
+	}
+}
+
+func WithHTTPTransport(transport *http.Transport) ClientOption {
+	return func(client *HTTPClient) {
+		client.httpClient.Transport = transport
 	}
 }

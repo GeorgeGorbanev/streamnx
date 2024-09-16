@@ -217,13 +217,12 @@ func (c *HTTPClient) getWithKey(ctx context.Context, path string, values url.Val
 		return nil, fmt.Errorf("failed to perform get request: %w", err)
 	}
 	defer response.Body.Close()
-	b, err := io.ReadAll(response.Body)
 
 	if response.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("non ok http status: %d", response.StatusCode)
 	}
 
-	return b, err
+	return io.ReadAll(response.Body)
 }
 
 func (s *snippet) ownerChannelTitle() string {

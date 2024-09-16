@@ -3,6 +3,7 @@ package youtube
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -14,14 +15,14 @@ const (
 )
 
 var (
-	NotFoundError = fmt.Errorf("not found")
+	NotFoundError = errors.New("not found")
 )
 
 type Client interface {
 	GetVideo(ctx context.Context, id string) (*Video, error)
-	SearchVideo(ctx context.Context, term string) (*Video, error)
+	SearchVideo(ctx context.Context, term string) (*SearchResponse, error)
 	GetPlaylist(ctx context.Context, id string) (*Playlist, error)
-	SearchPlaylist(ctx context.Context, term string) (*Playlist, error)
+	SearchPlaylist(ctx context.Context, term string) (*SearchResponse, error)
 	GetPlaylistItems(ctx context.Context, id string) ([]Video, error)
 }
 
@@ -40,16 +41,15 @@ type getSnippetItem struct {
 	Snippet *snippet `json:"snippet"`
 }
 
-type searchSnippetResponse struct {
-	Items []*searchSnippetItem `json:"items"`
+type SearchResponse struct {
+	Items []SearchItem `json:"items"`
 }
 
-type searchSnippetItem struct {
-	ID      *searchSnippetID `json:"id"`
-	Snippet *snippet         `json:"snippet"`
+type SearchItem struct {
+	ID SearchID `json:"id"`
 }
 
-type searchSnippetID struct {
+type SearchID struct {
 	VideoID    string `json:"videoId"`
 	PlaylistID string `json:"playlistId"`
 }
@@ -104,7 +104,7 @@ func (c *HTTPClient) GetVideo(ctx context.Context, id string) (*Video, error) {
 }
 
 // https://developers.google.com/youtube/v3/docs/search/list
-func (c *HTTPClient) SearchVideo(ctx context.Context, query string) (*Video, error) {
+func (c *HTTPClient) SearchVideo(ctx context.Context, query string) (*SearchResponse, error) {
 	body, err := c.getWithKey(ctx, "/youtube/v3/search", url.Values{
 		"q":               {query},
 		"part":            {"snippet"},
@@ -116,7 +116,7 @@ func (c *HTTPClient) SearchVideo(ctx context.Context, query string) (*Video, err
 		return nil, err
 	}
 
-	response := searchSnippetResponse{}
+	response := SearchResponse{}
 	if err := json.Unmarshal(body, &response); err != nil {
 		return nil, fmt.Errorf("failed to decode api response: %w", err)
 	}
@@ -125,12 +125,7 @@ func (c *HTTPClient) SearchVideo(ctx context.Context, query string) (*Video, err
 		return nil, NotFoundError
 	}
 
-	item := response.Items[0]
-	return &Video{
-		ID:           item.ID.VideoID,
-		Title:        item.Snippet.Title,
-		ChannelTitle: item.Snippet.ownerChannelTitle(),
-	}, nil
+	return &response, nil
 }
 
 // https://developers.google.com/youtube/v3/docs/playlists/list
@@ -160,7 +155,7 @@ func (c *HTTPClient) GetPlaylist(ctx context.Context, id string) (*Playlist, err
 }
 
 // https://developers.google.com/youtube/v3/docs/search/list
-func (c *HTTPClient) SearchPlaylist(ctx context.Context, query string) (*Playlist, error) {
+func (c *HTTPClient) SearchPlaylist(ctx context.Context, query string) (*SearchResponse, error) {
 	body, err := c.getWithKey(ctx, "/youtube/v3/search", url.Values{
 		"q":          {query},
 		"part":       {"snippet"},
@@ -171,7 +166,7 @@ func (c *HTTPClient) SearchPlaylist(ctx context.Context, query string) (*Playlis
 		return nil, err
 	}
 
-	response := searchSnippetResponse{}
+	response := SearchResponse{}
 	if err := json.Unmarshal(body, &response); err != nil {
 		return nil, fmt.Errorf("failed to decode api response: %w", err)
 	}
@@ -179,11 +174,7 @@ func (c *HTTPClient) SearchPlaylist(ctx context.Context, query string) (*Playlis
 		return nil, NotFoundError
 	}
 
-	return &Playlist{
-		ID:           response.Items[0].ID.PlaylistID,
-		Title:        response.Items[0].Snippet.Title,
-		ChannelTitle: response.Items[0].Snippet.ownerChannelTitle(),
-	}, nil
+	return &response, nil
 }
 
 // https://developers.google.com/youtube/v3/docs/playlistItems/list

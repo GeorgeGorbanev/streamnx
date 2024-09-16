@@ -83,11 +83,11 @@ func TestHTTPClient_GetVideo(t *testing.T) {
 
 func TestHTTPClient_SearchVideo(t *testing.T) {
 	tests := []struct {
-		name          string
-		query         string
-		responseMock  string
-		expectedVideo *Video
-		expectedErr   error
+		name             string
+		query            string
+		responseMock     string
+		expectedResponse *SearchResponse
+		expectedErr      error
 	}{
 		{
 			name:  "when video found",
@@ -105,10 +105,15 @@ func TestHTTPClient_SearchVideo(t *testing.T) {
 					}
 				]
 			}`,
-			expectedVideo: &Video{
-				ID:           "dQw4w9WgXcQ",
-				Title:        "Rick Astley - Never Gonna Give You Up (Video)",
-				ChannelTitle: "RickAstleyVEVO",
+			expectedResponse: &SearchResponse{
+				Items: []SearchItem{
+					{
+						ID: SearchID{
+							VideoID:    "dQw4w9WgXcQ",
+							PlaylistID: "",
+						},
+					},
+				},
 			},
 		},
 		{
@@ -117,8 +122,8 @@ func TestHTTPClient_SearchVideo(t *testing.T) {
 			responseMock: `{	
 				"items": []
 			}`,
-			expectedVideo: nil,
-			expectedErr:   NotFoundError,
+			expectedResponse: nil,
+			expectedErr:      NotFoundError,
 		},
 	}
 	for _, tt := range tests {
@@ -127,7 +132,6 @@ func TestHTTPClient_SearchVideo(t *testing.T) {
 				require.Equal(t, http.MethodGet, r.Method)
 				require.Equal(t, "/youtube/v3/search", r.URL.Path)
 				require.Equal(t, sampleAPIKey, r.URL.Query().Get("key"))
-				require.Equal(t, "snippet", r.URL.Query().Get("part"))
 				require.Equal(t, tt.query, r.URL.Query().Get("q"))
 				require.Equal(t, "10", r.URL.Query().Get("videoCategoryId"))
 				require.Equal(t, "1", r.URL.Query().Get("maxResults"))
@@ -143,12 +147,12 @@ func TestHTTPClient_SearchVideo(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
 
-			video, err := client.SearchVideo(ctx, tt.query)
+			response, err := client.SearchVideo(ctx, tt.query)
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
 			} else {
 				require.NoError(t, err)
-				require.Equal(t, tt.expectedVideo, video)
+				require.Equal(t, tt.expectedResponse, response)
 			}
 		})
 	}
@@ -227,7 +231,7 @@ func TestHTTPClient_SearchPlaylist(t *testing.T) {
 		name             string
 		query            string
 		responseMock     string
-		expectedPlaylist *Playlist
+		expectedResponse *SearchResponse
 		expectedErr      error
 	}{
 		{
@@ -246,10 +250,15 @@ func TestHTTPClient_SearchPlaylist(t *testing.T) {
 					}
 				]
 			}`,
-			expectedPlaylist: &Playlist{
-				ID:           "PLH1JGOJgZ2u2J7bRnfjl-7kDj_vQKTPa6",
-				Title:        "Portishead - (1994) Dummy [Full Album]",
-				ChannelTitle: "Harry",
+			expectedResponse: &SearchResponse{
+				Items: []SearchItem{
+					{
+						ID: SearchID{
+							VideoID:    "",
+							PlaylistID: "PLH1JGOJgZ2u2J7bRnfjl-7kDj_vQKTPa6",
+						},
+					},
+				},
 			},
 		},
 		{
@@ -258,7 +267,7 @@ func TestHTTPClient_SearchPlaylist(t *testing.T) {
 			responseMock: `{	
 				"items": []
 			}`,
-			expectedPlaylist: nil,
+			expectedResponse: nil,
 			expectedErr:      NotFoundError,
 		},
 	}
@@ -283,12 +292,12 @@ func TestHTTPClient_SearchPlaylist(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
 
-			video, err := client.SearchPlaylist(ctx, tt.query)
+			response, err := client.SearchPlaylist(ctx, tt.query)
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
 			} else {
 				require.NoError(t, err)
-				require.Equal(t, tt.expectedPlaylist, video)
+				require.Equal(t, tt.expectedResponse, response)
 			}
 		})
 	}

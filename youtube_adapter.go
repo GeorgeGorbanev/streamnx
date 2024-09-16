@@ -14,7 +14,10 @@ type YoutubeAdapter struct {
 	client youtube.Client
 }
 
-var nonTitleContentRe = regexp.MustCompile(`\s*\[.*?\]|\s*\{.*?\}|\s*\(.*?\)`)
+var (
+	nonTitleContentRe = regexp.MustCompile(`\s*\[.*?\]|\s*\{.*?\}|\s*\(.*?\)`)
+	titleSeparators   = []string{" - ", " – ", " — ", "|"}
+)
 
 func newYoutubeAdapter(client youtube.Client) *YoutubeAdapter {
 	return &YoutubeAdapter{
@@ -33,13 +36,19 @@ func (a *YoutubeAdapter) FetchTrack(ctx context.Context, id string) (*Entity, er
 }
 
 func (a *YoutubeAdapter) SearchTrack(ctx context.Context, artistName, trackName string) (*Entity, error) {
-	query := fmt.Sprintf("%s – %s", artistName, trackName)
-	video, err := a.client.SearchVideo(ctx, query)
+	query := entityFullTitle(artistName, trackName)
+	search, err := a.client.SearchVideo(ctx, query)
 	if err != nil {
 		if errors.Is(err, youtube.NotFoundError) {
 			return nil, EntityNotFoundError
 		}
 		return nil, fmt.Errorf("failed to search video on youtube: %w", err)
+	}
+
+	id := search.Items[0].ID.VideoID
+	video, err := a.client.GetVideo(ctx, id)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get video from youtube: %w", err)
 	}
 
 	return a.adaptTrack(video), nil
@@ -57,13 +66,19 @@ func (a *YoutubeAdapter) FetchAlbum(ctx context.Context, id string) (*Entity, er
 }
 
 func (a *YoutubeAdapter) SearchAlbum(ctx context.Context, artistName, albumName string) (*Entity, error) {
-	query := fmt.Sprintf("%s – %s", artistName, albumName)
-	album, err := a.client.SearchPlaylist(ctx, query)
+	query := entityFullTitle(artistName, albumName)
+	search, err := a.client.SearchPlaylist(ctx, query)
 	if err != nil {
 		if errors.Is(err, youtube.NotFoundError) {
 			return nil, EntityNotFoundError
 		}
 		return nil, fmt.Errorf("failed to search playlist on youtube: %w", err)
+	}
+
+	id := search.Items[0].ID.PlaylistID
+	album, err := a.client.GetPlaylist(ctx, id)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get playlist from youtube: %w", err)
 	}
 
 	return a.adaptAlbum(ctx, album)
@@ -131,8 +146,7 @@ func (a *YoutubeAdapter) extractAlbumTitle(ctx context.Context, playlist *youtub
 func (a *YoutubeAdapter) cleanAndSplitTitle(title string) (artist, entity string) {
 	cleanTitle := nonTitleContentRe.ReplaceAllString(title, "")
 
-	separators := []string{" - ", " – ", " — ", "|"}
-	for _, sep := range separators {
+	for _, sep := range titleSeparators {
 		if strings.Contains(cleanTitle, sep) {
 			parts := strings.Split(cleanTitle, sep)
 			return strings.TrimSpace(parts[0]), strings.TrimSpace(parts[1])

@@ -13,8 +13,8 @@ import (
 type yandexClientMock struct {
 	fetchTrack  map[string]*yandex.Track
 	fetchAlbum  map[string]*yandex.Album
-	searchTrack map[string]map[string]*yandex.Track
-	searchAlbum map[string]map[string]*yandex.Album
+	searchTrack map[string]*yandex.Track
+	searchAlbum map[string]*yandex.Album
 }
 
 func (c *yandexClientMock) FetchTrack(_ context.Context, id string) (*yandex.Track, error) {
@@ -25,12 +25,8 @@ func (c *yandexClientMock) FetchTrack(_ context.Context, id string) (*yandex.Tra
 	return track, nil
 }
 
-func (c *yandexClientMock) SearchTrack(_ context.Context, artistName, trackName string) (*yandex.Track, error) {
-	if tracks, ok := c.searchTrack[artistName]; ok {
-		track, ok := tracks[trackName]
-		if !ok {
-			return nil, yandex.NotFoundError
-		}
+func (c *yandexClientMock) SearchTrack(_ context.Context, query string) (*yandex.Track, error) {
+	if track, ok := c.searchTrack[query]; ok {
 		return track, nil
 	}
 	return nil, yandex.NotFoundError
@@ -44,12 +40,8 @@ func (c *yandexClientMock) FetchAlbum(_ context.Context, id string) (*yandex.Alb
 	return album, nil
 }
 
-func (c *yandexClientMock) SearchAlbum(_ context.Context, artistName, albumName string) (*yandex.Album, error) {
-	if albums, ok := c.searchAlbum[artistName]; ok {
-		album, ok := albums[albumName]
-		if !ok {
-			return nil, yandex.NotFoundError
-		}
+func (c *yandexClientMock) SearchAlbum(_ context.Context, query string) (*yandex.Album, error) {
+	if album, ok := c.searchAlbum[query]; ok {
 		return album, nil
 	}
 	return nil, yandex.NotFoundError
@@ -143,17 +135,15 @@ func TestYandexAdapter_SearchTrack(t *testing.T) {
 			artistName: "sample artist",
 			searchName: "sample name",
 			yandexClientMock: yandexClientMock{
-				searchTrack: map[string]map[string]*yandex.Track{
-					"sample artist": {
-						"sample name": {
-							ID:    42,
-							Title: "sample name",
-							Artists: []yandex.Artist{
-								{Name: "sample artist"},
-							},
-							Albums: []yandex.Album{
-								{ID: 41},
-							},
+				searchTrack: map[string]*yandex.Track{
+					"sample artist – sample name": {
+						ID:    42,
+						Title: "sample name",
+						Artists: []yandex.Artist{
+							{Name: "sample artist"},
+						},
+						Albums: []yandex.Album{
+							{ID: 41},
 						},
 					},
 				},
@@ -172,17 +162,15 @@ func TestYandexAdapter_SearchTrack(t *testing.T) {
 			artistName: "sample artist not matching",
 			searchName: "sample name",
 			yandexClientMock: yandexClientMock{
-				searchTrack: map[string]map[string]*yandex.Track{
-					"sample artist": {
-						"sample artist not matching": {
-							ID:    42,
-							Title: "sample name",
-							Artists: []yandex.Artist{
-								{Name: "not matching artist"},
-							},
-							Albums: []yandex.Album{
-								{ID: 41},
-							},
+				searchTrack: map[string]*yandex.Track{
+					"sample artist – sample artist not matching": {
+						ID:    42,
+						Title: "sample name",
+						Artists: []yandex.Artist{
+							{Name: "not matching artist"},
+						},
+						Albums: []yandex.Album{
+							{ID: 41},
 						},
 					},
 				},
@@ -195,17 +183,15 @@ func TestYandexAdapter_SearchTrack(t *testing.T) {
 			artistName: "sample artist matching translit",
 			searchName: "sample name",
 			yandexClientMock: yandexClientMock{
-				searchTrack: map[string]map[string]*yandex.Track{
-					"sample artist matching translit": {
-						"sample name": {
-							ID:    42,
-							Title: "sample name",
-							Artists: []yandex.Artist{
-								{Name: "сампле артист матчинг транслит"},
-							},
-							Albums: []yandex.Album{
-								{ID: 41},
-							},
+				searchTrack: map[string]*yandex.Track{
+					"sample artist matching translit – sample name": {
+						ID:    42,
+						Title: "sample name",
+						Artists: []yandex.Artist{
+							{Name: "сампле артист матчинг транслит"},
+						},
+						Albums: []yandex.Album{
+							{ID: 41},
 						},
 					},
 				},
@@ -224,17 +210,15 @@ func TestYandexAdapter_SearchTrack(t *testing.T) {
 			artistName: "sample artist after translit",
 			searchName: "кириллическое название",
 			yandexClientMock: yandexClientMock{
-				searchTrack: map[string]map[string]*yandex.Track{
-					"сампле артист афтер транслит": {
-						"кириллическое название": {
-							ID:    42,
-							Title: "sample name",
-							Artists: []yandex.Artist{
-								{Name: "сампле артист афтер транслит"},
-							},
-							Albums: []yandex.Album{
-								{ID: 41},
-							},
+				searchTrack: map[string]*yandex.Track{
+					"сампле артист афтер транслит – кириллическое название": {
+						ID:    42,
+						Title: "sample name",
+						Artists: []yandex.Artist{
+							{Name: "сампле артист афтер транслит"},
+						},
+						Albums: []yandex.Album{
+							{ID: 41},
 						},
 					},
 				},
@@ -253,17 +237,15 @@ func TestYandexAdapter_SearchTrack(t *testing.T) {
 			artistName: "translatable artist",
 			searchName: "sample name",
 			yandexClientMock: yandexClientMock{
-				searchTrack: map[string]map[string]*yandex.Track{
-					"translatable artist": {
-						"sample name": {
-							ID:    42,
-							Title: "sample name",
-							Artists: []yandex.Artist{
-								{Name: "переведенный артист"},
-							},
-							Albums: []yandex.Album{
-								{ID: 41},
-							},
+				searchTrack: map[string]*yandex.Track{
+					"translatable artist – sample name": {
+						ID:    42,
+						Title: "sample name",
+						Artists: []yandex.Artist{
+							{Name: "переведенный артист"},
+						},
+						Albums: []yandex.Album{
+							{ID: 41},
 						},
 					},
 				},
@@ -381,14 +363,12 @@ func TestYandexAdapter_SearchAlbum(t *testing.T) {
 			artistName: "sample artist",
 			searchName: "sample name",
 			yandexClientMock: yandexClientMock{
-				searchAlbum: map[string]map[string]*yandex.Album{
-					"sample artist": {
-						"sample name": {
-							ID:    42,
-							Title: "sample name",
-							Artists: []yandex.Artist{
-								{Name: "sample artist"},
-							},
+				searchAlbum: map[string]*yandex.Album{
+					"sample artist – sample name": {
+						ID:    42,
+						Title: "sample name",
+						Artists: []yandex.Artist{
+							{Name: "sample artist"},
 						},
 					},
 				},
@@ -407,14 +387,12 @@ func TestYandexAdapter_SearchAlbum(t *testing.T) {
 			artistName: "sample artist not matching",
 			searchName: "sample name",
 			yandexClientMock: yandexClientMock{
-				searchAlbum: map[string]map[string]*yandex.Album{
-					"sample artist": {
-						"sample artist not matching": {
-							ID:    42,
-							Title: "sample name",
-							Artists: []yandex.Artist{
-								{Name: "not matching artist"},
-							},
+				searchAlbum: map[string]*yandex.Album{
+					"sample artist – sample artist not matching": {
+						ID:    42,
+						Title: "sample name",
+						Artists: []yandex.Artist{
+							{Name: "not matching artist"},
 						},
 					},
 				},
@@ -427,14 +405,12 @@ func TestYandexAdapter_SearchAlbum(t *testing.T) {
 			artistName: "sample artist matching translit",
 			searchName: "sample name",
 			yandexClientMock: yandexClientMock{
-				searchAlbum: map[string]map[string]*yandex.Album{
-					"sample artist matching translit": {
-						"sample name": {
-							ID:    42,
-							Title: "sample name",
-							Artists: []yandex.Artist{
-								{Name: "сампле артист матчинг транслит"},
-							},
+				searchAlbum: map[string]*yandex.Album{
+					"sample artist matching translit – sample name": {
+						ID:    42,
+						Title: "sample name",
+						Artists: []yandex.Artist{
+							{Name: "сампле артист матчинг транслит"},
 						},
 					},
 				},
@@ -453,14 +429,12 @@ func TestYandexAdapter_SearchAlbum(t *testing.T) {
 			artistName: "sample artist after translit",
 			searchName: "кириллическое название",
 			yandexClientMock: yandexClientMock{
-				searchAlbum: map[string]map[string]*yandex.Album{
-					"сампле артист афтер транслит": {
-						"кириллическое название": {
-							ID:    42,
-							Title: "sample name",
-							Artists: []yandex.Artist{
-								{Name: "сампле артист афтер транслит"},
-							},
+				searchAlbum: map[string]*yandex.Album{
+					"сампле артист афтер транслит – кириллическое название": {
+						ID:    42,
+						Title: "sample name",
+						Artists: []yandex.Artist{
+							{Name: "сампле артист афтер транслит"},
 						},
 					},
 				},
@@ -479,14 +453,12 @@ func TestYandexAdapter_SearchAlbum(t *testing.T) {
 			artistName: "translatable artist",
 			searchName: "sample name",
 			yandexClientMock: yandexClientMock{
-				searchAlbum: map[string]map[string]*yandex.Album{
-					"translatable artist": {
-						"sample name": {
-							ID:    42,
-							Title: "sample name",
-							Artists: []yandex.Artist{
-								{Name: "переведенный артист"},
-							},
+				searchAlbum: map[string]*yandex.Album{
+					"translatable artist – sample name": {
+						ID:    42,
+						Title: "sample name",
+						Artists: []yandex.Artist{
+							{Name: "переведенный артист"},
 						},
 					},
 				},

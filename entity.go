@@ -15,3 +15,7 @@ type Entity struct {
 	Provider *Provider
 	Type     EntityType
 }
+
+func entityFullTitle(artist, title string) string {
+	return artist + " – " + title
+}

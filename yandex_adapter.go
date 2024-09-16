@@ -35,11 +35,8 @@ func (a *YandexAdapter) FetchTrack(ctx context.Context, id string) (*Entity, err
 	return a.adaptTrack(yandexTrack), nil
 }
 
-func (a *YandexAdapter) SearchTrack(ctx context.Context, artist, track string) (*Entity, error) {
-	lowcasedArtist := strings.ToLower(artist)
-	lowcasedTrack := strings.ToLower(track)
-
-	foundTrack, err := a.findTrack(ctx, lowcasedArtist, lowcasedTrack)
+func (a *YandexAdapter) SearchTrack(ctx context.Context, artist, title string) (*Entity, error) {
+	foundTrack, err := a.findTrack(ctx, artist, title)
 	if err != nil {
 		if errors.Is(err, yandex.NotFoundError) {
 			return nil, EntityNotFoundError
@@ -62,11 +59,8 @@ func (a *YandexAdapter) FetchAlbum(ctx context.Context, id string) (*Entity, err
 	return a.adaptAlbum(yandexAlbum), nil
 }
 
-func (a *YandexAdapter) SearchAlbum(ctx context.Context, artistName, albumName string) (*Entity, error) {
-	lowcasedArtist := strings.ToLower(artistName)
-	lowcasedAlbum := strings.ToLower(albumName)
-
-	foundAlbum, err := a.findAlbum(ctx, lowcasedArtist, lowcasedAlbum)
+func (a *YandexAdapter) SearchAlbum(ctx context.Context, artist, title string) (*Entity, error) {
+	foundAlbum, err := a.findAlbum(ctx, artist, title)
 	if err != nil {
 		if errors.Is(err, yandex.NotFoundError) {
 			return nil, EntityNotFoundError
@@ -77,62 +71,77 @@ func (a *YandexAdapter) SearchAlbum(ctx context.Context, artistName, albumName s
 	return a.adaptAlbum(foundAlbum), nil
 }
 
-func (a *YandexAdapter) findTrack(ctx context.Context, artist, track string) (*yandex.Track, error) {
-	foundTrack, err := a.client.SearchTrack(ctx, artist, track)
+func (a *YandexAdapter) findTrack(ctx context.Context, artist, title string) (*yandex.Track, error) {
+	track, err := a.searchTrackRequest(ctx, artist, title)
 	if err != nil && !errors.Is(err, yandex.NotFoundError) {
 		return nil, fmt.Errorf("error searching track: %w", err)
 	}
-	if foundTrack != nil {
-		artistMatch, err := a.artistMatch(ctx, foundTrack.Artists[0].Name, artist)
+	if track != nil {
+		artistMatch, err := a.artistMatch(ctx, track.Artists[0].Name, artist)
 		if err != nil {
 			return nil, fmt.Errorf("failed to check artist match: %w", err)
 		}
 		if artistMatch {
-			return foundTrack, nil
+			return track, nil
 		}
 	}
 
-	if translator.HasCyrillic(track) {
+	if translator.HasCyrillic(title) {
 		translited := translator.TranslitLatToCyr(artist)
-		foundTranslitedTrack, err := a.client.SearchTrack(ctx, translited, track)
+		track, err = a.searchTrackRequest(ctx, translited, title)
 		if err != nil {
 			return nil, fmt.Errorf("error searching yandex track: %w", err)
 		}
-		if foundTranslitedTrack != nil {
-			return foundTranslitedTrack, nil
+		if track != nil {
+			return track, nil
 		}
 	}
 
 	return nil, yandex.NotFoundError
 }
 
-func (a *YandexAdapter) findAlbum(ctx context.Context, artist, album string) (*yandex.Album, error) {
-	foundAlbum, err := a.client.SearchAlbum(ctx, artist, album)
+func (a *YandexAdapter) findAlbum(ctx context.Context, artist, title string) (*yandex.Album, error) {
+	album, err := a.searchAlbumRequest(ctx, artist, title)
 	if err != nil && !errors.Is(err, yandex.NotFoundError) {
 		return nil, fmt.Errorf("error searching album: %w", err)
 	}
-	if foundAlbum != nil {
-		artistMatch, err := a.artistMatch(ctx, foundAlbum.Artists[0].Name, artist)
+	if album != nil {
+		artistMatch, err := a.artistMatch(ctx, album.Artists[0].Name, artist)
 		if err != nil {
 			return nil, fmt.Errorf("failed to check artist match: %w", err)
 		}
 		if artistMatch {
-			return foundAlbum, nil
+			return album, nil
 		}
 	}
 
-	if translator.HasCyrillic(album) {
+	if translator.HasCyrillic(title) {
 		translited := translator.TranslitLatToCyr(artist)
-		foundTranslitedAlbum, err := a.client.SearchAlbum(ctx, translited, album)
+		album, err = a.searchAlbumRequest(ctx, translited, title)
 		if err != nil {
 			return nil, fmt.Errorf("error searching yandex album: %w", err)
 		}
-		if foundTranslitedAlbum != nil {
-			return foundTranslitedAlbum, nil
+		if album != nil {
+			return album, nil
 		}
 	}
 
 	return nil, yandex.NotFoundError
+}
+
+func (a *YandexAdapter) searchTrackRequest(ctx context.Context, artist, title string) (*yandex.Track, error) {
+	query := a.prepareQuery(artist, title)
+	return a.client.SearchTrack(ctx, query)
+}
+
+func (a *YandexAdapter) searchAlbumRequest(ctx context.Context, artist, title string) (*yandex.Album, error) {
+	query := a.prepareQuery(artist, title)
+	return a.client.SearchAlbum(ctx, query)
+}
+
+func (a *YandexAdapter) prepareQuery(artist, title string) string {
+	query := entityFullTitle(artist, title)
+	return strings.ToLower(query)
 }
 
 func (a *YandexAdapter) adaptTrack(yandexTrack *yandex.Track) *Entity {
@@ -157,23 +166,24 @@ func (a *YandexAdapter) adaptAlbum(yandexAlbum *yandex.Album) *Entity {
 	}
 }
 
-func (a *YandexAdapter) artistMatch(ctx context.Context, foundArtist, artistName string) (bool, error) {
-	lowcasedFoundArtist := strings.ToLower(foundArtist)
-	if artistName == lowcasedFoundArtist {
+func (a *YandexAdapter) artistMatch(ctx context.Context, found, query string) (bool, error) {
+	lcFound := strings.ToLower(found)
+	lcQuery := strings.ToLower(query)
+	if lcQuery == lcFound {
 		return true, nil
 	}
 
-	translitedFoundArtist := translator.TranslitCyrToLat(lowcasedFoundArtist)
-	if artistName == translitedFoundArtist {
+	translitedFoundArtist := translator.TranslitCyrToLat(lcFound)
+	if lcQuery == translitedFoundArtist {
 		return true, nil
 	}
 
-	if translator.HasCyrillic(foundArtist) {
-		translatedArtist, err := a.translator.TranslateEnToRu(ctx, artistName)
+	if translator.HasCyrillic(found) {
+		translatedArtist, err := a.translator.TranslateEnToRu(ctx, lcQuery)
 		if err != nil {
 			return false, fmt.Errorf("failed to translate artist name: %w", err)
 		}
-		if translatedArtist == lowcasedFoundArtist {
+		if translatedArtist == lcFound {
 			return true, nil
 		}
 	}

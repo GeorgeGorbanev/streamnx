@@ -13,8 +13,8 @@ import (
 type youtubeClientMock struct {
 	getVideo         map[string]*youtube.Video
 	getPlaylist      map[string]*youtube.Playlist
-	searchVideo      map[string]*youtube.Video
-	searchPlaylist   map[string]*youtube.Playlist
+	searchVideo      map[string]*youtube.SearchResponse
+	searchPlaylist   map[string]*youtube.SearchResponse
 	getPlaylistItems map[string][]youtube.Video
 }
 
@@ -26,7 +26,7 @@ func (c *youtubeClientMock) GetVideo(_ context.Context, id string) (*youtube.Vid
 	return video, nil
 }
 
-func (c *youtubeClientMock) SearchVideo(_ context.Context, query string) (*youtube.Video, error) {
+func (c *youtubeClientMock) SearchVideo(_ context.Context, query string) (*youtube.SearchResponse, error) {
 	video, ok := c.searchVideo[query]
 	if !ok {
 		return nil, youtube.NotFoundError
@@ -42,7 +42,7 @@ func (c *youtubeClientMock) GetPlaylist(_ context.Context, id string) (*youtube.
 	return playlist, nil
 }
 
-func (c *youtubeClientMock) SearchPlaylist(_ context.Context, query string) (*youtube.Playlist, error) {
+func (c *youtubeClientMock) SearchPlaylist(_ context.Context, query string) (*youtube.SearchResponse, error) {
 	playlist, ok := c.searchPlaylist[query]
 	if !ok {
 		return nil, youtube.NotFoundError
@@ -145,8 +145,19 @@ func TestYoutubeAdapter_SearchTrack(t *testing.T) {
 			artistName: "sample artist",
 			searchName: "sample track",
 			youtubeClientMock: youtubeClientMock{
-				searchVideo: map[string]*youtube.Video{
+				searchVideo: map[string]*youtube.SearchResponse{
 					"sample artist – sample track": {
+						Items: []youtube.SearchItem{
+							{
+								ID: youtube.SearchID{
+									VideoID: "sampleID",
+								},
+							},
+						},
+					},
+				},
+				getVideo: map[string]*youtube.Video{
+					"sampleID": {
 						ID:    "sampleID",
 						Title: "sample artist – sample track",
 					},
@@ -341,8 +352,19 @@ func TestYoutubeAdapter_SearchAlbum(t *testing.T) {
 			artistName: "sample artist",
 			searchName: "sample album",
 			youtubeClientMock: youtubeClientMock{
-				searchPlaylist: map[string]*youtube.Playlist{
+				searchPlaylist: map[string]*youtube.SearchResponse{
 					"sample artist – sample album": {
+						Items: []youtube.SearchItem{
+							{
+								ID: youtube.SearchID{
+									PlaylistID: "sampleID",
+								},
+							},
+						},
+					},
+				},
+				getPlaylist: map[string]*youtube.Playlist{
+					"sampleID": {
 						ID:    "sampleID",
 						Title: "sample artist – sample album",
 					},

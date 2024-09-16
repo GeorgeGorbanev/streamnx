@@ -163,16 +163,14 @@ func TestClient_FetchAlbum(t *testing.T) {
 
 func TestClient_SearchTrack(t *testing.T) {
 	tests := []struct {
-		name        string
-		queryArtist string
-		queryTrack  string
-		want        *Track
-		wantErr     error
+		name    string
+		query   string
+		want    *Track
+		wantErr error
 	}{
 		{
-			name:        "when track found",
-			queryArtist: "Found artist",
-			queryTrack:  "Found track",
+			name:  "when track found",
+			query: "found query",
 			want: &Track{
 				ID:    "1",
 				Title: "sample title",
@@ -197,10 +195,9 @@ func TestClient_SearchTrack(t *testing.T) {
 			},
 		},
 		{
-			name:        "when track not found",
-			queryArtist: "any impossible artist",
-			queryTrack:  "any impossible track",
-			wantErr:     NotFoundError,
+			name:    "when track not found",
+			query:   "any not found query",
+			wantErr: NotFoundError,
 		},
 	}
 	for _, tt := range tests {
@@ -212,7 +209,7 @@ func TestClient_SearchTrack(t *testing.T) {
 				require.Equal(t, "track", searchType)
 
 				query := r.URL.Query().Get("text")
-				if query == "Found artist – Found track" {
+				if query == "found query" {
 					_, err := w.Write([]byte(`{
 						"result": {
 							"tracks":{
@@ -244,7 +241,7 @@ func TestClient_SearchTrack(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
 
-			result, err := client.SearchTrack(ctx, tt.queryArtist, tt.queryTrack)
+			result, err := client.SearchTrack(ctx, tt.query)
 			if tt.wantErr != nil {
 				require.ErrorIs(t, err, tt.wantErr)
 			} else {
@@ -257,16 +254,14 @@ func TestClient_SearchTrack(t *testing.T) {
 
 func TestClient_SearchAlbum(t *testing.T) {
 	tests := []struct {
-		name        string
-		queryArtist string
-		queryAlbum  string
-		want        *Album
-		wantErr     error
+		name    string
+		query   string
+		want    *Album
+		wantErr error
 	}{
 		{
-			name:        "when track found",
-			queryArtist: "Found artist",
-			queryAlbum:  "Found album",
+			name:  "when track found",
+			query: "found query",
 			want: &Album{
 				ID:    1,
 				Title: "Sample Title",
@@ -279,10 +274,9 @@ func TestClient_SearchAlbum(t *testing.T) {
 			},
 		},
 		{
-			name:        "when track not found",
-			queryArtist: "any impossible artist",
-			queryAlbum:  "any impossible album",
-			wantErr:     NotFoundError,
+			name:    "when track not found",
+			query:   "any not found query",
+			wantErr: NotFoundError,
 		},
 	}
 	for _, tt := range tests {
@@ -294,7 +288,7 @@ func TestClient_SearchAlbum(t *testing.T) {
 				require.Equal(t, "album", searchType)
 
 				query := r.URL.Query().Get("text")
-				if query == "Found artist – Found album" {
+				if query == "found query" {
 					_, err := w.Write([]byte(`{
 						"result": {
 							"albums":{
@@ -319,7 +313,7 @@ func TestClient_SearchAlbum(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
 
-			result, err := client.SearchAlbum(ctx, tt.queryArtist, tt.queryAlbum)
+			result, err := client.SearchAlbum(ctx, tt.query)
 			if tt.wantErr != nil {
 				require.ErrorIs(t, err, tt.wantErr)
 			} else {

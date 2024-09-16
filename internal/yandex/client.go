@@ -20,9 +20,9 @@ var (
 
 type Client interface {
 	FetchTrack(ctx context.Context, id string) (*Track, error)
-	SearchTrack(ctx context.Context, artistName, trackName string) (*Track, error)
+	SearchTrack(ctx context.Context, query string) (*Track, error)
 	FetchAlbum(ctx context.Context, id string) (*Album, error)
-	SearchAlbum(ctx context.Context, artistName, albumName string) (*Album, error)
+	SearchAlbum(ctx context.Context, query string) (*Album, error)
 }
 
 type HTTPClient struct {
@@ -87,11 +87,11 @@ func (c *HTTPClient) FetchTrack(ctx context.Context, trackID string) (*Track, er
 	return &tr.Result[0], nil
 }
 
-func (c *HTTPClient) SearchTrack(ctx context.Context, artistName, trackName string) (*Track, error) {
+func (c *HTTPClient) SearchTrack(ctx context.Context, query string) (*Track, error) {
 	body, err := c.getAPI(ctx, "/search", url.Values{
 		"type": []string{"track"},
 		"page": []string{"0"},
-		"text": []string{fmt.Sprintf("%s – %s", artistName, trackName)},
+		"text": []string{query},
 	})
 	if err != nil {
 		return nil, fmt.Errorf("failed to get api: %s", err)
@@ -127,11 +127,11 @@ func (c *HTTPClient) FetchAlbum(ctx context.Context, albumID string) (*Album, er
 	return ar.Result, nil
 }
 
-func (c *HTTPClient) SearchAlbum(ctx context.Context, artistName, albumName string) (*Album, error) {
+func (c *HTTPClient) SearchAlbum(ctx context.Context, query string) (*Album, error) {
 	body, err := c.getAPI(ctx, "/search", url.Values{
 		"type": []string{"album"},
 		"page": []string{"0"},
-		"text": []string{fmt.Sprintf("%s – %s", artistName, albumName)},
+		"text": []string{query},
 	})
 	if err != nil {
 		return nil, fmt.Errorf("failed to get api: %s", err)

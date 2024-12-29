@@ -11,6 +11,8 @@ type Credentials struct {
 	YoutubeAPIKey              string
 	SpotifyClientID            string
 	SpotifyClientSecret        string
+	DeezerClientID             string
+	DeezerClientSecret         string
 }
 
 func (c Credentials) google() *translator.GoogleCredentials {

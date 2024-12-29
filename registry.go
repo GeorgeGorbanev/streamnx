@@ -10,6 +10,7 @@ import (
 	"github.com/GeorgeGorbanev/streamnx/internal/translator"
 	"github.com/GeorgeGorbanev/streamnx/internal/yandex"
 	"github.com/GeorgeGorbanev/streamnx/internal/youtube"
+	"github.com/GeorgeGorbanev/streamnx/internal/deezer"
 )
 
 var (
@@ -55,6 +56,10 @@ func NewRegistry(ctx context.Context, cred Credentials, opts ...RegistryOption) 
 	if registry.adapter(Youtube) == nil {
 		client := youtube.NewHTTPClient(cred.YoutubeAPIKey, registry.clientOptions.youtube...)
 		registry.adapters[Youtube.сode] = newYoutubeAdapter(client)
+	}
+	if registry.adapter(Deezer) == nil {
+		client := deezer.NewHTTPClient(cred.DeezerClientID, cred.DeezerClientSecret, registry.clientOptions.deezer...)
+		registry.adapters[Deezer.сode] = newDeezerAdapter(client)
 	}
 
 	return &registry, nil

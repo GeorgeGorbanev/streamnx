@@ -1,7 +1,7 @@
 # Streamnx
 
 Streamnx is a library that unifies interactions with various music streaming links into a single system.
-With Streamnx, you can integrate platforms such as Apple Music, Spotify, YouTube and Yandex Music into your applications using a unified interface for searching and retrieving data about tracks and albums.
+With Streamnx, you can integrate platforms such as Apple Music, Spotify, YouTube, Yandex Music, and Deezer into your applications using a unified interface for searching and retrieving data about tracks and albums.
 
 - [Motivation](#motivation)
 - [Supported services](#supported-services)
@@ -31,6 +31,7 @@ The library supports the following music streaming services
 - Spotify
 - Yandex Music
 - YouTube (also YouTube Music)
+- Deezer
 
 ## Installation
 
@@ -54,7 +55,8 @@ Here are the steps to configure the library:
 1) *Google Translator API.* Obtain the Google Translator API key and project ID from the [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
 2) *YouTube API*. Obtain the YouTube API key from the [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
 3) *Spotify*. Register your application and obtain the Client ID with Client Secret on the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard).
-4) *Build registry*. When you have all the necessary credentials, you can initialize the streamnx *registry* with the following code.
+4) *Deezer*. Register your application and obtain the Client ID with Client Secret on the [Deezer Developer Portal](https://developers.deezer.com/).
+5) *Build registry*. When you have all the necessary credentials, you can initialize the streamnx *registry* with the following code.
 
 ``` golang
 package main
@@ -73,6 +75,8 @@ func main() {
         YoutubeAPIKey:              "[your youtube api key]",
         SpotifyClientID:            "[your spotify client id]",
         SpotifyClientSecret:        "[your spotify client secret]",
+        DeezerClientID:             "[your deezer client id]",
+        DeezerClientSecret:         "[your deezer client secret]",
     })
     if err != nil {
         // Handle error

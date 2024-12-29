@@ -5,6 +5,7 @@ import (
 	"github.com/GeorgeGorbanev/streamnx/internal/spotify"
 	"github.com/GeorgeGorbanev/streamnx/internal/yandex"
 	"github.com/GeorgeGorbanev/streamnx/internal/youtube"
+	"github.com/GeorgeGorbanev/streamnx/internal/deezer"
 )
 
 var (
@@ -13,6 +14,7 @@ var (
 		Spotify,
 		Yandex,
 		Youtube,
+		Deezer,
 	}
 
 	Apple = &Provider{
@@ -40,6 +42,12 @@ var (
 		сode:          "yt",
 		trackIDParser: youtube.DetectTrackID,
 		albumIDParser: youtube.DetectAlbumID,
+	}
+	Deezer = &Provider{
+		name:          "Deezer",
+		сode:          "dz",
+		trackIDParser: deezer.DetectTrackID,
+		albumIDParser: deezer.DetectAlbumID,
 	}
 )
 

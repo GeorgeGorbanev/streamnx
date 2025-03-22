@@ -14,10 +14,6 @@ const (
 	defaultAPIURL = "https://api.music.yandex.net"
 )
 
-var (
-	NotFoundError = errors.New("not found")
-)
-
 type Client interface {
 	FetchTrack(ctx context.Context, id string) (*Track, error)
 	SearchTrack(ctx context.Context, query string) (*Track, error)
@@ -30,30 +26,7 @@ type HTTPClient struct {
 	httpClient *http.Client
 }
 
-type trackResponse struct {
-	Result []Track `json:"result"`
-}
-
-type albumResponse struct {
-	Result *Album `json:"result"`
-}
-
-type searchResponse struct {
-	Result searchResult `json:"result"`
-}
-
-type searchResult struct {
-	Tracks tracksSection `json:"tracks"`
-	Albums albumsSection `json:"albums"`
-}
-
-type tracksSection struct {
-	Results []Track `json:"results"`
-}
-
-type albumsSection struct {
-	Results []Album `json:"results"`
-}
+var NotFoundError = errors.New("not found")
 
 func NewHTTPClient(opts ...ClientOption) *HTTPClient {
 	c := HTTPClient{
@@ -69,8 +42,11 @@ func NewHTTPClient(opts ...ClientOption) *HTTPClient {
 }
 
 func (c *HTTPClient) FetchTrack(ctx context.Context, trackID string) (*Track, error) {
-	path := fmt.Sprintf("/tracks/%s", trackID)
-	body, err := c.getAPI(ctx, path, url.Values{})
+	type trackResponse struct {
+		Result []Track `json:"result"`
+	}
+
+	body, err := c.getAPI(ctx, "/tracks/"+trackID, url.Values{})
 	if err != nil {
 		return nil, fmt.Errorf("failed to get api: %s", err)
 	}
@@ -88,6 +64,14 @@ func (c *HTTPClient) FetchTrack(ctx context.Context, trackID string) (*Track, er
 }
 
 func (c *HTTPClient) SearchTrack(ctx context.Context, query string) (*Track, error) {
+	type searchResponse struct {
+		Result struct {
+			Tracks struct {
+				Results []Track `json:"results"`
+			} `json:"tracks"`
+		} `json:"result"`
+	}
+
 	body, err := c.getAPI(ctx, "/search", url.Values{
 		"type": []string{"track"},
 		"page": []string{"0"},
@@ -110,8 +94,15 @@ func (c *HTTPClient) SearchTrack(ctx context.Context, query string) (*Track, err
 }
 
 func (c *HTTPClient) FetchAlbum(ctx context.Context, albumID string) (*Album, error) {
-	path := fmt.Sprintf("/albums/%s", albumID)
-	body, err := c.getAPI(ctx, path, url.Values{})
+	const notFoundAPIErr = "not-found"
+	type albumResponse struct {
+		Result struct {
+			Album
+			Error *string `json:"error"`
+		} `json:"result"`
+	}
+
+	body, err := c.getAPI(ctx, "/albums/"+albumID, url.Values{})
 	if err != nil {
 		return nil, fmt.Errorf("failed to get api: %s", err)
 	}
@@ -120,14 +111,26 @@ func (c *HTTPClient) FetchAlbum(ctx context.Context, albumID string) (*Album, er
 	if err = json.Unmarshal(body, &ar); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal response body: %s", err)
 	}
-	if ar.Result == nil {
-		return nil, NotFoundError
+
+	if ar.Result.Error != nil {
+		if *ar.Result.Error == notFoundAPIErr {
+			return nil, NotFoundError
+		}
+		return nil, fmt.Errorf("api error: %s", *ar.Result.Error)
 	}
 
-	return ar.Result, nil
+	return &ar.Result.Album, nil
 }
 
 func (c *HTTPClient) SearchAlbum(ctx context.Context, query string) (*Album, error) {
+	type searchResponse struct {
+		Result struct {
+			Albums struct {
+				Results []Album `json:"results"`
+			} `json:"albums"`
+		} `json:"result"`
+	}
+
 	body, err := c.getAPI(ctx, "/search", url.Values{
 		"type": []string{"album"},
 		"page": []string{"0"},
@@ -162,39 +165,4 @@ func (c *HTTPClient) getAPI(ctx context.Context, path string, query url.Values) 
 	defer resp.Body.Close()
 
 	return io.ReadAll(resp.Body)
-}
-
-func (ar *albumResponse) UnmarshalJSON(data []byte) error {
-	parsedResponse := map[string]map[string]any{}
-	if err := json.Unmarshal(data, &parsedResponse); err != nil {
-		return fmt.Errorf("failed to unmarshal album response: %s", err)
-	}
-
-	result, hasResult := parsedResponse["result"]
-	if !hasResult {
-		return fmt.Errorf("response does not contain result field")
-	}
-
-	apiError, hasAPIError := result["error"]
-	if hasAPIError {
-		apiErrorString, ok := apiError.(string)
-		if !ok {
-			return fmt.Errorf("api error is not a string")
-		}
-		if apiErrorString == "not-found" {
-			return nil
-		}
-		return fmt.Errorf("api error: %s", apiErrorString)
-	}
-
-	albumJSON, err := json.Marshal(result)
-	if err != nil {
-		return fmt.Errorf("failed to marshal album result: %s", err)
-	}
-
-	if err = json.Unmarshal(albumJSON, &ar.Result); err != nil {
-		return fmt.Errorf("failed to unmarshal album: %s", err)
-	}
-
-	return nil
 }

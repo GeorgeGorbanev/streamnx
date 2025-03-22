@@ -429,12 +429,11 @@ func TestHTTPClient_fetchToken(t *testing.T) {
 }
 
 func Test_searchQuery(t *testing.T) {
-	sampleTerm := "sample term"
-	result := searchQuery(sampleTerm)
+	result := searchQuery("sample", "term")
 
 	q, err := url.ParseQuery(result)
 	require.NoError(t, err)
-	require.Equal(t, sampleTerm, q.Get("term"))
+	require.Equal(t, "sample term", q.Get("term"))
 	require.Equal(t, "c", q.Get("art[music-videos:url]"))
 	require.Equal(t, "f", q.Get("art[url]"))
 	require.Equal(t, "artistUrl", q.Get("extend"))

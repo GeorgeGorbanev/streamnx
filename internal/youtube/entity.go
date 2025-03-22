@@ -12,11 +12,6 @@ const (
 	autogenPlaylistTitlePrefix       = "Album - "
 )
 
-var (
-	VideoRe    = regexp.MustCompile(`(?:youtu\.be/|youtube\.com/watch\?v=)([a-zA-Z0-9_-]{11})`)
-	PlaylistRe = regexp.MustCompile(`(?:youtube\.com/playlist\?list=|youtu\.be/playlist\?list=)([a-zA-Z0-9_-]+)`)
-)
-
 type Video struct {
 	ID           string
 	Title        string
@@ -28,6 +23,11 @@ type Playlist struct {
 	Title        string
 	ChannelTitle string
 }
+
+var (
+	VideoRe    = regexp.MustCompile(`(?:youtu\.be/|youtube\.com/watch\?v=)([a-zA-Z0-9_-]{11})`)
+	PlaylistRe = regexp.MustCompile(`(?:youtube\.com/playlist\?list=|youtu\.be/playlist\?list=)([a-zA-Z0-9_-]+)`)
+)
 
 func DetectTrackID(trackURL string) string {
 	if matches := VideoRe.FindStringSubmatch(trackURL); len(matches) > 1 {

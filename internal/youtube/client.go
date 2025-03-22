@@ -14,10 +14,6 @@ const (
 	defaultAPIURL = "https://www.googleapis.com"
 )
 
-var (
-	NotFoundError = errors.New("not found")
-)
-
 type Client interface {
 	GetVideo(ctx context.Context, id string) (*Video, error)
 	SearchVideo(ctx context.Context, term string) (*SearchResponse, error)
@@ -32,38 +28,7 @@ type HTTPClient struct {
 	httpClient *http.Client
 }
 
-type getSnippetResponse struct {
-	Items []*getSnippetItem `json:"items"`
-}
-
-type getSnippetItem struct {
-	ID      string   `json:"id"`
-	Snippet *snippet `json:"snippet"`
-}
-
-type SearchResponse struct {
-	Items []SearchItem `json:"items"`
-}
-
-type SearchItem struct {
-	ID SearchID `json:"id"`
-}
-
-type SearchID struct {
-	VideoID    string `json:"videoId"`
-	PlaylistID string `json:"playlistId"`
-}
-
-type getPlaylistItemsResponse struct {
-	Items []*getSnippetItem `json:"items"`
-}
-
-type snippet struct {
-	Title                  string `json:"title"`
-	ChannelTitle           string `json:"channelTitle"`
-	Description            string `json:"description"`
-	VideoOwnerChannelTitle string `json:"videoOwnerChannelTitle"`
-}
+var NotFoundError = errors.New("not found")
 
 func NewHTTPClient(apiKey string, opts ...ClientOption) *HTTPClient {
 	c := HTTPClient{
@@ -87,7 +52,7 @@ func (c *HTTPClient) GetVideo(ctx context.Context, id string) (*Video, error) {
 		return nil, err
 	}
 
-	response := getSnippetResponse{}
+	response := snippetResponse{}
 	if err := json.Unmarshal(body, &response); err != nil {
 		return nil, fmt.Errorf("failed to decode api response: %w", err)
 	}
@@ -138,7 +103,7 @@ func (c *HTTPClient) GetPlaylist(ctx context.Context, id string) (*Playlist, err
 		return nil, err
 	}
 
-	response := getSnippetResponse{}
+	response := snippetResponse{}
 	if err := json.Unmarshal(body, &response); err != nil {
 		return nil, fmt.Errorf("failed to decode api response: %w", err)
 	}
@@ -179,6 +144,10 @@ func (c *HTTPClient) SearchPlaylist(ctx context.Context, query string) (*SearchR
 
 // https://developers.google.com/youtube/v3/docs/playlistItems/list
 func (c *HTTPClient) GetPlaylistItems(ctx context.Context, id string) ([]Video, error) {
+	type getPlaylistItemsResponse struct {
+		Items []*snippetItem `json:"items"`
+	}
+
 	body, err := c.getWithKey(ctx, "/youtube/v3/playlistItems", url.Values{
 		"part":       {"snippet"},
 		"playlistId": {id},
@@ -223,11 +192,4 @@ func (c *HTTPClient) getWithKey(ctx context.Context, path string, values url.Val
 	}
 
 	return io.ReadAll(response.Body)
-}
-
-func (s *snippet) ownerChannelTitle() string {
-	if s.VideoOwnerChannelTitle != "" {
-		return s.VideoOwnerChannelTitle
-	}
-	return s.ChannelTitle
 }

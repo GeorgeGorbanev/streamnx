@@ -10,17 +10,17 @@ const (
 	delimiter = "-"
 )
 
+type CompositeKey struct {
+	ID         string
+	Storefront string
+}
+
 var (
 	compositeKeyRe = regexp.MustCompile(
 		fmt.Sprintf(`^([a-z]{2})%s([0-9]+)$`, delimiter),
 	)
 	CompositeKeyError = errors.New("invalid composite key")
 )
-
-type CompositeKey struct {
-	ID         string
-	Storefront string
-}
 
 func (k *CompositeKey) ParseFromTrackURL(url string) error {
 	if matches := AlbumTrackRe.FindStringSubmatch(url); len(matches) == 4 {

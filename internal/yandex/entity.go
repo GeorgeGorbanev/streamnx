@@ -5,19 +5,6 @@ import (
 	"regexp"
 )
 
-var (
-	TrackRe = regexp.MustCompile(
-		fmt.Sprintf(
-			`https://music\.yandex\.(%s)/album/\d+/track/(\d+)`, allDomainZonesRe(),
-		),
-	)
-	AlbumRe = regexp.MustCompile(
-		fmt.Sprintf(
-			`https://music\.yandex\.(%s)/album/(\d+)`, allDomainZonesRe(),
-		),
-	)
-)
-
 type Track struct {
 	Albums  []Album  `json:"albums"`
 	Artists []Artist `json:"artists"`
@@ -35,6 +22,19 @@ type Artist struct {
 	ID   int    `json:"id"`
 	Name string `json:"name"`
 }
+
+var (
+	TrackRe = regexp.MustCompile(
+		fmt.Sprintf(
+			`https://music\.yandex\.(%s)/album/\d+/track/(\d+)`, allDomainZonesRe(),
+		),
+	)
+	AlbumRe = regexp.MustCompile(
+		fmt.Sprintf(
+			`https://music\.yandex\.(%s)/album/(\d+)`, allDomainZonesRe(),
+		),
+	)
+)
 
 func DetectTrackID(trackURL string) string {
 	match := TrackRe.FindStringSubmatch(trackURL)

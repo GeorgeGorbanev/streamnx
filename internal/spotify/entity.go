@@ -5,11 +5,6 @@ import (
 	"regexp"
 )
 
-var (
-	TrackRe = regexp.MustCompile(`https://open\.spotify\.com/(?:[\w-]+/)?track/([a-zA-Z0-9]+)(?:\?.*)?`)
-	AlbumRe = regexp.MustCompile(`https://open\.spotify\.com/(?:[\w-]+/)?album/([a-zA-Z0-9]+)(?:\?.*)?`)
-)
-
 type Track struct {
 	Artists []Artist `json:"artists"`
 	ID      string   `json:"id"`
@@ -25,6 +20,11 @@ type Album struct {
 type Artist struct {
 	Name string `json:"name"`
 }
+
+var (
+	TrackRe = regexp.MustCompile(`https://open\.spotify\.com/(?:[\w-]+/)?track/([a-zA-Z0-9]+)(?:\?.*)?`)
+	AlbumRe = regexp.MustCompile(`https://open\.spotify\.com/(?:[\w-]+/)?album/([a-zA-Z0-9]+)(?:\?.*)?`)
+)
 
 func DetectTrackID(trackURL string) string {
 	match := TrackRe.FindStringSubmatch(trackURL)

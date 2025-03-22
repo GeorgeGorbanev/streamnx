@@ -1,14 +1,6 @@
 package apple
 
-import (
-	"regexp"
-)
-
-var (
-	AlbumRe      = regexp.MustCompile(`music\.apple\.com/(\w+)/album/.*/(\d+)`)
-	AlbumTrackRe = regexp.MustCompile(`music\.apple\.com/(\w+)/album/.*/(\d+)\?i=(\d+)`)
-	SongRe       = regexp.MustCompile(`music\.apple\.com/(\w+)/song/.*/(\d+)`)
-)
+import "regexp"
 
 type Entity struct {
 	ID         string     `json:"id"`
@@ -20,6 +12,12 @@ type Attributes struct {
 	URL        string `json:"url"`
 	ArtistName string `json:"artistName"`
 }
+
+var (
+	AlbumRe      = regexp.MustCompile(`music\.apple\.com/(\w+)/album/.*/(\d+)`)
+	AlbumTrackRe = regexp.MustCompile(`music\.apple\.com/(\w+)/album/.*/(\d+)\?i=(\d+)`)
+	SongRe       = regexp.MustCompile(`music\.apple\.com/(\w+)/song/.*/(\d+)`)
+)
 
 func DetectTrackID(trackURL string) string {
 	ck := CompositeKey{}

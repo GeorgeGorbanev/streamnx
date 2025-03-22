@@ -15,10 +15,6 @@ const (
 	defaulWebPlayerURL = "https://music.apple.com"
 )
 
-var (
-	NotFoundError = errors.New("not found")
-)
-
 type Client interface {
 	FetchTrack(ctx context.Context, id, storefront string) (*Entity, error)
 	SearchTrack(ctx context.Context, artistName, trackName string) (*Entity, error)
@@ -33,32 +29,26 @@ type HTTPClient struct {
 	httpClient   *http.Client
 }
 
-type searchResponse struct {
-	Resources searchResources `json:"resources"`
-	Results   searchResults   `json:"results"`
-}
-
-type searchResults struct {
-	Top searchTop `json:"top"`
-}
-
-type searchTop struct {
-	Data []searchDataItem `json:"data"`
-}
-
-type searchDataItem struct {
-	ID   string `json:"id"`
-	Type string `json:"type"`
-}
-
-type getResponse struct {
+type fetchResponse struct {
 	Data []*Entity `json:"data"`
 }
 
-type searchResources struct {
-	Songs  map[string]*Entity `json:"songs"`
-	Albums map[string]*Entity `json:"albums"`
+type searchResponse struct {
+	Resources struct {
+		Songs  map[string]*Entity `json:"songs"`
+		Albums map[string]*Entity `json:"albums"`
+	} `json:"resources"`
+	Results struct {
+		Top struct {
+			Data []struct {
+				ID   string `json:"id"`
+				Type string `json:"type"`
+			} `json:"data"`
+		} `json:"top"`
+	} `json:"results"`
 }
+
+var NotFoundError = errors.New("not found")
 
 func NewHTTPClient(opts ...ClientOption) *HTTPClient {
 	c := HTTPClient{
@@ -66,17 +56,15 @@ func NewHTTPClient(opts ...ClientOption) *HTTPClient {
 		apiURL:       defaultAPIURL,
 		webPlayerURL: defaulWebPlayerURL,
 	}
-
 	for _, opt := range opts {
 		opt(&c)
 	}
-
 	return &c
 }
 
 func (c *HTTPClient) FetchTrack(ctx context.Context, id, storefront string) (*Entity, error) {
-	url := fmt.Sprintf(`%s/v1/catalog/%s/songs/%s`, c.apiURL, storefront, id)
-	response, err := c.getAPI(ctx, url)
+	u := fmt.Sprintf(`%s/v1/catalog/%s/songs/%s`, c.apiURL, storefront, id)
+	response, err := c.getAPI(ctx, u)
 	if err != nil {
 		return nil, fmt.Errorf("failed to perform get request: %s", err)
 	}
@@ -86,16 +74,16 @@ func (c *HTTPClient) FetchTrack(ctx context.Context, id, storefront string) (*En
 		return nil, NotFoundError
 	}
 
-	gr := getResponse{}
-	if err := json.NewDecoder(response.Body).Decode(&gr); err != nil {
+	r := fetchResponse{}
+	if err := json.NewDecoder(response.Body).Decode(&r); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal get response: %s", err)
 	}
-	return gr.Data[0], nil
+	return r.Data[0], nil
 }
 
-func (c *HTTPClient) SearchTrack(ctx context.Context, artistName, trackName string) (*Entity, error) {
-	url := fmt.Sprintf(`%s/v1/catalog/us/search?%s`, c.apiURL, searchQuery(artistName+" "+trackName))
-	response, err := c.getAPI(ctx, url)
+func (c *HTTPClient) SearchTrack(ctx context.Context, artist, track string) (*Entity, error) {
+	u := fmt.Sprintf(`%s/v1/catalog/us/search?%s`, c.apiURL, searchQuery(artist, track))
+	response, err := c.getAPI(ctx, u)
 	if err != nil {
 		return nil, fmt.Errorf("failed to perform get request: %s", err)
 	}
@@ -113,8 +101,8 @@ func (c *HTTPClient) SearchTrack(ctx context.Context, artistName, trackName stri
 	return nil, NotFoundError
 }
 func (c *HTTPClient) FetchAlbum(ctx context.Context, id, storefront string) (*Entity, error) {
-	url := fmt.Sprintf(`%s/v1/catalog/%s/albums/%s`, c.apiURL, storefront, id)
-	response, err := c.getAPI(ctx, url)
+	u := fmt.Sprintf(`%s/v1/catalog/%s/albums/%s`, c.apiURL, storefront, id)
+	response, err := c.getAPI(ctx, u)
 	if err != nil {
 		return nil, fmt.Errorf("failed to perform get request: %s", err)
 	}
@@ -123,15 +111,15 @@ func (c *HTTPClient) FetchAlbum(ctx context.Context, id, storefront string) (*En
 	if response.StatusCode == http.StatusNotFound {
 		return nil, NotFoundError
 	}
-	gr := getResponse{}
-	if err := json.NewDecoder(response.Body).Decode(&gr); err != nil {
+	r := fetchResponse{}
+	if err := json.NewDecoder(response.Body).Decode(&r); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal get response: %s", err)
 	}
-	return gr.Data[0], nil
+	return r.Data[0], nil
 }
-func (c *HTTPClient) SearchAlbum(ctx context.Context, artistName, albumName string) (*Entity, error) {
-	url := fmt.Sprintf(`%s/v1/catalog/us/search?%s`, c.apiURL, searchQuery(artistName+" "+albumName))
-	response, err := c.getAPI(ctx, url)
+func (c *HTTPClient) SearchAlbum(ctx context.Context, artist, album string) (*Entity, error) {
+	u := fmt.Sprintf(`%s/v1/catalog/us/search?%s`, c.apiURL, searchQuery(artist, album))
+	response, err := c.getAPI(ctx, u)
 	if err != nil {
 		return nil, fmt.Errorf("failed to perform get request: %s", err)
 	}
@@ -221,10 +209,10 @@ func (c *HTTPClient) fetchWebPlayerJS(ctx context.Context, bundleName string) ([
 	return io.ReadAll(response.Body)
 }
 
-func searchQuery(term string) string {
+func searchQuery(artist, entity string) string {
 	query := url.Values{}
 
-	query.Set("term", term)
+	query.Set("term", artist+" "+entity)
 	query.Set("art[music-videos:url]", "c")
 	query.Set("art[url]", "f")
 	query.Set("extend", "artistUrl")

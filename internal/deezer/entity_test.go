@@ -67,12 +67,12 @@ func TestDetectCloakID(t *testing.T) {
 		want  string
 	}{
 		{
-			input: "https://dzr.page.link/jHWZaLoRJutY3TiVA",
-			want:  "jHWZaLoRJutY3TiVA",
+			input: "https://link.deezer.com/s/30FbcgrctxIrNQImDnVEZ",
+			want:  "30FbcgrctxIrNQImDnVEZ",
 		},
 		{
-			input: "https://dzr.page.link/en1DUAej4gK6nNnz6",
-			want:  "en1DUAej4gK6nNnz6",
+			input: "https://link.deezer.com/s/jHWZaLoRJutY3TiVA",
+			want:  "jHWZaLoRJutY3TiVA",
 		},
 		{
 			input: "not a deezer link",

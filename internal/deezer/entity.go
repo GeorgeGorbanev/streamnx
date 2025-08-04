@@ -30,7 +30,7 @@ type Artist struct {
 var (
 	TrackRe = regexp.MustCompile(`^https://(?:www\.)?deezer\.com(?:/[^/]+)?/track/(\d+)$`)
 	AlbumRe = regexp.MustCompile(`^https://(?:www\.)?deezer\.com(?:/[^/]+)?/album/(\d+)$`)
-	CloakRe = regexp.MustCompile(`https://dzr\.page\.link/([A-Za-z0-9]+)`)
+	CloakRe = regexp.MustCompile(`https://link\.deezer\.com/s/([A-Za-z0-9]+)`)
 )
 
 func DetectCloakID(url string) string {

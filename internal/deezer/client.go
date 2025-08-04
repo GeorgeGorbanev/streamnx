@@ -12,7 +12,7 @@ import (
 
 const (
 	defaultAPIURL   = "https://api.deezer.com"
-	cloakBaseURL    = "https://dzr.page.link/"
+	cloakBaseURL    = "https://link.deezer.com/s/"
 )
 
 var (

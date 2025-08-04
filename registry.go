@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/GeorgeGorbanev/streamnx/internal/apple"
+	"github.com/GeorgeGorbanev/streamnx/internal/deezer"
 	"github.com/GeorgeGorbanev/streamnx/internal/spotify"
 	"github.com/GeorgeGorbanev/streamnx/internal/translator"
 	"github.com/GeorgeGorbanev/streamnx/internal/yandex"
@@ -13,9 +14,10 @@ import (
 )
 
 var (
-	InvalidProviderError   = errors.New("invalid provider")
-	InvalidEntityTypeError = errors.New("invalid entity type")
-	EntityNotFoundError    = errors.New("entity not found")
+	InvalidProviderError      = errors.New("invalid provider")
+	InvalidEntityTypeError    = errors.New("invalid entity type")
+	EntityNotFoundError       = errors.New("entity not found")
+	UnsupportedEntityTypeError = errors.New("unsupported entity type")
 )
 
 type Registry struct {
@@ -43,6 +45,10 @@ func NewRegistry(ctx context.Context, cred Credentials, opts ...RegistryOption) 
 	if registry.adapter(Apple) == nil {
 		client := apple.NewHTTPClient(registry.clientOptions.apple...)
 		registry.adapters[Apple.сode] = newAppleAdapter(client)
+	}
+	if registry.adapter(Deezer) == nil {
+		client := deezer.NewHTTPClient()
+		registry.adapters[Deezer.сode] = newDeezerAdapter(client)
 	}
 	if registry.adapter(Spotify) == nil {
 		client := spotify.NewHTTPClient(cred.spotify(), registry.clientOptions.spotify...)
@@ -75,6 +81,8 @@ func (r *Registry) Fetch(ctx context.Context, p *Provider, et EntityType, id str
 		return adapter.FetchTrack(ctx, id)
 	case Album:
 		return adapter.FetchAlbum(ctx, id)
+	case Cloak:
+		return adapter.FetchCloak(ctx, id)
 	default:
 		return nil, InvalidEntityTypeError
 	}
@@ -94,6 +102,15 @@ func (r *Registry) Search(ctx context.Context, p *Provider, et EntityType, artis
 	default:
 		return nil, InvalidEntityTypeError
 	}
+}
+
+func (r *Registry) FetchCloak(ctx context.Context, p *Provider, cloakCode string) (*Entity, error) {
+	adapter := r.adapter(p)
+	if adapter == nil {
+		return nil, InvalidProviderError
+	}
+
+	return adapter.FetchCloak(ctx, cloakCode)
 }
 
 func (r *Registry) adapter(p *Provider) Adapter {

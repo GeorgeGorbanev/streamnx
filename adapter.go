@@ -10,4 +10,6 @@ type Adapter interface {
 
 	FetchAlbum(ctx context.Context, id string) (*Entity, error)
 	SearchAlbum(ctx context.Context, artistName, albumName string) (*Entity, error)
+
+	FetchCloak(ctx context.Context, cloakCode string) (*Entity, error)
 }

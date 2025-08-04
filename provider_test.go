@@ -44,30 +44,30 @@ func TestFindProviderByCode(t *testing.T) {
 	}
 }
 
-func TestProvider_DetectUnknownEntityID(t *testing.T) {
+func TestProvider_DetectCloakEntityID(t *testing.T) {
 	tests := []struct {
 		name     string
 		provider Provider
 		want     string
 	}{
 		{
-			name: "has unknownIDParser",
+			name: "has cloakIDParser",
 			provider: Provider{
-				unknownIDParser: func(url string) string {
+				cloakIDParser: func(url string) string {
 					return "sample result"
 				},
 			},
 			want: "sample result",
 		},
 		{
-			name:     "has no unknownIDParser",
+			name:     "has no cloakIDParser",
 			provider: Provider{},
 			want:     "",
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result := tt.provider.DetectUnknownEntityID("sample url")
+			result := tt.provider.DetectCloakEntityID("sample url")
 			require.Equal(t, tt.want, result)
 		})
 	}

@@ -24,13 +24,13 @@ func TestParseLink(t *testing.T) {
 			},
 		},
 		{
-			name: "Deezer uknown entity",
+			name: "Deezer cloak entity",
 			url:  "https://dzr.page.link/en1DUAej4gK6nNnz6",
 			want: &Link{
 				URL:        "https://dzr.page.link/en1DUAej4gK6nNnz6",
 				Provider:   Deezer,
 				EntityID:   "en1DUAej4gK6nNnz6",
-				EntityType: Unknown,
+				EntityType: Cloak,
 			},
 		},
 		{

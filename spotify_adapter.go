@@ -77,6 +77,10 @@ func (a *SpotifyAdapter) adaptTrack(track *spotify.Track) *Entity {
 	}
 }
 
+func (a *SpotifyAdapter) FetchCloak(ctx context.Context, cloakCode string) (*Entity, error) {
+	return nil, UnsupportedEntityTypeError
+}
+
 func (a *SpotifyAdapter) adaptAlbum(album *spotify.Album) *Entity {
 	return &Entity{
 		ID:       album.ID,

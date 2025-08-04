@@ -61,7 +61,7 @@ func TestDetectAlbumID(t *testing.T) {
 
 }
 
-func TestDetectUnknownEntityID(t *testing.T) {
+func TestDetectCloakID(t *testing.T) {
 	tests := []struct {
 		input string
 		want  string
@@ -81,7 +81,7 @@ func TestDetectUnknownEntityID(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.input, func(t *testing.T) {
-			result := DetectUnknownEntityID(tt.input)
+			result := DetectCloakID(tt.input)
 			require.Equal(t, tt.want, result)
 		})
 	}

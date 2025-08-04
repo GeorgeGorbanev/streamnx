@@ -1,9 +1,9 @@
 package streamnx
 
 const (
-	Track   EntityType = "track"
-	Album   EntityType = "album"
-	Unknown EntityType = "unknown"
+	Track EntityType = "track"
+	Album EntityType = "album"
+	Cloak EntityType = "cloak"
 )
 
 type EntityType string

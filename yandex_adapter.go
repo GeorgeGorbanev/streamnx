@@ -155,6 +155,10 @@ func (a *YandexAdapter) adaptTrack(yandexTrack *yandex.Track) *Entity {
 	}
 }
 
+func (a *YandexAdapter) FetchCloak(ctx context.Context, cloakCode string) (*Entity, error) {
+	return nil, UnsupportedEntityTypeError
+}
+
 func (a *YandexAdapter) adaptAlbum(yandexAlbum *yandex.Album) *Entity {
 	return &Entity{
 		ID:       strconv.Itoa(yandexAlbum.ID),

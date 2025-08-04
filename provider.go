@@ -25,11 +25,11 @@ var (
 		albumIDParser: apple.DetectAlbumID,
 	}
 	Deezer = &Provider{
-		name:            "Deezer",
-		сode:            "dz",
-		trackIDParser:   deezer.DetectTrackID,
-		albumIDParser:   deezer.DetectAlbumID,
-		unknownIDParser: deezer.DetectUnknownEntityID,
+		name:          "Deezer",
+		сode:          "dz",
+		trackIDParser: deezer.DetectTrackID,
+		albumIDParser: deezer.DetectAlbumID,
+		cloakIDParser: deezer.DetectCloakID,
 	}
 	Spotify = &Provider{
 		name:          "Spotify",
@@ -57,9 +57,9 @@ type Provider struct {
 	сode    string
 	regions []string
 
-	unknownIDParser idParser
-	trackIDParser   idParser
-	albumIDParser   idParser
+	cloakIDParser idParser
+	trackIDParser idParser
+	albumIDParser idParser
 }
 
 type idParser func(url string) (id string)
@@ -76,11 +76,11 @@ func (p *Provider) Regions() []string {
 	return p.regions
 }
 
-func (p *Provider) DetectUnknownEntityID(url string) string {
-	if p.unknownIDParser == nil {
+func (p *Provider) DetectCloakEntityID(url string) string {
+	if p.cloakIDParser == nil {
 		return ""
 	}
-	return p.unknownIDParser(url)
+	return p.cloakIDParser(url)
 }
 
 func (p *Provider) DetectTrackID(trackURL string) string {
@@ -93,9 +93,9 @@ func (p *Provider) DetectAlbumID(albumURL string) string {
 
 func (p *Provider) parseURL(url string) (string, *EntityType) {
 	parsers := map[EntityType]idParser{
-		Track:   p.DetectTrackID,
-		Album:   p.DetectAlbumID,
-		Unknown: p.DetectUnknownEntityID,
+		Track: p.DetectTrackID,
+		Album: p.DetectAlbumID,
+		Cloak: p.DetectCloakEntityID,
 	}
 	for et, detector := range parsers {
 		if id := detector(url); id != "" {

@@ -106,6 +106,10 @@ func (a *AppleAdapter) adaptTrack(track *apple.Entity) (*Entity, error) {
 	}, nil
 }
 
+func (a *AppleAdapter) FetchCloak(ctx context.Context, cloakCode string) (*Entity, error) {
+	return nil, UnsupportedEntityTypeError
+}
+
 func (a *AppleAdapter) adaptAlbum(album *apple.Entity) (*Entity, error) {
 	ck := apple.CompositeKey{}
 	if err := ck.ParseFromAlbumURL(album.Attributes.URL); err != nil {

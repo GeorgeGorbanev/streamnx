@@ -55,7 +55,7 @@ func TestDeezerAdapter_FetchTrack(t *testing.T) {
 			name: "successful fetch",
 			id:   "123456",
 			track: &deezer.Track{
-				ID:    "123456",
+				ID:    123456,
 				Title: "Test Song",
 				Artist: deezer.Artist{
 					Name: "Test Artist",
@@ -101,22 +101,21 @@ func TestDeezerAdapter_FetchTrack(t *testing.T) {
 
 func TestDeezerAdapter_FetchCloak(t *testing.T) {
 	tests := []struct {
-		name           string
-		cloakCode      string
-		resolvedURL    string
-		followError    error
-		fetchResult    *deezer.Track
-		fetchError     error
-		want           *Entity
-		wantError      bool
-		wantErrorMsg   string
+		name        string
+		cloakCode   string
+		resolvedURL string
+		followError error
+		fetchResult *deezer.Track
+		fetchError  error
+		want        *Entity
+		wantErr     string
 	}{
 		{
 			name:        "successful track resolution",
 			cloakCode:   "abc123",
-			resolvedURL: "https://deezer.com/track/123456",
+			resolvedURL: "https://link.deezer.com/?dest=https%3A%2F%2Fwww.deezer.com%2Ftrack%2F123456",
 			fetchResult: &deezer.Track{
-				ID:    "123456",
+				ID:    123456,
 				Title: "Test Song",
 				Artist: deezer.Artist{
 					Name: "Test Artist",
@@ -132,18 +131,16 @@ func TestDeezerAdapter_FetchCloak(t *testing.T) {
 			},
 		},
 		{
-			name:         "follow cloak error",
-			cloakCode:    "error123",
-			followError:  errors.New("network error"),
-			wantError:    true,
-			wantErrorMsg: "failed to follow cloak link",
+			name:        "follow cloak error",
+			cloakCode:   "error123",
+			followError: errors.New("network error"),
+			wantErr:     "failed to follow cloak link",
 		},
 		{
-			name:         "invalid resolved URL",
-			cloakCode:    "invalid123",
-			resolvedURL:  "https://example.com/invalid",
-			wantError:    true,
-			wantErrorMsg: "resolved URL is not a track or album",
+			name:        "invalid resolved URL",
+			cloakCode:   "invalid123",
+			resolvedURL: "https://link.deezer.com/?dest=https%3A%2F%2Fwww.deezer.com%2Fartist%2F123456",
+			wantErr:     "entity not found: cloak dest is not a track or album (https://www.deezer.com/artist/123456)",
 		},
 	}
 
@@ -159,9 +156,9 @@ func TestDeezerAdapter_FetchCloak(t *testing.T) {
 
 			got, err := adapter.FetchCloak(context.Background(), tt.cloakCode)
 
-			if tt.wantError {
+			if tt.wantErr != "" {
 				require.Error(t, err)
-				require.Contains(t, err.Error(), tt.wantErrorMsg)
+				require.Contains(t, err.Error(), tt.wantErr)
 				require.Nil(t, got)
 			} else {
 				require.NoError(t, err)
@@ -174,7 +171,7 @@ func TestDeezerAdapter_FetchCloak(t *testing.T) {
 func TestDeezerAdapter_FetchAlbum(t *testing.T) {
 	client := &deezerClientMock{
 		fetchAlbumResult: &deezer.Album{
-			ID:    "789",
+			ID:    789,
 			Title: "Test Album",
 			Artist: deezer.Artist{
 				Name: "Test Artist",

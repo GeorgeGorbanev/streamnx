@@ -14,9 +14,9 @@ import (
 )
 
 var (
-	InvalidProviderError      = errors.New("invalid provider")
-	InvalidEntityTypeError    = errors.New("invalid entity type")
-	EntityNotFoundError       = errors.New("entity not found")
+	InvalidProviderError       = errors.New("invalid provider")
+	InvalidEntityTypeError     = errors.New("invalid entity type")
+	EntityNotFoundError        = errors.New("entity not found")
 	UnsupportedEntityTypeError = errors.New("unsupported entity type")
 )
 
@@ -99,6 +99,8 @@ func (r *Registry) Search(ctx context.Context, p *Provider, et EntityType, artis
 		return adapter.SearchTrack(ctx, artist, name)
 	case Album:
 		return adapter.SearchAlbum(ctx, artist, name)
+	case Cloak:
+		return nil, UnsupportedEntityTypeError
 	default:
 		return nil, InvalidEntityTypeError
 	}

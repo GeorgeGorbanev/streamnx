@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strconv"
 
 	"github.com/GeorgeGorbanev/streamnx/internal/deezer"
 )
@@ -66,26 +67,30 @@ func (a *DeezerAdapter) SearchAlbum(ctx context.Context, artistName, albumName s
 	return a.adaptAlbum(album), nil
 }
 
-func (a *DeezerAdapter) FetchCloak(ctx context.Context, cloakCode string) (*Entity, error) {
-	resolvedURL, err := a.client.FollowCloak(ctx, cloakCode)
+func (a *DeezerAdapter) FetchCloak(ctx context.Context, id string) (*Entity, error) {
+	cloak, err := a.client.FollowCloak(ctx, id)
 	if err != nil {
 		return nil, fmt.Errorf("failed to follow cloak link: %w", err)
 	}
 
-	// Parse resolved URL to detect entity type and ID
-	if trackID := deezer.DetectTrackID(resolvedURL); trackID != "" {
+	dest, err := deezer.DetectCloakDest(cloak)
+	if err != nil {
+		return nil, fmt.Errorf("failed to detect cloak destination: %w", err)
+	}
+
+	if trackID := deezer.DetectTrackID(dest); trackID != "" {
 		return a.FetchTrack(ctx, trackID)
 	}
-	if albumID := deezer.DetectAlbumID(resolvedURL); albumID != "" {
+	if albumID := deezer.DetectAlbumID(dest); albumID != "" {
 		return a.FetchAlbum(ctx, albumID)
 	}
 
-	return nil, fmt.Errorf("resolved URL is not a track or album: %s", resolvedURL)
+	return nil, fmt.Errorf("%w: cloak dest is not a track or album (%s)", EntityNotFoundError, dest)
 }
 
 func (a *DeezerAdapter) adaptTrack(track *deezer.Track) *Entity {
 	return &Entity{
-		ID:       track.ID,
+		ID:       strconv.Itoa(track.ID),
 		Title:    track.Title,
 		Artist:   track.Artist.Name,
 		URL:      track.URL(),
@@ -96,7 +101,7 @@ func (a *DeezerAdapter) adaptTrack(track *deezer.Track) *Entity {
 
 func (a *DeezerAdapter) adaptAlbum(album *deezer.Album) *Entity {
 	return &Entity{
-		ID:       album.ID,
+		ID:       strconv.Itoa(album.ID),
 		Title:    album.Title,
 		Artist:   album.Artist.Name,
 		URL:      album.URL(),

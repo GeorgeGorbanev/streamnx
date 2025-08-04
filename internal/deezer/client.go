@@ -11,8 +11,8 @@ import (
 )
 
 const (
-	defaultAPIURL   = "https://api.deezer.com"
-	cloakBaseURL    = "https://link.deezer.com/s/"
+	defaultAPIURL = "https://api.deezer.com"
+	cloakBaseURL  = "https://link.deezer.com/s/"
 )
 
 var (
@@ -28,8 +28,8 @@ type Client interface {
 }
 
 type HTTPClient struct {
-	apiURL     string
-	apiClient  *http.Client
+	apiURL      string
+	apiClient   *http.Client
 	cloakClient *http.Client
 }
 
@@ -45,8 +45,8 @@ type albumSearchResult struct {
 
 func NewHTTPClient() *HTTPClient {
 	return &HTTPClient{
-		apiURL:      defaultAPIURL,
-		apiClient:   &http.Client{},
+		apiURL:    defaultAPIURL,
+		apiClient: &http.Client{},
 		cloakClient: &http.Client{
 			CheckRedirect: func(req *http.Request, via []*http.Request) error {
 				return http.ErrUseLastResponse
@@ -66,8 +66,7 @@ func (c *HTTPClient) FetchTrack(ctx context.Context, id string) (*Track, error) 
 		return nil, fmt.Errorf("failed to parse track response: %w", err)
 	}
 
-	// Check if track exists (Deezer returns empty fields for non-existent tracks)
-	if track.ID == "" {
+	if track.ID == 0 {
 		return nil, NotFoundError
 	}
 
@@ -106,8 +105,7 @@ func (c *HTTPClient) FetchAlbum(ctx context.Context, id string) (*Album, error) 
 		return nil, fmt.Errorf("failed to parse album response: %w", err)
 	}
 
-	// Check if album exists
-	if album.ID == "" {
+	if album.ID == 0 {
 		return nil, NotFoundError
 	}
 
@@ -135,27 +133,25 @@ func (c *HTTPClient) SearchAlbum(ctx context.Context, artistName, albumName stri
 	return result.Data[0], nil
 }
 
-func (c *HTTPClient) FollowCloak(ctx context.Context, cloakCode string) (string, error) {
-	cloakURL := cloakBaseURL + cloakCode
-	
-	req, err := http.NewRequestWithContext(ctx, "HEAD", cloakURL, nil)
+func (c *HTTPClient) FollowCloak(ctx context.Context, id string) (string, error) {
+	req, err := http.NewRequestWithContext(ctx, "HEAD", cloakBaseURL+id, nil)
 	if err != nil {
 		return "", fmt.Errorf("failed to create request: %w", err)
 	}
-	
+
 	resp, err := c.cloakClient.Do(req)
 	if err != nil {
 		return "", fmt.Errorf("failed to follow cloak link: %w", err)
 	}
 	defer resp.Body.Close()
-	
+
 	if resp.StatusCode >= 300 && resp.StatusCode < 400 {
 		location := resp.Header.Get("Location")
 		if location != "" {
 			return location, nil
 		}
 	}
-	
+
 	return "", fmt.Errorf("no redirect found for cloak link")
 }
 
@@ -164,25 +160,25 @@ func (c *HTTPClient) getAPI(ctx context.Context, path string, query url.Values) 
 	if len(query) > 0 {
 		u += "?" + query.Encode()
 	}
-	
+
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, u, nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
-	
+
 	resp, err := c.apiClient.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to send request: %w", err)
 	}
 	defer resp.Body.Close()
-	
+
 	if resp.StatusCode == http.StatusNotFound {
 		return nil, NotFoundError
 	}
-	
+
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("API returned status %d", resp.StatusCode)
 	}
-	
+
 	return io.ReadAll(resp.Body)
 }

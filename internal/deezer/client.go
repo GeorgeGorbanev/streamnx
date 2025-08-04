@@ -15,10 +15,6 @@ const (
 	cloakBaseURL  = "https://link.deezer.com/s/"
 )
 
-var (
-	NotFoundError = errors.New("not found")
-)
-
 type Client interface {
 	FetchTrack(ctx context.Context, id string) (*Track, error)
 	SearchTrack(ctx context.Context, artistName, trackName string) (*Track, error)
@@ -33,28 +29,23 @@ type HTTPClient struct {
 	cloakClient *http.Client
 }
 
-type searchResult struct {
-	Data  []*Track `json:"data"`
-	Total int      `json:"total"`
-}
-
-type albumSearchResult struct {
-	Data  []*Album `json:"data"`
-	Total int      `json:"total"`
-}
+var (
+	NotFoundError = errors.New("not found")
+)
 
 func NewHTTPClient() *HTTPClient {
 	return &HTTPClient{
 		apiURL:    defaultAPIURL,
 		apiClient: &http.Client{},
 		cloakClient: &http.Client{
-			CheckRedirect: func(req *http.Request, via []*http.Request) error {
+			CheckRedirect: func(_ *http.Request, _ []*http.Request) error {
 				return http.ErrUseLastResponse
 			},
 		},
 	}
 }
 
+// https://developers.deezer.com/api/track
 func (c *HTTPClient) FetchTrack(ctx context.Context, id string) (*Track, error) {
 	body, err := c.getAPI(ctx, "/track/"+id, url.Values{})
 	if err != nil {
@@ -73,16 +64,16 @@ func (c *HTTPClient) FetchTrack(ctx context.Context, id string) (*Track, error) 
 	return &track, nil
 }
 
-func (c *HTTPClient) SearchTrack(ctx context.Context, artistName, trackName string) (*Track, error) {
-	query := url.Values{}
-	query.Set("q", fmt.Sprintf("artist:\"%s\" track:\"%s\"", artistName, trackName))
-
-	body, err := c.getAPI(ctx, "/search", query)
+// https://developers.deezer.com/api/search
+func (c *HTTPClient) SearchTrack(ctx context.Context, artist, title string) (*Track, error) {
+	body, err := c.search(ctx, artist, "track", title)
 	if err != nil {
 		return nil, fmt.Errorf("failed to search track: %w", err)
 	}
 
-	var result searchResult
+	var result struct {
+		Data []Track `json:"data"`
+	}
 	if err := json.Unmarshal(body, &result); err != nil {
 		return nil, fmt.Errorf("failed to parse search response: %w", err)
 	}
@@ -91,9 +82,10 @@ func (c *HTTPClient) SearchTrack(ctx context.Context, artistName, trackName stri
 		return nil, NotFoundError
 	}
 
-	return result.Data[0], nil
+	return &result.Data[0], nil
 }
 
+// https://developers.deezer.com/api/album
 func (c *HTTPClient) FetchAlbum(ctx context.Context, id string) (*Album, error) {
 	body, err := c.getAPI(ctx, "/album/"+id, url.Values{})
 	if err != nil {
@@ -112,25 +104,24 @@ func (c *HTTPClient) FetchAlbum(ctx context.Context, id string) (*Album, error) 
 	return &album, nil
 }
 
-func (c *HTTPClient) SearchAlbum(ctx context.Context, artistName, albumName string) (*Album, error) {
-	query := url.Values{}
-	query.Set("q", fmt.Sprintf("artist:\"%s\" album:\"%s\"", artistName, albumName))
-
-	body, err := c.getAPI(ctx, "/search/album", query)
+// https://developers.deezer.com/api/search
+func (c *HTTPClient) SearchAlbum(ctx context.Context, artist, title string) (*Album, error) {
+	body, err := c.search(ctx, artist, "album", title)
 	if err != nil {
 		return nil, fmt.Errorf("failed to search album: %w", err)
 	}
 
-	var result albumSearchResult
+	var result struct {
+		Data []Album `json:"data"`
+	}
 	if err := json.Unmarshal(body, &result); err != nil {
 		return nil, fmt.Errorf("failed to parse album search response: %w", err)
 	}
-
 	if len(result.Data) == 0 {
 		return nil, NotFoundError
 	}
 
-	return result.Data[0], nil
+	return &result.Data[0], nil
 }
 
 func (c *HTTPClient) FollowCloak(ctx context.Context, id string) (string, error) {
@@ -156,11 +147,7 @@ func (c *HTTPClient) FollowCloak(ctx context.Context, id string) (string, error)
 }
 
 func (c *HTTPClient) getAPI(ctx context.Context, path string, query url.Values) ([]byte, error) {
-	u := fmt.Sprintf("%s%s", c.apiURL, path)
-	if len(query) > 0 {
-		u += "?" + query.Encode()
-	}
-
+	u := fmt.Sprintf("%s%s?%s", c.apiURL, path, query.Encode())
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, u, nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
@@ -181,4 +168,12 @@ func (c *HTTPClient) getAPI(ctx context.Context, path string, query url.Values) 
 	}
 
 	return io.ReadAll(resp.Body)
+}
+
+func (c *HTTPClient) search(ctx context.Context, artist, entityType, title string) ([]byte, error) {
+	return c.getAPI(ctx, "/search", url.Values{
+		"q": []string{
+			fmt.Sprintf(`artist:"%s" %s:"%s"`, artist, entityType, title),
+		},
+	})
 }

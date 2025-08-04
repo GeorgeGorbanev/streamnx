@@ -155,7 +155,7 @@ func (a *YandexAdapter) adaptTrack(yandexTrack *yandex.Track) *Entity {
 	}
 }
 
-func (a *YandexAdapter) FetchCloak(ctx context.Context, cloakCode string) (*Entity, error) {
+func (a *YandexAdapter) FetchCloak(_ context.Context, _ string) (*Entity, error) {
 	return nil, UnsupportedEntityTypeError
 }
 

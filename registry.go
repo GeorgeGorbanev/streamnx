@@ -47,7 +47,7 @@ func NewRegistry(ctx context.Context, cred Credentials, opts ...RegistryOption) 
 		registry.adapters[Apple.сode] = newAppleAdapter(client)
 	}
 	if registry.adapter(Deezer) == nil {
-		client := deezer.NewHTTPClient()
+		client := deezer.NewHTTPClient(registry.clientOptions.deezer...)
 		registry.adapters[Deezer.сode] = newDeezerAdapter(client)
 	}
 	if registry.adapter(Spotify) == nil {

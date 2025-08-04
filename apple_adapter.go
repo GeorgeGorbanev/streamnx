@@ -106,7 +106,7 @@ func (a *AppleAdapter) adaptTrack(track *apple.Entity) (*Entity, error) {
 	}, nil
 }
 
-func (a *AppleAdapter) FetchCloak(ctx context.Context, cloakCode string) (*Entity, error) {
+func (a *AppleAdapter) FetchCloak(_ context.Context, _ string) (*Entity, error) {
 	return nil, UnsupportedEntityTypeError
 }
 

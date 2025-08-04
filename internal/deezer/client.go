@@ -12,7 +12,7 @@ import (
 
 const (
 	defaultAPIURL = "https://api.deezer.com"
-	cloakBaseURL  = "https://link.deezer.com/s/"
+	cloakBaseURL  = "https://link.deezer.com"
 )
 
 type Client interface {
@@ -24,25 +24,31 @@ type Client interface {
 }
 
 type HTTPClient struct {
-	apiURL      string
-	apiClient   *http.Client
-	cloakClient *http.Client
+	apiURL       string
+	cloakBaseURL string
+	apiClient    *http.Client
+	cloakClient  *http.Client
 }
 
 var (
 	NotFoundError = errors.New("not found")
 )
 
-func NewHTTPClient() *HTTPClient {
-	return &HTTPClient{
-		apiURL:    defaultAPIURL,
-		apiClient: &http.Client{},
+func NewHTTPClient(options ...ClientOption) *HTTPClient {
+	c := &HTTPClient{
+		apiURL:       defaultAPIURL,
+		cloakBaseURL: cloakBaseURL,
+		apiClient:    &http.Client{},
 		cloakClient: &http.Client{
 			CheckRedirect: func(_ *http.Request, _ []*http.Request) error {
 				return http.ErrUseLastResponse
 			},
 		},
 	}
+	for _, option := range options {
+		option(c)
+	}
+	return c
 }
 
 // https://developers.deezer.com/api/track
@@ -51,16 +57,13 @@ func (c *HTTPClient) FetchTrack(ctx context.Context, id string) (*Track, error) 
 	if err != nil {
 		return nil, fmt.Errorf("failed to get track: %w", err)
 	}
-
 	var track Track
 	if err := json.Unmarshal(body, &track); err != nil {
 		return nil, fmt.Errorf("failed to parse track response: %w", err)
 	}
-
 	if track.ID == 0 {
 		return nil, NotFoundError
 	}
-
 	return &track, nil
 }
 
@@ -70,18 +73,15 @@ func (c *HTTPClient) SearchTrack(ctx context.Context, artist, title string) (*Tr
 	if err != nil {
 		return nil, fmt.Errorf("failed to search track: %w", err)
 	}
-
 	var result struct {
 		Data []Track `json:"data"`
 	}
 	if err := json.Unmarshal(body, &result); err != nil {
 		return nil, fmt.Errorf("failed to parse search response: %w", err)
 	}
-
 	if len(result.Data) == 0 {
 		return nil, NotFoundError
 	}
-
 	return &result.Data[0], nil
 }
 
@@ -91,16 +91,13 @@ func (c *HTTPClient) FetchAlbum(ctx context.Context, id string) (*Album, error) 
 	if err != nil {
 		return nil, fmt.Errorf("failed to get album: %w", err)
 	}
-
 	var album Album
 	if err := json.Unmarshal(body, &album); err != nil {
 		return nil, fmt.Errorf("failed to parse album response: %w", err)
 	}
-
 	if album.ID == 0 {
 		return nil, NotFoundError
 	}
-
 	return &album, nil
 }
 
@@ -110,7 +107,6 @@ func (c *HTTPClient) SearchAlbum(ctx context.Context, artist, title string) (*Al
 	if err != nil {
 		return nil, fmt.Errorf("failed to search album: %w", err)
 	}
-
 	var result struct {
 		Data []Album `json:"data"`
 	}
@@ -120,16 +116,15 @@ func (c *HTTPClient) SearchAlbum(ctx context.Context, artist, title string) (*Al
 	if len(result.Data) == 0 {
 		return nil, NotFoundError
 	}
-
 	return &result.Data[0], nil
 }
 
 func (c *HTTPClient) FollowCloak(ctx context.Context, id string) (string, error) {
-	req, err := http.NewRequestWithContext(ctx, "HEAD", cloakBaseURL+id, nil)
+	u := fmt.Sprintf("%s/s/%s", c.cloakBaseURL, id)
+	req, err := http.NewRequestWithContext(ctx, "HEAD", u, nil)
 	if err != nil {
 		return "", fmt.Errorf("failed to create request: %w", err)
 	}
-
 	resp, err := c.cloakClient.Do(req)
 	if err != nil {
 		return "", fmt.Errorf("failed to follow cloak link: %w", err)
@@ -152,7 +147,6 @@ func (c *HTTPClient) getAPI(ctx context.Context, path string, query url.Values) 
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
-
 	resp, err := c.apiClient.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to send request: %w", err)
@@ -162,11 +156,9 @@ func (c *HTTPClient) getAPI(ctx context.Context, path string, query url.Values) 
 	if resp.StatusCode == http.StatusNotFound {
 		return nil, NotFoundError
 	}
-
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("API returned status %d", resp.StatusCode)
 	}
-
 	return io.ReadAll(resp.Body)
 }
 

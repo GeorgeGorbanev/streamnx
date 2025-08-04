@@ -24,6 +24,5 @@ func ParseLink(url string) (*Link, error) {
 			}, nil
 		}
 	}
-
 	return nil, UnknownLinkError
 }

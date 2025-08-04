@@ -64,6 +64,16 @@ func TestParseLink(t *testing.T) {
 			},
 		},
 		{
+			name: "Deezer track",
+			url:  "https://www.deezer.com/track/123456789",
+			want: &Link{
+				URL:        "https://www.deezer.com/track/123456789",
+				Provider:   Deezer,
+				EntityID:   "123456789",
+				EntityType: Track,
+			},
+		},
+		{
 			name:          "Unknown provider",
 			url:           "https://example.com/track/123456789",
 			expectedError: UnknownLinkError,

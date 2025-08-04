@@ -77,7 +77,7 @@ func (a *SpotifyAdapter) adaptTrack(track *spotify.Track) *Entity {
 	}
 }
 
-func (a *SpotifyAdapter) FetchCloak(ctx context.Context, cloakCode string) (*Entity, error) {
+func (a *SpotifyAdapter) FetchCloak(_ context.Context, _ string) (*Entity, error) {
 	return nil, UnsupportedEntityTypeError
 }
 

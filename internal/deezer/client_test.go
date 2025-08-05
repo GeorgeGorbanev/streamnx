@@ -289,7 +289,7 @@ func TestHTTPClient_SearchAlbum(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			apiServerMock := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				require.Equal(t, http.MethodGet, r.Method)
-				require.Equal(t, "/search", r.URL.Path)
+				require.Equal(t, "/search/album", r.URL.Path)
 				require.Equal(t, fmt.Sprintf(`artist:"%s" album:"%s"`, tt.artist, tt.title), r.URL.Query().Get("q"))
 
 				_, err := w.Write([]byte(tt.responseMock))

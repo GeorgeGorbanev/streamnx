@@ -24,6 +24,16 @@ func TestParseLink(t *testing.T) {
 			},
 		},
 		{
+			name: "Deezer cloak entity",
+			url:  "https://link.deezer.com/s/30FbcgrctxIrNQImDnVEZ",
+			want: &Link{
+				URL:        "https://link.deezer.com/s/30FbcgrctxIrNQImDnVEZ",
+				Provider:   Deezer,
+				EntityID:   "30FbcgrctxIrNQImDnVEZ",
+				EntityType: Cloak,
+			},
+		},
+		{
 			name: "Spotify album",
 			url:  "https://open.spotify.com/album/7uv632EkfwYhXoqf8rhYrg",
 			want: &Link{
@@ -51,6 +61,16 @@ func TestParseLink(t *testing.T) {
 				Provider:   Youtube,
 				EntityID:   "PLMC9KNkIncKtPzgY-5rmhvj7fax8fdxoj",
 				EntityType: Album,
+			},
+		},
+		{
+			name: "Deezer track",
+			url:  "https://www.deezer.com/track/123456789",
+			want: &Link{
+				URL:        "https://www.deezer.com/track/123456789",
+				Provider:   Deezer,
+				EntityID:   "123456789",
+				EntityType: Track,
 			},
 		},
 		{

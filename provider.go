@@ -2,6 +2,8 @@ package streamnx
 
 import (
 	"github.com/GeorgeGorbanev/streamnx/internal/apple"
+	"github.com/GeorgeGorbanev/streamnx/internal/deezer"
+	"github.com/GeorgeGorbanev/streamnx/internal/pointer"
 	"github.com/GeorgeGorbanev/streamnx/internal/spotify"
 	"github.com/GeorgeGorbanev/streamnx/internal/yandex"
 	"github.com/GeorgeGorbanev/streamnx/internal/youtube"
@@ -10,6 +12,7 @@ import (
 var (
 	Providers = []*Provider{
 		Apple,
+		Deezer,
 		Spotify,
 		Yandex,
 		Youtube,
@@ -21,6 +24,13 @@ var (
 		regions:       apple.ISO3166codes,
 		trackIDParser: apple.DetectTrackID,
 		albumIDParser: apple.DetectAlbumID,
+	}
+	Deezer = &Provider{
+		name:          "Deezer",
+		сode:          "dz",
+		trackIDParser: deezer.DetectTrackID,
+		albumIDParser: deezer.DetectAlbumID,
+		cloakIDParser: deezer.DetectCloakID,
 	}
 	Spotify = &Provider{
 		name:          "Spotify",
@@ -48,9 +58,12 @@ type Provider struct {
 	сode    string
 	regions []string
 
-	trackIDParser func(trackURL string) string
-	albumIDParser func(albumURL string) string
+	cloakIDParser idParser
+	trackIDParser idParser
+	albumIDParser idParser
 }
+
+type idParser func(url string) (id string)
 
 func (p *Provider) Name() string {
 	return p.name
@@ -64,12 +77,32 @@ func (p *Provider) Regions() []string {
 	return p.regions
 }
 
+func (p *Provider) DetectCloakEntityID(url string) string {
+	if p.cloakIDParser == nil {
+		return ""
+	}
+	return p.cloakIDParser(url)
+}
+
 func (p *Provider) DetectTrackID(trackURL string) string {
 	return p.trackIDParser(trackURL)
 }
 
 func (p *Provider) DetectAlbumID(albumURL string) string {
 	return p.albumIDParser(albumURL)
+}
+
+func (p *Provider) parseURL(url string) (string, *EntityType) {
+	if id := p.DetectTrackID(url); id != "" {
+		return id, pointer.Any(Track)
+	}
+	if id := p.DetectAlbumID(url); id != "" {
+		return id, pointer.Any(Album)
+	}
+	if id := p.DetectCloakEntityID(url); id != "" {
+		return id, pointer.Any(Cloak)
+	}
+	return "", nil
 }
 
 func FindProviderByCode(code string) *Provider {

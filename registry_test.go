@@ -53,6 +53,10 @@ func (a *adapterMock) SearchAlbum(_ context.Context, artistName, albumName strin
 	return nil, EntityNotFoundError
 }
 
+func (a *adapterMock) FetchCloak(_ context.Context, cloakCode string) (*Entity, error) {
+	return nil, UnsupportedEntityTypeError
+}
+
 func TestRegistry_Fetch(t *testing.T) {
 	sampleProvider := Apple
 
@@ -134,6 +138,15 @@ func TestRegistry_Fetch(t *testing.T) {
 				id: "1",
 			},
 			wantErr: InvalidEntityTypeError,
+		},
+		{
+			name: "cloak entity unsupported",
+			args: args{
+				p:  sampleProvider,
+				et: Cloak,
+				id: "test-cloak-code",
+			},
+			wantErr: UnsupportedEntityTypeError,
 		},
 	}
 	for _, tt := range tests {
@@ -286,4 +299,25 @@ func TestRegistry_Search(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestRegistry_FetchCloak(t *testing.T) {
+	ctx := context.Background()
+
+	t.Run("unsupported provider", func(t *testing.T) {
+		registry, err := NewRegistry(
+			ctx,
+			Credentials{},
+			WithTranslator(&translatorMock{}),
+			WithProviderAdapter(Apple, &adapterMock{}),
+			WithProviderAdapter(Spotify, &adapterMock{}),
+			WithProviderAdapter(Yandex, &adapterMock{}),
+			WithProviderAdapter(Youtube, &adapterMock{}),
+		)
+		require.NoError(t, err)
+
+		result, err := registry.FetchCloak(ctx, Apple, "test-cloak-code")
+		require.ErrorIs(t, err, UnsupportedEntityTypeError)
+		require.Nil(t, result)
+	})
 }

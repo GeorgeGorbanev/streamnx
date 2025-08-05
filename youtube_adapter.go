@@ -143,6 +143,10 @@ func (a *YoutubeAdapter) extractAlbumTitle(ctx context.Context, playlist *youtub
 	return playlist.Title, nil
 }
 
+func (a *YoutubeAdapter) FetchCloak(_ context.Context, _ string) (*Entity, error) {
+	return nil, UnsupportedEntityTypeError
+}
+
 func (a *YoutubeAdapter) cleanAndSplitTitle(title string) (artist, entity string) {
 	cleanTitle := nonTitleContentRe.ReplaceAllString(title, "")
 

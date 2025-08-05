@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/GeorgeGorbanev/streamnx/internal/apple"
+	"github.com/GeorgeGorbanev/streamnx/internal/deezer"
 	"github.com/GeorgeGorbanev/streamnx/internal/spotify"
 	"github.com/GeorgeGorbanev/streamnx/internal/translator"
 	"github.com/GeorgeGorbanev/streamnx/internal/yandex"
@@ -14,6 +15,7 @@ type RegistryOption func(registry *Registry)
 
 type clientOptions struct {
 	apple   []apple.ClientOption
+	deezer  []deezer.ClientOption
 	spotify []spotify.ClientOption
 	yandex  []yandex.ClientOption
 	youtube []youtube.ClientOption
@@ -88,5 +90,29 @@ func WithYandexHTTPTransport(transport *http.Transport) RegistryOption {
 func WithYoutubeHTTPTransport(transport *http.Transport) RegistryOption {
 	return func(r *Registry) {
 		r.clientOptions.youtube = append(r.clientOptions.youtube, youtube.WithHTTPTransport(transport))
+	}
+}
+
+func WithDeezerAPIURL(url string) RegistryOption {
+	return func(r *Registry) {
+		r.clientOptions.deezer = append(r.clientOptions.deezer, deezer.WithAPIURL(url))
+	}
+}
+
+func WithDeezerCloakBaseURL(url string) RegistryOption {
+	return func(r *Registry) {
+		r.clientOptions.deezer = append(r.clientOptions.deezer, deezer.WithCloakBaseURL(url))
+	}
+}
+
+func WithDeezerAPIClient(client *http.Client) RegistryOption {
+	return func(r *Registry) {
+		r.clientOptions.deezer = append(r.clientOptions.deezer, deezer.WithAPIClient(client))
+	}
+}
+
+func WithDeezerCloakClient(client *http.Client) RegistryOption {
+	return func(r *Registry) {
+		r.clientOptions.deezer = append(r.clientOptions.deezer, deezer.WithCloakClient(client))
 	}
 }

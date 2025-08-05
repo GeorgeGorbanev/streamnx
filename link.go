@@ -15,23 +15,14 @@ type Link struct {
 
 func ParseLink(url string) (*Link, error) {
 	for _, provider := range Providers {
-		if id := provider.DetectTrackID(url); id != "" {
+		if id, et := provider.parseURL(url); id != "" {
 			return &Link{
 				URL:        url,
 				Provider:   provider,
 				EntityID:   id,
-				EntityType: Track,
-			}, nil
-		}
-		if id := provider.DetectAlbumID(url); id != "" {
-			return &Link{
-				URL:        url,
-				Provider:   provider,
-				EntityID:   id,
-				EntityType: Album,
+				EntityType: *et,
 			}, nil
 		}
 	}
-
 	return nil, UnknownLinkError
 }

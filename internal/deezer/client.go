@@ -69,7 +69,11 @@ func (c *HTTPClient) FetchTrack(ctx context.Context, id string) (*Track, error) 
 
 // https://developers.deezer.com/api/search
 func (c *HTTPClient) SearchTrack(ctx context.Context, artist, title string) (*Track, error) {
-	body, err := c.search(ctx, artist, "track", title)
+	body, err := c.getAPI(ctx, "/search", url.Values{
+		"q": []string{
+			fmt.Sprintf(`artist:"%s" track:"%s"`, artist, title),
+		},
+	})
 	if err != nil {
 		return nil, fmt.Errorf("failed to search track: %w", err)
 	}
@@ -101,9 +105,13 @@ func (c *HTTPClient) FetchAlbum(ctx context.Context, id string) (*Album, error) 
 	return &album, nil
 }
 
-// https://developers.deezer.com/api/search
+// https://developers.deezer.com/api/search/album
 func (c *HTTPClient) SearchAlbum(ctx context.Context, artist, title string) (*Album, error) {
-	body, err := c.search(ctx, artist, "album", title)
+	body, err := c.getAPI(ctx, "/search/album", url.Values{
+		"q": []string{
+			fmt.Sprintf(`artist:"%s" album:"%s"`, artist, title),
+		},
+	})
 	if err != nil {
 		return nil, fmt.Errorf("failed to search album: %w", err)
 	}
@@ -160,12 +168,4 @@ func (c *HTTPClient) getAPI(ctx context.Context, path string, query url.Values) 
 		return nil, fmt.Errorf("API returned status %d", resp.StatusCode)
 	}
 	return io.ReadAll(resp.Body)
-}
-
-func (c *HTTPClient) search(ctx context.Context, artist, entityType, title string) ([]byte, error) {
-	return c.getAPI(ctx, "/search", url.Values{
-		"q": []string{
-			fmt.Sprintf(`artist:"%s" %s:"%s"`, artist, entityType, title),
-		},
-	})
 }

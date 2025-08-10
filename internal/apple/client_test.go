@@ -91,16 +91,16 @@ func TestHTTPClient_FetchTrack(t *testing.T) {
 
 func TestHTTPClient_SearchTrack(t *testing.T) {
 	tests := []struct {
-		name       string
-		artistName string
-		trackName  string
-		want       *Entity
-		wantErr    error
+		name    string
+		artist  string
+		title   string
+		want    *Entity
+		wantErr error
 	}{
 		{
-			name:       "when track found",
-			artistName: "foundArtistName",
-			trackName:  "foundTrackName",
+			name:   "when track found",
+			artist: "foundArtistName",
+			title:  "foundTrackName",
 			want: &Entity{
 				ID: "foundID",
 				Attributes: Attributes{
@@ -111,10 +111,10 @@ func TestHTTPClient_SearchTrack(t *testing.T) {
 			},
 		},
 		{
-			name:       "when track not found",
-			artistName: "notFoundArtistName",
-			trackName:  "notFoundTrackName",
-			wantErr:    NotFoundError,
+			name:    "when track not found",
+			artist:  "notFoundArtistName",
+			title:   "notFoundTrackName",
+			wantErr: NotFoundError,
 		},
 	}
 	for _, tt := range tests {
@@ -190,7 +190,7 @@ func TestHTTPClient_SearchTrack(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
 
-			result, err := client.SearchTrack(ctx, tt.artistName, tt.trackName)
+			result, err := client.SearchTrack(ctx, tt.artist, tt.title)
 			if tt.wantErr != nil {
 				require.ErrorIs(t, err, tt.wantErr)
 			} else {
@@ -283,14 +283,14 @@ func TestHTTPClient_SearchAlbum(t *testing.T) {
 	tests := []struct {
 		name       string
 		artistName string
-		albumName  string
+		title      string
 		want       *Entity
 		wantErr    error
 	}{
 		{
 			name:       "when album found",
 			artistName: "foundArtistName",
-			albumName:  "foundAlbumName",
+			title:      "foundAlbumName",
 			want: &Entity{
 				ID: "foundID",
 				Attributes: Attributes{
@@ -303,7 +303,7 @@ func TestHTTPClient_SearchAlbum(t *testing.T) {
 		{
 			name:       "when album not found",
 			artistName: "notFoundArtistName",
-			albumName:  "notFoundAlbumName",
+			title:      "notFoundAlbumName",
 			wantErr:    NotFoundError,
 		},
 	}
@@ -380,7 +380,7 @@ func TestHTTPClient_SearchAlbum(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
 
-			result, err := client.SearchAlbum(ctx, tt.artistName, tt.albumName)
+			result, err := client.SearchAlbum(ctx, tt.artistName, tt.title)
 			if tt.wantErr != nil {
 				require.ErrorIs(t, err, tt.wantErr)
 			} else {

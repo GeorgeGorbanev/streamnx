@@ -5,57 +5,9 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
+
+	"github.com/GeorgeGorbanev/streamnx/internal/translator"
 )
-
-type adapterMock struct {
-	fetchTrack  map[string]*Entity
-	searchTrack map[string]map[string]*Entity
-	fetchAlbum  map[string]*Entity
-	searchAlbum map[string]map[string]*Entity
-}
-
-func (a *adapterMock) FetchTrack(_ context.Context, id string) (*Entity, error) {
-	entity, ok := a.fetchTrack[id]
-	if !ok {
-		return nil, EntityNotFoundError
-	}
-	return entity, nil
-}
-
-func (a *adapterMock) SearchTrack(_ context.Context, artistName, trackName string) (*Entity, error) {
-	if tracks, ok := a.searchTrack[artistName]; ok {
-		track, ok := tracks[trackName]
-		if !ok {
-			return nil, EntityNotFoundError
-		}
-		return track, nil
-	}
-	return nil, EntityNotFoundError
-}
-
-func (a *adapterMock) FetchAlbum(_ context.Context, id string) (*Entity, error) {
-	entity, ok := a.fetchAlbum[id]
-	if !ok {
-		return nil, EntityNotFoundError
-	}
-	return entity, nil
-}
-
-func (a *adapterMock) SearchAlbum(_ context.Context, artistName, albumName string) (*Entity, error) {
-	if albums, ok := a.searchAlbum[artistName]; ok {
-		album, ok := albums[albumName]
-		if !ok {
-			return nil, EntityNotFoundError
-		}
-		return album, nil
-
-	}
-	return nil, EntityNotFoundError
-}
-
-func (a *adapterMock) FetchCloak(_ context.Context, cloakCode string) (*Entity, error) {
-	return nil, UnsupportedEntityTypeError
-}
 
 func TestRegistry_Fetch(t *testing.T) {
 	sampleProvider := Apple
@@ -69,7 +21,7 @@ func TestRegistry_Fetch(t *testing.T) {
 	tests := []struct {
 		name        string
 		args        args
-		adapterMock adapterMock
+		mockAdapter func(m *adapterMock)
 		want        *Entity
 		wantErr     error
 	}{
@@ -80,10 +32,11 @@ func TestRegistry_Fetch(t *testing.T) {
 				et: Track,
 				id: "1",
 			},
-			adapterMock: adapterMock{
-				fetchTrack: map[string]*Entity{
-					"1": {ID: "1"},
-				},
+			mockAdapter: func(m *adapterMock) {
+				m.
+					On("FetchTrack", "1").
+					Return(&Entity{ID: "1"}, nil).
+					Once()
 			},
 			want: &Entity{ID: "1"},
 		},
@@ -94,10 +47,11 @@ func TestRegistry_Fetch(t *testing.T) {
 				et: Album,
 				id: "1",
 			},
-			adapterMock: adapterMock{
-				fetchAlbum: map[string]*Entity{
-					"1": {ID: "1"},
-				},
+			mockAdapter: func(m *adapterMock) {
+				m.
+					On("FetchAlbum", "1").
+					Return(&Entity{ID: "1"}, nil).
+					Once()
 			},
 			want: &Entity{ID: "1"},
 		},
@@ -107,6 +61,12 @@ func TestRegistry_Fetch(t *testing.T) {
 				p:  sampleProvider,
 				et: Track,
 				id: "1",
+			},
+			mockAdapter: func(m *adapterMock) {
+				m.
+					On("FetchTrack", "1").
+					Return(nil, EntityNotFoundError).
+					Once()
 			},
 			want:    nil,
 			wantErr: EntityNotFoundError,
@@ -118,6 +78,12 @@ func TestRegistry_Fetch(t *testing.T) {
 				et: Album,
 				id: "1",
 			},
+			mockAdapter: func(m *adapterMock) {
+				m.
+					On("FetchAlbum", "1").
+					Return(nil, EntityNotFoundError).
+					Once()
+			},
 			want:    nil,
 			wantErr: EntityNotFoundError,
 		},
@@ -128,7 +94,8 @@ func TestRegistry_Fetch(t *testing.T) {
 				et: Track,
 				id: "1",
 			},
-			wantErr: InvalidProviderError,
+			mockAdapter: func(m *adapterMock) {},
+			wantErr:     InvalidProviderError,
 		},
 		{
 			name: "invalid entity type",
@@ -137,7 +104,8 @@ func TestRegistry_Fetch(t *testing.T) {
 				et: EntityType("invalid"),
 				id: "1",
 			},
-			wantErr: InvalidEntityTypeError,
+			mockAdapter: func(m *adapterMock) {},
+			wantErr:     InvalidEntityTypeError,
 		},
 		{
 			name: "cloak entity unsupported",
@@ -146,6 +114,12 @@ func TestRegistry_Fetch(t *testing.T) {
 				et: Cloak,
 				id: "test-cloak-code",
 			},
+			mockAdapter: func(m *adapterMock) {
+				m.
+					On("FetchCloak", "test-cloak-code").
+					Return(nil, UnsupportedEntityTypeError).
+					Once()
+			},
 			wantErr: UnsupportedEntityTypeError,
 		},
 	}
@@ -153,11 +127,16 @@ func TestRegistry_Fetch(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			ctx := context.Background()
 
+			am := &adapterMock{}
+			tt.mockAdapter(am)
+
+			translatorMock := &translator.Mock{}
+
 			registry, err := NewRegistry(
 				ctx,
 				Credentials{},
-				WithTranslator(&translatorMock{}),
-				WithProviderAdapter(sampleProvider, &tt.adapterMock),
+				WithTranslator(translatorMock),
+				WithProviderAdapter(sampleProvider, am),
 				WithProviderAdapter(Spotify, &adapterMock{}),
 				WithProviderAdapter(Yandex, &adapterMock{}),
 				WithProviderAdapter(Youtube, &adapterMock{}),
@@ -172,6 +151,8 @@ func TestRegistry_Fetch(t *testing.T) {
 				require.NoError(t, err)
 				require.Equal(t, tt.want, result)
 			}
+
+			am.AssertExpectations(t)
 		})
 	}
 }
@@ -189,7 +170,7 @@ func TestRegistry_Search(t *testing.T) {
 	tests := []struct {
 		name        string
 		args        args
-		adapterMock adapterMock
+		mockAdapter func(m *adapterMock)
 		want        *Entity
 		wantErr     error
 	}{
@@ -201,14 +182,11 @@ func TestRegistry_Search(t *testing.T) {
 				artist: "artist",
 				name:   "name",
 			},
-			adapterMock: adapterMock{
-				searchTrack: map[string]map[string]*Entity{
-					"artist": {
-						"name": {
-							ID: "1",
-						},
-					},
-				},
+			mockAdapter: func(m *adapterMock) {
+				m.
+					On("SearchTrack", "artist", "name").
+					Return(&Entity{ID: "1"}, nil).
+					Once()
 			},
 			want: &Entity{ID: "1"},
 		},
@@ -220,14 +198,11 @@ func TestRegistry_Search(t *testing.T) {
 				artist: "artist",
 				name:   "name",
 			},
-			adapterMock: adapterMock{
-				searchAlbum: map[string]map[string]*Entity{
-					"artist": {
-						"name": {
-							ID: "1",
-						},
-					},
-				},
+			mockAdapter: func(m *adapterMock) {
+				m.
+					On("SearchAlbum", "artist", "name").
+					Return(&Entity{ID: "1"}, nil).
+					Once()
 			},
 			want: &Entity{ID: "1"},
 		},
@@ -238,6 +213,12 @@ func TestRegistry_Search(t *testing.T) {
 				et:     Track,
 				artist: "artist",
 				name:   "name",
+			},
+			mockAdapter: func(m *adapterMock) {
+				m.
+					On("SearchTrack", "artist", "name").
+					Return(nil, EntityNotFoundError).
+					Once()
 			},
 			want:    nil,
 			wantErr: EntityNotFoundError,
@@ -250,6 +231,12 @@ func TestRegistry_Search(t *testing.T) {
 				artist: "artist",
 				name:   "name",
 			},
+			mockAdapter: func(m *adapterMock) {
+				m.
+					On("SearchAlbum", "artist", "name").
+					Return(nil, EntityNotFoundError).
+					Once()
+			},
 			want:    nil,
 			wantErr: EntityNotFoundError,
 		},
@@ -261,7 +248,8 @@ func TestRegistry_Search(t *testing.T) {
 				artist: "artist",
 				name:   "name",
 			},
-			wantErr: InvalidProviderError,
+			mockAdapter: func(m *adapterMock) {},
+			wantErr:     InvalidProviderError,
 		},
 		{
 			name: "invalid entity type",
@@ -271,18 +259,24 @@ func TestRegistry_Search(t *testing.T) {
 				artist: "artist",
 				name:   "name",
 			},
-			wantErr: InvalidEntityTypeError,
+			mockAdapter: func(m *adapterMock) {},
+			wantErr:     InvalidEntityTypeError,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			ctx := context.Background()
 
+			am := &adapterMock{}
+			tt.mockAdapter(am)
+
+			translatorMock := &translator.Mock{}
+
 			registry, err := NewRegistry(
 				ctx,
 				Credentials{},
-				WithTranslator(&translatorMock{}),
-				WithProviderAdapter(sampleProvider, &tt.adapterMock),
+				WithTranslator(translatorMock),
+				WithProviderAdapter(sampleProvider, am),
 				WithProviderAdapter(Spotify, &adapterMock{}),
 				WithProviderAdapter(Yandex, &adapterMock{}),
 				WithProviderAdapter(Youtube, &adapterMock{}),
@@ -297,6 +291,8 @@ func TestRegistry_Search(t *testing.T) {
 				require.NoError(t, err)
 				require.Equal(t, tt.want, result)
 			}
+
+			am.AssertExpectations(t)
 		})
 	}
 }
@@ -305,11 +301,19 @@ func TestRegistry_FetchCloak(t *testing.T) {
 	ctx := context.Background()
 
 	t.Run("unsupported provider", func(t *testing.T) {
+		am := &adapterMock{}
+		am.
+			On("FetchCloak", "test-cloak-code").
+			Return(nil, UnsupportedEntityTypeError).
+			Once()
+
+		translatorMock := &translator.Mock{}
+
 		registry, err := NewRegistry(
 			ctx,
 			Credentials{},
-			WithTranslator(&translatorMock{}),
-			WithProviderAdapter(Apple, &adapterMock{}),
+			WithTranslator(translatorMock),
+			WithProviderAdapter(Apple, am),
 			WithProviderAdapter(Spotify, &adapterMock{}),
 			WithProviderAdapter(Yandex, &adapterMock{}),
 			WithProviderAdapter(Youtube, &adapterMock{}),
@@ -319,5 +323,7 @@ func TestRegistry_FetchCloak(t *testing.T) {
 		result, err := registry.FetchCloak(ctx, Apple, "test-cloak-code")
 		require.ErrorIs(t, err, UnsupportedEntityTypeError)
 		require.Nil(t, result)
+
+		am.AssertExpectations(t)
 	})
 }

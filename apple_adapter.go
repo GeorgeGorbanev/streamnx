@@ -39,8 +39,8 @@ func (a *AppleAdapter) FetchTrack(ctx context.Context, id string) (*Entity, erro
 	return res, nil
 }
 
-func (a *AppleAdapter) SearchTrack(ctx context.Context, artistName, trackName string) (*Entity, error) {
-	track, err := a.client.SearchTrack(ctx, artistName, trackName)
+func (a *AppleAdapter) SearchTrack(ctx context.Context, artist, title string) (*Entity, error) {
+	track, err := a.client.SearchTrack(ctx, artist, title)
 	if err != nil {
 		if errors.Is(err, apple.NotFoundError) {
 			return nil, EntityNotFoundError
@@ -75,8 +75,8 @@ func (a *AppleAdapter) FetchAlbum(ctx context.Context, id string) (*Entity, erro
 	return res, nil
 }
 
-func (a *AppleAdapter) SearchAlbum(ctx context.Context, artistName, albumName string) (*Entity, error) {
-	album, err := a.client.SearchAlbum(ctx, artistName, albumName)
+func (a *AppleAdapter) SearchAlbum(ctx context.Context, artist, title string) (*Entity, error) {
+	album, err := a.client.SearchAlbum(ctx, artist, title)
 	if err != nil {
 		if errors.Is(err, apple.NotFoundError) {
 			return nil, EntityNotFoundError

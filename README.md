@@ -1,7 +1,7 @@
 # Streamnx
 
 Streamnx is a library that unifies interactions with various music streaming links into a single system.
-With Streamnx, you can integrate platforms such as Apple Music, Spotify, YouTube and Yandex Music into your applications using a unified interface for searching and retrieving data about tracks and albums.
+With Streamnx, you can integrate platforms such as Apple Music, Deezer, Spotify, YouTube and Yandex Music into your applications using a unified interface for searching and retrieving data about tracks and albums.
 
 - [Motivation](#motivation)
 - [Supported services](#supported-services)
@@ -28,6 +28,7 @@ Therefore, the primary use case for this library is *converting links* from one 
 
 The library supports the following music streaming services
 - Apple Music
+- Deezer
 - Spotify
 - Yandex Music
 - YouTube (also YouTube Music)

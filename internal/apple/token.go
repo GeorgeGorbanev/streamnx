@@ -12,7 +12,7 @@ var (
 
 func parseBundleName(html []byte) string {
 	matches := tokenBundleRe.FindSubmatch(html)
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 2 {
 		return ""
 	}
 	return string(matches[1])
@@ -34,7 +34,7 @@ func parseToken(jsBundle []byte) (string, error) {
 
 func parseTokenVar(jsBundle []byte) string {
 	matches := tokenVarRe.FindSubmatch(jsBundle)
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 2 {
 		return ""
 	}
 	return string(matches[1])
@@ -43,7 +43,7 @@ func parseTokenVar(jsBundle []byte) string {
 func parseVariableValue(jsBundle []byte, variable string) (string, error) {
 	re := regexp.MustCompile(fmt.Sprintf(`\b%s\s*=\s*"([^"]+)"`, regexp.QuoteMeta(variable)))
 	matches := re.FindSubmatch(jsBundle)
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 2 {
 		return "", fmt.Errorf("value of variable %s not found", variable)
 	}
 	return string(matches[1]), nil

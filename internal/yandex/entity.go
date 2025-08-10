@@ -38,7 +38,7 @@ var (
 
 func DetectTrackID(trackURL string) string {
 	match := TrackRe.FindStringSubmatch(trackURL)
-	if match == nil || len(match) < 3 {
+	if len(match) < 3 {
 		return ""
 	}
 	return match[2]
@@ -46,7 +46,7 @@ func DetectTrackID(trackURL string) string {
 
 func DetectAlbumID(albumURL string) string {
 	match := AlbumRe.FindStringSubmatch(albumURL)
-	if match == nil || len(match) < 3 {
+	if len(match) < 3 {
 		return ""
 	}
 	return match[2]

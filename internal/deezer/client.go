@@ -17,9 +17,9 @@ const (
 
 type Client interface {
 	FetchTrack(ctx context.Context, id string) (*Track, error)
-	SearchTrack(ctx context.Context, artistName, trackName string) (*Track, error)
+	SearchTrack(ctx context.Context, artist, title string) (*Track, error)
 	FetchAlbum(ctx context.Context, id string) (*Album, error)
-	SearchAlbum(ctx context.Context, artistName, albumName string) (*Album, error)
+	SearchAlbum(ctx context.Context, artist, title string) (*Album, error)
 	FollowCloak(ctx context.Context, cloakCode string) (string, error)
 }
 

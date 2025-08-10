@@ -19,9 +19,9 @@ const (
 
 type Client interface {
 	FetchTrack(ctx context.Context, id string) (*Track, error)
-	SearchTrack(ctx context.Context, artistName, trackName string) (*Track, error)
+	SearchTrack(ctx context.Context, artist, title string) (*Track, error)
 	FetchAlbum(ctx context.Context, id string) (*Album, error)
-	SearchAlbum(ctx context.Context, artistName, albumName string) (*Album, error)
+	SearchAlbum(ctx context.Context, artist, title string) (*Album, error)
 }
 
 type HTTPClient struct {
@@ -64,7 +64,7 @@ func (c *HTTPClient) FetchTrack(ctx context.Context, id string) (*Track, error) 
 }
 
 // https://developer.spotify.com/documentation/web-api/reference/search
-func (c *HTTPClient) SearchTrack(ctx context.Context, artistName, trackName string) (*Track, error) {
+func (c *HTTPClient) SearchTrack(ctx context.Context, artist, title string) (*Track, error) {
 	type searchResult struct {
 		Tracks struct {
 			Items []*Track `json:"items"`
@@ -72,7 +72,7 @@ func (c *HTTPClient) SearchTrack(ctx context.Context, artistName, trackName stri
 	}
 
 	body, err := c.getAPI(ctx, "/v1/search", url.Values{
-		"q":     []string{fmt.Sprintf("artist:%s track:%s", artistName, trackName)},
+		"q":     []string{fmt.Sprintf("artist:%s track:%s", artist, title)},
 		"type":  []string{"track"},
 		"limit": []string{"1"},
 	})
@@ -107,7 +107,7 @@ func (c *HTTPClient) FetchAlbum(ctx context.Context, id string) (*Album, error) 
 }
 
 // https://developer.spotify.com/documentation/web-api/reference/search
-func (c *HTTPClient) SearchAlbum(ctx context.Context, artistName, albumName string) (*Album, error) {
+func (c *HTTPClient) SearchAlbum(ctx context.Context, artist, title string) (*Album, error) {
 	type searchResult struct {
 		Albums struct {
 			Items []*Album `json:"items"`
@@ -115,7 +115,7 @@ func (c *HTTPClient) SearchAlbum(ctx context.Context, artistName, albumName stri
 	}
 
 	body, err := c.getAPI(ctx, "/v1/search", url.Values{
-		"q":     []string{fmt.Sprintf("artist:%s album:%s", artistName, albumName)},
+		"q":     []string{fmt.Sprintf("artist:%s album:%s", artist, title)},
 		"type":  []string{"album"},
 		"limit": []string{"1"},
 	})

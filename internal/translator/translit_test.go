@@ -83,25 +83,25 @@ func TestTranslitLatToCyr(t *testing.T) {
 
 func TestTranslitable(t *testing.T) {
 	tests := []struct {
-		trackName string
-		want      bool
+		title string
+		want  bool
 	}{
 		{
-			trackName: "sample english track",
-			want:      false,
+			title: "sample english track",
+			want:  false,
 		},
 		{
-			trackName: "широка река",
-			want:      true,
+			title: "широка река",
+			want:  true,
 		},
 		{
-			trackName: "sample руnglish track",
-			want:      true,
+			title: "sample руnglish track",
+			want:  true,
 		},
 	}
 	for _, tt := range tests {
-		t.Run(tt.trackName, func(t *testing.T) {
-			result := HasCyrillic(tt.trackName)
+		t.Run(tt.title, func(t *testing.T) {
+			result := HasCyrillic(tt.title)
 			require.Equal(t, tt.want, result)
 		})
 	}

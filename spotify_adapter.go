@@ -30,8 +30,8 @@ func (a *SpotifyAdapter) FetchTrack(ctx context.Context, id string) (*Entity, er
 	return a.adaptTrack(track), nil
 }
 
-func (a *SpotifyAdapter) SearchTrack(ctx context.Context, artistName, trackName string) (*Entity, error) {
-	track, err := a.client.SearchTrack(ctx, artistName, trackName)
+func (a *SpotifyAdapter) SearchTrack(ctx context.Context, artist, title string) (*Entity, error) {
+	track, err := a.client.SearchTrack(ctx, artist, title)
 	if err != nil {
 		if errors.Is(err, spotify.NotFoundError) {
 			return nil, EntityNotFoundError
@@ -54,8 +54,8 @@ func (a *SpotifyAdapter) FetchAlbum(ctx context.Context, id string) (*Entity, er
 	return a.adaptAlbum(album), nil
 }
 
-func (a *SpotifyAdapter) SearchAlbum(ctx context.Context, artistName, albumName string) (*Entity, error) {
-	album, err := a.client.SearchAlbum(ctx, artistName, albumName)
+func (a *SpotifyAdapter) SearchAlbum(ctx context.Context, artist, title string) (*Entity, error) {
+	album, err := a.client.SearchAlbum(ctx, artist, title)
 	if err != nil {
 		if errors.Is(err, spotify.NotFoundError) {
 			return nil, EntityNotFoundError

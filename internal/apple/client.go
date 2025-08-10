@@ -17,9 +17,9 @@ const (
 
 type Client interface {
 	FetchTrack(ctx context.Context, id, storefront string) (*Entity, error)
-	SearchTrack(ctx context.Context, artistName, trackName string) (*Entity, error)
+	SearchTrack(ctx context.Context, artist, title string) (*Entity, error)
 	FetchAlbum(ctx context.Context, id, storefront string) (*Entity, error)
-	SearchAlbum(ctx context.Context, artistName, albumName string) (*Entity, error)
+	SearchAlbum(ctx context.Context, artist, title string) (*Entity, error)
 }
 
 type HTTPClient struct {

@@ -36,8 +36,8 @@ func (a *YoutubeAdapter) FetchTrack(ctx context.Context, id string) (*Entity, er
 	return a.adaptTrack(video), nil
 }
 
-func (a *YoutubeAdapter) SearchTrack(ctx context.Context, artistName, trackName string) (*Entity, error) {
-	query := entityFullTitle(artistName, trackName)
+func (a *YoutubeAdapter) SearchTrack(ctx context.Context, artist, title string) (*Entity, error) {
+	query := entityFullTitle(artist, title)
 	search, err := a.client.SearchVideo(ctx, query)
 	if err != nil {
 		if errors.Is(err, youtube.NotFoundError) {
@@ -66,8 +66,8 @@ func (a *YoutubeAdapter) FetchAlbum(ctx context.Context, id string) (*Entity, er
 	return a.adaptAlbum(ctx, album)
 }
 
-func (a *YoutubeAdapter) SearchAlbum(ctx context.Context, artistName, albumName string) (*Entity, error) {
-	query := entityFullTitle(artistName, albumName)
+func (a *YoutubeAdapter) SearchAlbum(ctx context.Context, artist, title string) (*Entity, error) {
+	query := entityFullTitle(artist, title)
 	search, err := a.client.SearchPlaylist(ctx, query)
 	if err != nil {
 		if errors.Is(err, youtube.NotFoundError) {

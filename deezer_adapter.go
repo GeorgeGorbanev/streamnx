@@ -31,8 +31,8 @@ func (a *DeezerAdapter) FetchTrack(ctx context.Context, id string) (*Entity, err
 	return a.adaptTrack(track), nil
 }
 
-func (a *DeezerAdapter) SearchTrack(ctx context.Context, artistName, trackName string) (*Entity, error) {
-	track, err := a.client.SearchTrack(ctx, artistName, trackName)
+func (a *DeezerAdapter) SearchTrack(ctx context.Context, artist, title string) (*Entity, error) {
+	track, err := a.client.SearchTrack(ctx, artist, title)
 	if err != nil {
 		if errors.Is(err, deezer.NotFoundError) {
 			return nil, EntityNotFoundError
@@ -55,8 +55,8 @@ func (a *DeezerAdapter) FetchAlbum(ctx context.Context, id string) (*Entity, err
 	return a.adaptAlbum(album), nil
 }
 
-func (a *DeezerAdapter) SearchAlbum(ctx context.Context, artistName, albumName string) (*Entity, error) {
-	album, err := a.client.SearchAlbum(ctx, artistName, albumName)
+func (a *DeezerAdapter) SearchAlbum(ctx context.Context, artist, title string) (*Entity, error) {
+	album, err := a.client.SearchAlbum(ctx, artist, title)
 	if err != nil {
 		if errors.Is(err, deezer.NotFoundError) {
 			return nil, EntityNotFoundError

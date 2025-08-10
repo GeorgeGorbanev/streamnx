@@ -10,65 +10,21 @@ import (
 	"github.com/GeorgeGorbanev/streamnx/internal/spotify"
 )
 
-type spotifyClientMock struct {
-	fetchTrack  map[string]*spotify.Track
-	fetchAlbum  map[string]*spotify.Album
-	searchTrack map[string]map[string]*spotify.Track
-	searchAlbum map[string]map[string]*spotify.Album
-}
-
-func (c *spotifyClientMock) FetchTrack(_ context.Context, id string) (*spotify.Track, error) {
-	track, ok := c.fetchTrack[id]
-	if !ok {
-		return nil, spotify.NotFoundError
-	}
-	return track, nil
-}
-
-func (c *spotifyClientMock) SearchTrack(_ context.Context, artistName, trackName string) (*spotify.Track, error) {
-	if tracks, ok := c.searchTrack[artistName]; ok {
-		track, ok := tracks[trackName]
-		if !ok {
-			return nil, spotify.NotFoundError
-		}
-		return track, nil
-	}
-	return nil, spotify.NotFoundError
-}
-
-func (c *spotifyClientMock) FetchAlbum(_ context.Context, id string) (*spotify.Album, error) {
-	album, ok := c.fetchAlbum[id]
-	if !ok {
-		return nil, spotify.NotFoundError
-	}
-	return album, nil
-}
-
-func (c *spotifyClientMock) SearchAlbum(_ context.Context, artistName, albumName string) (*spotify.Album, error) {
-	if albums, ok := c.searchAlbum[artistName]; ok {
-		album, ok := albums[albumName]
-		if !ok {
-			return nil, spotify.NotFoundError
-		}
-		return album, nil
-	}
-	return nil, spotify.NotFoundError
-}
-
 func TestSpotifyAdapter_FetchTrack(t *testing.T) {
 	tests := []struct {
 		name          string
 		id            string
-		clientMock    *spotifyClientMock
+		mockClient    func(m *spotify.ClientMock)
 		expectedTrack *Entity
 		expectedErr   error
 	}{
 		{
 			name: "found ID",
 			id:   "sampleID",
-			clientMock: &spotifyClientMock{
-				fetchTrack: map[string]*spotify.Track{
-					"sampleID": {
+			mockClient: func(m *spotify.ClientMock) {
+				m.
+					On("FetchTrack", "sampleID").
+					Return(&spotify.Track{
 						ID:   "sampleID",
 						Name: "sample name",
 						Artists: []spotify.Artist{
@@ -76,8 +32,8 @@ func TestSpotifyAdapter_FetchTrack(t *testing.T) {
 								Name: "sample artist",
 							},
 						},
-					},
-				},
+					}, nil).
+					Once()
 			},
 			expectedTrack: &Entity{
 				ID:       "sampleID",
@@ -89,9 +45,14 @@ func TestSpotifyAdapter_FetchTrack(t *testing.T) {
 			},
 		},
 		{
-			name:          "not found ID",
-			id:            "notFoundID",
-			clientMock:    &spotifyClientMock{},
+			name: "not found ID",
+			id:   "notFoundID",
+			mockClient: func(m *spotify.ClientMock) {
+				m.
+					On("FetchTrack", "notFoundID").
+					Return(nil, spotify.NotFoundError).
+					Once()
+			},
 			expectedTrack: nil,
 			expectedErr:   EntityNotFoundError,
 		},
@@ -101,7 +62,10 @@ func TestSpotifyAdapter_FetchTrack(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
 
-			a := newSpotifyAdapter(tt.clientMock)
+			clientMock := &spotify.ClientMock{}
+			tt.mockClient(clientMock)
+
+			a := newSpotifyAdapter(clientMock)
 			result, err := a.FetchTrack(ctx, tt.id)
 
 			if tt.expectedErr != nil {
@@ -110,6 +74,8 @@ func TestSpotifyAdapter_FetchTrack(t *testing.T) {
 				require.NoError(t, err)
 				require.Equal(t, tt.expectedTrack, result)
 			}
+
+			clientMock.AssertExpectations(t)
 		})
 	}
 }
@@ -117,30 +83,29 @@ func TestSpotifyAdapter_FetchTrack(t *testing.T) {
 func TestSpotifyAdapter_SearchTrack(t *testing.T) {
 	tests := []struct {
 		name          string
-		artistName    string
+		artist        string
 		searchName    string
-		clientMock    *spotifyClientMock
+		mockClient    func(m *spotify.ClientMock)
 		expectedTrack *Entity
 		expectedErr   error
 	}{
 		{
 			name:       "found query",
-			artistName: "sample artist",
+			artist:     "sample artist",
 			searchName: "sample name",
-			clientMock: &spotifyClientMock{
-				searchTrack: map[string]map[string]*spotify.Track{
-					"sample artist": {
-						"sample name": {
-							ID:   "sampleID",
-							Name: "sample name",
-							Artists: []spotify.Artist{
-								{
-									Name: "sample artist",
-								},
+			mockClient: func(m *spotify.ClientMock) {
+				m.
+					On("SearchTrack", "sample artist", "sample name").
+					Return(&spotify.Track{
+						ID:   "sampleID",
+						Name: "sample name",
+						Artists: []spotify.Artist{
+							{
+								Name: "sample artist",
 							},
 						},
-					},
-				},
+					}, nil).
+					Once()
 			},
 			expectedTrack: &Entity{
 				ID:       "sampleID",
@@ -152,10 +117,15 @@ func TestSpotifyAdapter_SearchTrack(t *testing.T) {
 			},
 		},
 		{
-			name:          "not found query",
-			artistName:    "not found artist",
-			searchName:    "not found name",
-			clientMock:    &spotifyClientMock{},
+			name:       "not found query",
+			artist:     "not found artist",
+			searchName: "not found name",
+			mockClient: func(m *spotify.ClientMock) {
+				m.
+					On("SearchTrack", "not found artist", "not found name").
+					Return(nil, spotify.NotFoundError).
+					Once()
+			},
 			expectedTrack: nil,
 			expectedErr:   EntityNotFoundError,
 		},
@@ -165,8 +135,11 @@ func TestSpotifyAdapter_SearchTrack(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
 
-			a := newSpotifyAdapter(tt.clientMock)
-			result, err := a.SearchTrack(ctx, tt.artistName, tt.searchName)
+			clientMock := &spotify.ClientMock{}
+			tt.mockClient(clientMock)
+
+			a := newSpotifyAdapter(clientMock)
+			result, err := a.SearchTrack(ctx, tt.artist, tt.searchName)
 
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
@@ -174,6 +147,8 @@ func TestSpotifyAdapter_SearchTrack(t *testing.T) {
 				require.NoError(t, err)
 				require.Equal(t, tt.expectedTrack, result)
 			}
+
+			clientMock.AssertExpectations(t)
 		})
 	}
 }
@@ -182,16 +157,17 @@ func TestSpotifyAdapter_FetchAlbum(t *testing.T) {
 	tests := []struct {
 		name          string
 		id            string
-		clientMock    *spotifyClientMock
+		mockClient    func(m *spotify.ClientMock)
 		expectedTrack *Entity
 		expectedErr   error
 	}{
 		{
 			name: "found ID",
 			id:   "sampleID",
-			clientMock: &spotifyClientMock{
-				fetchAlbum: map[string]*spotify.Album{
-					"sampleID": {
+			mockClient: func(m *spotify.ClientMock) {
+				m.
+					On("FetchAlbum", "sampleID").
+					Return(&spotify.Album{
 						ID:   "sampleID",
 						Name: "sample name",
 						Artists: []spotify.Artist{
@@ -199,8 +175,8 @@ func TestSpotifyAdapter_FetchAlbum(t *testing.T) {
 								Name: "sample artist",
 							},
 						},
-					},
-				},
+					}, nil).
+					Once()
 			},
 			expectedTrack: &Entity{
 				ID:       "sampleID",
@@ -212,9 +188,14 @@ func TestSpotifyAdapter_FetchAlbum(t *testing.T) {
 			},
 		},
 		{
-			name:          "not found ID",
-			id:            "notFoundID",
-			clientMock:    &spotifyClientMock{},
+			name: "not found ID",
+			id:   "notFoundID",
+			mockClient: func(m *spotify.ClientMock) {
+				m.
+					On("FetchAlbum", "notFoundID").
+					Return(nil, spotify.NotFoundError).
+					Once()
+			},
 			expectedTrack: nil,
 			expectedErr:   EntityNotFoundError,
 		},
@@ -224,7 +205,10 @@ func TestSpotifyAdapter_FetchAlbum(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
 
-			a := newSpotifyAdapter(tt.clientMock)
+			clientMock := &spotify.ClientMock{}
+			tt.mockClient(clientMock)
+
+			a := newSpotifyAdapter(clientMock)
 			result, err := a.FetchAlbum(ctx, tt.id)
 
 			if tt.expectedErr != nil {
@@ -233,6 +217,8 @@ func TestSpotifyAdapter_FetchAlbum(t *testing.T) {
 				require.NoError(t, err)
 				require.Equal(t, tt.expectedTrack, result)
 			}
+
+			clientMock.AssertExpectations(t)
 		})
 	}
 }
@@ -240,30 +226,29 @@ func TestSpotifyAdapter_FetchAlbum(t *testing.T) {
 func TestSpotifyAdapter_SearchAlbum(t *testing.T) {
 	tests := []struct {
 		name          string
-		artistName    string
+		artist        string
 		searchName    string
-		clientMock    *spotifyClientMock
+		mockClient    func(m *spotify.ClientMock)
 		expectedTrack *Entity
 		expectedErr   error
 	}{
 		{
 			name:       "found query",
-			artistName: "sample artist",
+			artist:     "sample artist",
 			searchName: "sample name",
-			clientMock: &spotifyClientMock{
-				searchAlbum: map[string]map[string]*spotify.Album{
-					"sample artist": {
-						"sample name": {
-							ID:   "sampleID",
-							Name: "sample name",
-							Artists: []spotify.Artist{
-								{
-									Name: "sample artist",
-								},
+			mockClient: func(m *spotify.ClientMock) {
+				m.
+					On("SearchAlbum", "sample artist", "sample name").
+					Return(&spotify.Album{
+						ID:   "sampleID",
+						Name: "sample name",
+						Artists: []spotify.Artist{
+							{
+								Name: "sample artist",
 							},
 						},
-					},
-				},
+					}, nil).
+					Once()
 			},
 			expectedTrack: &Entity{
 				ID:       "sampleID",
@@ -275,10 +260,15 @@ func TestSpotifyAdapter_SearchAlbum(t *testing.T) {
 			},
 		},
 		{
-			name:          "not found query",
-			artistName:    "not found artist",
-			searchName:    "not found name",
-			clientMock:    &spotifyClientMock{},
+			name:       "not found query",
+			artist:     "not found artist",
+			searchName: "not found name",
+			mockClient: func(m *spotify.ClientMock) {
+				m.
+					On("SearchAlbum", "not found artist", "not found name").
+					Return(nil, spotify.NotFoundError).
+					Once()
+			},
 			expectedTrack: nil,
 			expectedErr:   EntityNotFoundError,
 		},
@@ -288,8 +278,11 @@ func TestSpotifyAdapter_SearchAlbum(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
 
-			a := newSpotifyAdapter(tt.clientMock)
-			result, err := a.SearchAlbum(ctx, tt.artistName, tt.searchName)
+			clientMock := &spotify.ClientMock{}
+			tt.mockClient(clientMock)
+
+			a := newSpotifyAdapter(clientMock)
+			result, err := a.SearchAlbum(ctx, tt.artist, tt.searchName)
 
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
@@ -297,6 +290,8 @@ func TestSpotifyAdapter_SearchAlbum(t *testing.T) {
 				require.NoError(t, err)
 				require.Equal(t, tt.expectedTrack, result)
 			}
+
+			clientMock.AssertExpectations(t)
 		})
 	}
 }

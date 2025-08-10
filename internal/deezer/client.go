@@ -30,9 +30,8 @@ type HTTPClient struct {
 	cloakClient  *http.Client
 }
 
-var (
-	NotFoundError = errors.New("not found")
-)
+// TODO: rename to ErrFoo
+var NotFoundError = errors.New("not found") //nolint:revive
 
 func NewHTTPClient(options ...ClientOption) *HTTPClient {
 	c := &HTTPClient{

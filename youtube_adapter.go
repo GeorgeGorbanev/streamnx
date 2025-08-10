@@ -24,6 +24,7 @@ func newYoutubeAdapter(client youtube.Client) *YoutubeAdapter {
 		client: client,
 	}
 }
+
 func (a *YoutubeAdapter) FetchTrack(ctx context.Context, id string) (*Entity, error) {
 	video, err := a.client.GetVideo(ctx, id)
 	if err != nil {

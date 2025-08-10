@@ -14,10 +14,11 @@ import (
 )
 
 var (
-	InvalidProviderError       = errors.New("invalid provider")
-	InvalidEntityTypeError     = errors.New("invalid entity type")
-	EntityNotFoundError        = errors.New("entity not found")
-	UnsupportedEntityTypeError = errors.New("unsupported entity type")
+	// TODO: rename to ErrFoo
+	InvalidProviderError       = errors.New("invalid provider")        //nolint:revive
+	InvalidEntityTypeError     = errors.New("invalid entity type")     //nolint:revive
+	EntityNotFoundError        = errors.New("entity not found")        //nolint:revive
+	UnsupportedEntityTypeError = errors.New("unsupported entity type") //nolint:revive
 )
 
 type Registry struct {

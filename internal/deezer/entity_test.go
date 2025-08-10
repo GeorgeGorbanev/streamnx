@@ -66,7 +66,6 @@ func TestDetectAlbumID(t *testing.T) {
 			require.Equal(t, tt.want, result)
 		})
 	}
-
 }
 
 func TestDetectCloakID(t *testing.T) {

@@ -1,0 +1,54 @@
+run:
+  timeout: 3m
+  tests: true
+  modules-download-mode: readonly
+
+linters:
+  disable-all: true
+  enable:
+    - gci
+    - gofumpt
+    - revive
+
+    - govet
+    - staticcheck
+    - gosimple
+    - errcheck
+    - unused
+    - unparam
+    - ineffassign
+    - copyloopvar
+
+    - prealloc
+
+linters-settings:
+  gci:
+    custom-order: true
+    sections:
+      - standard
+      - default
+      - prefix(github.com/GeorgeGorbanev)
+
+  gofumpt:
+    extra-rules: true
+
+  revive:
+    severity: warning
+    rules:
+      - name: exported
+      - name: var-naming
+      - name: receiver-naming
+      - name: error-naming
+      - name: indent-error-flow
+      - name: empty-block
+      - name: early-return
+  prealloc:
+    simple: true
+    range-loops: true
+    for-loops: true
+
+issues:
+  exclude-rules:
+    - path: ^tests/
+      linters:
+        - revive

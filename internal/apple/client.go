@@ -48,7 +48,8 @@ type searchResponse struct {
 	} `json:"results"`
 }
 
-var NotFoundError = errors.New("not found")
+// TODO: rename to ErrFoo
+var NotFoundError = errors.New("not found") //nolint:revive
 
 func NewHTTPClient(opts ...ClientOption) *HTTPClient {
 	c := HTTPClient{
@@ -100,6 +101,7 @@ func (c *HTTPClient) SearchTrack(ctx context.Context, artist, track string) (*En
 	}
 	return nil, NotFoundError
 }
+
 func (c *HTTPClient) FetchAlbum(ctx context.Context, id, storefront string) (*Entity, error) {
 	u := fmt.Sprintf(`%s/v1/catalog/%s/albums/%s`, c.apiURL, storefront, id)
 	response, err := c.getAPI(ctx, u)
@@ -117,6 +119,7 @@ func (c *HTTPClient) FetchAlbum(ctx context.Context, id, storefront string) (*En
 	}
 	return r.Data[0], nil
 }
+
 func (c *HTTPClient) SearchAlbum(ctx context.Context, artist, album string) (*Entity, error) {
 	u := fmt.Sprintf(`%s/v1/catalog/us/search?%s`, c.apiURL, searchQuery(artist, album))
 	response, err := c.getAPI(ctx, u)

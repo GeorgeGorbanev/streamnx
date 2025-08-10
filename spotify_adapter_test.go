@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/GeorgeGorbanev/streamnx/internal/spotify"
-
 	"github.com/stretchr/testify/require"
+
+	"github.com/GeorgeGorbanev/streamnx/internal/spotify"
 )
 
 type spotifyClientMock struct {

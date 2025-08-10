@@ -2,9 +2,8 @@ package streamnx
 
 import "errors"
 
-var (
-	UnknownLinkError = errors.New("unknown entity link")
-)
+// TODO: rename to ErrFoo
+var UnknownLinkError = errors.New("unknown entity link") //nolint:revive
 
 type Link struct {
 	URL        string

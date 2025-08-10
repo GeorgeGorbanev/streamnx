@@ -5,8 +5,9 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/GeorgeGorbanev/streamnx/internal/deezer"
 	"github.com/stretchr/testify/require"
+
+	"github.com/GeorgeGorbanev/streamnx/internal/deezer"
 )
 
 type deezerClientMock struct {

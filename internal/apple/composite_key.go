@@ -19,7 +19,8 @@ var (
 	compositeKeyRe = regexp.MustCompile(
 		fmt.Sprintf(`^([a-z]{2})%s([0-9]+)$`, delimiter),
 	)
-	CompositeKeyError = errors.New("invalid composite key")
+	// TODO: rename to ErrFoo
+	CompositeKeyError = errors.New("invalid composite key") //nolint:revive
 )
 
 func (k *CompositeKey) ParseFromTrackURL(url string) error {

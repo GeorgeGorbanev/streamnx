@@ -26,7 +26,8 @@ type HTTPClient struct {
 	httpClient *http.Client
 }
 
-var NotFoundError = errors.New("not found")
+// TODO: rename to ErrFoo
+var NotFoundError = errors.New("not found") //nolint:revive
 
 func NewHTTPClient(opts ...ClientOption) *HTTPClient {
 	c := HTTPClient{

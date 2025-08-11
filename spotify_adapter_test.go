@@ -1,9 +1,7 @@
 package streamnx
 
 import (
-	"context"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/require"
 
@@ -59,14 +57,11 @@ func TestSpotifyAdapter_FetchTrack(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
 			clientMock := &spotify.ClientMock{}
 			tt.mockClient(clientMock)
 
 			a := newSpotifyAdapter(clientMock)
-			result, err := a.FetchTrack(ctx, tt.id)
+			result, err := a.FetchTrack(t.Context(), tt.id)
 
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
@@ -132,14 +127,11 @@ func TestSpotifyAdapter_SearchTrack(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
 			clientMock := &spotify.ClientMock{}
 			tt.mockClient(clientMock)
 
 			a := newSpotifyAdapter(clientMock)
-			result, err := a.SearchTrack(ctx, tt.artist, tt.searchName)
+			result, err := a.SearchTrack(t.Context(), tt.artist, tt.searchName)
 
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
@@ -202,14 +194,11 @@ func TestSpotifyAdapter_FetchAlbum(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
 			clientMock := &spotify.ClientMock{}
 			tt.mockClient(clientMock)
 
 			a := newSpotifyAdapter(clientMock)
-			result, err := a.FetchAlbum(ctx, tt.id)
+			result, err := a.FetchAlbum(t.Context(), tt.id)
 
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
@@ -275,14 +264,11 @@ func TestSpotifyAdapter_SearchAlbum(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
 			clientMock := &spotify.ClientMock{}
 			tt.mockClient(clientMock)
 
 			a := newSpotifyAdapter(clientMock)
-			result, err := a.SearchAlbum(ctx, tt.artist, tt.searchName)
+			result, err := a.SearchAlbum(t.Context(), tt.artist, tt.searchName)
 
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)

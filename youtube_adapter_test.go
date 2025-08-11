@@ -1,9 +1,7 @@
 package streamnx
 
 import (
-	"context"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/require"
 
@@ -82,10 +80,7 @@ func TestYoutubeAdapter_FetchTrack(t *testing.T) {
 
 			a := newYoutubeAdapter(clientMock)
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			result, err := a.FetchTrack(ctx, tt.id)
+			result, err := a.FetchTrack(t.Context(), tt.id)
 
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
@@ -163,10 +158,7 @@ func TestYoutubeAdapter_SearchTrack(t *testing.T) {
 
 			a := newYoutubeAdapter(clientMock)
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			result, err := a.SearchTrack(ctx, tt.artist, tt.searchName)
+			result, err := a.SearchTrack(t.Context(), tt.artist, tt.searchName)
 
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
@@ -318,10 +310,7 @@ func TestYoutubeAdapter_FetchAlbum(t *testing.T) {
 
 			a := newYoutubeAdapter(clientMock)
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			result, err := a.FetchAlbum(ctx, tt.id)
+			result, err := a.FetchAlbum(t.Context(), tt.id)
 
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
@@ -399,10 +388,7 @@ func TestYoutubeAdapter_SearchAlbum(t *testing.T) {
 
 			a := newYoutubeAdapter(clientMock)
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			result, err := a.SearchAlbum(ctx, tt.artist, tt.searchName)
+			result, err := a.SearchAlbum(t.Context(), tt.artist, tt.searchName)
 
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)

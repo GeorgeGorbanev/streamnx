@@ -1,12 +1,10 @@
 package youtube
 
 import (
-	"context"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/require"
 )
@@ -67,10 +65,7 @@ func TestHTTPClient_GetVideo(t *testing.T) {
 
 			client := NewHTTPClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			video, err := client.GetVideo(ctx, tt.inputID)
+			video, err := client.GetVideo(t.Context(), tt.inputID)
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
 			} else {
@@ -144,10 +139,7 @@ func TestHTTPClient_SearchVideo(t *testing.T) {
 
 			client := NewHTTPClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			response, err := client.SearchVideo(ctx, tt.query)
+			response, err := client.SearchVideo(t.Context(), tt.query)
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
 			} else {
@@ -212,10 +204,7 @@ func TestHTTPClient_GetPlaylist(t *testing.T) {
 
 			client := NewHTTPClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			playlist, err := client.GetPlaylist(ctx, tt.inputID)
+			playlist, err := client.GetPlaylist(t.Context(), tt.inputID)
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
 			} else {
@@ -289,10 +278,7 @@ func TestHTTPClient_SearchPlaylist(t *testing.T) {
 
 			client := NewHTTPClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			response, err := client.SearchPlaylist(ctx, tt.query)
+			response, err := client.SearchPlaylist(t.Context(), tt.query)
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
 			} else {
@@ -367,10 +353,7 @@ func TestHTTPClient_GetPlaylistItems(t *testing.T) {
 
 			client := NewHTTPClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			videos, err := client.GetPlaylistItems(ctx, tt.inputID)
+			videos, err := client.GetPlaylistItems(t.Context(), tt.inputID)
 
 			if tt.expectedError != nil {
 				require.Error(t, tt.expectedError, err)

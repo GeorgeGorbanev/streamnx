@@ -177,10 +177,7 @@ func TestHTTPClient_SearchAlbum(t *testing.T) {
 		WithAPIURL(mockAPIServer.URL),
 	)
 
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	album, err := client.SearchAlbum(ctx, "Sample Artist", "Sample Album")
+	album, err := client.SearchAlbum(t.Context(), "Sample Artist", "Sample Album")
 	require.NoError(t, err)
 	require.Equal(t, &Album{
 		ID:   "samplealbumid",
@@ -219,10 +216,7 @@ func TestHTTPClient_TokenNotExpired(t *testing.T) {
 		AccessToken: "mock_access_token",
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	track, err := client.FetchTrack(ctx, "sampletrackid")
+	track, err := client.FetchTrack(t.Context(), "sampletrackid")
 	require.NoError(t, err)
 	require.Equal(t, &Track{
 		ID: "sampletrackid",
@@ -264,10 +258,7 @@ func TestHTTPClient_RefreshTokenWhenExpired(t *testing.T) {
 		ExpiresIn: 1,
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	track, err := client.FetchTrack(ctx, "sampletrackid")
+	track, err := client.FetchTrack(t.Context(), "sampletrackid")
 	require.NoError(t, err)
 	require.Equal(t, &Track{
 		ID: "sampletrackid",
@@ -314,10 +305,7 @@ func TestHTTPClient_RefreshTokenWhenUnauthorized(t *testing.T) {
 		AccessToken: "not_expired_token_to_refresh",
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	track, err := client.FetchTrack(ctx, "sampletrackid")
+	track, err := client.FetchTrack(t.Context(), "sampletrackid")
 	require.NoError(t, err)
 	require.Equal(t, &Track{
 		ID: "sampletrackid",
@@ -357,10 +345,7 @@ func TestHTTPClient_APIError(t *testing.T) {
 		WithAPIURL(mockAPIServer.URL),
 	)
 
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	track, err := client.FetchTrack(ctx, "sampletrackid")
+	track, err := client.FetchTrack(t.Context(), "sampletrackid")
 	require.Errorf(t, err,
 		"failed to send request: unexpected API response: 403 Spotify is unavailable in this country")
 	require.Nil(t, track)

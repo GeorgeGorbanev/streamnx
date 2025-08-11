@@ -1,11 +1,9 @@
 package yandex
 
 import (
-	"context"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/require"
 )
@@ -79,10 +77,7 @@ func TestClient_FetchTrack(t *testing.T) {
 
 			client := NewHTTPClient(WithAPIURL(apiServerMock.URL))
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			result, err := client.FetchTrack(ctx, tt.trackID)
+			result, err := client.FetchTrack(t.Context(), tt.trackID)
 			if tt.wantErr != nil {
 				require.ErrorIs(t, err, tt.wantErr)
 			} else {
@@ -147,10 +142,7 @@ func TestClient_FetchAlbum(t *testing.T) {
 
 			client := NewHTTPClient(WithAPIURL(apiServerMock.URL))
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			result, err := client.FetchAlbum(ctx, tt.albumID)
+			result, err := client.FetchAlbum(t.Context(), tt.albumID)
 			if tt.wantErr != nil {
 				require.ErrorIs(t, err, tt.wantErr)
 			} else {
@@ -238,10 +230,7 @@ func TestClient_SearchTrack(t *testing.T) {
 
 			client := NewHTTPClient(WithAPIURL(apiServerMock.URL))
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			result, err := client.SearchTrack(ctx, tt.query)
+			result, err := client.SearchTrack(t.Context(), tt.query)
 			if tt.wantErr != nil {
 				require.ErrorIs(t, err, tt.wantErr)
 			} else {
@@ -310,10 +299,7 @@ func TestClient_SearchAlbum(t *testing.T) {
 
 			client := NewHTTPClient(WithAPIURL(apiServerMock.URL))
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			result, err := client.SearchAlbum(ctx, tt.query)
+			result, err := client.SearchAlbum(t.Context(), tt.query)
 			if tt.wantErr != nil {
 				require.ErrorIs(t, err, tt.wantErr)
 			} else {

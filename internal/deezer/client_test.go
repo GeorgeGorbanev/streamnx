@@ -1,12 +1,10 @@
 package deezer
 
 import (
-	"context"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/require"
 )
@@ -75,10 +73,7 @@ func TestHTTPClient_FetchTrack(t *testing.T) {
 				WithAPIURL(apiServerMock.URL),
 			)
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			track, err := client.FetchTrack(ctx, tt.inputID)
+			track, err := client.FetchTrack(t.Context(), tt.inputID)
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
 			} else {
@@ -157,10 +152,7 @@ func TestHTTPClient_SearchTrack(t *testing.T) {
 				WithAPIURL(apiServerMock.URL),
 			)
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			track, err := client.SearchTrack(ctx, tt.artist, tt.title)
+			track, err := client.SearchTrack(t.Context(), tt.artist, tt.title)
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
 			} else {
@@ -227,10 +219,7 @@ func TestHTTPClient_FetchAlbum(t *testing.T) {
 				WithAPIURL(apiServerMock.URL),
 			)
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			album, err := client.FetchAlbum(ctx, tt.inputID)
+			album, err := client.FetchAlbum(t.Context(), tt.inputID)
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
 			} else {
@@ -301,10 +290,7 @@ func TestHTTPClient_SearchAlbum(t *testing.T) {
 				WithAPIURL(apiServerMock.URL),
 			)
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			album, err := client.SearchAlbum(ctx, tt.artist, tt.title)
+			album, err := client.SearchAlbum(t.Context(), tt.artist, tt.title)
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
 			} else {
@@ -374,10 +360,7 @@ func TestHTTPClient_FollowCloak(t *testing.T) {
 				WithAPIURL(apiServerMock.URL),
 			)
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			location, err := client.FollowCloak(ctx, tt.inputID)
+			location, err := client.FollowCloak(t.Context(), tt.inputID)
 			if tt.expectedErr {
 				require.Error(t, err)
 			} else {

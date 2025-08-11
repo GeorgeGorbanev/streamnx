@@ -1,12 +1,10 @@
 package apple
 
 import (
-	"context"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/require"
 )
@@ -75,10 +73,7 @@ func TestHTTPClient_FetchTrack(t *testing.T) {
 				httpClient: &http.Client{},
 			}
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			result, err := client.FetchTrack(ctx, tt.trackID, tt.storeFront)
+			result, err := client.FetchTrack(t.Context(), tt.trackID, tt.storeFront)
 			if tt.wantErr != nil {
 				require.ErrorIs(t, err, tt.wantErr)
 			} else {
@@ -187,10 +182,7 @@ func TestHTTPClient_SearchTrack(t *testing.T) {
 				httpClient: &http.Client{},
 			}
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			result, err := client.SearchTrack(ctx, tt.artist, tt.title)
+			result, err := client.SearchTrack(t.Context(), tt.artist, tt.title)
 			if tt.wantErr != nil {
 				require.ErrorIs(t, err, tt.wantErr)
 			} else {
@@ -265,10 +257,7 @@ func TestHTTPClient_FetchAlbum(t *testing.T) {
 				httpClient: &http.Client{},
 			}
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			result, err := client.FetchAlbum(ctx, tt.albumID, tt.storeFront)
+			result, err := client.FetchAlbum(t.Context(), tt.albumID, tt.storeFront)
 			if tt.wantErr != nil {
 				require.ErrorIs(t, err, tt.wantErr)
 			} else {
@@ -377,10 +366,7 @@ func TestHTTPClient_SearchAlbum(t *testing.T) {
 				httpClient: &http.Client{},
 			}
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			result, err := client.SearchAlbum(ctx, tt.artistName, tt.title)
+			result, err := client.SearchAlbum(t.Context(), tt.artistName, tt.title)
 			if tt.wantErr != nil {
 				require.ErrorIs(t, err, tt.wantErr)
 			} else {
@@ -419,10 +405,7 @@ func TestHTTPClient_fetchToken(t *testing.T) {
 		webPlayerURL: webPlayerServerMock.URL,
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	token, err := client.fetchToken(ctx)
+	token, err := client.fetchToken(t.Context())
 
 	require.NoError(t, err)
 	require.Equal(t, "sampleToken", token)

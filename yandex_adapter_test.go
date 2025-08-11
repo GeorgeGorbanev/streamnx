@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/require"
 
@@ -67,10 +66,7 @@ func TestYandexAdapter_FetchTrack(t *testing.T) {
 
 			a := newYandexAdapter(clientMock, nil)
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			result, err := a.FetchTrack(ctx, tt.id)
+			result, err := a.FetchTrack(t.Context(), tt.id)
 
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
@@ -136,10 +132,7 @@ func TestYandexAdapter_FetchAlbum(t *testing.T) {
 
 			a := newYandexAdapter(clientMock, nil)
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			result, err := a.FetchAlbum(ctx, tt.id)
+			result, err := a.FetchAlbum(t.Context(), tt.id)
 
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
@@ -336,10 +329,7 @@ func TestYandexAdapter_SearchTrack(t *testing.T) {
 
 			a := newYandexAdapter(clientMock, translatorMock)
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			result, err := a.SearchTrack(ctx, tt.artist, tt.searchName)
+			result, err := a.SearchTrack(t.Context(), tt.artist, tt.searchName)
 
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
@@ -522,10 +512,7 @@ func TestYandexAdapter_SearchAlbum(t *testing.T) {
 
 			a := newYandexAdapter(clientMock, translatorMock)
 
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-			defer cancel()
-
-			result, err := a.SearchAlbum(ctx, tt.artistName, tt.searchName)
+			result, err := a.SearchAlbum(t.Context(), tt.artistName, tt.searchName)
 
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)

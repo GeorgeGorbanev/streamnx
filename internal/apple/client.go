@@ -11,8 +11,8 @@ import (
 )
 
 const (
-	defaultAPIURL      = "https://amp-api-edge.music.apple.com"
-	defaulWebPlayerURL = "https://music.apple.com"
+	defaultAPIURL       = "https://amp-api-edge.music.apple.com"
+	defaultWebPlayerURL = "https://music.apple.com"
 )
 
 type Client interface {
@@ -55,7 +55,7 @@ func NewHTTPClient(opts ...ClientOption) *HTTPClient {
 	c := HTTPClient{
 		httpClient:   &http.Client{},
 		apiURL:       defaultAPIURL,
-		webPlayerURL: defaulWebPlayerURL,
+		webPlayerURL: defaultWebPlayerURL,
 	}
 	for _, opt := range opts {
 		opt(&c)
@@ -155,7 +155,7 @@ func (c *HTTPClient) getAPI(ctx context.Context, reqURL string) (*http.Response,
 	}
 
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.token))
-	req.Header.Set("Origin", defaulWebPlayerURL)
+	req.Header.Set("Origin", defaultWebPlayerURL)
 
 	return c.httpClient.Do(req)
 }

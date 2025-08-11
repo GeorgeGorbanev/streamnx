@@ -47,6 +47,9 @@ func (gc *GoogleClient) TranslateEnToRu(ctx context.Context, text string) (strin
 	if err != nil {
 		return "", fmt.Errorf("failed to translate text: %w", err)
 	}
+	if len(resp.Translations) == 0 {
+		return "", fmt.Errorf("no translations returned")
+	}
 	return resp.Translations[0].TranslatedText, nil
 }
 

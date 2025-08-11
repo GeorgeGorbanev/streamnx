@@ -52,7 +52,7 @@ func NewHTTPClient(credentials *Credentials, opts ...ClientOption) *HTTPClient {
 func (c *HTTPClient) FetchTrack(ctx context.Context, id string) (*Track, error) {
 	body, err := c.getAPI(ctx, "/v1/tracks/"+id, nil)
 	if err != nil {
-		return nil, fmt.Errorf("failed to send request: %w", err)
+		return nil, err
 	}
 
 	track := Track{}
@@ -77,7 +77,7 @@ func (c *HTTPClient) SearchTrack(ctx context.Context, artist, title string) (*Tr
 		"limit": []string{"1"},
 	})
 	if err != nil {
-		return nil, fmt.Errorf("failed to send request: %w", err)
+		return nil, err
 	}
 
 	sr := searchResult{}
@@ -95,7 +95,7 @@ func (c *HTTPClient) SearchTrack(ctx context.Context, artist, title string) (*Tr
 func (c *HTTPClient) FetchAlbum(ctx context.Context, id string) (*Album, error) {
 	body, err := c.getAPI(ctx, "/v1/albums/"+id, nil)
 	if err != nil {
-		return nil, fmt.Errorf("failed to send request: %w", err)
+		return nil, err
 	}
 
 	album := Album{}
@@ -120,7 +120,7 @@ func (c *HTTPClient) SearchAlbum(ctx context.Context, artist, title string) (*Al
 		"limit": []string{"1"},
 	})
 	if err != nil {
-		return nil, fmt.Errorf("failed to send request: %w", err)
+		return nil, err
 	}
 
 	sr := searchResult{}
@@ -216,7 +216,7 @@ func (c *HTTPClient) requestWithToken(ctx context.Context, url string) (*http.Re
 	req.Header.Set("Authorization", c.token.authHeader())
 
 	resp, err := c.httpClient.Do(req)
-	if resp.StatusCode == http.StatusUnauthorized {
+	if err == nil && resp.StatusCode == http.StatusUnauthorized {
 		c.token, err = c.fetchToken(ctx)
 		if err != nil {
 			return nil, fmt.Errorf("failed to fetch token: %w", err)

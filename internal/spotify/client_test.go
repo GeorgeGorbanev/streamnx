@@ -3,6 +3,8 @@ package spotify
 import (
 	"context"
 	"encoding/json"
+	"fmt"
+	"net"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -368,6 +370,36 @@ func TestHTTPClient_APIError(t *testing.T) {
 	track, err := client.FetchTrack(ctx, "sampletrackid")
 	require.Errorf(t, err,
 		"failed to send request: unexpected API response: 403 Spotify is unavailable in this country")
+	require.Nil(t, track)
+}
+
+func TestHTTPClient_HandlesRequestError(t *testing.T) {
+	mockAPIServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+	}))
+	mockAPIServer.Close()
+
+	client := NewHTTPClient(
+		&sampleCredentials,
+		WithAPIURL(mockAPIServer.URL),
+	)
+	client.token = &token{
+		fetchedAt:   time.Now(),
+		ExpiresIn:   3600,
+		AccessToken: "valid_token",
+	}
+
+	track, err := client.FetchTrack(t.Context(), "sampletrackid")
+	require.Error(t, err)
+
+	port := mockAPIServer.Listener.Addr().(*net.TCPAddr).Port
+	expectedError := fmt.Sprintf(
+		`failed to send request: `+
+			`Get "%s/v1/tracks/sampletrackid?": `+
+			`dial tcp 127.0.0.1:%d: `+
+			`connect: connection refused`,
+		mockAPIServer.URL, port)
+	require.Equal(t, expectedError, err.Error())
 	require.Nil(t, track)
 }
 

@@ -2,6 +2,7 @@ package streamnx
 
 import (
 	"context"
+	"errors"
 	"testing"
 	"time"
 
@@ -532,6 +533,228 @@ func TestYandexAdapter_SearchAlbum(t *testing.T) {
 				require.NoError(t, err)
 				require.Equal(t, tt.expectedAlbum, result)
 			}
+
+			clientMock.AssertExpectations(t)
+			translatorMock.AssertExpectations(t)
+		})
+	}
+}
+
+var errTestServer = errors.New("server error")
+
+func TestYandexAdapter_SearchTrack_ErrorHandling(t *testing.T) {
+	tests := []struct {
+		name           string
+		artist         string
+		searchName     string
+		mockClient     func(m *yandex.ClientMock)
+		mockTranslator func(m *translator.Mock)
+		expectedErr    error
+	}{
+		{
+			name:       "first search returns non-NotFoundError, should propagate",
+			artist:     "test artist",
+			searchName: "test name",
+			mockClient: func(m *yandex.ClientMock) {
+				m.
+					On("SearchTrack", "test artist – test name").
+					Return(nil, errTestServer).
+					Once()
+			},
+			mockTranslator: func(m *translator.Mock) {},
+			expectedErr:    errTestServer,
+		},
+		{
+			name:       "transliterated search returns non-NotFoundError, should propagate",
+			artist:     "test artist",
+			searchName: "кириллическое название",
+			mockClient: func(m *yandex.ClientMock) {
+				m.
+					On("SearchTrack", "test artist – кириллическое название").
+					Return(nil, yandex.NotFoundError).
+					Once()
+				m.
+					On("SearchTrack", "тест артист – кириллическое название").
+					Return(nil, errTestServer).
+					Once()
+			},
+			mockTranslator: func(m *translator.Mock) {},
+			expectedErr:    errTestServer,
+		},
+		{
+			name:       "transliterated search finds track but artist doesn't match",
+			artist:     "test artist",
+			searchName: "кириллическое название",
+			mockClient: func(m *yandex.ClientMock) {
+				m.
+					On("SearchTrack", "test artist – кириллическое название").
+					Return(nil, yandex.NotFoundError).
+					Once()
+				m.
+					On("SearchTrack", "тест артист – кириллическое название").
+					Return(&yandex.Track{
+						ID:    42,
+						Title: "sample name",
+						Artists: []yandex.Artist{
+							{Name: "неподходящий артист"},
+						},
+						Albums: []yandex.Album{
+							{ID: 41},
+						},
+					}, nil).
+					Once()
+			},
+			mockTranslator: func(m *translator.Mock) {
+				m.
+					On("TranslateEnToRu", "test artist").
+					Return("тест артист", nil).
+					Once()
+			},
+			expectedErr: EntityNotFoundError,
+		},
+		{
+			name:       "artist match fails during transliterated search",
+			artist:     "test artist",
+			searchName: "кириллическое название",
+			mockClient: func(m *yandex.ClientMock) {
+				m.
+					On("SearchTrack", "test artist – кириллическое название").
+					Return(nil, yandex.NotFoundError).
+					Once()
+				m.
+					On("SearchTrack", "тест артист – кириллическое название").
+					Return(&yandex.Track{
+						ID:    42,
+						Title: "sample name",
+						Artists: []yandex.Artist{
+							{Name: "подходящий артист"},
+						},
+						Albums: []yandex.Album{
+							{ID: 41},
+						},
+					}, nil).
+					Once()
+			},
+			mockTranslator: func(m *translator.Mock) {
+				m.
+					On("TranslateEnToRu", "test artist").
+					Return("", errTestServer).
+					Once()
+			},
+			expectedErr: errTestServer,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			ctx := context.Background()
+
+			clientMock := &yandex.ClientMock{}
+			tt.mockClient(clientMock)
+
+			translatorMock := &translator.Mock{}
+			tt.mockTranslator(translatorMock)
+
+			adapter := newYandexAdapter(clientMock, translatorMock)
+
+			result, err := adapter.SearchTrack(ctx, tt.artist, tt.searchName)
+
+			require.Nil(t, result)
+			require.Error(t, err)
+			require.ErrorIs(t, err, tt.expectedErr)
+
+			clientMock.AssertExpectations(t)
+			translatorMock.AssertExpectations(t)
+		})
+	}
+}
+
+func TestYandexAdapter_SearchAlbum_ErrorHandling(t *testing.T) {
+	tests := []struct {
+		name           string
+		artist         string
+		searchName     string
+		mockClient     func(m *yandex.ClientMock)
+		mockTranslator func(m *translator.Mock)
+		expectedErr    error
+	}{
+		{
+			name:       "first search returns non-NotFoundError, should propagate",
+			artist:     "test artist",
+			searchName: "test album",
+			mockClient: func(m *yandex.ClientMock) {
+				m.
+					On("SearchAlbum", "test artist – test album").
+					Return(nil, errTestServer).
+					Once()
+			},
+			mockTranslator: func(m *translator.Mock) {},
+			expectedErr:    errTestServer,
+		},
+		{
+			name:       "transliterated search returns non-NotFoundError, should propagate",
+			artist:     "test artist",
+			searchName: "кириллическое название",
+			mockClient: func(m *yandex.ClientMock) {
+				m.
+					On("SearchAlbum", "test artist – кириллическое название").
+					Return(nil, yandex.NotFoundError).
+					Once()
+				m.
+					On("SearchAlbum", "тест артист – кириллическое название").
+					Return(nil, errTestServer).
+					Once()
+			},
+			mockTranslator: func(m *translator.Mock) {},
+			expectedErr:    errTestServer,
+		},
+		{
+			name:       "transliterated search finds album but artist doesn't match",
+			artist:     "test artist",
+			searchName: "кириллическое название",
+			mockClient: func(m *yandex.ClientMock) {
+				m.
+					On("SearchAlbum", "test artist – кириллическое название").
+					Return(nil, yandex.NotFoundError).
+					Once()
+				m.
+					On("SearchAlbum", "тест артист – кириллическое название").
+					Return(&yandex.Album{
+						ID:    42,
+						Title: "sample album",
+						Artists: []yandex.Artist{
+							{Name: "неподходящий артист"},
+						},
+					}, nil).
+					Once()
+			},
+			mockTranslator: func(m *translator.Mock) {
+				m.
+					On("TranslateEnToRu", "test artist").
+					Return("тест артист", nil).
+					Once()
+			},
+			expectedErr: EntityNotFoundError,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			ctx := context.Background()
+
+			clientMock := &yandex.ClientMock{}
+			tt.mockClient(clientMock)
+
+			translatorMock := &translator.Mock{}
+			tt.mockTranslator(translatorMock)
+
+			adapter := newYandexAdapter(clientMock, translatorMock)
+
+			result, err := adapter.SearchAlbum(ctx, tt.artist, tt.searchName)
+
+			require.Nil(t, result)
+			require.Error(t, err)
+			require.ErrorIs(t, err, tt.expectedErr)
 
 			clientMock.AssertExpectations(t)
 			translatorMock.AssertExpectations(t)

@@ -89,11 +89,17 @@ func (a *YandexAdapter) findTrack(ctx context.Context, artist, title string) (*y
 	if translator.HasCyrillic(title) {
 		translited := translator.TranslitLatToCyr(artist)
 		track, err = a.searchTrackRequest(ctx, translited, title)
-		if err != nil {
+		if err != nil && !errors.Is(err, yandex.NotFoundError) {
 			return nil, fmt.Errorf("error searching yandex track: %w", err)
 		}
 		if track != nil {
-			return track, nil
+			artistMatch, err := a.artistMatch(ctx, track.Artists[0].Name, artist)
+			if err != nil {
+				return nil, fmt.Errorf("failed to check artist match: %w", err)
+			}
+			if artistMatch {
+				return track, nil
+			}
 		}
 	}
 
@@ -118,11 +124,17 @@ func (a *YandexAdapter) findAlbum(ctx context.Context, artist, title string) (*y
 	if translator.HasCyrillic(title) {
 		translited := translator.TranslitLatToCyr(artist)
 		album, err = a.searchAlbumRequest(ctx, translited, title)
-		if err != nil {
+		if err != nil && !errors.Is(err, yandex.NotFoundError) {
 			return nil, fmt.Errorf("error searching yandex album: %w", err)
 		}
 		if album != nil {
-			return album, nil
+			artistMatch, err := a.artistMatch(ctx, album.Artists[0].Name, artist)
+			if err != nil {
+				return nil, fmt.Errorf("failed to check artist match: %w", err)
+			}
+			if artistMatch {
+				return album, nil
+			}
 		}
 	}
 

@@ -7,6 +7,8 @@ import (
 	"net"
 	"net/http"
 	"net/http/httptest"
+	"sync"
+	"sync/atomic"
 	"testing"
 	"time"
 
@@ -51,10 +53,7 @@ func TestHTTPClient_FetchTrack(t *testing.T) {
 		WithAPIURL(mockAPIServer.URL),
 	)
 
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	track, err := client.FetchTrack(ctx, "sampletrackid")
+	track, err := client.FetchTrack(t.Context(), "sampletrackid")
 	require.NoError(t, err)
 	require.Equal(t, &Track{
 		ID: "sampletrackid",
@@ -97,10 +96,7 @@ func TestHTTPClient_SearchTrack(t *testing.T) {
 		WithAPIURL(mockAPIServer.URL),
 	)
 
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	track, err := client.SearchTrack(ctx, "Sample Artist", "Sample Track")
+	track, err := client.SearchTrack(t.Context(), "Sample Artist", "Sample Track")
 	require.NoError(t, err)
 	require.Equal(t, &Track{
 		ID: "sampletrackid",
@@ -138,10 +134,7 @@ func TestHTTPClient_FetchAlbum(t *testing.T) {
 		WithAPIURL(mockAPIServer.URL),
 	)
 
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	album, err := client.FetchAlbum(ctx, "samplealbumid")
+	album, err := client.FetchAlbum(t.Context(), "samplealbumid")
 	require.NoError(t, err)
 	require.Equal(t, &Album{
 		ID:   "samplealbumid",
@@ -417,4 +410,184 @@ func newAuthServerMock(t *testing.T) *httptest.Server {
 		})
 		require.NoError(t, err)
 	}))
+}
+
+func TestHTTPClient_ConcurrentTokenRefresh(t *testing.T) {
+	var tokenRequests, apiRequests int64
+
+	authServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		atomic.AddInt64(&tokenRequests, 1)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte(`{"access_token":"test-token","token_type":"Bearer","expires_in":1}`))
+	}))
+	defer authServer.Close()
+
+	apiServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		atomic.AddInt64(&apiRequests, 1)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte(`{"id":"test-track","name":"Test Track"}`))
+	}))
+	defer apiServer.Close()
+
+	client := NewHTTPClient(
+		&Credentials{ClientID: "test", ClientSecret: "secret"},
+		WithAuthURL(authServer.URL),
+		WithAPIURL(apiServer.URL),
+	)
+
+	const concurrency = 10
+	wg := sync.WaitGroup{}
+	wg.Add(concurrency)
+	for i := 0; i < concurrency; i++ {
+		go func() {
+			defer wg.Done()
+			_, err := client.FetchTrack(context.Background(), "test-track")
+			require.NoError(t, err)
+		}()
+	}
+	wg.Wait()
+
+	require.Equal(t, int64(1), atomic.LoadInt64(&tokenRequests))
+	require.Equal(t, int64(concurrency), atomic.LoadInt64(&apiRequests))
+}
+
+func TestHTTPClient_ConcurrentTokenRefreshAfter401(t *testing.T) {
+	var tokenRequests int64
+
+	authServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		atomic.AddInt64(&tokenRequests, 1)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte(`{"access_token":"refreshed-token","token_type":"Bearer","expires_in":3600}`))
+	}))
+	defer authServer.Close()
+
+	requestCount := make(map[string]int64)
+	mu := sync.Mutex{}
+	apiServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		mu.Lock()
+		requestCount["total"]++
+		auth := r.Header.Get("Authorization")
+		count := requestCount[auth]
+		requestCount[auth] = count + 1
+		mu.Unlock()
+
+		if auth == "Bearer expired-token" {
+			w.WriteHeader(http.StatusUnauthorized)
+			_, _ = w.Write([]byte(`{"error":{"status":401,"message":"invalid_token"}}`))
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte(`{"id":"test-track","name":"Test Track"}`))
+	}))
+	defer apiServer.Close()
+
+	client := NewHTTPClient(
+		&Credentials{ClientID: "test", ClientSecret: "secret"},
+		WithAuthURL(authServer.URL),
+		WithAPIURL(apiServer.URL),
+	)
+
+	client.token = &token{
+		AccessToken: "expired-token",
+		TokenType:   "Bearer",
+		ExpiresIn:   3600,
+		fetchedAt:   time.Now(),
+	}
+
+	_, err := client.FetchTrack(context.Background(), "test-track")
+	require.NoError(t, err)
+	require.Equal(t, int64(1), atomic.LoadInt64(&tokenRequests))
+}
+
+func TestHTTPClient_ConcurrentExpiredTokenRefresh(t *testing.T) {
+	var tokenRequests int64
+
+	authServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		atomic.AddInt64(&tokenRequests, 1)
+		time.Sleep(10 * time.Millisecond)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte(`{"access_token":"new-token","token_type":"Bearer","expires_in":3600}`))
+	}))
+	defer authServer.Close()
+
+	apiServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte(`{"id":"test-track","name":"Test Track"}`))
+	}))
+	defer apiServer.Close()
+
+	client := NewHTTPClient(
+		&Credentials{ClientID: "test", ClientSecret: "secret"},
+		WithAuthURL(authServer.URL),
+		WithAPIURL(apiServer.URL),
+	)
+
+	client.token = &token{
+		AccessToken: "expired-token",
+		TokenType:   "Bearer",
+		ExpiresIn:   1,
+		fetchedAt:   time.Now().Add(-2 * time.Second),
+	}
+
+	const concurrency = 20
+	wg := sync.WaitGroup{}
+	wg.Add(concurrency)
+	for i := 0; i < concurrency; i++ {
+		go func() {
+			defer wg.Done()
+			_, err := client.FetchTrack(context.Background(), "test-track")
+			require.NoError(t, err)
+		}()
+	}
+	wg.Wait()
+
+	require.Equal(t, int64(1), atomic.LoadInt64(&tokenRequests))
+}
+
+func TestHTTPClient_TokenDoubleChecking(t *testing.T) {
+	var tokenRequests int64
+
+	authServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		count := atomic.AddInt64(&tokenRequests, 1)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte(`{"access_token":"token-` + string(rune('0'+count)) + `","token_type":"Bearer","expires_in":3600}`))
+	}))
+	defer authServer.Close()
+
+	apiServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		auth := r.Header.Get("Authorization")
+		require.Contains(t, auth, "token-1")
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte(`{"id":"test-track","name":"Test Track"}`))
+	}))
+	defer apiServer.Close()
+
+	client := NewHTTPClient(
+		&Credentials{ClientID: "test", ClientSecret: "secret"},
+		WithAuthURL(authServer.URL),
+		WithAPIURL(apiServer.URL),
+	)
+
+	const concurrency = 3
+	wg := sync.WaitGroup{}
+	wg.Add(concurrency)
+	for i := 0; i < concurrency; i++ {
+		go func() {
+			defer wg.Done()
+			_, err := client.FetchTrack(context.Background(), "test-track")
+			require.NoError(t, err)
+		}()
+	}
+	wg.Wait()
+
+	require.Equal(t, int64(1), atomic.LoadInt64(&tokenRequests))
 }

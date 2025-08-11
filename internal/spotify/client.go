@@ -9,6 +9,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"sync"
 	"time"
 )
 
@@ -30,6 +31,7 @@ type HTTPClient struct {
 	httpClient  *http.Client
 	credentials *Credentials
 	token       *token
+	tokenMutex  sync.RWMutex
 }
 
 // TODO: rename to ErrFoo
@@ -175,7 +177,7 @@ func (c *HTTPClient) getAPI(ctx context.Context, path string, query url.Values) 
 		} `json:"error"`
 	}
 
-	resp, err := c.requestWithToken(ctx, c.apiURL+path+"?"+query.Encode())
+	resp, err := c.requestWithAuth(ctx, c.apiURL+path+"?"+query.Encode())
 	if err != nil {
 		return nil, fmt.Errorf("failed to send request: %w", err)
 	}
@@ -201,28 +203,56 @@ func (c *HTTPClient) getAPI(ctx context.Context, path string, query url.Values) 
 	return body, nil
 }
 
-func (c *HTTPClient) requestWithToken(ctx context.Context, url string) (*http.Response, error) {
+func (c *HTTPClient) requestWithAuth(ctx context.Context, url string) (*http.Response, error) {
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
 
-	if c.token == nil || c.token.isExpired() {
-		c.token, err = c.fetchToken(ctx)
-		if err != nil {
-			return nil, fmt.Errorf("failed to fetch token: %w", err)
+	authHeader, refresh := c.authHeader()
+	if refresh {
+		if err = c.refreshToken(ctx, false); err != nil {
+			return nil, fmt.Errorf("failed to refresh token: %w", err)
 		}
+		authHeader, _ = c.authHeader()
 	}
-	req.Header.Set("Authorization", c.token.authHeader())
+
+	req.Header.Set("Authorization", authHeader)
 
 	resp, err := c.httpClient.Do(req)
 	if err == nil && resp.StatusCode == http.StatusUnauthorized {
-		c.token, err = c.fetchToken(ctx)
-		if err != nil {
-			return nil, fmt.Errorf("failed to fetch token: %w", err)
+		if err = c.refreshToken(ctx, true); err != nil {
+			return nil, fmt.Errorf("failed to refresh token after 401: %w", err)
 		}
-		req.Header.Set("Authorization", c.token.authHeader())
+		authHeader, _ = c.authHeader()
+		req.Header.Set("Authorization", authHeader)
 		resp, err = c.httpClient.Do(req)
 	}
 	return resp, err
+}
+
+func (c *HTTPClient) authHeader() (string, bool) {
+	c.tokenMutex.RLock()
+	defer c.tokenMutex.RUnlock()
+
+	if c.token == nil || c.token.isExpired() {
+		return "", true
+	}
+	return c.token.authHeader(), false
+}
+
+func (c *HTTPClient) refreshToken(ctx context.Context, force bool) error {
+	c.tokenMutex.Lock()
+	defer c.tokenMutex.Unlock()
+
+	if !force && c.token != nil && !c.token.isExpired() {
+		return nil
+	}
+
+	newToken, err := c.fetchToken(ctx)
+	if err != nil {
+		return err
+	}
+	c.token = newToken
+	return nil
 }

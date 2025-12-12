@@ -6,27 +6,21 @@ import (
 	"regexp"
 )
 
-const (
-	delimiter = "-"
-)
-
 type CompositeKey struct {
 	ID         string
 	Storefront string
 }
 
-var (
-	compositeKeyRe = regexp.MustCompile(
-		fmt.Sprintf(`^([a-z]{2})%s([0-9]+)$`, delimiter),
-	)
-	// TODO: rename to ErrFoo
-	CompositeKeyError = errors.New("invalid composite key") //nolint:revive
+const delimiter = "-"
+
+var compositeKeyRe = regexp.MustCompile(
+	fmt.Sprintf(`^([a-z]{2})%s([0-9]+)$`, delimiter),
 )
 
 func (k *CompositeKey) ParseFromTrackURL(url string) error {
 	if matches := AlbumTrackRe.FindStringSubmatch(url); len(matches) == 4 {
 		if !IsValidStorefront(matches[1]) {
-			return fmt.Errorf("%w (invalid storefront)", CompositeKeyError)
+			return fmt.Errorf("invalid storefront: %s", matches[1])
 		}
 		k.Storefront = matches[1]
 		k.ID = matches[3]
@@ -34,22 +28,22 @@ func (k *CompositeKey) ParseFromTrackURL(url string) error {
 	}
 	if matches := SongRe.FindStringSubmatch(url); len(matches) == 3 {
 		if !IsValidStorefront(matches[1]) {
-			return fmt.Errorf("%w (invalid storefront)", CompositeKeyError)
+			return fmt.Errorf("invalid storefront: %s", matches[1])
 		}
 		k.Storefront = matches[1]
 		k.ID = matches[2]
 		return nil
 	}
-	return fmt.Errorf("%w (not valid url)", CompositeKeyError)
+	return errors.New("invalid track url")
 }
 
 func (k *CompositeKey) ParseFromAlbumURL(url string) error {
 	matches := AlbumRe.FindStringSubmatch(url)
 	if len(matches) != 3 {
-		return fmt.Errorf("%w (not valid url)", CompositeKeyError)
+		return errors.New("invalid album url")
 	}
 	if !IsValidStorefront(matches[1]) {
-		return fmt.Errorf("%w (invalid storefront)", CompositeKeyError)
+		return fmt.Errorf("invalid storefront: %s", matches[1])
 	}
 
 	k.Storefront = matches[1]

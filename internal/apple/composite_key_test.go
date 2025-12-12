@@ -22,7 +22,7 @@ func TestCompositeKey_ParseFromTrackURL(t *testing.T) {
 		{
 			name:     "invalid storefront URL",
 			trackURL: "https://music.apple.com/invalid/album/song-name/1234567890?i=987654321",
-			wantErr:  CompositeKeyError,
+			wantErr:  errors.New("invalid storefront: invalid"),
 		},
 	}
 
@@ -32,7 +32,7 @@ func TestCompositeKey_ParseFromTrackURL(t *testing.T) {
 			err := k.ParseFromTrackURL(tt.trackURL)
 
 			if tt.wantErr != nil {
-				require.ErrorAs(t, err, &tt.wantErr)
+				require.Equal(t, tt.wantErr.Error(), err.Error())
 			} else {
 				require.Equal(t, tt.want, *k)
 				require.NoError(t, err)
@@ -56,7 +56,7 @@ func TestCompositeKey_ParseFromAlbumURL(t *testing.T) {
 		{
 			name:     "invalid storefront URL",
 			albumURL: "https://music.apple.com/invalid/album/album-name/123456789",
-			wantErr:  CompositeKeyError,
+			wantErr:  errors.New("invalid storefront: invalid"),
 		},
 	}
 
@@ -66,7 +66,7 @@ func TestCompositeKey_ParseFromAlbumURL(t *testing.T) {
 			err := k.ParseFromAlbumURL(tt.albumURL)
 
 			if tt.wantErr != nil {
-				require.ErrorAs(t, err, &tt.wantErr)
+				require.Equal(t, tt.wantErr.Error(), err.Error())
 			} else {
 				require.Equal(t, tt.want, *k)
 				require.NoError(t, err)

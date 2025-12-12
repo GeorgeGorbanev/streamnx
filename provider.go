@@ -2,6 +2,7 @@ package streamnx
 
 import (
 	"github.com/GeorgeGorbanev/streamnx/internal/apple"
+	"github.com/GeorgeGorbanev/streamnx/internal/bandcamp"
 	"github.com/GeorgeGorbanev/streamnx/internal/deezer"
 	"github.com/GeorgeGorbanev/streamnx/internal/pointer"
 	"github.com/GeorgeGorbanev/streamnx/internal/spotify"
@@ -24,6 +25,12 @@ var (
 		regions:       apple.ISO3166codes,
 		trackIDParser: apple.DetectTrackID,
 		albumIDParser: apple.DetectAlbumID,
+	}
+	Bandcamp = &Provider{
+		name:          "Bandcamp",
+		сode:          "bc",
+		trackIDParser: bandcamp.DetectTrackID,
+		albumIDParser: bandcamp.DetectAlbumID,
 	}
 	Deezer = &Provider{
 		name:          "Deezer",

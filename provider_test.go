@@ -16,6 +16,10 @@ func TestFindProviderByCode(t *testing.T) {
 			want: Apple,
 		},
 		{
+			code: "bc",
+			want: Bandcamp,
+		},
+		{
 			code: "dz",
 			want: Deezer,
 		},

@@ -17,7 +17,7 @@ func TestCompositeKey_ParseFromAlbumURL(t *testing.T) {
 		{
 			name:     "valid album URL",
 			albumURL: "https://autechre.bandcamp.com/album/amber",
-			want:     CompositeKey{ID: "amber", Subdomain: "autechre"},
+			want:     CompositeKey{ID: "amber", ArtistSlug: "autechre"},
 		},
 		{
 			name:     "invalid album URL",
@@ -49,7 +49,7 @@ func TestCompositeKey_ParseFromTrackURL(t *testing.T) {
 		{
 			name:     "valid track URL",
 			trackURL: "https://autechre.bandcamp.com/track/nil",
-			want:     CompositeKey{ID: "nil", Subdomain: "autechre"},
+			want:     CompositeKey{ID: "nil", ArtistSlug: "autechre"},
 		},
 		{
 			name:     "invalid track URL",
@@ -75,13 +75,13 @@ func TestCompositeKey_ParseFromTrackURL(t *testing.T) {
 
 func TestCompositeKey_Marshal(t *testing.T) {
 	ck := CompositeKey{
-		ID:        "sampleid",
-		Subdomain: "samplesubdomain",
+		ID:         "sampleid",
+		ArtistSlug: "sampleartistslug",
 	}
 
 	result := ck.Marshal()
 
-	require.Equal(t, "samplesubdomain:sampleid", result)
+	require.Equal(t, "sampleartistslug:sampleid", result)
 }
 
 func TestCompositeKey_Unmarshal(t *testing.T) {
@@ -95,8 +95,8 @@ func TestCompositeKey_Unmarshal(t *testing.T) {
 			name:  "valid composite key",
 			input: "autechre:amber",
 			wantResult: CompositeKey{
-				ID:        "amber",
-				Subdomain: "autechre",
+				ID:         "amber",
+				ArtistSlug: "autechre",
 			},
 			wantErr: nil,
 		},

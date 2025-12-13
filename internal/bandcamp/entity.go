@@ -2,6 +2,11 @@ package bandcamp
 
 import "regexp"
 
+type Entity struct {
+	Name     string
+	BandName string
+}
+
 var (
 	albumRe = regexp.MustCompile(`^https?://([^.]+)\.bandcamp\.com/album/([^/?#]+)`)
 	trackRe = regexp.MustCompile(`^https?://([^.]+)\.bandcamp\.com/track/([^/?#]+)`)

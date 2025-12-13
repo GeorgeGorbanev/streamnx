@@ -7,8 +7,8 @@ import (
 )
 
 type CompositeKey struct {
-	ID        string
-	Subdomain string
+	ID         string
+	ArtistSlug string
 }
 
 const delimiter = ":"
@@ -23,7 +23,7 @@ func (k *CompositeKey) ParseFromAlbumURL(url string) error {
 		return errors.New("invalid album url")
 	}
 	k.ID = matches[2]
-	k.Subdomain = matches[1]
+	k.ArtistSlug = matches[1]
 	return nil
 }
 
@@ -32,13 +32,13 @@ func (k *CompositeKey) ParseFromTrackURL(url string) error {
 	if len(matches) != 3 {
 		return errors.New("invalid track url")
 	}
-	k.Subdomain = matches[1]
+	k.ArtistSlug = matches[1]
 	k.ID = matches[2]
 	return nil
 }
 
 func (k *CompositeKey) Marshal() string {
-	return k.Subdomain + delimiter + k.ID
+	return k.ArtistSlug + delimiter + k.ID
 }
 
 func (k *CompositeKey) Unmarshal(s string) error {
@@ -46,7 +46,7 @@ func (k *CompositeKey) Unmarshal(s string) error {
 	if len(matches) != 3 {
 		return fmt.Errorf("invalid composite key: %s", s)
 	}
-	k.Subdomain = matches[1]
+	k.ArtistSlug = matches[1]
 	k.ID = matches[2]
 	return nil
 }

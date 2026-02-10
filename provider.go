@@ -13,6 +13,7 @@ import (
 var (
 	Providers = []*Provider{
 		Apple,
+		Bandcamp,
 		Deezer,
 		Spotify,
 		Yandex,

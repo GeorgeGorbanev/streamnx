@@ -1,6 +1,7 @@
 package bandcamp
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
@@ -16,18 +17,23 @@ type Client interface {
 }
 
 type HTTPClient struct {
-	httpClient *http.Client
+	apiClient *http.Client
+	apiHost   string
+	apiScheme string
 }
-
-const webHost = "bandcamp.com"
 
 var ldJSONRe = regexp.MustCompile(`(?s)<script\s+type=["']application/ld\+json["']\s*>(.*?)</script>`)
 
-var ErrNotFound = errors.New("entity not found")
+var (
+	ErrNotFound       = errors.New("entity not found")
+	ErrLDJSONNotFound = errors.New("ld+json script not found in html")
+)
 
 func NewHTTPClient(opts ...ClientOption) *HTTPClient {
 	c := HTTPClient{
-		httpClient: &http.Client{},
+		apiClient: &http.Client{},
+		apiHost:   "bandcamp.com",
+		apiScheme: "https",
 	}
 	for _, opt := range opts {
 		opt(&c)
@@ -36,13 +42,29 @@ func NewHTTPClient(opts ...ClientOption) *HTTPClient {
 }
 
 func (c *HTTPClient) FetchAlbum(ctx context.Context, artistSlug, id string) (*Entity, error) {
-	u := fmt.Sprintf("https://%s.%s/album/%s", artistSlug, webHost, id)
+	u := fmt.Sprintf("%s://%s.%s/album/%s", c.apiScheme, artistSlug, c.apiHost, id)
 	return c.fetchEntity(ctx, u)
 }
 
 func (c *HTTPClient) FetchTrack(ctx context.Context, artistSlug, id string) (*Entity, error) {
-	u := fmt.Sprintf("https://%s.%s/track/%s", artistSlug, webHost, id)
+	u := fmt.Sprintf("%s://%s.%s/track/%s", c.apiScheme, artistSlug, c.apiHost, id)
 	return c.fetchEntity(ctx, u)
+}
+
+func (c *HTTPClient) SearchAlbum(ctx context.Context, artist, title string) (*Entity, error) {
+	results, err := c.searchEntity(ctx, albumEntityType, fmt.Sprintf("%s %s", artist, title))
+	if err != nil {
+		return nil, err
+	}
+	return &results[0], nil
+}
+
+func (c *HTTPClient) SearchTrack(ctx context.Context, artist, title string) (*Entity, error) {
+	results, err := c.searchEntity(ctx, trackEntityType, fmt.Sprintf("%s %s", artist, title))
+	if err != nil {
+		return nil, err
+	}
+	return &results[0], nil
 }
 
 func (c *HTTPClient) fetchEntity(ctx context.Context, u string) (*Entity, error) {
@@ -51,7 +73,7 @@ func (c *HTTPClient) fetchEntity(ctx context.Context, u string) (*Entity, error)
 		return nil, fmt.Errorf("failed to create request: %s", err)
 	}
 
-	response, err := c.httpClient.Do(req)
+	response, err := c.apiClient.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to perform get request: %s", err)
 	}
@@ -72,7 +94,7 @@ func (c *HTTPClient) fetchEntity(ctx context.Context, u string) (*Entity, error)
 
 	matches := ldJSONRe.FindStringSubmatch(string(html))
 	if len(matches) < 2 {
-		return nil, errors.New("failed to find ld+json script in html")
+		return nil, ErrLDJSONNotFound
 	}
 
 	jsonld := struct {
@@ -89,4 +111,47 @@ func (c *HTTPClient) fetchEntity(ctx context.Context, u string) (*Entity, error)
 		Name:     jsonld.Name,
 		BandName: jsonld.ByArtist.Name,
 	}, nil
+}
+
+func (c *HTTPClient) searchEntity(ctx context.Context, et entityType, searchText string) ([]Entity, error) {
+	reqBody, err := json.Marshal(struct {
+		SearchText   string `json:"search_text"`
+		SearchFilter string `json:"search_filter"`
+	}{
+		SearchText:   searchText,
+		SearchFilter: string(et),
+	})
+	if err != nil {
+		return nil, fmt.Errorf("failed to marshal request body: %s", err)
+	}
+
+	u := fmt.Sprintf("%s://%s/api/bcsearch_public_api/1/autocomplete_elastic", c.apiScheme, c.apiHost)
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, u, bytes.NewReader(reqBody))
+	if err != nil {
+		return nil, fmt.Errorf("failed to create request: %s", err)
+	}
+	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
+
+	resp, err := c.apiClient.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("failed to perform get request: %s", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("unexpected status code: %d", resp.StatusCode)
+	}
+
+	var respBody struct {
+		Auto struct {
+			Results []Entity `json:"results"`
+		} `json:"auto"`
+	}
+	if err := json.NewDecoder(resp.Body).Decode(&respBody); err != nil {
+		return nil, fmt.Errorf("failed to decode response body: %s", err)
+	}
+	if len(respBody.Auto.Results) == 0 {
+		return nil, ErrNotFound
+	}
+	return respBody.Auto.Results, nil
 }

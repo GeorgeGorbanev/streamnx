@@ -39,6 +39,7 @@ func TestCompositeKey_ParseFromAlbumURL(t *testing.T) {
 		})
 	}
 }
+
 func TestCompositeKey_ParseFromTrackURL(t *testing.T) {
 	tests := []struct {
 		name     string

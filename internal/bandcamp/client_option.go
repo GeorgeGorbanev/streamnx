@@ -4,8 +4,20 @@ import "net/http"
 
 type ClientOption func(client *HTTPClient)
 
-func WithHTTPTransport(transport *http.Transport) ClientOption {
+func WithAPIClient(c *http.Client) ClientOption {
 	return func(client *HTTPClient) {
-		client.httpClient.Transport = transport
+		client.apiClient = c
+	}
+}
+
+func WithAPIHost(host string) ClientOption {
+	return func(client *HTTPClient) {
+		client.apiHost = host
+	}
+}
+
+func WithAPIScheme(scheme string) ClientOption {
+	return func(client *HTTPClient) {
+		client.apiScheme = scheme
 	}
 }

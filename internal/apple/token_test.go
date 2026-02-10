@@ -10,12 +10,12 @@ func Test_parseBundleName(t *testing.T) {
 	html := []byte(`
 		<!DOCTYPE html>
 		<html lang="en">
-			<head><script type="module" crossorigin="" src="/assets/index-d23b7a84.js"></script></head>
+			<head><script type="module" crossorigin src="/assets/index~d23b7a84.js"></script></head>
 			<body>sample body</body>
 	 	</html>`)
 
 	result := parseBundleName(html)
-	require.Equal(t, "/assets/index-d23b7a84.js", result)
+	require.Equal(t, "/assets/index~d23b7a84.js", result)
 }
 
 func Test_parseTokenVar(t *testing.T) {

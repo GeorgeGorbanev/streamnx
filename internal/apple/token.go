@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	tokenBundleRe = regexp.MustCompile(`src="(/assets/index-[a-zA-Z0-9]+\.js)"`)
+	tokenBundleRe = regexp.MustCompile(`src="(/assets/index[^"]+\.js)"`)
 	tokenVarRe    = regexp.MustCompile(`headers\.Authorization\s*=\s*` + "`Bearer \\${([a-zA-Z0-9_]+)}`")
 )
 

@@ -74,6 +74,26 @@ func TestParseLink(t *testing.T) {
 			},
 		},
 		{
+			name: "Bandcamp track",
+			url:  "https://artistname.bandcamp.com/track/song-name",
+			want: &Link{
+				URL:        "https://artistname.bandcamp.com/track/song-name",
+				Provider:   Bandcamp,
+				EntityID:   "artistname:song-name",
+				EntityType: Track,
+			},
+		},
+		{
+			name: "Bandcamp album",
+			url:  "https://artistname.bandcamp.com/album/album-name",
+			want: &Link{
+				URL:        "https://artistname.bandcamp.com/album/album-name",
+				Provider:   Bandcamp,
+				EntityID:   "artistname:album-name",
+				EntityType: Album,
+			},
+		},
+		{
 			name:          "Unknown provider",
 			url:           "https://example.com/track/123456789",
 			expectedError: UnknownLinkError,

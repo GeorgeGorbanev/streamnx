@@ -3,9 +3,9 @@ package bandcamp
 import "regexp"
 
 type Entity struct {
-	Name        string `json:"name"`
-	BandName    string `json:"band_name"`
-	ItemURLPath string `json:"item_url_path"`
+	Name     string
+	BandName string
+	URL      string
 }
 
 type entityType string

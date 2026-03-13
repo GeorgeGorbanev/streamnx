@@ -49,6 +49,7 @@ func TestHTTPClient_FetchAlbum(t *testing.T) {
 			want: &Entity{
 				Name:     "Amber",
 				BandName: "Autechre",
+				URL:      "http://autechre.bandcamp.com/album/amber",
 			},
 		},
 		{
@@ -123,6 +124,7 @@ func TestHTTPClient_FetchTrack(t *testing.T) {
 			want: &Entity{
 				Name:     "Nil",
 				BandName: "Autechre",
+				URL:      "http://autechre.bandcamp.com/track/nil",
 			},
 		},
 		{
@@ -191,9 +193,9 @@ func TestHTTPClient_SearchTrack(t *testing.T) {
 				}
 			}`,
 			want: &Entity{
-				Name:        "Nil",
-				BandName:    "Autechre",
-				ItemURLPath: "https://autechre.bandcamp.com/track/nil",
+				Name:     "Nil",
+				BandName: "Autechre",
+				URL:      "https://autechre.bandcamp.com/track/nil",
 			},
 		},
 		{
@@ -289,9 +291,9 @@ func TestHTTPClient_SearchAlbum(t *testing.T) {
 				}
 			}`,
 			want: &Entity{
-				Name:        "Music Has The Right To Children",
-				BandName:    "Boards of Canada",
-				ItemURLPath: "https://boardsofcanada.bandcamp.com/album/music-has-the-right-to-children",
+				Name:     "Music Has The Right To Children",
+				BandName: "Boards of Canada",
+				URL:      "https://boardsofcanada.bandcamp.com/album/music-has-the-right-to-children",
 			},
 		},
 		{

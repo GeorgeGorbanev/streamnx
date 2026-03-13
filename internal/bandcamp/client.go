@@ -14,12 +14,37 @@ import (
 type Client interface {
 	FetchAlbum(ctx context.Context, artistSlug, id string) (*Entity, error)
 	FetchTrack(ctx context.Context, artistSlug, id string) (*Entity, error)
+	SearchAlbum(ctx context.Context, artist, title string) (*Entity, error)
+	SearchTrack(ctx context.Context, artist, title string) (*Entity, error)
 }
 
 type HTTPClient struct {
 	apiClient *http.Client
 	apiHost   string
 	apiScheme string
+}
+
+type entityLDJSON struct {
+	Name     string `json:"name"`
+	ByArtist struct {
+		Name string `json:"name"`
+	} `json:"byArtist"`
+}
+
+type searchRequest struct {
+	SearchText   string `json:"search_text"`
+	SearchFilter string `json:"search_filter"`
+	FullPage     bool   `json:"full_page"`
+}
+
+type searchResponse struct {
+	Auto struct {
+		Results []struct {
+			Name        string `json:"name"`
+			BandName    string `json:"band_name"`
+			ItemURLPath string `json:"item_url_path"`
+		} `json:"results"`
+	} `json:"auto"`
 }
 
 var ldJSONRe = regexp.MustCompile(`(?s)<script\s+type=["']application/ld\+json["']\s*>(.*?)</script>`)
@@ -52,19 +77,11 @@ func (c *HTTPClient) FetchTrack(ctx context.Context, artistSlug, id string) (*En
 }
 
 func (c *HTTPClient) SearchAlbum(ctx context.Context, artist, title string) (*Entity, error) {
-	results, err := c.searchEntity(ctx, albumEntityType, fmt.Sprintf("%s %s", artist, title))
-	if err != nil {
-		return nil, err
-	}
-	return &results[0], nil
+	return c.searchEntity(ctx, albumEntityType, artist, title)
 }
 
 func (c *HTTPClient) SearchTrack(ctx context.Context, artist, title string) (*Entity, error) {
-	results, err := c.searchEntity(ctx, trackEntityType, fmt.Sprintf("%s %s", artist, title))
-	if err != nil {
-		return nil, err
-	}
-	return &results[0], nil
+	return c.searchEntity(ctx, trackEntityType, artist, title)
 }
 
 func (c *HTTPClient) fetchEntity(ctx context.Context, u string) (*Entity, error) {
@@ -97,29 +114,23 @@ func (c *HTTPClient) fetchEntity(ctx context.Context, u string) (*Entity, error)
 		return nil, ErrLDJSONNotFound
 	}
 
-	jsonld := struct {
-		Name     string `json:"name"`
-		ByArtist struct {
-			Name string `json:"name"`
-		} `json:"byArtist"`
-	}{}
-	if err := json.Unmarshal([]byte(matches[1]), &jsonld); err != nil {
+	ldjson := entityLDJSON{}
+	if err := json.Unmarshal([]byte(matches[1]), &ldjson); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal ld+json: %s", err)
 	}
 
 	return &Entity{
-		Name:     jsonld.Name,
-		BandName: jsonld.ByArtist.Name,
+		Name:     ldjson.Name,
+		BandName: ldjson.ByArtist.Name,
+		URL:      u,
 	}, nil
 }
 
-func (c *HTTPClient) searchEntity(ctx context.Context, et entityType, searchText string) ([]Entity, error) {
-	reqBody, err := json.Marshal(struct {
-		SearchText   string `json:"search_text"`
-		SearchFilter string `json:"search_filter"`
-	}{
-		SearchText:   searchText,
+func (c *HTTPClient) searchEntity(ctx context.Context, et entityType, artist, title string) (*Entity, error) {
+	reqBody, err := json.Marshal(searchRequest{
+		SearchText:   fmt.Sprintf("%s %s", artist, title),
 		SearchFilter: string(et),
+		FullPage:     true,
 	})
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal request body: %s", err)
@@ -142,16 +153,16 @@ func (c *HTTPClient) searchEntity(ctx context.Context, et entityType, searchText
 		return nil, fmt.Errorf("unexpected status code: %d", resp.StatusCode)
 	}
 
-	var respBody struct {
-		Auto struct {
-			Results []Entity `json:"results"`
-		} `json:"auto"`
-	}
+	var respBody searchResponse
 	if err := json.NewDecoder(resp.Body).Decode(&respBody); err != nil {
 		return nil, fmt.Errorf("failed to decode response body: %s", err)
 	}
 	if len(respBody.Auto.Results) == 0 {
 		return nil, ErrNotFound
 	}
-	return respBody.Auto.Results, nil
+	return &Entity{
+		Name:     respBody.Auto.Results[0].Name,
+		BandName: respBody.Auto.Results[0].BandName,
+		URL:      respBody.Auto.Results[0].ItemURLPath,
+	}, nil
 }

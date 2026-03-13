@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/GeorgeGorbanev/streamnx/internal/apple"
+	"github.com/GeorgeGorbanev/streamnx/internal/bandcamp"
 	"github.com/GeorgeGorbanev/streamnx/internal/deezer"
 	"github.com/GeorgeGorbanev/streamnx/internal/spotify"
 	"github.com/GeorgeGorbanev/streamnx/internal/translator"
@@ -14,11 +15,12 @@ import (
 type RegistryOption func(registry *Registry)
 
 type clientOptions struct {
-	apple   []apple.ClientOption
-	deezer  []deezer.ClientOption
-	spotify []spotify.ClientOption
-	yandex  []yandex.ClientOption
-	youtube []youtube.ClientOption
+	apple    []apple.ClientOption
+	bandcamp []bandcamp.ClientOption
+	deezer   []deezer.ClientOption
+	spotify  []spotify.ClientOption
+	yandex   []yandex.ClientOption
+	youtube  []youtube.ClientOption
 }
 
 func WithProviderAdapter(provider *Provider, adapter Adapter) RegistryOption {
@@ -114,5 +116,23 @@ func WithDeezerAPIClient(client *http.Client) RegistryOption {
 func WithDeezerCloakClient(client *http.Client) RegistryOption {
 	return func(r *Registry) {
 		r.clientOptions.deezer = append(r.clientOptions.deezer, deezer.WithCloakClient(client))
+	}
+}
+
+func WithBandcampAPIHost(url string) RegistryOption {
+	return func(r *Registry) {
+		r.clientOptions.bandcamp = append(r.clientOptions.bandcamp, bandcamp.WithAPIHost(url))
+	}
+}
+
+func WithBandcampAPIScheme(scheme string) RegistryOption {
+	return func(r *Registry) {
+		r.clientOptions.bandcamp = append(r.clientOptions.bandcamp, bandcamp.WithAPIScheme(scheme))
+	}
+}
+
+func WithBandcampAPIClient(client *http.Client) RegistryOption {
+	return func(r *Registry) {
+		r.clientOptions.bandcamp = append(r.clientOptions.bandcamp, bandcamp.WithAPIClient(client))
 	}
 }

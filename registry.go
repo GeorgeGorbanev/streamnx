@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/GeorgeGorbanev/streamnx/internal/apple"
+	"github.com/GeorgeGorbanev/streamnx/internal/bandcamp"
 	"github.com/GeorgeGorbanev/streamnx/internal/deezer"
 	"github.com/GeorgeGorbanev/streamnx/internal/spotify"
 	"github.com/GeorgeGorbanev/streamnx/internal/translator"
@@ -46,6 +47,10 @@ func NewRegistry(ctx context.Context, cred Credentials, opts ...RegistryOption) 
 	if registry.adapter(Apple) == nil {
 		client := apple.NewHTTPClient(registry.clientOptions.apple...)
 		registry.adapters[Apple.сode] = newAppleAdapter(client)
+	}
+	if registry.adapter(Bandcamp) == nil {
+		client := bandcamp.NewHTTPClient(registry.clientOptions.bandcamp...)
+		registry.adapters[Bandcamp.сode] = newBandcampAdapter(client)
 	}
 	if registry.adapter(Deezer) == nil {
 		client := deezer.NewHTTPClient(registry.clientOptions.deezer...)

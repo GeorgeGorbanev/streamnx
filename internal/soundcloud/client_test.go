@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"net/url"
+	"sync/atomic"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -220,6 +221,108 @@ func TestHTTPClient_FetchAlbum(t *testing.T) {
 	}
 }
 
+func TestHTTPClient_SearchTrack(t *testing.T) {
+	var homepageHits atomic.Int32
+
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case "/":
+			homepageHits.Add(1)
+			_, err := w.Write([]byte(`<html><body><script>window.__sc_hydration = [
+				{"hydratable":"apiClient","data":{"id":"test-client-id","isExpiring":false}}
+			];</script></body></html>`))
+			require.NoError(t, err)
+		case "/search/tracks":
+			require.Equal(t, "autechre nil", r.URL.Query().Get("q"))
+			require.Equal(t, "test-client-id", r.URL.Query().Get("client_id"))
+			_, err := w.Write([]byte(`{
+				"collection": [{
+					"kind":"track",
+					"urn":"soundcloud:tracks:1441462279",
+					"title":"Nil",
+					"permalink":"nil",
+					"permalink_url":"https://soundcloud.com/autechreofficial/nil",
+					"user":{
+						"username":"Autechre",
+						"permalink":"autechreofficial",
+						"permalink_url":"https://soundcloud.com/autechreofficial"
+					}
+				}]
+			}`))
+			require.NoError(t, err)
+		default:
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+	}))
+	defer srv.Close()
+
+	serverURL := mustURL(t, srv.URL)
+	client := NewHTTPClient(
+		WithAPIClient(srv.Client()),
+		WithAPIHost(serverURL.Host),
+		WithAPIScheme(serverURL.Scheme),
+		WithSearchAPIURL(srv.URL),
+	)
+
+	track, err := client.SearchTrack(t.Context(), "autechre", "nil")
+	require.NoError(t, err)
+	require.Equal(t, "Nil", track.Title)
+	require.Equal(t, "Autechre", track.User.Username)
+
+	_, err = client.SearchTrack(t.Context(), "autechre", "nil")
+	require.NoError(t, err)
+	require.Equal(t, int32(1), homepageHits.Load())
+}
+
+func TestHTTPClient_SearchAlbum(t *testing.T) {
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case "/":
+			_, err := w.Write([]byte(`<html><body><script>window.__sc_hydration = [
+				{"hydratable":"apiClient","data":{"id":"test-client-id","isExpiring":false}}
+			];</script></body></html>`))
+			require.NoError(t, err)
+		case "/search/albums":
+			require.Equal(t, "autechre amber", r.URL.Query().Get("q"))
+			require.Equal(t, "test-client-id", r.URL.Query().Get("client_id"))
+			_, err := w.Write([]byte(`{
+				"collection": [{
+					"kind":"playlist",
+					"urn":"soundcloud:playlists:1566833785",
+					"title":"Amber",
+					"permalink":"amber-384961498",
+					"permalink_url":"https://soundcloud.com/autechreofficial/sets/amber-384961498",
+					"set_type":"album",
+					"track_count":11,
+					"user":{
+						"username":"Autechre",
+						"permalink":"autechreofficial",
+						"permalink_url":"https://soundcloud.com/autechreofficial"
+					}
+				}]
+			}`))
+			require.NoError(t, err)
+		default:
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+	}))
+	defer srv.Close()
+
+	serverURL := mustURL(t, srv.URL)
+	client := NewHTTPClient(
+		WithAPIClient(srv.Client()),
+		WithAPIHost(serverURL.Host),
+		WithAPIScheme(serverURL.Scheme),
+		WithSearchAPIURL(srv.URL),
+	)
+
+	album, err := client.SearchAlbum(t.Context(), "autechre", "amber")
+	require.NoError(t, err)
+	require.Equal(t, "Amber", album.Title)
+	require.Equal(t, "album", album.SetType)
+	require.Equal(t, 11, album.TrackCount)
+}
+
 func TestParseTrackHTML(t *testing.T) {
 	tests := []struct {
 		name    string
@@ -367,4 +470,54 @@ func TestParseAlbumHTML(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestParseAPIClientID(t *testing.T) {
+	tests := []struct {
+		name    string
+		html    string
+		want    string
+		wantErr error
+	}{
+		{
+			name: "when api client data found",
+			html: `<script>window.__sc_hydration = [
+				{"hydratable":"apiClient","data":{"id":"test-client-id","isExpiring":false}}
+			];</script>`,
+			want: "test-client-id",
+		},
+		{
+			name:    "when hydration script missing",
+			html:    `<html></html>`,
+			wantErr: ErrHydrationNotFound,
+		},
+		{
+			name: "when api client data missing",
+			html: `<script>window.__sc_hydration = [
+				{"hydratable":"user","data":{"username":"Forss"}}
+			];</script>`,
+			wantErr: ErrAPIClientDataNotFound,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result, err := parseAPIClientID([]byte(tt.html))
+			if tt.wantErr != nil {
+				require.ErrorIs(t, err, tt.wantErr)
+				require.Empty(t, result)
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, tt.want, result)
+			}
+		})
+	}
+}
+
+func mustURL(t *testing.T, raw string) *url.URL {
+	t.Helper()
+
+	u, err := url.Parse(raw)
+	require.NoError(t, err)
+	return u
 }

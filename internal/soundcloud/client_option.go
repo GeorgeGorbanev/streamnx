@@ -4,26 +4,20 @@ import "net/http"
 
 type ClientOption func(client *HTTPClient)
 
-func WithSearchAPIURL(url string) ClientOption {
+func WithAPIURL(url string) ClientOption {
 	return func(client *HTTPClient) {
-		client.searchAPIURL = url
+		client.apiURL = url
 	}
 }
 
-func WithAPIClient(c *http.Client) ClientOption {
+func WithHTTPClient(c *http.Client) ClientOption {
 	return func(client *HTTPClient) {
-		client.apiClient = c
+		client.client = c
 	}
 }
 
-func WithAPIHost(host string) ClientOption {
+func WithWebURL(host string) ClientOption {
 	return func(client *HTTPClient) {
-		client.apiHost = host
-	}
-}
-
-func WithAPIScheme(scheme string) ClientOption {
-	return func(client *HTTPClient) {
-		client.apiScheme = scheme
+		client.webURL = host
 	}
 }

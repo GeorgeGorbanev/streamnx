@@ -9,7 +9,6 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
-	"strings"
 	"sync"
 )
 
@@ -21,39 +20,30 @@ type Client interface {
 }
 
 type HTTPClient struct {
-	apiClient     *http.Client
-	apiHost       string
-	apiScheme     string
-	searchAPIURL  string
+	client *http.Client
+
+	apiURL string
+	webURL string
+
 	clientID      string
 	clientIDMutex sync.RWMutex
 }
 
-type hydrationItem struct {
-	Hydratable string          `json:"hydratable"`
-	Data       json.RawMessage `json:"data"`
-}
-
-type apiClientHydration struct {
-	ID string `json:"id"`
-}
-
-var hydrationRe = regexp.MustCompile(`(?s)<script>\s*window\.__sc_hydration\s*=\s*(\[.*?\]);</script>`)
-
 var (
-	NotFoundError            = errors.New("not found")
-	ErrHydrationNotFound     = errors.New("hydration script not found in html")
-	ErrSoundDataNotFound     = errors.New("sound hydration data not found")
-	ErrPlaylistDataNotFound  = errors.New("playlist hydration data not found")
-	ErrAPIClientDataNotFound = errors.New("api client hydration data not found")
+	hydrationRe = regexp.MustCompile(`(?s)<script>\s*window\.__sc_hydration\s*=\s*(\[.*?\]);</script>`)
+
+	NotFoundError = errors.New("not found")
 )
 
 func NewHTTPClient(opts ...ClientOption) *HTTPClient {
+	const (
+		defaultSearchAPIURL = "https://api-v2.soundcloud.com"
+		defaultWebURL       = "https://soundcloud.com"
+	)
 	c := HTTPClient{
-		apiClient:    &http.Client{},
-		apiHost:      "soundcloud.com",
-		apiScheme:    "https",
-		searchAPIURL: "https://api-v2.soundcloud.com",
+		client: &http.Client{},
+		apiURL: defaultSearchAPIURL,
+		webURL: defaultWebURL,
 	}
 	for _, opt := range opts {
 		opt(&c)
@@ -62,34 +52,54 @@ func NewHTTPClient(opts ...ClientOption) *HTTPClient {
 }
 
 func (c *HTTPClient) FetchTrack(ctx context.Context, userSlug, trackSlug string) (*Track, error) {
-	html, err := c.fetchPageHTML(ctx, fmt.Sprintf("%s://%s/%s/%s", c.apiScheme, c.apiHost, userSlug, trackSlug))
+	path := fmt.Sprintf("/%s/%s", userSlug, trackSlug)
+	html, err := c.getWebHTML(ctx, path)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to fetch track page: %s", err)
 	}
-	return parseTrackHTML(html)
+
+	trackJSON, err := findHydratableJSON(html, "sound")
+	if err != nil {
+		return nil, fmt.Errorf("failed to find track hydration data: %s", err)
+	}
+
+	track := Track{}
+	if err := json.Unmarshal(trackJSON, &track); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal sound hydration data: %s", err)
+	}
+	return &track, nil
 }
 
 func (c *HTTPClient) FetchAlbum(ctx context.Context, userSlug, setSlug string) (*Album, error) {
-	html, err := c.fetchPageHTML(ctx, fmt.Sprintf("%s://%s/%s/sets/%s", c.apiScheme, c.apiHost, userSlug, setSlug))
+	path := fmt.Sprintf("/%s/sets/%s", userSlug, setSlug)
+	html, err := c.getWebHTML(ctx, path)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to fetch album page: %s", err)
 	}
-	return parseAlbumHTML(html)
+
+	albumJSON, err := findHydratableJSON(html, "playlist")
+	if err != nil {
+		return nil, fmt.Errorf("failed to find album hydration data: %s", err)
+	}
+
+	album := Album{}
+	if err := json.Unmarshal(albumJSON, &album); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal playlist hydration data: %s", err)
+	}
+	return &album, nil
 }
 
 func (c *HTTPClient) SearchTrack(ctx context.Context, artist, title string) (*Track, error) {
-	type searchResponse struct {
-		Collection []Track `json:"collection"`
-	}
-
 	body, err := c.getAPI(ctx, "/search/tracks", url.Values{
-		"q": []string{searchQuery(artist, title)},
+		"q": []string{artist + " " + title},
 	})
 	if err != nil {
 		return nil, err
 	}
 
-	result := searchResponse{}
+	var result struct {
+		Collection []Track `json:"collection"`
+	}
 	if err := json.Unmarshal(body, &result); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal search response body: %s", err)
 	}
@@ -101,18 +111,16 @@ func (c *HTTPClient) SearchTrack(ctx context.Context, artist, title string) (*Tr
 }
 
 func (c *HTTPClient) SearchAlbum(ctx context.Context, artist, title string) (*Album, error) {
-	type searchResponse struct {
-		Collection []Album `json:"collection"`
-	}
-
 	body, err := c.getAPI(ctx, "/search/albums", url.Values{
-		"q": []string{searchQuery(artist, title)},
+		"q": []string{artist + " " + title},
 	})
 	if err != nil {
 		return nil, err
 	}
 
-	result := searchResponse{}
+	var result struct {
+		Collection []Album `json:"collection"`
+	}
 	if err := json.Unmarshal(body, &result); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal search response body: %s", err)
 	}
@@ -123,13 +131,14 @@ func (c *HTTPClient) SearchAlbum(ctx context.Context, artist, title string) (*Al
 	return &result.Collection[0], nil
 }
 
-func (c *HTTPClient) fetchPageHTML(ctx context.Context, u string) ([]byte, error) {
+func (c *HTTPClient) getWebHTML(ctx context.Context, path string) ([]byte, error) {
+	u := c.webURL + path
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, u, nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %s", err)
 	}
 
-	response, err := c.apiClient.Do(req)
+	response, err := c.client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to perform get request: %s", err)
 	}
@@ -152,23 +161,20 @@ func (c *HTTPClient) fetchPageHTML(ctx context.Context, u string) ([]byte, error
 }
 
 func (c *HTTPClient) getAPI(ctx context.Context, path string, query url.Values) ([]byte, error) {
-	clientID, err := c.clientIDValue(ctx)
+	clientID, err := c.getClientID(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get client id: %s", err)
 	}
 
-	if query == nil {
-		query = url.Values{}
-	}
 	query.Set("client_id", clientID)
 
-	u := c.searchAPIURL + path + "?" + query.Encode()
+	u := c.apiURL + path + "?" + query.Encode()
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, u, nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %s", err)
 	}
 
-	resp, err := c.apiClient.Do(req)
+	resp, err := c.client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to perform get request: %s", err)
 	}
@@ -189,7 +195,7 @@ func (c *HTTPClient) getAPI(ctx context.Context, path string, query url.Values) 
 	return body, nil
 }
 
-func (c *HTTPClient) clientIDValue(ctx context.Context) (string, error) {
+func (c *HTTPClient) getClientID(ctx context.Context) (string, error) {
 	c.clientIDMutex.RLock()
 	if c.clientID != "" {
 		defer c.clientIDMutex.RUnlock()
@@ -204,109 +210,46 @@ func (c *HTTPClient) clientIDValue(ctx context.Context) (string, error) {
 		return c.clientID, nil
 	}
 
-	html, err := c.fetchPageHTML(ctx, fmt.Sprintf("%s://%s", c.apiScheme, c.apiHost))
+	html, err := c.getWebHTML(ctx, "/")
 	if err != nil {
 		return "", err
 	}
 
-	clientID, err := parseAPIClientID(html)
+	clientJSON, err := findHydratableJSON(html, "apiClient")
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("failed to find api client hydration data: %s", err)
 	}
-	c.clientID = clientID
 
+	var apiClient struct {
+		ID string `json:"id"`
+	}
+	if err := json.Unmarshal(clientJSON, &apiClient); err != nil {
+		return "", fmt.Errorf("failed to unmarshal api client hydration data: %s", err)
+	}
+
+	c.clientID = apiClient.ID
 	return c.clientID, nil
 }
 
-func parseTrackHTML(html []byte) (*Track, error) {
-	items, err := parseHydrationItems(html)
-	if err != nil {
-		return nil, err
-	}
-
-	for _, item := range items {
-		if item.Hydratable != "sound" {
-			continue
-		}
-
-		track := Track{}
-		if err := json.Unmarshal(item.Data, &track); err != nil {
-			return nil, fmt.Errorf("failed to unmarshal sound hydration data: %s", err)
-		}
-		if track.Kind != "track" {
-			return nil, NotFoundError
-		}
-
-		return &track, nil
-	}
-
-	return nil, ErrSoundDataNotFound
-}
-
-func parseAlbumHTML(html []byte) (*Album, error) {
-	items, err := parseHydrationItems(html)
-	if err != nil {
-		return nil, err
-	}
-
-	for _, item := range items {
-		if item.Hydratable != "playlist" {
-			continue
-		}
-
-		album := Album{}
-		if err := json.Unmarshal(item.Data, &album); err != nil {
-			return nil, fmt.Errorf("failed to unmarshal playlist hydration data: %s", err)
-		}
-		if album.Kind != "playlist" {
-			return nil, NotFoundError
-		}
-
-		return &album, nil
-	}
-
-	return nil, ErrPlaylistDataNotFound
-}
-
-func parseHydrationItems(html []byte) ([]hydrationItem, error) {
+func findHydratableJSON(html []byte, hydratable string) (json.RawMessage, error) {
 	matches := hydrationRe.FindSubmatch(html)
 	if len(matches) < 2 {
-		return nil, ErrHydrationNotFound
+		return nil, errors.New("hydration script not found in html")
 	}
 
-	var items []hydrationItem
+	var items []struct {
+		Hydratable string          `json:"hydratable"`
+		Data       json.RawMessage `json:"data"`
+	}
+
 	if err := json.Unmarshal(matches[1], &items); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal hydration json: %s", err)
 	}
 
-	return items, nil
-}
-
-func parseAPIClientID(html []byte) (string, error) {
-	items, err := parseHydrationItems(html)
-	if err != nil {
-		return "", err
-	}
-
 	for _, item := range items {
-		if item.Hydratable != "apiClient" {
-			continue
+		if item.Hydratable == hydratable {
+			return item.Data, nil
 		}
-
-		apiClient := apiClientHydration{}
-		if err := json.Unmarshal(item.Data, &apiClient); err != nil {
-			return "", fmt.Errorf("failed to unmarshal api client hydration data: %s", err)
-		}
-		if apiClient.ID == "" {
-			return "", ErrAPIClientDataNotFound
-		}
-
-		return apiClient.ID, nil
 	}
-
-	return "", ErrAPIClientDataNotFound
-}
-
-func searchQuery(artist, title string) string {
-	return strings.TrimSpace(strings.Join([]string{artist, title}, " "))
+	return nil, fmt.Errorf("hydration data for %s not found", hydratable)
 }

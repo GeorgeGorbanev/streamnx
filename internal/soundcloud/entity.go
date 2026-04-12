@@ -6,8 +6,6 @@ import (
 )
 
 type Track struct {
-	Kind         string `json:"kind"`
-	URN          string `json:"urn"`
 	Title        string `json:"title"`
 	Permalink    string `json:"permalink"`
 	PermalinkURL string `json:"permalink_url"`
@@ -15,15 +13,10 @@ type Track struct {
 }
 
 type Album struct {
-	Kind         string  `json:"kind"`
-	URN          string  `json:"urn"`
-	Title        string  `json:"title"`
-	Permalink    string  `json:"permalink"`
-	PermalinkURL string  `json:"permalink_url"`
-	SetType      string  `json:"set_type"`
-	TrackCount   int     `json:"track_count"`
-	User         User    `json:"user"`
-	Tracks       []Track `json:"tracks"`
+	Title        string `json:"title"`
+	Permalink    string `json:"permalink"`
+	PermalinkURL string `json:"permalink_url"`
+	User         User   `json:"user"`
 }
 
 type User struct {
@@ -55,21 +48,9 @@ func DetectAlbumID(albumURL string) string {
 }
 
 func (t *Track) URL() string {
-	if t.PermalinkURL != "" {
-		return t.PermalinkURL
-	}
-	if t.User.Permalink != "" && t.Permalink != "" {
-		return fmt.Sprintf("https://soundcloud.com/%s/%s", t.User.Permalink, t.Permalink)
-	}
-	return ""
+	return fmt.Sprintf("https://soundcloud.com/%s/%s", t.User.Permalink, t.Permalink)
 }
 
 func (a *Album) URL() string {
-	if a.PermalinkURL != "" {
-		return a.PermalinkURL
-	}
-	if a.User.Permalink != "" && a.Permalink != "" {
-		return fmt.Sprintf("https://soundcloud.com/%s/sets/%s", a.User.Permalink, a.Permalink)
-	}
-	return ""
+	return fmt.Sprintf("https://soundcloud.com/%s/sets/%s", a.User.Permalink, a.Permalink)
 }

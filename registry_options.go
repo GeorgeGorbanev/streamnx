@@ -6,6 +6,7 @@ import (
 	"github.com/GeorgeGorbanev/streamnx/internal/apple"
 	"github.com/GeorgeGorbanev/streamnx/internal/bandcamp"
 	"github.com/GeorgeGorbanev/streamnx/internal/deezer"
+	"github.com/GeorgeGorbanev/streamnx/internal/soundcloud"
 	"github.com/GeorgeGorbanev/streamnx/internal/spotify"
 	"github.com/GeorgeGorbanev/streamnx/internal/translator"
 	"github.com/GeorgeGorbanev/streamnx/internal/yandex"
@@ -15,12 +16,13 @@ import (
 type RegistryOption func(registry *Registry)
 
 type clientOptions struct {
-	apple    []apple.ClientOption
-	bandcamp []bandcamp.ClientOption
-	deezer   []deezer.ClientOption
-	spotify  []spotify.ClientOption
-	yandex   []yandex.ClientOption
-	youtube  []youtube.ClientOption
+	apple      []apple.ClientOption
+	bandcamp   []bandcamp.ClientOption
+	deezer     []deezer.ClientOption
+	spotify    []spotify.ClientOption
+	soundcloud []soundcloud.ClientOption
+	yandex     []yandex.ClientOption
+	youtube    []youtube.ClientOption
 }
 
 func WithProviderAdapter(provider *Provider, adapter Adapter) RegistryOption {
@@ -65,6 +67,18 @@ func WithYandexAPIURL(url string) RegistryOption {
 	}
 }
 
+func WithSoundcloudAPIURL(url string) RegistryOption {
+	return func(r *Registry) {
+		r.clientOptions.soundcloud = append(r.clientOptions.soundcloud, soundcloud.WithAPIURL(url))
+	}
+}
+
+func WithSoundcloudWebURL(url string) RegistryOption {
+	return func(r *Registry) {
+		r.clientOptions.soundcloud = append(r.clientOptions.soundcloud, soundcloud.WithWebURL(url))
+	}
+}
+
 func WithYoutubeAPIURL(url string) RegistryOption {
 	return func(r *Registry) {
 		r.clientOptions.youtube = append(r.clientOptions.youtube, youtube.WithAPIURL(url))
@@ -80,6 +94,12 @@ func WithAppleHTTPTransport(transport *http.Transport) RegistryOption {
 func WithSpotifyHTTPTransport(transport *http.Transport) RegistryOption {
 	return func(r *Registry) {
 		r.clientOptions.spotify = append(r.clientOptions.spotify, spotify.WithHTTPTransport(transport))
+	}
+}
+
+func WithSoundcloudHTTPClient(client *http.Client) RegistryOption {
+	return func(r *Registry) {
+		r.clientOptions.soundcloud = append(r.clientOptions.soundcloud, soundcloud.WithHTTPClient(client))
 	}
 }
 

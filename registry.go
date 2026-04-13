@@ -8,6 +8,7 @@ import (
 	"github.com/GeorgeGorbanev/streamnx/internal/apple"
 	"github.com/GeorgeGorbanev/streamnx/internal/bandcamp"
 	"github.com/GeorgeGorbanev/streamnx/internal/deezer"
+	"github.com/GeorgeGorbanev/streamnx/internal/soundcloud"
 	"github.com/GeorgeGorbanev/streamnx/internal/spotify"
 	"github.com/GeorgeGorbanev/streamnx/internal/translator"
 	"github.com/GeorgeGorbanev/streamnx/internal/yandex"
@@ -59,6 +60,10 @@ func NewRegistry(ctx context.Context, cred Credentials, opts ...RegistryOption) 
 	if registry.adapter(Spotify) == nil {
 		client := spotify.NewHTTPClient(cred.spotify(), registry.clientOptions.spotify...)
 		registry.adapters[Spotify.сode] = newSpotifyAdapter(client)
+	}
+	if registry.adapter(Soundcloud) == nil {
+		client := soundcloud.NewHTTPClient(registry.clientOptions.soundcloud...)
+		registry.adapters[Soundcloud.сode] = newSoundcloudAdapter(client)
 	}
 	if registry.adapter(Yandex) == nil {
 		client := yandex.NewHTTPClient(registry.clientOptions.yandex...)

@@ -32,7 +32,7 @@ type HTTPClient struct {
 var (
 	hydrationRe = regexp.MustCompile(`(?s)<script>\s*window\.__sc_hydration\s*=\s*(\[.*?\]);</script>`)
 
-	NotFoundError = errors.New("not found")
+	ErrNotFound = errors.New("not found")
 )
 
 func NewHTTPClient(opts ...ClientOption) *HTTPClient {
@@ -104,7 +104,7 @@ func (c *HTTPClient) SearchTrack(ctx context.Context, artist, title string) (*Tr
 		return nil, fmt.Errorf("failed to unmarshal search response body: %s", err)
 	}
 	if len(result.Collection) == 0 {
-		return nil, NotFoundError
+		return nil, ErrNotFound
 	}
 
 	return &result.Collection[0], nil
@@ -125,7 +125,7 @@ func (c *HTTPClient) SearchAlbum(ctx context.Context, artist, title string) (*Al
 		return nil, fmt.Errorf("failed to unmarshal search response body: %s", err)
 	}
 	if len(result.Collection) == 0 {
-		return nil, NotFoundError
+		return nil, ErrNotFound
 	}
 
 	return &result.Collection[0], nil
@@ -147,7 +147,7 @@ func (c *HTTPClient) getWebHTML(ctx context.Context, path string) ([]byte, error
 	switch response.StatusCode {
 	case http.StatusOK:
 	case http.StatusNotFound:
-		return nil, NotFoundError
+		return nil, ErrNotFound
 	default:
 		return nil, fmt.Errorf("unexpected status code: %d", response.StatusCode)
 	}
@@ -181,7 +181,7 @@ func (c *HTTPClient) getAPI(ctx context.Context, path string, query url.Values) 
 	defer resp.Body.Close()
 
 	if resp.StatusCode == http.StatusNotFound {
-		return nil, NotFoundError
+		return nil, ErrNotFound
 	}
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("unexpected status code: %d", resp.StatusCode)

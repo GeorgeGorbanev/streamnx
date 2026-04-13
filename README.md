@@ -1,7 +1,7 @@
 # Streamnx
 
 Streamnx is a library that unifies interactions with various music streaming links into a single system.
-With Streamnx, you can integrate platforms such as Apple Music, Bandcamp, Deezer, Spotify, YouTube and Yandex Music into your applications using a unified interface for searching and retrieving data about tracks and albums.
+With Streamnx, you can integrate platforms such as Apple Music, Bandcamp, Deezer, Soundcloud, Spotify, YouTube and Yandex Music into your applications using a unified interface for searching and retrieving data about tracks and albums.
 
 - [Motivation](#motivation)
 - [Supported services](#supported-services)
@@ -30,6 +30,7 @@ The library supports the following music streaming services
 - Apple Music
 - Bandcamp (not official API, web scraping — you might tweak http client to avoid 403)
 - Deezer
+- Soundcloud
 - Spotify
 - Yandex Music
 - YouTube (also YouTube Music)
@@ -98,12 +99,12 @@ func appleTrackToSpotify(ctx context.Context, link string) (string, error) {
         // Handle error
     }
         
-    track, err := registry.Fetch(ctx, streamnx.Apple, streamnx.Track, parsedLink.ID)
+    track, err := registry.Fetch(ctx, streamnx.Apple, streamnx.Track, parsedLink.EntityID)
     if err != nil {
         // Handle error
     }
 
-    converted, err := registry.Search(ctx, streamnx.Spotify, streamnx.Track, track.Artist, track.Name)
+    converted, err := registry.Search(ctx, streamnx.Spotify, streamnx.Track, track.Artist, track.Title)
     if err != nil {
         // Handle error
     }
@@ -161,12 +162,12 @@ regions := p.Regions()
 // => []string{"us", "es", "fr", "ru", ... }
 // optional region codes for the provider, used for region-specific requests and referenced in the URL 
    
-trackID, err := p.DetectTrackID("https://music.apple.com/us/album/song-name/1234?i=4567")
-// => "4567", nil
+trackID := p.DetectTrackID("https://music.apple.com/us/album/song-name/1234?i=4567")
+// => "us-4567"
 // extract track ID from the link
 
-albumID, err := p.DetectAlbumID("https://music.apple.com/us/album/album-name/1234")
-// => "1234", nil
+albumID := p.DetectAlbumID("https://music.apple.com/us/album/album-name/1234")
+// => "us-1234"
 // extract album ID from the link
 
 
@@ -182,9 +183,9 @@ provider := streamnx.FindProviderByCode("ap")
 
 #### EntityType
 
-`EntityType` simple string enum that represents the type of entity you want to fetch or search for. 
+`EntityType` simple string enum that represents the type of entity you want to fetch or search for.
 
-For now, it has two values: `Track` and `Album`.
+It has three values: `Track`, `Album` and `Cloak`.
 
 ``` golang
 streamnx.Track
@@ -219,10 +220,10 @@ Useful to extract the ID and provider from the link.
 
 ``` golang
 type Link struct {
-    URL      string
-    Provider *Provider
-    Type     EntityType
-    ID       string
+    URL        string
+    Provider   *Provider
+    EntityID   string
+    EntityType EntityType
 }
 ```
 
@@ -233,8 +234,8 @@ link, err := streamnx.ParseLink("https://music.apple.com/us/album/song-name/1234
 // => Link{
 //      URL: "https://music.apple.com/us/album/song-name/1234?i=4567", 
 //      Provider: streamnx.Apple,
-//      Type: streamnx.Track,
-//      ID: "4567",
+//      EntityID: "us-4567",
+//      EntityType: streamnx.Track,
 //  }, nil
 ```
 
@@ -261,6 +262,8 @@ registry, err := streamnx.NewRegistry(
     streamnx.Credentials{},
     streamnx.WithAppleAPIURL(appleAPIServerMock.URL),
     streamnx.WithAppleWebPlayerURL(appleWebPlayerServerMock.URL),
+    streamnx.WithSoundcloudAPIURL(soundcloudAPIServerMock.URL),
+    streamnx.WithSoundcloudWebURL(soundcloudWebServerMock.URL),
     streamnx.WithSpotifyAuthURL(spotifyAuthServerMock.URL),
     streamnx.WithSpotifyAPIURL(spotifyAPIServerMock.URL),
     streamnx.WithYandexAPIURL(yandexMockServer.URL),
@@ -274,7 +277,7 @@ To mock translator calls you also have option too:
 registry, err := streamnx.NewRegistry(
     ctx,
     streamnx.Credentials{},
-    streamnx.WithGoogleTranslatorURL(translatorMockServer.URL),
+    streamnx.WithTranslator(translatorMock),
 }
 ```
 
@@ -295,4 +298,3 @@ To run the test and linter use the following commands:
 make test
 make lint
 ```
-

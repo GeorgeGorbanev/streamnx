@@ -44,6 +44,26 @@ func TestParseLink(t *testing.T) {
 			},
 		},
 		{
+			name: "Soundcloud track",
+			url:  "https://soundcloud.com/forss/flickermood",
+			want: &Link{
+				URL:        "https://soundcloud.com/forss/flickermood",
+				Provider:   Soundcloud,
+				EntityID:   "forss:flickermood",
+				EntityType: Track,
+			},
+		},
+		{
+			name: "Soundcloud album",
+			url:  "https://soundcloud.com/forss/sets/soulhack",
+			want: &Link{
+				URL:        "https://soundcloud.com/forss/sets/soulhack",
+				Provider:   Soundcloud,
+				EntityID:   "forss:soulhack",
+				EntityType: Album,
+			},
+		},
+		{
 			name: "Yandex track",
 			url:  "https://music.yandex.by/album/3192570/track/1197793",
 			want: &Link{

@@ -28,6 +28,10 @@ func TestFindProviderByCode(t *testing.T) {
 			want: Spotify,
 		},
 		{
+			code: "sc",
+			want: Soundcloud,
+		},
+		{
 			code: "ya",
 			want: Yandex,
 		},

@@ -5,6 +5,7 @@ import (
 	"github.com/GeorgeGorbanev/streamnx/internal/bandcamp"
 	"github.com/GeorgeGorbanev/streamnx/internal/deezer"
 	"github.com/GeorgeGorbanev/streamnx/internal/pointer"
+	"github.com/GeorgeGorbanev/streamnx/internal/soundcloud"
 	"github.com/GeorgeGorbanev/streamnx/internal/spotify"
 	"github.com/GeorgeGorbanev/streamnx/internal/yandex"
 	"github.com/GeorgeGorbanev/streamnx/internal/youtube"
@@ -16,6 +17,7 @@ var (
 		Bandcamp,
 		Deezer,
 		Spotify,
+		Soundcloud,
 		Yandex,
 		Youtube,
 	}
@@ -45,6 +47,12 @@ var (
 		сode:          "sf",
 		trackIDParser: spotify.DetectTrackID,
 		albumIDParser: spotify.DetectAlbumID,
+	}
+	Soundcloud = &Provider{
+		name:          "Soundcloud",
+		сode:          "sc",
+		trackIDParser: soundcloud.DetectTrackID,
+		albumIDParser: soundcloud.DetectAlbumID,
 	}
 	Yandex = &Provider{
 		name:          "Yandex",

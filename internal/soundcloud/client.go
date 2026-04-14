@@ -37,12 +37,12 @@ var (
 
 func NewHTTPClient(opts ...ClientOption) *HTTPClient {
 	const (
-		defaultSearchAPIURL = "https://api-v2.soundcloud.com"
-		defaultWebURL       = "https://soundcloud.com"
+		defaultAPIURL = "https://api-v2.soundcloud.com"
+		defaultWebURL = "https://soundcloud.com"
 	)
 	c := HTTPClient{
 		client: &http.Client{},
-		apiURL: defaultSearchAPIURL,
+		apiURL: defaultAPIURL,
 		webURL: defaultWebURL,
 	}
 	for _, opt := range opts {
@@ -55,17 +55,17 @@ func (c *HTTPClient) FetchTrack(ctx context.Context, userSlug, trackSlug string)
 	path := fmt.Sprintf("/%s/%s", userSlug, trackSlug)
 	html, err := c.getWebHTML(ctx, path)
 	if err != nil {
-		return nil, fmt.Errorf("failed to fetch track page: %s", err)
+		return nil, fmt.Errorf("failed to fetch track page: %w", err)
 	}
 
 	trackJSON, err := findHydratableJSON(html, "sound")
 	if err != nil {
-		return nil, fmt.Errorf("failed to find track hydration data: %s", err)
+		return nil, fmt.Errorf("failed to find track hydration data: %w", err)
 	}
 
 	track := Track{}
 	if err := json.Unmarshal(trackJSON, &track); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal sound hydration data: %s", err)
+		return nil, fmt.Errorf("failed to unmarshal sound hydration data: %w", err)
 	}
 	return &track, nil
 }
@@ -74,17 +74,17 @@ func (c *HTTPClient) FetchAlbum(ctx context.Context, userSlug, setSlug string) (
 	path := fmt.Sprintf("/%s/sets/%s", userSlug, setSlug)
 	html, err := c.getWebHTML(ctx, path)
 	if err != nil {
-		return nil, fmt.Errorf("failed to fetch album page: %s", err)
+		return nil, fmt.Errorf("failed to fetch album page: %w", err)
 	}
 
 	albumJSON, err := findHydratableJSON(html, "playlist")
 	if err != nil {
-		return nil, fmt.Errorf("failed to find album hydration data: %s", err)
+		return nil, fmt.Errorf("failed to find album hydration data: %w", err)
 	}
 
 	album := Album{}
 	if err := json.Unmarshal(albumJSON, &album); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal playlist hydration data: %s", err)
+		return nil, fmt.Errorf("failed to unmarshal playlist hydration data: %w", err)
 	}
 	return &album, nil
 }
@@ -101,7 +101,7 @@ func (c *HTTPClient) SearchTrack(ctx context.Context, artist, title string) (*Tr
 		Collection []Track `json:"collection"`
 	}
 	if err := json.Unmarshal(body, &result); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal search response body: %s", err)
+		return nil, fmt.Errorf("failed to unmarshal search response body: %w", err)
 	}
 	if len(result.Collection) == 0 {
 		return nil, ErrNotFound
@@ -122,7 +122,7 @@ func (c *HTTPClient) SearchAlbum(ctx context.Context, artist, title string) (*Al
 		Collection []Album `json:"collection"`
 	}
 	if err := json.Unmarshal(body, &result); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal search response body: %s", err)
+		return nil, fmt.Errorf("failed to unmarshal search response body: %w", err)
 	}
 	if len(result.Collection) == 0 {
 		return nil, ErrNotFound
@@ -135,12 +135,12 @@ func (c *HTTPClient) getWebHTML(ctx context.Context, path string) ([]byte, error
 	u := c.webURL + path
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, u, nil)
 	if err != nil {
-		return nil, fmt.Errorf("failed to create request: %s", err)
+		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
 
 	response, err := c.client.Do(req)
 	if err != nil {
-		return nil, fmt.Errorf("failed to perform get request: %s", err)
+		return nil, fmt.Errorf("failed to perform get request: %w", err)
 	}
 	defer response.Body.Close()
 
@@ -154,7 +154,7 @@ func (c *HTTPClient) getWebHTML(ctx context.Context, path string) ([]byte, error
 
 	html, err := io.ReadAll(response.Body)
 	if err != nil {
-		return nil, fmt.Errorf("failed to read response body: %s", err)
+		return nil, fmt.Errorf("failed to read response body: %w", err)
 	}
 
 	return html, nil
@@ -163,7 +163,7 @@ func (c *HTTPClient) getWebHTML(ctx context.Context, path string) ([]byte, error
 func (c *HTTPClient) getAPI(ctx context.Context, path string, query url.Values) ([]byte, error) {
 	clientID, err := c.getClientID(ctx)
 	if err != nil {
-		return nil, fmt.Errorf("failed to get client id: %s", err)
+		return nil, fmt.Errorf("failed to get client id: %w", err)
 	}
 
 	query.Set("client_id", clientID)
@@ -171,12 +171,12 @@ func (c *HTTPClient) getAPI(ctx context.Context, path string, query url.Values) 
 	u := c.apiURL + path + "?" + query.Encode()
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, u, nil)
 	if err != nil {
-		return nil, fmt.Errorf("failed to create request: %s", err)
+		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
 
 	resp, err := c.client.Do(req)
 	if err != nil {
-		return nil, fmt.Errorf("failed to perform get request: %s", err)
+		return nil, fmt.Errorf("failed to perform get request: %w", err)
 	}
 	defer resp.Body.Close()
 
@@ -189,7 +189,7 @@ func (c *HTTPClient) getAPI(ctx context.Context, path string, query url.Values) 
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, fmt.Errorf("failed to read response body: %s", err)
+		return nil, fmt.Errorf("failed to read response body: %w", err)
 	}
 
 	return body, nil
@@ -217,14 +217,14 @@ func (c *HTTPClient) getClientID(ctx context.Context) (string, error) {
 
 	clientJSON, err := findHydratableJSON(html, "apiClient")
 	if err != nil {
-		return "", fmt.Errorf("failed to find api client hydration data: %s", err)
+		return "", fmt.Errorf("failed to find api client hydration data: %w", err)
 	}
 
 	var apiClient struct {
 		ID string `json:"id"`
 	}
 	if err := json.Unmarshal(clientJSON, &apiClient); err != nil {
-		return "", fmt.Errorf("failed to unmarshal api client hydration data: %s", err)
+		return "", fmt.Errorf("failed to unmarshal api client hydration data: %w", err)
 	}
 
 	c.clientID = apiClient.ID
@@ -243,7 +243,7 @@ func findHydratableJSON(html []byte, hydratable string) (json.RawMessage, error)
 	}
 
 	if err := json.Unmarshal(matches[1], &items); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal hydration json: %s", err)
+		return nil, fmt.Errorf("failed to unmarshal hydration json: %w", err)
 	}
 
 	for _, item := range items {

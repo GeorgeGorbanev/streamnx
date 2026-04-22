@@ -1,6 +1,6 @@
 module github.com/GeorgeGorbanev/streamnx
 
-go 1.24.6
+go 1.26.2
 
 require (
 	cloud.google.com/go/translate v1.10.3

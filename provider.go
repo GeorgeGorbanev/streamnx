@@ -4,7 +4,6 @@ import (
 	"github.com/GeorgeGorbanev/streamnx/internal/apple"
 	"github.com/GeorgeGorbanev/streamnx/internal/bandcamp"
 	"github.com/GeorgeGorbanev/streamnx/internal/deezer"
-	"github.com/GeorgeGorbanev/streamnx/internal/pointer"
 	"github.com/GeorgeGorbanev/streamnx/internal/soundcloud"
 	"github.com/GeorgeGorbanev/streamnx/internal/spotify"
 	"github.com/GeorgeGorbanev/streamnx/internal/yandex"
@@ -110,13 +109,13 @@ func (p *Provider) DetectAlbumID(albumURL string) string {
 
 func (p *Provider) parseURL(url string) (string, *EntityType) {
 	if id := p.DetectTrackID(url); id != "" {
-		return id, pointer.Any(Track)
+		return id, new(Track)
 	}
 	if id := p.DetectAlbumID(url); id != "" {
-		return id, pointer.Any(Album)
+		return id, new(Album)
 	}
 	if id := p.DetectCloakEntityID(url); id != "" {
-		return id, pointer.Any(Cloak)
+		return id, new(Cloak)
 	}
 	return "", nil
 }

@@ -1,54 +1,69 @@
+version: "2"
 run:
-  timeout: 3m
-  tests: true
   modules-download-mode: readonly
-
+  tests: true
 linters:
-  disable-all: true
+  default: none
+  enable:
+    - copyloopvar
+    - errcheck
+    - govet
+    - ineffassign
+    - prealloc
+    - revive
+    - staticcheck
+    - unparam
+    - unused
+  settings:
+    prealloc:
+      simple: true
+      range-loops: true
+      for-loops: true
+    revive:
+      severity: warning
+      rules:
+        - name: exported
+        - name: var-naming
+        - name: receiver-naming
+        - name: error-naming
+        - name: indent-error-flow
+        - name: empty-block
+        - name: early-return
+    staticcheck:
+      checks:
+        - all
+        - "-ST1012"
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    rules:
+      - linters:
+          - revive
+        path: ^tests/
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
   enable:
     - gci
     - gofumpt
-    - revive
-
-    - govet
-    - staticcheck
-    - gosimple
-    - errcheck
-    - unused
-    - unparam
-    - ineffassign
-    - copyloopvar
-
-    - prealloc
-
-linters-settings:
-  gci:
-    custom-order: true
-    sections:
-      - standard
-      - default
-      - prefix(github.com/GeorgeGorbanev)
-
-  gofumpt:
-    extra-rules: true
-
-  revive:
-    severity: warning
-    rules:
-      - name: exported
-      - name: var-naming
-      - name: receiver-naming
-      - name: error-naming
-      - name: indent-error-flow
-      - name: empty-block
-      - name: early-return
-  prealloc:
-    simple: true
-    range-loops: true
-    for-loops: true
-
-issues:
-  exclude-rules:
-    - path: ^tests/
-      linters:
-        - revive
+  settings:
+    gci:
+      sections:
+        - standard
+        - default
+        - prefix(github.com/GeorgeGorbanev)
+      custom-order: true
+    gofumpt:
+      extra-rules: true
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$

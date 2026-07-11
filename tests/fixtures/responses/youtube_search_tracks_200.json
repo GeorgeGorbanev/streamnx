@@ -1,0 +1,353 @@
+{
+  "kind": "youtube#searchListResponse",
+  "etag": "Ml9MfehUUTtQlVPsvgUVz01XrOc",
+  "nextPageToken": "CAoQAA",
+  "regionCode": "GE",
+  "pageInfo": {
+    "totalResults": 1000000,
+    "resultsPerPage": 10
+  },
+  "items": [
+    {
+      "kind": "youtube#searchResult",
+      "etag": "2TLDCfIHwrWgcKxgUYtQtSU046c",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "dQw4w9WgXcQ"
+      },
+      "snippet": {
+        "publishedAt": "2009-10-25T06:57:33Z",
+        "channelId": "UCuAXFkgsw1L7xaCfnd5JJOw",
+        "title": "Rick Astley - Never Gonna Give You Up (Official Video) (4K Remaster)",
+        "description": "The official video for “Never Gonna Give You Up” by Rick Astley. Never: The Autobiography OUT NOW! Follow this link to get ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/dQw4w9WgXcQ/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Rick Astley",
+        "liveBroadcastContent": "none",
+        "publishTime": "2009-10-25T06:57:33Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "wC2Sc4U95kmCHPFr6ukCcpBK5fU",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "7FwDP17XPlk"
+      },
+      "snippet": {
+        "publishedAt": "2025-05-27T14:54:24Z",
+        "channelId": "UCZtoHl1p6R6_iLm2yjA9gew",
+        "title": "Rick Astley - Never Gonna Give You Up",
+        "description": "Rick Astley - Never Gonna Give You Up Get: Lyrics: [Intro] Desert you Ooh-ooh-ooh-ooh Hurt you [Verse 1] We're no strangers to ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/7FwDP17XPlk/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/7FwDP17XPlk/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/7FwDP17XPlk/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Amazing Lyrics",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-05-27T14:54:24Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "GKzMKf6XkRAFYtTj02p0YMGO2T0",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "3BFTio5296w"
+      },
+      "snippet": {
+        "publishedAt": "2022-05-19T10:03:26Z",
+        "channelId": "UCwZEU0wAwIyZb4x5G_KJp2w",
+        "title": "Never Gonna Give You Up (2022 Remaster)",
+        "description": "Provided to YouTube by BMG Rights Management (UK) Ltd. Never Gonna Give You Up (2022 Remaster) · Rick Astley Whenever ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/3BFTio5296w/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/3BFTio5296w/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/3BFTio5296w/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Rick Astley - Topic",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-05-19T10:03:26Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "BzupY3d_nfwrn_SboyMy617-n1k",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "QFK09y01me0"
+      },
+      "snippet": {
+        "publishedAt": "2022-04-19T14:00:34Z",
+        "channelId": "UCIq-5ALaaM-hiL_bFUc5GlA",
+        "title": "Rick Astley - Never Gonna Give You Up (Countdown, 1987)",
+        "description": "TV performance by Rick Astley with 'Never Gonna Give You Up' on Dutch popshow “Countdown”. The television show was ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/QFK09y01me0/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/QFK09y01me0/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/QFK09y01me0/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Countdown",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-04-19T14:00:34Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "IviYAAemdmNRAWr5CtPDQN-4veA",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "DLzxrzFCyOs"
+      },
+      "snippet": {
+        "publishedAt": "2015-04-12T00:23:38Z",
+        "channelId": "UCLNd5EtH77IyN1frExzwPRQ",
+        "title": "Rick Astley - Never Gonna Give You Up [HQ]",
+        "description": "Artist: Rick Astley Title: Never Gonna Give You Up Difference with original: nothing but the quality of audio and video. all rights ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/DLzxrzFCyOs/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/DLzxrzFCyOs/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/DLzxrzFCyOs/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "AllKindsOfStuff",
+        "liveBroadcastContent": "none",
+        "publishTime": "2015-04-12T00:23:38Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "aXc6fe6FEyDsqXvQlWBaKj-CsS4",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "WmttqfVT830"
+      },
+      "snippet": {
+        "publishedAt": "2018-10-24T14:00:07Z",
+        "channelId": "UC0_LJ1oJtR5keARJWupA3_g",
+        "title": "Rick Astley - Never Gonna Give You Up (Jeanie Schultheiß) | The Voice of Germany | Blind Audition",
+        "description": "Mit so viel Gefühl haben wir den 80er-Hit von Rick Astley \"Never Gonna Give You Up\" noch nie gehört! Jeanie Schultheiß ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/WmttqfVT830/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/WmttqfVT830/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/WmttqfVT830/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "The Voice of Germany - Offiziell",
+        "liveBroadcastContent": "none",
+        "publishTime": "2018-10-24T14:00:07Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "MQ0n0em5Nm8OzYi6LA8pbuN22qM",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "LLFhKaqnWwk"
+      },
+      "snippet": {
+        "publishedAt": "2022-05-20T13:00:11Z",
+        "channelId": "UCuAXFkgsw1L7xaCfnd5JJOw",
+        "title": "Rick Astley - Never Gonna Give You Up (Official Animated Video)",
+        "description": "The official animated video for \"Never Gonna Give You Up” by Rick Astley Taken from the album 'Whenever You Need ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/LLFhKaqnWwk/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/LLFhKaqnWwk/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/LLFhKaqnWwk/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Rick Astley",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-05-20T13:00:11Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "G1X6ynyYRU1aDBD6DNf190zwxTc",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "RL6Jq1hHsco"
+      },
+      "snippet": {
+        "publishedAt": "2024-04-04T02:11:59Z",
+        "channelId": "UCnjBmRrP1VPWaMDiT2jVc-w",
+        "title": "InsurAAAnce &amp; Rick Astley - Never Gonna Give You Up 2022 4K/8K 60FPS",
+        "description": "this is just an edit, all the credits going to - @csaainsurancegroup @RickAstleyYT watch the original here ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/RL6Jq1hHsco/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/RL6Jq1hHsco/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/RL6Jq1hHsco/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "cskillers1",
+        "liveBroadcastContent": "none",
+        "publishTime": "2024-04-04T02:11:59Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "KVux9zGDZcGwMCuxalAEnRqtCVo",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "nsCIeklgp1M"
+      },
+      "snippet": {
+        "publishedAt": "2023-06-24T16:12:55Z",
+        "channelId": "UCZtDUmC3W7j25XHZWFT_XgQ",
+        "title": "Rick Astley - Never Gonna Give You Up | Glastonbury 2023",
+        "description": "Rick Astley performs Never Gonna Give You Up at Glastonbury 2023. Watch more highlights on BBC iPlayer: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/nsCIeklgp1M/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/nsCIeklgp1M/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/nsCIeklgp1M/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "BBC Music",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-06-24T16:12:55Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "-ief-c8nPsYpC48jblYsRJwwpPY",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "SbYXkOAoZpI"
+      },
+      "snippet": {
+        "publishedAt": "2013-04-15T03:58:04Z",
+        "channelId": "UCBAhXJWTzz3ozTkOnl6khrw",
+        "title": "Never Gonna Give You Up (Lyrics) - Rick Astley",
+        "description": "Music video and lyrics Never Gonna Give You Up of Rick Astley We're no strangers to love You know the rules and so do I  A full ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/SbYXkOAoZpI/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/SbYXkOAoZpI/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/SbYXkOAoZpI/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Giovanna Lozano",
+        "liveBroadcastContent": "none",
+        "publishTime": "2013-04-15T03:58:04Z"
+      }
+    }
+  ]
+}
+

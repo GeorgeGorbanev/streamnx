@@ -1,0 +1,13 @@
+{
+  "invocationInfo": {
+    "req-id": "1781216571912953-9624664286501831616",
+    "hostname": "music-web-default-production-music-92.sas.yp-c.yandex.net",
+    "exec-duration-millis": 5
+  },
+  "result": [
+    {
+      "id": "987654321",
+      "error": "not-found"
+    }
+  ]
+}

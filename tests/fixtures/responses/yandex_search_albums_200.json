@@ -1,0 +1,176 @@
+{
+  "invocationInfo": {
+    "hostname": "music-web-default-production-music-97.sas.yp-c.yandex.net",
+    "req-id": "1781216571438674-9916851734658868088",
+    "exec-duration-millis": "95"
+  },
+  "result": {
+    "type": "album",
+    "page": 0,
+    "perPage": 10,
+    "text": "Rick Astley – Whenever You Need Somebody",
+    "searchRequestId": "music-web-default-production-music-97.sas.yp-c.yandex.net-1781216571438674-9916851734658868088-1781216571448",
+    "albums": {
+      "total": 2,
+      "perPage": 10,
+      "order": 0,
+      "results": [
+        {
+          "id": 14599266,
+          "title": "Whenever You Need Somebody",
+          "metaType": "music",
+          "year": 1987,
+          "releaseDate": "1987-11-12T00:00:00+03:00",
+          "coverUri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+          "ogImage": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+          "genre": "pop",
+          "trackCount": 10,
+          "likesCount": 1096,
+          "recent": false,
+          "veryImportant": false,
+          "artists": [
+            {
+              "id": 34466,
+              "name": "Rick Astley",
+              "various": false,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-artist-photos",
+                "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                "prefix": "f8c365f5.p.34466/"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "cutoutCover": {
+                "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+              }
+            }
+          ],
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "availableForMobile": true,
+          "availablePartially": false,
+          "bests": [
+            609676,
+            609700
+          ],
+          "disclaimers": [
+
+          ],
+          "listeningFinished": false,
+          "labels": [
+            "BMG Rights Management (UK)"
+          ],
+          "storageDir": "274495a5.a.14599266-4",
+          "regions": [
+            "GEORGIA",
+            "GEORGIA_PREMIUM"
+          ],
+          "availableRegions": [
+            "qa",
+            "by",
+            "om",
+            "ge",
+            "tm",
+            "uz",
+            "ae",
+            "iq",
+            "kw",
+            "bh",
+            "jo",
+            "kg",
+            "tj",
+            "ru",
+            "il",
+            "eg",
+            "md",
+            "kz",
+            "am",
+            "az",
+            "sa"
+          ]
+        },
+        {
+          "id": 1083828,
+          "title": "Whenever You Need Somebody (In the Style of Rick Astley) - Single",
+          "type": "single",
+          "metaType": "music",
+          "version": "Karaoke Version",
+          "year": 2013,
+          "releaseDate": "2013-01-31T00:00:00+04:00",
+          "coverUri": "avatars.yandex.net/get-music-content/49876/af55045c.a.1083828-1/%%",
+          "ogImage": "avatars.yandex.net/get-music-content/49876/af55045c.a.1083828-1/%%",
+          "genre": "pop",
+          "trackCount": 1,
+          "likesCount": 2,
+          "recent": false,
+          "veryImportant": false,
+          "artists": [
+            {
+              "id": 1512596,
+              "name": "Ameritz Digital Karaoke",
+              "various": true,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/33216/7863a06c.a.1083783-1/%%",
+                "prefix": "7863a06c.a.1083783-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "availableForMobile": true,
+          "availablePartially": false,
+          "bests": [
+
+          ],
+          "disclaimers": [
+
+          ],
+          "listeningFinished": false,
+          "labels": [
+            "Ameritz"
+          ],
+          "storageDir": "af55045c.a.1083828-1",
+          "regions": [
+            "GEORGIA",
+            "GEORGIA_PREMIUM"
+          ],
+          "availableRegions": [
+            "ru",
+            "by",
+            "ge",
+            "tm",
+            "md",
+            "uz",
+            "kz",
+            "am",
+            "ua",
+            "az",
+            "tj",
+            "kg"
+          ]
+        }
+      ]
+    }
+  }
+}

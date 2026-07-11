@@ -1,0 +1,2900 @@
+{
+  "invocationInfo": {
+    "hostname": "music-web-default-production-music-99.sas.yp-c.yandex.net",
+    "req-id": "1781216571182711-12405173583799495999",
+    "exec-duration-millis": "98"
+  },
+  "result": {
+    "type": "track",
+    "page": 0,
+    "perPage": 20,
+    "text": "Rick Astley – Never Gonna Give You Up",
+    "searchRequestId": "music-web-default-production-music-99.sas.yp-c.yandex.net-1781216571182711-12405173583799495999-1781216571192",
+    "tracks": {
+      "total": 129,
+      "perPage": 20,
+      "order": 0,
+      "results": [
+        {
+          "id": 609676,
+          "realId": "609676",
+          "title": "Never Gonna Give You Up",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 212740,
+          "fileSize": 0,
+          "r128": {
+            "i": -11.04,
+            "tp": 0.56
+          },
+          "fade": {
+            "inStart": 0.1,
+            "inStop": 1.5,
+            "outStart": 206.3,
+            "outStop": 210.9
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 34466,
+              "name": "Rick Astley",
+              "various": false,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-artist-photos",
+                "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                "prefix": "f8c365f5.p.34466/"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "cutoutCover": {
+                "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+              }
+            }
+          ],
+          "albums": [
+            {
+              "id": 14599232,
+              "title": "3 Originals",
+              "metaType": "music",
+              "year": 2002,
+              "releaseDate": "2002-12-07T00:00:00+03:00",
+              "coverUri": "avatars.yandex.net/get-music-content/18132539/5ef3a5a4.a.14599232-4/%%",
+              "ogImage": "avatars.yandex.net/get-music-content/18132539/5ef3a5a4.a.14599232-4/%%",
+              "genre": "pop",
+              "trackCount": 31,
+              "likesCount": 257,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 34466,
+                  "name": "Rick Astley",
+                  "various": false,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-artist-photos",
+                    "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                    "prefix": "f8c365f5.p.34466/"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ],
+                  "cutoutCover": {
+                    "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+                  }
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+                609676,
+                609700,
+                609718
+              ],
+              "disclaimers": [
+
+              ],
+              "listeningFinished": false,
+              "labels": [
+                "BMG Rights Management (UK)"
+              ],
+              "storageDir": "5ef3a5a4.a.14599232-4",
+              "trackPosition": {
+                "volume": 1,
+                "index": 1
+              },
+              "regions": [
+                "GEORGIA",
+                "GEORGIA_PREMIUM"
+              ],
+              "availableRegions": [
+
+              ]
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/18132539/5ef3a5a4.a.14599232-4/%%",
+          "derivedColors": {
+            "average": "#2c1e2c",
+            "waveText": "#fec1ff",
+            "miniPlayer": "#c3abc3",
+            "accent": "#aa87aa"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/18132539/5ef3a5a4.a.14599232-4/%%",
+          "lyricsAvailable": true,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": true,
+            "hasAvailableTextLyrics": true
+          },
+          "trackSource": "OWN",
+          "specialAudioResources": [
+            "smart_preview"
+          ],
+          "availableAsRbt": true,
+          "explicit": false,
+          "regions": [
+            "GEORGIA",
+            "GEORGIA_PREMIUM"
+          ]
+        },
+        {
+          "id": 6228762,
+          "realId": "6228762",
+          "title": "Never Gonna Give You Up",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 211270,
+          "fileSize": 0,
+          "r128": {
+            "i": -12.98,
+            "tp": 0.09
+          },
+          "fade": {
+            "inStart": 0.1,
+            "inStop": 1.5,
+            "outStart": 203.2,
+            "outStop": 206.9
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 1158960,
+              "name": "Rick Astley Tribute Band",
+              "various": false,
+              "composer": false,
+              "available": true,
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "albums": [
+            {
+              "id": 681909,
+              "title": "World's Greatest 80's Disco - The Only 80's Disco Album You'll Ever Need",
+              "type": "compilation",
+              "metaType": "music",
+              "year": 2010,
+              "releaseDate": "2010-03-22T00:00:00+03:00",
+              "coverUri": "avatars.yandex.net/get-music-content/42108/7f22dbdf.a.681909-1/%%",
+              "ogImage": "avatars.yandex.net/get-music-content/42108/7f22dbdf.a.681909-1/%%",
+              "genre": "disco",
+              "trackCount": 40,
+              "likesCount": 459,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 171,
+                  "name": "сборник",
+                  "various": true,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-album-cover",
+                    "uri": "avatars.yandex.net/get-music-content/14299670/83f4071f.a.35195596-1/%%",
+                    "prefix": "83f4071f.a.35195596-1"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ]
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+                6228771,
+                6228754,
+                6228753
+              ],
+              "disclaimers": [
+
+              ],
+              "listeningFinished": false,
+              "labels": [
+                "Lush Groove"
+              ],
+              "storageDir": "7f22dbdf.a.681909-1",
+              "trackPosition": {
+                "volume": 1,
+                "index": 29
+              },
+              "regions": [
+                "GEORGIA",
+                "GEORGIA_PREMIUM"
+              ],
+              "availableRegions": [
+
+              ]
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/42108/7f22dbdf.a.681909-1/%%",
+          "derivedColors": {
+            "average": "#28132a",
+            "waveText": "#fbc1ff",
+            "miniPlayer": "#cf9dd2",
+            "accent": "#bb73bf"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/42108/7f22dbdf.a.681909-1/%%",
+          "lyricsAvailable": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": false,
+            "hasAvailableTextLyrics": true
+          },
+          "trackSource": "OWN",
+          "specialAudioResources": [
+            "smart_preview"
+          ],
+          "availableAsRbt": true,
+          "explicit": false,
+          "regions": [
+            "GEORGIA",
+            "GEORGIA_PREMIUM"
+          ]
+        },
+        {
+          "id": 24917594,
+          "realId": "24917594",
+          "title": "Never Gonna Give You Up Originally Performed By Rick Astley",
+          "version": "Karaoke Version",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 203330,
+          "fileSize": 0,
+          "r128": {
+            "i": -11.04,
+            "tp": 0.62
+          },
+          "fade": {
+            "inStart": 0.0,
+            "inStop": 1.5,
+            "outStart": 198.8,
+            "outStop": 202.6
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 824843,
+              "name": "Sunfly Karaoke",
+              "various": true,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/49707/56f3d8e6.a.3546292-1/%%",
+                "prefix": "56f3d8e6.a.3546292-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "albums": [
+            {
+              "id": 2924562,
+              "title": "Favourite 80's Karaoke Vol. 3",
+              "type": "compilation",
+              "metaType": "music",
+              "version": "Karaoke Version",
+              "coverUri": "avatars.yandex.net/get-music-content/28589/9ad97f0e.a.2924562-1/%%",
+              "ogImage": "avatars.yandex.net/get-music-content/28589/9ad97f0e.a.2924562-1/%%",
+              "genre": "pop",
+              "trackCount": 19,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 824843,
+                  "name": "Sunfly Karaoke",
+                  "various": true,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-album-cover",
+                    "uri": "avatars.yandex.net/get-music-content/49707/56f3d8e6.a.3546292-1/%%",
+                    "prefix": "56f3d8e6.a.3546292-1"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ]
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "listeningFinished": false,
+              "labels": [
+                "Sunfly"
+              ],
+              "storageDir": "9ad97f0e.a.2924562-1",
+              "trackPosition": {
+                "volume": 1,
+                "index": 8
+              },
+              "regions": [
+                "GEORGIA",
+                "GEORGIA_PREMIUM"
+              ],
+              "availableRegions": [
+
+              ]
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/28589/9ad97f0e.a.2924562-1/%%",
+          "derivedColors": {
+            "average": "#cc33a8",
+            "waveText": "#ffc1f0",
+            "miniPlayer": "#fb74db",
+            "accent": "#f938cc"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/28589/9ad97f0e.a.2924562-1/%%",
+          "lyricsAvailable": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": false,
+            "hasAvailableTextLyrics": false
+          },
+          "trackSource": "OWN",
+          "availableAsRbt": true,
+          "explicit": false,
+          "regions": [
+            "GEORGIA",
+            "GEORGIA_PREMIUM"
+          ]
+        },
+        {
+          "id": 54424835,
+          "realId": "54424835",
+          "title": "Never Gonna Give You Up",
+          "version": "Rick Astley",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 213200,
+          "fileSize": 0,
+          "r128": {
+            "i": -16.64,
+            "tp": -0.73
+          },
+          "fade": {
+            "inStart": 0.9,
+            "inStop": 1.5,
+            "outStart": 204.8,
+            "outStop": 208.2
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 807113,
+              "name": "Disco Fever",
+              "various": false,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/142001/7979af12.a.5352574-1/%%",
+                "prefix": "7979af12.a.5352574-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "albums": [
+            {
+              "id": 9486773,
+              "title": "Back To 80 Retro Party",
+              "metaType": "music",
+              "year": 2019,
+              "releaseDate": "2019-12-18T00:00:00+03:00",
+              "coverUri": "avatars.yandex.net/get-music-content/2358262/60e86876.a.9486773-1/%%",
+              "ogImage": "avatars.yandex.net/get-music-content/2358262/60e86876.a.9486773-1/%%",
+              "genre": "dance",
+              "trackCount": 53,
+              "likesCount": 4,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 807113,
+                  "name": "Disco Fever",
+                  "various": false,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-album-cover",
+                    "uri": "avatars.yandex.net/get-music-content/142001/7979af12.a.5352574-1/%%",
+                    "prefix": "7979af12.a.5352574-1"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ]
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+                54424831,
+                54424488,
+                54424886
+              ],
+              "disclaimers": [
+
+              ],
+              "listeningFinished": false,
+              "labels": [
+                "JB"
+              ],
+              "storageDir": "60e86876.a.9486773-1",
+              "trackPosition": {
+                "volume": 1,
+                "index": 6
+              },
+              "regions": [
+                "GEORGIA",
+                "GEORGIA_PREMIUM"
+              ],
+              "availableRegions": [
+
+              ]
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/2358262/60e86876.a.9486773-1/%%",
+          "derivedColors": {
+            "average": "#11112b",
+            "waveText": "#c1c1ff",
+            "miniPlayer": "#9999d6",
+            "accent": "#6d6dc4"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/2358262/60e86876.a.9486773-1/%%",
+          "lyricsAvailable": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": false,
+            "hasAvailableTextLyrics": false
+          },
+          "trackSource": "OWN",
+          "specialAudioResources": [
+            "smart_preview"
+          ],
+          "availableAsRbt": true,
+          "explicit": false,
+          "regions": [
+            "GEORGIA",
+            "GEORGIA_PREMIUM"
+          ]
+        },
+        {
+          "id": 60143894,
+          "realId": "60143894",
+          "title": "Never Gonna Give You Up",
+          "version": "Originally Performed By Rick Astley",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 196330,
+          "fileSize": 0,
+          "r128": {
+            "i": -18.15,
+            "tp": -1.81
+          },
+          "fade": {
+            "inStart": 0.0,
+            "inStop": 1.5,
+            "outStart": 194.8,
+            "outStop": 196.3
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 5416063,
+              "name": "Tutt",
+              "various": false,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/2383988/a88471f0.a.9266676-1/%%",
+                "prefix": "a88471f0.a.9266676-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "albums": [
+            {
+              "id": 9266700,
+              "title": "The Ultimate Tribute To Rick Astley",
+              "metaType": "music",
+              "year": 2019,
+              "releaseDate": "2019-03-19T00:00:00+03:00",
+              "coverUri": "avatars.yandex.net/get-music-content/1880735/bd4a82af.a.9266700-1/%%",
+              "ogImage": "avatars.yandex.net/get-music-content/1880735/bd4a82af.a.9266700-1/%%",
+              "genre": "pop",
+              "trackCount": 24,
+              "likesCount": 1,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 5416063,
+                  "name": "Tutt",
+                  "various": false,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-album-cover",
+                    "uri": "avatars.yandex.net/get-music-content/2383988/a88471f0.a.9266676-1/%%",
+                    "prefix": "a88471f0.a.9266676-1"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ]
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "listeningFinished": false,
+              "labels": [
+                "SEE MUSIC (Shanghai)"
+              ],
+              "storageDir": "bd4a82af.a.9266700-1",
+              "trackPosition": {
+                "volume": 1,
+                "index": 5
+              },
+              "regions": [
+                "GEORGIA",
+                "GEORGIA_PREMIUM"
+              ],
+              "availableRegions": [
+
+              ]
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/1880735/bd4a82af.a.9266700-1/%%",
+          "derivedColors": {
+            "average": "#886840",
+            "waveText": "#ffe3c1",
+            "miniPlayer": "#d1ba9d",
+            "accent": "#bd9d74"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/1880735/bd4a82af.a.9266700-1/%%",
+          "lyricsAvailable": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": false,
+            "hasAvailableTextLyrics": false
+          },
+          "trackSource": "OWN",
+          "specialAudioResources": [
+            "smart_preview"
+          ],
+          "availableAsRbt": true,
+          "explicit": false,
+          "regions": [
+            "GEORGIA",
+            "GEORGIA_PREMIUM"
+          ]
+        },
+        {
+          "id": 4543246,
+          "realId": "4543246",
+          "title": "Never Gonna Give You Up",
+          "version": "Originally performed by Rick Astley",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 211320,
+          "fileSize": 0,
+          "r128": {
+            "i": -15.99,
+            "tp": -0.06
+          },
+          "fade": {
+            "inStart": 0.3,
+            "inStop": 1.5,
+            "outStart": 204.0,
+            "outStop": 209.0
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 815214,
+              "name": "It's a Cover Up",
+              "various": false,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/2433821/50829e4e.a.12715497-1/%%",
+                "prefix": "50829e4e.a.12715497-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "albums": [
+            {
+              "id": 512721,
+              "title": "School Reunion: The 80's",
+              "metaType": "music",
+              "year": 2011,
+              "releaseDate": "2011-10-07T00:00:00+04:00",
+              "coverUri": "avatars.yandex.net/get-music-content/38044/296c9826.a.512721-1/%%",
+              "ogImage": "avatars.yandex.net/get-music-content/38044/296c9826.a.512721-1/%%",
+              "genre": "pop",
+              "trackCount": 18,
+              "likesCount": 7,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 815214,
+                  "name": "It's a Cover Up",
+                  "various": false,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-album-cover",
+                    "uri": "avatars.yandex.net/get-music-content/2433821/50829e4e.a.12715497-1/%%",
+                    "prefix": "50829e4e.a.12715497-1"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ]
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+                4543247,
+                4543241
+              ],
+              "disclaimers": [
+
+              ],
+              "listeningFinished": false,
+              "labels": [
+                "BPM"
+              ],
+              "storageDir": "296c9826.a.512721-1",
+              "trackPosition": {
+                "volume": 1,
+                "index": 11
+              },
+              "regions": [
+                "GEORGIA",
+                "GEORGIA_PREMIUM"
+              ],
+              "availableRegions": [
+
+              ]
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/38044/296c9826.a.512721-1/%%",
+          "derivedColors": {
+            "average": "#404f4f",
+            "waveText": "#c1ffff",
+            "miniPlayer": "#afbfbf",
+            "accent": "#8da4a4"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/38044/296c9826.a.512721-1/%%",
+          "lyricsAvailable": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": false,
+            "hasAvailableTextLyrics": false
+          },
+          "trackSource": "OWN",
+          "specialAudioResources": [
+            "smart_preview"
+          ],
+          "availableAsRbt": true,
+          "explicit": false,
+          "regions": [
+            "GEORGIA",
+            "GEORGIA_PREMIUM"
+          ]
+        },
+        {
+          "id": 1107906,
+          "realId": "1107906",
+          "title": "Never Gonna Give You Up",
+          "contentWarning": "explicit",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+            "explicit",
+            "explicitIcon:671a23afcec5646906723a54",
+            "descriptionText:67370c8e13b92b0a60256675"
+          ],
+          "storageDir": "",
+          "durationMs": 196280,
+          "fileSize": 0,
+          "r128": {
+            "i": -18.05,
+            "tp": -1.62
+          },
+          "fade": {
+            "inStart": 2.0,
+            "inStop": 2.4,
+            "outStart": 193.5,
+            "outStop": 194.2
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 586226,
+              "name": "Jukebox Junction",
+              "various": false,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/33216/728c5e0a.a.2307091-1/%%",
+                "prefix": "728c5e0a.a.2307091-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "albums": [
+            {
+              "id": 300175,
+              "title": "Music From Queer As Folk Series 2",
+              "type": "compilation",
+              "metaType": "music",
+              "contentWarning": "explicit",
+              "year": 2009,
+              "releaseDate": "2009-12-07T00:00:00+03:00",
+              "coverUri": "avatars.yandex.net/get-music-content/41288/b3516c41.a.300175-1/%%",
+              "ogImage": "avatars.yandex.net/get-music-content/41288/b3516c41.a.300175-1/%%",
+              "genre": "soundtrack",
+              "trackCount": 14,
+              "likesCount": 62,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 410861,
+                  "name": "Union of Sound",
+                  "various": false,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-album-cover",
+                    "uri": "avatars.yandex.net/get-music-content/28589/cf356c8f.a.352517-1/%%",
+                    "prefix": "cf356c8f.a.352517-1"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ]
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+                2794233,
+                1107927
+              ],
+              "disclaimers": [
+                "descriptionText:67370c8e13b92b0a60256675"
+              ],
+              "listeningFinished": false,
+              "labels": [
+                "White Parrot"
+              ],
+              "storageDir": "b3516c41.a.300175-1",
+              "trackPosition": {
+                "volume": 1,
+                "index": 3
+              },
+              "regions": [
+                "GEORGIA",
+                "GEORGIA_PREMIUM"
+              ],
+              "availableRegions": [
+
+              ]
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/41288/b3516c41.a.300175-1/%%",
+          "derivedColors": {
+            "average": "#625969",
+            "waveText": "#e0e0e0",
+            "miniPlayer": "#b9b1bd",
+            "accent": "#9b90a1"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/41288/b3516c41.a.300175-1/%%",
+          "lyricsAvailable": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": false,
+            "hasAvailableTextLyrics": false
+          },
+          "trackSource": "OWN",
+          "specialAudioResources": [
+            "smart_preview"
+          ],
+          "availableAsRbt": true,
+          "explicit": true,
+          "regions": [
+            "GEORGIA",
+            "GEORGIA_PREMIUM"
+          ]
+        },
+        {
+          "id": 19006424,
+          "realId": "19006424",
+          "title": "Never Gonna Give You up",
+          "version": "Karaoke Version; Originally Performed By Rick Astley",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 215380,
+          "fileSize": 0,
+          "r128": {
+            "i": -12.78,
+            "tp": 1.21
+          },
+          "fade": {
+            "inStart": 0.0,
+            "inStop": 1.5,
+            "outStart": 213.8,
+            "outStop": 215.3
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 651753,
+              "name": "Zoom Karaoke",
+              "various": true,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/42108/38907115.a.449405-1/%%",
+                "prefix": "38907115.a.449405-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "albums": [
+            {
+              "id": 2125142,
+              "title": "Zoom Karaoke Party, Vol. 46",
+              "type": "compilation",
+              "metaType": "music",
+              "year": 2014,
+              "releaseDate": "2014-08-19T00:00:00+04:00",
+              "coverUri": "avatars.yandex.net/get-music-content/34131/2e3cc405.a.2125142-1/%%",
+              "ogImage": "avatars.yandex.net/get-music-content/34131/2e3cc405.a.2125142-1/%%",
+              "trackCount": 15,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 651753,
+                  "name": "Zoom Karaoke",
+                  "various": true,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-album-cover",
+                    "uri": "avatars.yandex.net/get-music-content/42108/38907115.a.449405-1/%%",
+                    "prefix": "38907115.a.449405-1"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ]
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "listeningFinished": false,
+              "labels": [
+                "Zoom Entertainments"
+              ],
+              "storageDir": "2e3cc405.a.2125142-1",
+              "trackPosition": {
+                "volume": 1,
+                "index": 9
+              },
+              "regions": [
+                "GEORGIA",
+                "GEORGIA_PREMIUM"
+              ],
+              "availableRegions": [
+
+              ]
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/34131/2e3cc405.a.2125142-1/%%",
+          "derivedColors": {
+            "average": "#c02f82",
+            "waveText": "#ffc1e4",
+            "miniPlayer": "#fa74c1",
+            "accent": "#f839a6"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/34131/2e3cc405.a.2125142-1/%%",
+          "lyricsAvailable": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": false,
+            "hasAvailableTextLyrics": false
+          },
+          "trackSource": "OWN",
+          "availableAsRbt": true,
+          "explicit": false,
+          "regions": [
+            "GEORGIA",
+            "GEORGIA_PREMIUM"
+          ]
+        },
+        {
+          "id": 9649285,
+          "realId": "9649285",
+          "title": "Never Gonna Give You Up",
+          "version": "Originally Performed By Rick Astley; Karaoke Version",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 210000,
+          "fileSize": 0,
+          "r128": {
+            "i": -14.0,
+            "tp": -0.21
+          },
+          "fade": {
+            "inStart": 0.0,
+            "inStop": 1.5,
+            "outStart": 208.5,
+            "outStop": 210.0
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 805167,
+              "name": "Sing Karaoke Sing",
+              "various": true,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/28589/94ca21b5.a.526272-1/%%",
+                "prefix": "94ca21b5.a.526272-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "albums": [
+            {
+              "id": 1026526,
+              "title": "100% 80's",
+              "type": "compilation",
+              "metaType": "music",
+              "version": "100 Classic Hits",
+              "year": 2013,
+              "releaseDate": "2013-02-15T00:00:00+04:00",
+              "coverUri": "avatars.yandex.net/get-music-content/32236/e55ce820.a.1026526-1/%%",
+              "ogImage": "avatars.yandex.net/get-music-content/32236/e55ce820.a.1026526-1/%%",
+              "genre": "pop",
+              "trackCount": 100,
+              "likesCount": 1,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 805167,
+                  "name": "Sing Karaoke Sing",
+                  "various": true,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-album-cover",
+                    "uri": "avatars.yandex.net/get-music-content/28589/94ca21b5.a.526272-1/%%",
+                    "prefix": "94ca21b5.a.526272-1"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ]
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "listeningFinished": false,
+              "labels": [
+                "BPM"
+              ],
+              "storageDir": "e55ce820.a.1026526-1",
+              "trackPosition": {
+                "volume": 1,
+                "index": 13
+              },
+              "regions": [
+                "GEORGIA",
+                "GEORGIA_PREMIUM"
+              ],
+              "availableRegions": [
+
+              ]
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/32236/e55ce820.a.1026526-1/%%",
+          "derivedColors": {
+            "average": "#999999",
+            "waveText": "#e0e0e0",
+            "miniPlayer": "#b7b7b7",
+            "accent": "#999999"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/32236/e55ce820.a.1026526-1/%%",
+          "lyricsAvailable": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": false,
+            "hasAvailableTextLyrics": false
+          },
+          "trackSource": "OWN",
+          "specialAudioResources": [
+            "smart_preview"
+          ],
+          "availableAsRbt": true,
+          "explicit": false,
+          "regions": [
+            "GEORGIA",
+            "GEORGIA_PREMIUM"
+          ]
+        },
+        {
+          "id": 8334780,
+          "realId": "8334780",
+          "title": "Never Gonna Give You Up in the Style of Rick Astley",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 226070,
+          "fileSize": 0,
+          "r128": {
+            "i": -11.04,
+            "tp": 0.63
+          },
+          "fade": {
+            "inStart": 10.0,
+            "inStop": 10.2,
+            "outStart": 209.8,
+            "outStop": 213.5
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 824843,
+              "name": "Sunfly Karaoke",
+              "various": true,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/49707/56f3d8e6.a.3546292-1/%%",
+                "prefix": "56f3d8e6.a.3546292-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "albums": [
+            {
+              "id": 869139,
+              "title": "Karaoke Party: Vol. 5",
+              "type": "compilation",
+              "metaType": "music",
+              "coverUri": "avatars.yandex.net/get-music-content/42108/515bb214.a.869139-1/%%",
+              "ogImage": "avatars.yandex.net/get-music-content/42108/515bb214.a.869139-1/%%",
+              "genre": "pop",
+              "trackCount": 13,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 824843,
+                  "name": "Sunfly Karaoke",
+                  "various": true,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-album-cover",
+                    "uri": "avatars.yandex.net/get-music-content/49707/56f3d8e6.a.3546292-1/%%",
+                    "prefix": "56f3d8e6.a.3546292-1"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ]
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "listeningFinished": false,
+              "labels": [
+                "Sunfly"
+              ],
+              "storageDir": "515bb214.a.869139-1",
+              "trackPosition": {
+                "volume": 1,
+                "index": 12
+              },
+              "regions": [
+                "GEORGIA",
+                "GEORGIA_PREMIUM"
+              ],
+              "availableRegions": [
+
+              ]
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/42108/515bb214.a.869139-1/%%",
+          "derivedColors": {
+            "average": "#a37d28",
+            "waveText": "#ffecc1",
+            "miniPlayer": "#f6cf79",
+            "accent": "#f2bb3f"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/42108/515bb214.a.869139-1/%%",
+          "lyricsAvailable": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": false,
+            "hasAvailableTextLyrics": false
+          },
+          "trackSource": "OWN",
+          "availableAsRbt": true,
+          "explicit": false,
+          "regions": [
+            "GEORGIA",
+            "GEORGIA_PREMIUM"
+          ]
+        },
+        {
+          "id": 3135519,
+          "realId": "3135519",
+          "title": "Never Gonna Give You Up",
+          "version": "Karaoke in the style of Rick Astley",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 198880,
+          "fileSize": 0,
+          "r128": {
+            "i": -18.54,
+            "tp": -1.68
+          },
+          "fade": {
+            "inStart": 1.4,
+            "inStop": 1.5,
+            "outStart": 192.9,
+            "outStop": 193.6
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 453898,
+              "name": "1980s Karaoke Band",
+              "various": true,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/42108/a637aee2.a.328163-1/%%",
+                "prefix": "a637aee2.a.328163-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "albums": [
+            {
+              "id": 332926,
+              "title": "1987 Karaoke Classics Volume 1",
+              "type": "compilation",
+              "metaType": "music",
+              "year": 2009,
+              "releaseDate": "2009-09-21T00:00:00+04:00",
+              "coverUri": "avatars.yandex.net/get-music-content/41288/96303662.a.332926-1/%%",
+              "ogImage": "avatars.yandex.net/get-music-content/41288/96303662.a.332926-1/%%",
+              "genre": "pop",
+              "trackCount": 16,
+              "likesCount": 1,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 453898,
+                  "name": "1980s Karaoke Band",
+                  "various": true,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-album-cover",
+                    "uri": "avatars.yandex.net/get-music-content/42108/a637aee2.a.328163-1/%%",
+                    "prefix": "a637aee2.a.328163-1"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ]
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "listeningFinished": false,
+              "labels": [
+                "Singsongs"
+              ],
+              "storageDir": "96303662.a.332926-1",
+              "trackPosition": {
+                "volume": 1,
+                "index": 10
+              },
+              "regions": [
+                "GEORGIA",
+                "GEORGIA_PREMIUM"
+              ],
+              "availableRegions": [
+
+              ]
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/41288/96303662.a.332926-1/%%",
+          "derivedColors": {
+            "average": "#978a34",
+            "waveText": "#fff6c1",
+            "miniPlayer": "#dad194",
+            "accent": "#cabd67"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/41288/96303662.a.332926-1/%%",
+          "lyricsAvailable": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": true,
+            "hasAvailableTextLyrics": true
+          },
+          "trackSource": "OWN",
+          "specialAudioResources": [
+            "smart_preview"
+          ],
+          "availableAsRbt": true,
+          "explicit": false,
+          "regions": [
+            "GEORGIA",
+            "GEORGIA_PREMIUM"
+          ]
+        },
+        {
+          "id": 147561609,
+          "realId": "147561609",
+          "title": "Never Gonna Give You Up",
+          "version": "Rick Astley Power metal cover",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 209880,
+          "fileSize": 0,
+          "r128": {
+            "i": -5.26,
+            "tp": 2.14
+          },
+          "fade": {
+            "inStart": 0.0,
+            "inStop": 1.5,
+            "outStart": 208.0,
+            "outStop": 208.9
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 25364470,
+              "name": "Crazy Metal",
+              "various": false,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/17730916/9965682b.a.40374075-1/%%",
+                "prefix": "9965682b.a.40374075-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "albums": [
+            {
+              "id": 40374075,
+              "title": "Metal songs No. 1",
+              "metaType": "music",
+              "year": 2026,
+              "releaseDate": "2026-01-06T00:00:00+03:00",
+              "coverUri": "avatars.yandex.net/get-music-content/17730916/9965682b.a.40374075-1/%%",
+              "ogImage": "avatars.yandex.net/get-music-content/17730916/9965682b.a.40374075-1/%%",
+              "genre": "rock",
+              "trackCount": 50,
+              "likesCount": 5,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 25364470,
+                  "name": "Crazy Metal",
+                  "various": false,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-album-cover",
+                    "uri": "avatars.yandex.net/get-music-content/17730916/9965682b.a.40374075-1/%%",
+                    "prefix": "9965682b.a.40374075-1"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ]
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+                147561619,
+                147561635,
+                147561632
+              ],
+              "disclaimers": [
+
+              ],
+              "listeningFinished": false,
+              "labels": [
+                "QUADRO"
+              ],
+              "storageDir": "9965682b.a.40374075-1",
+              "trackPosition": {
+                "volume": 1,
+                "index": 7
+              },
+              "regions": [
+                "GEORGIA",
+                "GEORGIA_PREMIUM"
+              ],
+              "availableRegions": [
+
+              ]
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/17730916/9965682b.a.40374075-1/%%",
+          "derivedColors": {
+            "average": "#1e1e1e",
+            "waveText": "#e0e0e0",
+            "miniPlayer": "#b7b7b7",
+            "accent": "#999999"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/17730916/9965682b.a.40374075-1/%%",
+          "lyricsAvailable": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": false,
+            "hasAvailableTextLyrics": false
+          },
+          "trackSource": "OWN",
+          "specialAudioResources": [
+            "smart_preview"
+          ],
+          "availableAsRbt": true,
+          "explicit": false,
+          "regions": [
+            "GEORGIA",
+            "GEORGIA_PREMIUM"
+          ]
+        },
+        {
+          "id": 17878763,
+          "realId": "17878763",
+          "title": "Never Gonna Give You up Originally Performed by Rick Astley",
+          "version": "Tribute Version",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 203410,
+          "fileSize": 0,
+          "r128": {
+            "i": -9.59,
+            "tp": 0.89
+          },
+          "fade": {
+            "inStart": 0.0,
+            "inStop": 1.5,
+            "outStart": 198.8,
+            "outStop": 202.8
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 2699266,
+              "name": "New Tribute Kings",
+              "various": false,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/38044/ae85f652.a.2677652-1/%%",
+                "prefix": "ae85f652.a.2677652-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "albums": [
+            {
+              "id": 1977346,
+              "title": "Pop AllStars - Party Classics, Vol. 3",
+              "metaType": "music",
+              "version": "Tribute Version",
+              "year": 2014,
+              "releaseDate": "2014-05-20T00:00:00+04:00",
+              "coverUri": "avatars.yandex.net/get-music-content/41288/20f86819.a.1977346-1/%%",
+              "ogImage": "avatars.yandex.net/get-music-content/41288/20f86819.a.1977346-1/%%",
+              "genre": "pop",
+              "trackCount": 25,
+              "likesCount": 6,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 2699266,
+                  "name": "New Tribute Kings",
+                  "various": false,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-album-cover",
+                    "uri": "avatars.yandex.net/get-music-content/38044/ae85f652.a.2677652-1/%%",
+                    "prefix": "ae85f652.a.2677652-1"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ]
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+                17878752,
+                17878755
+              ],
+              "disclaimers": [
+
+              ],
+              "listeningFinished": false,
+              "labels": [
+                "Legacy"
+              ],
+              "storageDir": "20f86819.a.1977346-1",
+              "trackPosition": {
+                "volume": 1,
+                "index": 12
+              },
+              "regions": [
+                "GEORGIA",
+                "GEORGIA_PREMIUM"
+              ],
+              "availableRegions": [
+
+              ]
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/41288/20f86819.a.1977346-1/%%",
+          "derivedColors": {
+            "average": "#999999",
+            "waveText": "#e0e0e0",
+            "miniPlayer": "#b7b7b7",
+            "accent": "#999999"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/41288/20f86819.a.1977346-1/%%",
+          "lyricsAvailable": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": false,
+            "hasAvailableTextLyrics": false
+          },
+          "trackSource": "OWN",
+          "specialAudioResources": [
+            "smart_preview"
+          ],
+          "availableAsRbt": true,
+          "explicit": false,
+          "regions": [
+            "GEORGIA",
+            "GEORGIA_PREMIUM"
+          ]
+        },
+        {
+          "id": 1360485,
+          "realId": "1360485",
+          "title": "Never Gonna Give You Up (In The Style Of Rick Astley)",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 207300,
+          "fileSize": 0,
+          "r128": {
+            "i": -21.92,
+            "tp": -2.02
+          },
+          "fade": {
+            "inStart": 0.0,
+            "inStop": 1.5,
+            "outStart": 205.8,
+            "outStop": 207.3
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 156849,
+              "name": "Karaoke",
+              "various": true,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/33216/7bf083b5.a.2002795-1/%%",
+                "prefix": "7bf083b5.a.2002795-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "albums": [
+            {
+              "id": 141764,
+              "title": "Karaoke Downloads - Disco Vol.9",
+              "type": "compilation",
+              "metaType": "music",
+              "year": 2009,
+              "releaseDate": "2009-04-02T00:00:00+04:00",
+              "coverUri": "avatars.yandex.net/get-music-content/34131/e00d51e1.a.141764-1/%%",
+              "ogImage": "avatars.yandex.net/get-music-content/34131/e00d51e1.a.141764-1/%%",
+              "trackCount": 12,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 156849,
+                  "name": "Karaoke",
+                  "various": true,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-album-cover",
+                    "uri": "avatars.yandex.net/get-music-content/33216/7bf083b5.a.2002795-1/%%",
+                    "prefix": "7bf083b5.a.2002795-1"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ]
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "listeningFinished": false,
+              "labels": [
+                "Ameritz"
+              ],
+              "storageDir": "e00d51e1.a.141764-1",
+              "trackPosition": {
+                "volume": 1,
+                "index": 9
+              },
+              "regions": [
+                "GEORGIA",
+                "GEORGIA_PREMIUM"
+              ],
+              "availableRegions": [
+
+              ]
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/34131/e00d51e1.a.141764-1/%%",
+          "derivedColors": {
+            "average": "#a3a328",
+            "waveText": "#ffffc1",
+            "miniPlayer": "#eeee80",
+            "accent": "#e7e74a"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/34131/e00d51e1.a.141764-1/%%",
+          "lyricsAvailable": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": false,
+            "hasAvailableTextLyrics": false
+          },
+          "trackSource": "OWN",
+          "availableAsRbt": true,
+          "explicit": false,
+          "regions": [
+            "GEORGIA",
+            "GEORGIA_PREMIUM"
+          ]
+        },
+        {
+          "id": 49865450,
+          "realId": "49865450",
+          "title": "Never Gonna Give You Up",
+          "version": "Originally Performed By Rick Astley",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 29780,
+          "fileSize": 0,
+          "r128": {
+            "i": -8.18,
+            "tp": 0.97
+          },
+          "fade": {
+            "inStart": 0.0,
+            "inStop": 1.5,
+            "outStart": 28.2,
+            "outStop": 29.7
+          },
+          "previewDurationMs": 29780,
+          "artists": [
+            {
+              "id": 6738221,
+              "name": "Chart Anthems",
+              "various": false,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/118603/211e38d3.a.7045995-1/%%",
+                "prefix": "211e38d3.a.7045995-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "albums": [
+            {
+              "id": 6858321,
+              "title": "Never Gonna Give You Up",
+              "type": "single",
+              "metaType": "music",
+              "version": "Originally Performed By Rick Astley",
+              "year": 2014,
+              "releaseDate": "2014-09-01T00:00:00+04:00",
+              "coverUri": "avatars.yandex.net/get-music-content/117546/4f90a024.a.6858321-1/%%",
+              "ogImage": "avatars.yandex.net/get-music-content/117546/4f90a024.a.6858321-1/%%",
+              "genre": "pop",
+              "trackCount": 1,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 6738221,
+                  "name": "Chart Anthems",
+                  "various": false,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-album-cover",
+                    "uri": "avatars.yandex.net/get-music-content/118603/211e38d3.a.7045995-1/%%",
+                    "prefix": "211e38d3.a.7045995-1"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ]
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "listeningFinished": false,
+              "labels": [
+                "Switch"
+              ],
+              "storageDir": "4f90a024.a.6858321-1",
+              "trackPosition": {
+                "volume": 1,
+                "index": 1
+              },
+              "regions": [
+                "GEORGIA",
+                "GEORGIA_PREMIUM"
+              ],
+              "availableRegions": [
+
+              ]
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/117546/4f90a024.a.6858321-1/%%",
+          "derivedColors": {
+            "average": "#0c1430",
+            "waveText": "#c1cfff",
+            "miniPlayer": "#869ce8",
+            "accent": "#5272df"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/117546/4f90a024.a.6858321-1/%%",
+          "lyricsAvailable": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": false,
+            "hasAvailableTextLyrics": false
+          },
+          "trackSource": "OWN",
+          "availableAsRbt": true,
+          "explicit": false,
+          "regions": [
+            "GEORGIA",
+            "GEORGIA_PREMIUM"
+          ]
+        },
+        {
+          "id": 7873543,
+          "realId": "7873543",
+          "title": "Never Gonna Give You Up",
+          "version": "Originally Performed By Rick Astley; Karaoke Version",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 224370,
+          "fileSize": 0,
+          "r128": {
+            "i": -13.49,
+            "tp": 0.39
+          },
+          "fade": {
+            "inStart": 5.0,
+            "inStop": 5.2,
+            "outStart": 217.8,
+            "outStop": 219.5
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 816639,
+              "name": "Amazing Karaoke",
+              "various": true,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/16154377/8f5e0d49.a.386453-2/%%",
+                "prefix": "8f5e0d49.a.386453-2"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "albums": [
+            {
+              "id": 276843,
+              "title": "Never Gonna Give You Up",
+              "type": "single",
+              "metaType": "music",
+              "version": "Originally Performed By Rick Astley; Karaoke Version",
+              "year": 2010,
+              "releaseDate": "2010-08-13T00:00:00+04:00",
+              "coverUri": "avatars.yandex.net/get-music-content/34131/257d7737.a.276843-10/%%",
+              "ogImage": "avatars.yandex.net/get-music-content/34131/257d7737.a.276843-10/%%",
+              "genre": "electronics",
+              "trackCount": 1,
+              "likesCount": 18,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 492675,
+                  "name": "David Morell",
+                  "various": false,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-album-cover",
+                    "uri": "avatars.yandex.net/get-music-content/175191/0161b942.a.551988-5/%%",
+                    "prefix": "0161b942.a.551988-5"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ]
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "listeningFinished": false,
+              "labels": [
+                "Amazing Karaoke"
+              ],
+              "storageDir": "257d7737.a.276843-10",
+              "trackPosition": {
+                "volume": 1,
+                "index": 1
+              },
+              "regions": [
+                "GEORGIA",
+                "GEORGIA_PREMIUM"
+              ],
+              "availableRegions": [
+
+              ]
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/34131/257d7737.a.276843-10/%%",
+          "derivedColors": {
+            "average": "#300c16",
+            "waveText": "#ffc1d2",
+            "miniPlayer": "#e38ba3",
+            "accent": "#d75a7c"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/34131/257d7737.a.276843-10/%%",
+          "lyricsAvailable": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": false,
+            "hasAvailableTextLyrics": false
+          },
+          "trackSource": "OWN",
+          "specialAudioResources": [
+            "smart_preview"
+          ],
+          "availableAsRbt": true,
+          "explicit": false,
+          "regions": [
+            "GEORGIA",
+            "GEORGIA_PREMIUM"
+          ]
+        },
+        {
+          "id": 31955383,
+          "realId": "31955383",
+          "title": "Never Gonna Give You Up",
+          "version": "Piano Version; Original Performed by Rick Astley",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 117500,
+          "fileSize": 0,
+          "r128": {
+            "i": -15.36,
+            "tp": -0.02
+          },
+          "fade": {
+            "inStart": 0.0,
+            "inStop": 1.5,
+            "outStart": 110.6,
+            "outStop": 112.3
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 3070862,
+              "name": "Lang Project",
+              "various": false,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/149669/46b5b72e.a.4153562-1/%%",
+                "prefix": "46b5b72e.a.4153562-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "albums": [
+            {
+              "id": 3885034,
+              "title": "80's at the Piano Vol. 2",
+              "metaType": "music",
+              "year": 2016,
+              "releaseDate": "2016-10-18T00:00:00+03:00",
+              "coverUri": "avatars.yandex.net/get-music-content/33216/c7328d70.a.3885034-1/%%",
+              "ogImage": "avatars.yandex.net/get-music-content/33216/c7328d70.a.3885034-1/%%",
+              "genre": "pop",
+              "trackCount": 20,
+              "likesCount": 8,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 3070862,
+                  "name": "Lang Project",
+                  "various": false,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-album-cover",
+                    "uri": "avatars.yandex.net/get-music-content/149669/46b5b72e.a.4153562-1/%%",
+                    "prefix": "46b5b72e.a.4153562-1"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ]
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "listeningFinished": false,
+              "labels": [
+                "Tam-Tam Media"
+              ],
+              "storageDir": "c7328d70.a.3885034-1",
+              "trackPosition": {
+                "volume": 1,
+                "index": 14
+              },
+              "regions": [
+                "GEORGIA",
+                "GEORGIA_PREMIUM"
+              ],
+              "availableRegions": [
+
+              ]
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/33216/c7328d70.a.3885034-1/%%",
+          "derivedColors": {
+            "average": "#0f2f3e",
+            "waveText": "#c1ebff",
+            "miniPlayer": "#70d1ff",
+            "accent": "#33bdff"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/33216/c7328d70.a.3885034-1/%%",
+          "lyricsAvailable": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": false,
+            "hasAvailableTextLyrics": false
+          },
+          "trackSource": "OWN",
+          "specialAudioResources": [
+            "smart_preview"
+          ],
+          "availableAsRbt": true,
+          "explicit": false,
+          "regions": [
+            "GEORGIA",
+            "GEORGIA_PREMIUM"
+          ]
+        },
+        {
+          "id": 5467705,
+          "realId": "5467705",
+          "title": "Never Gonna Give You Up (In the Style of Rick Astley)",
+          "version": "Karaoke Version",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 213500,
+          "fileSize": 0,
+          "r128": {
+            "i": -13.21,
+            "tp": 0.58
+          },
+          "fade": {
+            "inStart": 0.0,
+            "inStop": 1.5,
+            "outStart": 212.0,
+            "outStop": 213.5
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 712282,
+              "name": "Ameritz Karaoke Entertainment",
+              "various": true,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/41288/a5d1d316.a.634164-1/%%",
+                "prefix": "a5d1d316.a.634164-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "albums": [
+            {
+              "id": 602178,
+              "title": "Karaoke (In the Style of Rick Astley)",
+              "type": "compilation",
+              "metaType": "music",
+              "version": "Karaoke Version",
+              "year": 2012,
+              "releaseDate": "2012-07-26T00:00:00+04:00",
+              "coverUri": "avatars.yandex.net/get-music-content/42108/e7b25e45.a.602178-1/%%",
+              "ogImage": "avatars.yandex.net/get-music-content/42108/e7b25e45.a.602178-1/%%",
+              "genre": "pop",
+              "trackCount": 6,
+              "likesCount": 1,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 712282,
+                  "name": "Ameritz Karaoke Entertainment",
+                  "various": true,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-album-cover",
+                    "uri": "avatars.yandex.net/get-music-content/41288/a5d1d316.a.634164-1/%%",
+                    "prefix": "a5d1d316.a.634164-1"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ]
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "listeningFinished": false,
+              "labels": [
+                "Ameritz"
+              ],
+              "storageDir": "e7b25e45.a.602178-1",
+              "trackPosition": {
+                "volume": 1,
+                "index": 4
+              },
+              "regions": [
+                "GEORGIA",
+                "GEORGIA_PREMIUM"
+              ],
+              "availableRegions": [
+
+              ]
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/42108/e7b25e45.a.602178-1/%%",
+          "derivedColors": {
+            "average": "#3f213a",
+            "waveText": "#ffc1f4",
+            "miniPlayer": "#cda1c6",
+            "accent": "#b879ae"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/42108/e7b25e45.a.602178-1/%%",
+          "lyricsAvailable": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": false,
+            "hasAvailableTextLyrics": false
+          },
+          "trackSource": "OWN",
+          "specialAudioResources": [
+            "smart_preview"
+          ],
+          "availableAsRbt": true,
+          "explicit": false,
+          "regions": [
+            "GEORGIA",
+            "GEORGIA_PREMIUM"
+          ]
+        },
+        {
+          "id": 50074066,
+          "realId": "50074066",
+          "title": "Never Gonna Give You Up",
+          "version": "Originally Performed By Rick Astley",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 29120,
+          "fileSize": 0,
+          "r128": {
+            "i": -10.66,
+            "tp": 0.68
+          },
+          "fade": {
+            "inStart": 0.0,
+            "inStop": 1.5,
+            "outStart": 27.6,
+            "outStop": 29.1
+          },
+          "previewDurationMs": 29120,
+          "artists": [
+            {
+              "id": 6738197,
+              "name": "Pop Anthems",
+              "various": false,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/163479/bdfe8aaf.a.6815647-1/%%",
+                "prefix": "bdfe8aaf.a.6815647-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "albums": [
+            {
+              "id": 6894920,
+              "title": "Never Gonna Give You Up",
+              "type": "single",
+              "metaType": "music",
+              "version": "Originally Performed By Rick Astley",
+              "year": 2014,
+              "releaseDate": "2014-08-01T00:00:00+04:00",
+              "coverUri": "avatars.yandex.net/get-music-content/114728/fbe1f938.a.6894920-1/%%",
+              "ogImage": "avatars.yandex.net/get-music-content/114728/fbe1f938.a.6894920-1/%%",
+              "genre": "pop",
+              "trackCount": 1,
+              "likesCount": 1,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 6738197,
+                  "name": "Pop Anthems",
+                  "various": false,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-album-cover",
+                    "uri": "avatars.yandex.net/get-music-content/163479/bdfe8aaf.a.6815647-1/%%",
+                    "prefix": "bdfe8aaf.a.6815647-1"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ]
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "listeningFinished": false,
+              "labels": [
+                "Switch"
+              ],
+              "storageDir": "fbe1f938.a.6894920-1",
+              "trackPosition": {
+                "volume": 1,
+                "index": 1
+              },
+              "regions": [
+                "GEORGIA",
+                "GEORGIA_PREMIUM"
+              ],
+              "availableRegions": [
+
+              ]
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/114728/fbe1f938.a.6894920-1/%%",
+          "derivedColors": {
+            "average": "#265a99",
+            "waveText": "#c1ddff",
+            "miniPlayer": "#76b1f9",
+            "accent": "#3b90f6"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/114728/fbe1f938.a.6894920-1/%%",
+          "lyricsAvailable": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": false,
+            "hasAvailableTextLyrics": false
+          },
+          "trackSource": "OWN",
+          "availableAsRbt": true,
+          "explicit": false,
+          "regions": [
+            "GEORGIA",
+            "GEORGIA_PREMIUM"
+          ]
+        },
+        {
+          "id": 1148741,
+          "realId": "1148741",
+          "title": "Never Gonna Give You Up As Made Famous By: Rick Astley",
+          "version": "karaoke-version",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 197550,
+          "fileSize": 0,
+          "r128": {
+            "i": -16.75,
+            "tp": 0.04
+          },
+          "fade": {
+            "inStart": 1.5,
+            "inStop": 1.5,
+            "outStart": 193.0,
+            "outStop": 193.7
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 156849,
+              "name": "Karaoke",
+              "various": true,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/33216/7bf083b5.a.2002795-1/%%",
+                "prefix": "7bf083b5.a.2002795-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "albums": [
+            {
+              "id": 125923,
+              "title": "Karaoke Guys From The 80's And 90's Part 1",
+              "type": "compilation",
+              "metaType": "music",
+              "version": "karaoke-version",
+              "year": 2006,
+              "releaseDate": "2006-06-01T00:00:00+04:00",
+              "coverUri": "avatars.yandex.net/get-music-content/49707/7e593cba.a.125923-1/%%",
+              "ogImage": "avatars.yandex.net/get-music-content/49707/7e593cba.a.125923-1/%%",
+              "trackCount": 15,
+              "likesCount": 1,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 156849,
+                  "name": "Karaoke",
+                  "various": true,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-album-cover",
+                    "uri": "avatars.yandex.net/get-music-content/33216/7bf083b5.a.2002795-1/%%",
+                    "prefix": "7bf083b5.a.2002795-1"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ]
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "listeningFinished": false,
+              "labels": [
+                "CHARLY"
+              ],
+              "storageDir": "7e593cba.a.125923-1",
+              "trackPosition": {
+                "volume": 1,
+                "index": 9
+              },
+              "regions": [
+                "GEORGIA",
+                "GEORGIA_PREMIUM"
+              ],
+              "availableRegions": [
+
+              ]
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/49707/7e593cba.a.125923-1/%%",
+          "derivedColors": {
+            "average": "#999999",
+            "waveText": "#e0e0e0",
+            "miniPlayer": "#b7b7b7",
+            "accent": "#999999"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/49707/7e593cba.a.125923-1/%%",
+          "lyricsAvailable": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": false,
+            "hasAvailableTextLyrics": false
+          },
+          "trackSource": "OWN",
+          "availableAsRbt": true,
+          "explicit": false,
+          "regions": [
+            "GEORGIA",
+            "GEORGIA_PREMIUM"
+          ]
+        }
+      ]
+    }
+  }
+}

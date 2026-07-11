@@ -1,0 +1,67 @@
+{
+  "kind": "youtube#videoListResponse",
+  "etag": "luZXwFaQaEwwE84yemVsfH4dCAw",
+  "items": [
+    {
+      "kind": "youtube#video",
+      "etag": "HlNez8Eh9NF4daCyUu6xxpANWzs",
+      "id": "SbYXkOAoZpI",
+      "snippet": {
+        "publishedAt": "2013-04-15T03:58:04Z",
+        "channelId": "UCBAhXJWTzz3ozTkOnl6khrw",
+        "title": "Never Gonna Give You Up (Lyrics) - Rick Astley",
+        "description": "Music video and lyrics Never Gonna Give You Up of Rick Astley\n\nWe're no strangers to love \nYou know the rules and so do I \nA full commitment's what I'm thinking of \nYou wouldn't get this from any other guy \nI just wanna tell you how I'm feeling \nGotta make you understand \n\nCHORUS \nNever gonna give you up, \nNever gonna let you down \nNever gonna run around and desert you \nNever gonna make you cry, \nNever gonna say goodbye \nNever gonna tell a lie and hurt you \n\nWe've known each other for so long \nYour heart's been aching but you're too shy to say it \nInside we both know what's been going on \nWe know the game and we're gonna play it \nAnd if you ask me how I'm feeling \nDon't tell me you're too blind to see (CHORUS) \n\nCHORUSCHORUS \n(Ooh give you up) \n(Ooh give you up) \n(Ooh) never gonna give, never gonna give \n(give you up) \n(Ooh) never gonna give, never gonna give \n(give you up) \n\nWe've known each other for so long \nYour heart's been aching but you're too shy to say it \nInside we both know what's been going on \nWe know the game and we're gonna play it (TO FRONT)",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/SbYXkOAoZpI/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/SbYXkOAoZpI/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/SbYXkOAoZpI/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/SbYXkOAoZpI/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          }
+        },
+        "channelTitle": "Giovanna Lozano",
+        "tags": [
+          "Music",
+          "Rick Astley",
+          "Astley",
+          "Lyrics",
+          "80S",
+          "Gonna",
+          "You",
+          "Never",
+          "Again",
+          "Give",
+          "Never Gonna Give You Up",
+          "Up",
+          "Pop"
+        ],
+        "categoryId": "10",
+        "liveBroadcastContent": "none",
+        "defaultLanguage": "en",
+        "localized": {
+          "title": "Never Gonna Give You Up (Lyrics) - Rick Astley",
+          "description": "Music video and lyrics Never Gonna Give You Up of Rick Astley\n\nWe're no strangers to love \nYou know the rules and so do I \nA full commitment's what I'm thinking of \nYou wouldn't get this from any other guy \nI just wanna tell you how I'm feeling \nGotta make you understand \n\nCHORUS \nNever gonna give you up, \nNever gonna let you down \nNever gonna run around and desert you \nNever gonna make you cry, \nNever gonna say goodbye \nNever gonna tell a lie and hurt you \n\nWe've known each other for so long \nYour heart's been aching but you're too shy to say it \nInside we both know what's been going on \nWe know the game and we're gonna play it \nAnd if you ask me how I'm feeling \nDon't tell me you're too blind to see (CHORUS) \n\nCHORUSCHORUS \n(Ooh give you up) \n(Ooh give you up) \n(Ooh) never gonna give, never gonna give \n(give you up) \n(Ooh) never gonna give, never gonna give \n(give you up) \n\nWe've known each other for so long \nYour heart's been aching but you're too shy to say it \nInside we both know what's been going on \nWe know the game and we're gonna play it (TO FRONT)"
+        }
+      }
+    }
+  ],
+  "pageInfo": {
+    "totalResults": 1,
+    "resultsPerPage": 1
+  }
+}
+

@@ -1,0 +1,867 @@
+{
+  "invocationInfo": {
+    "req-id": "1781216571655219-7567966627085331071",
+    "hostname": "music-web-default-production-music-97.vla.yp-c.yandex.net",
+    "exec-duration-millis": 14
+  },
+  "result": [
+    {
+      "id": "609676",
+      "realId": "609676",
+      "title": "Never Gonna Give You Up",
+      "major": {
+        "id": 0,
+        "name": "-"
+      },
+      "available": true,
+      "availableForPremiumUsers": true,
+      "availableFullWithoutPermission": false,
+      "availableForOptions": [
+        "bookmate"
+      ],
+      "disclaimers": [
+
+      ],
+      "storageDir": "",
+      "durationMs": 212740,
+      "fileSize": 0,
+      "r128": {
+        "i": -11.04,
+        "tp": 0.56
+      },
+      "fade": {
+        "inStart": 0.1,
+        "inStop": 1.5,
+        "outStart": 206.3,
+        "outStop": 210.9
+      },
+      "previewDurationMs": 30000,
+      "artists": [
+        {
+          "id": 34466,
+          "name": "Rick Astley",
+          "various": false,
+          "composer": false,
+          "available": true,
+          "cover": {
+            "type": "from-artist-photos",
+            "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+            "prefix": "f8c365f5.p.34466/"
+          },
+          "genres": [
+
+          ],
+          "disclaimers": [
+
+          ],
+          "cutoutCover": {
+            "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+          }
+        }
+      ],
+      "albums": [
+        {
+          "id": 33628686,
+          "title": "The Best Of Me: Never Edition",
+          "metaType": "music",
+          "year": 2019,
+          "releaseDate": "2019-12-29T00:00:00+03:00",
+          "coverUri": "avatars.yandex.net/get-music-content/19999910/c1ed9300.a.33628686-3/%%",
+          "ogImage": "avatars.yandex.net/get-music-content/19999910/c1ed9300.a.33628686-3/%%",
+          "genre": "pop",
+          "trackCount": 38,
+          "likesCount": 18,
+          "recent": false,
+          "veryImportant": false,
+          "artists": [
+            {
+              "id": 34466,
+              "name": "Rick Astley",
+              "various": false,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-artist-photos",
+                "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                "prefix": "f8c365f5.p.34466/"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "cutoutCover": {
+                "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+              }
+            }
+          ],
+          "labels": [
+            {
+              "id": 43475,
+              "name": "BMG Rights Management (UK)"
+            }
+          ],
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "availableForMobile": true,
+          "availablePartially": false,
+          "bests": [
+            609676,
+            609700,
+            609718
+          ],
+          "disclaimers": [
+
+          ],
+          "listeningFinished": false,
+          "trackPosition": {
+            "volume": 1,
+            "index": 2
+          }
+        },
+        {
+          "id": 14599232,
+          "title": "3 Originals",
+          "metaType": "music",
+          "year": 2002,
+          "releaseDate": "2002-12-07T00:00:00+03:00",
+          "coverUri": "avatars.yandex.net/get-music-content/18132539/5ef3a5a4.a.14599232-4/%%",
+          "ogImage": "avatars.yandex.net/get-music-content/18132539/5ef3a5a4.a.14599232-4/%%",
+          "genre": "pop",
+          "trackCount": 31,
+          "likesCount": 257,
+          "recent": false,
+          "veryImportant": false,
+          "artists": [
+            {
+              "id": 34466,
+              "name": "Rick Astley",
+              "various": false,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-artist-photos",
+                "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                "prefix": "f8c365f5.p.34466/"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "cutoutCover": {
+                "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+              }
+            }
+          ],
+          "labels": [
+            {
+              "id": 43475,
+              "name": "BMG Rights Management (UK)"
+            }
+          ],
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "availableForMobile": true,
+          "availablePartially": false,
+          "bests": [
+            609676,
+            609700,
+            609718
+          ],
+          "disclaimers": [
+
+          ],
+          "listeningFinished": false,
+          "trackPosition": {
+            "volume": 1,
+            "index": 1
+          }
+        },
+        {
+          "id": 14599266,
+          "title": "Whenever You Need Somebody",
+          "metaType": "music",
+          "year": 1987,
+          "releaseDate": "1987-11-12T00:00:00+03:00",
+          "coverUri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+          "ogImage": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+          "genre": "pop",
+          "trackCount": 10,
+          "likesCount": 1096,
+          "recent": false,
+          "veryImportant": false,
+          "artists": [
+            {
+              "id": 34466,
+              "name": "Rick Astley",
+              "various": false,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-artist-photos",
+                "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                "prefix": "f8c365f5.p.34466/"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "cutoutCover": {
+                "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+              }
+            }
+          ],
+          "labels": [
+            {
+              "id": 43475,
+              "name": "BMG Rights Management (UK)"
+            }
+          ],
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "availableForMobile": true,
+          "availablePartially": false,
+          "bests": [
+            609676,
+            609700
+          ],
+          "disclaimers": [
+
+          ],
+          "listeningFinished": false,
+          "trackPosition": {
+            "volume": 1,
+            "index": 1
+          }
+        },
+        {
+          "id": 3987179,
+          "title": "I Love Skiing",
+          "type": "compilation",
+          "metaType": "music",
+          "contentWarning": "clean",
+          "year": 2016,
+          "releaseDate": "2016-12-30T00:00:00+03:00",
+          "coverUri": "avatars.yandex.net/get-music-content/139444/06024393.a.3987179-1/%%",
+          "ogImage": "avatars.yandex.net/get-music-content/139444/06024393.a.3987179-1/%%",
+          "genre": "sport",
+          "trackCount": 25,
+          "likesCount": 137,
+          "recent": false,
+          "veryImportant": false,
+          "artists": [
+            {
+              "id": 171,
+              "name": "сборник",
+              "various": true,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/14299670/83f4071f.a.35195596-1/%%",
+                "prefix": "83f4071f.a.35195596-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "labels": [
+
+          ],
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "availableForMobile": true,
+          "availablePartially": false,
+          "bests": [
+            609676,
+            31219146,
+            234703
+          ],
+          "disclaimers": [
+
+          ],
+          "listeningFinished": false,
+          "trackPosition": {
+            "volume": 1,
+            "index": 24
+          }
+        },
+        {
+          "id": 65006,
+          "title": "The Best Year Of My Life: 1987",
+          "type": "compilation",
+          "metaType": "music",
+          "year": 2010,
+          "releaseDate": "2010-05-03T00:00:00+04:00",
+          "coverUri": "avatars.yandex.net/get-music-content/32236/050986dc.a.65006-1/%%",
+          "ogImage": "avatars.yandex.net/get-music-content/32236/050986dc.a.65006-1/%%",
+          "genre": "pop",
+          "trackCount": 19,
+          "likesCount": 47,
+          "recent": false,
+          "veryImportant": false,
+          "artists": [
+            {
+              "id": 171,
+              "name": "сборник",
+              "various": true,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/14299670/83f4071f.a.35195596-1/%%",
+                "prefix": "83f4071f.a.35195596-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "labels": [
+
+          ],
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "availableForMobile": true,
+          "availablePartially": false,
+          "bests": [
+            609676,
+            609692,
+            95895
+          ],
+          "disclaimers": [
+
+          ],
+          "listeningFinished": false,
+          "trackPosition": {
+            "volume": 1,
+            "index": 2
+          }
+        },
+        {
+          "id": 2529364,
+          "title": "80-ties. The Best.",
+          "type": "compilation",
+          "metaType": "music",
+          "year": 2015,
+          "releaseDate": "2015-03-03T00:00:00+03:00",
+          "coverUri": "avatars.yandex.net/get-music-content/42108/7bf83d22.a.2529364-1/%%",
+          "ogImage": "avatars.yandex.net/get-music-content/42108/7bf83d22.a.2529364-1/%%",
+          "genre": "pop",
+          "trackCount": 14,
+          "likesCount": 654,
+          "recent": false,
+          "veryImportant": false,
+          "artists": [
+            {
+              "id": 171,
+              "name": "сборник",
+              "various": true,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/14299670/83f4071f.a.35195596-1/%%",
+                "prefix": "83f4071f.a.35195596-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "labels": [
+
+          ],
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "availableForMobile": true,
+          "availablePartially": false,
+          "bests": [
+            609676,
+            609550,
+            609666
+          ],
+          "disclaimers": [
+
+          ],
+          "listeningFinished": false,
+          "trackPosition": {
+            "volume": 1,
+            "index": 8
+          }
+        },
+        {
+          "id": 4952758,
+          "title": "The Hit Factory Ultimate Collection",
+          "type": "compilation",
+          "metaType": "music",
+          "contentWarning": "clean",
+          "year": 2017,
+          "releaseDate": "2017-11-03T00:00:00+03:00",
+          "coverUri": "avatars.yandex.net/get-music-content/20031403/01b4f94d.a.4952758-18/%%",
+          "ogImage": "avatars.yandex.net/get-music-content/20031403/01b4f94d.a.4952758-18/%%",
+          "genre": "pop",
+          "trackCount": 26,
+          "likesCount": 232,
+          "recent": false,
+          "veryImportant": false,
+          "artists": [
+            {
+              "id": 171,
+              "name": "сборник",
+              "various": true,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/14299670/83f4071f.a.35195596-1/%%",
+                "prefix": "83f4071f.a.35195596-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "labels": [
+            {
+              "id": 2348,
+              "name": "Union Square"
+            }
+          ],
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "availableForMobile": true,
+          "availablePartially": false,
+          "bests": [
+            32124094,
+            609676,
+            609700
+          ],
+          "disclaimers": [
+
+          ],
+          "listeningFinished": false,
+          "trackPosition": {
+            "volume": 1,
+            "index": 2
+          }
+        },
+        {
+          "id": 5553587,
+          "title": "Football Songs",
+          "type": "compilation",
+          "metaType": "music",
+          "contentWarning": "explicit",
+          "year": 2018,
+          "releaseDate": "2018-07-11T00:00:00+03:00",
+          "coverUri": "avatars.yandex.net/get-music-content/6058982/94386f06.a.5553587-2/%%",
+          "ogImage": "avatars.yandex.net/get-music-content/6058982/94386f06.a.5553587-2/%%",
+          "genre": "pop",
+          "trackCount": 23,
+          "likesCount": 473,
+          "recent": false,
+          "veryImportant": false,
+          "artists": [
+            {
+              "id": 171,
+              "name": "сборник",
+              "various": true,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/14299670/83f4071f.a.35195596-1/%%",
+                "prefix": "83f4071f.a.35195596-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "labels": [
+
+          ],
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "availableForMobile": true,
+          "availablePartially": false,
+          "bests": [
+            29544272,
+            609676,
+            647314
+          ],
+          "disclaimers": [
+            "descriptionText:67370c8e13b92b0a60256675"
+          ],
+          "listeningFinished": false,
+          "trackPosition": {
+            "volume": 1,
+            "index": 23
+          }
+        },
+        {
+          "id": 6644559,
+          "title": "80s Dance",
+          "type": "compilation",
+          "metaType": "music",
+          "contentWarning": "clean",
+          "year": 2019,
+          "releaseDate": "2019-01-18T00:00:00+03:00",
+          "coverUri": "avatars.yandex.net/get-music-content/17730916/f9f06036.a.6644559-22/%%",
+          "ogImage": "avatars.yandex.net/get-music-content/17730916/f9f06036.a.6644559-22/%%",
+          "genre": "pop",
+          "trackCount": 31,
+          "likesCount": 85,
+          "recent": false,
+          "veryImportant": false,
+          "artists": [
+            {
+              "id": 171,
+              "name": "сборник",
+              "various": true,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/14299670/83f4071f.a.35195596-1/%%",
+                "prefix": "83f4071f.a.35195596-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "labels": [
+            {
+              "id": 43475,
+              "name": "BMG Rights Management (UK)"
+            }
+          ],
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "availableForMobile": true,
+          "availablePartially": false,
+          "bests": [
+            609676,
+            609666,
+            609700
+          ],
+          "disclaimers": [
+
+          ],
+          "listeningFinished": false,
+          "trackPosition": {
+            "volume": 1,
+            "index": 7
+          }
+        },
+        {
+          "id": 40382550,
+          "title": "80s Dance",
+          "type": "compilation",
+          "metaType": "music",
+          "contentWarning": "explicit",
+          "year": 2019,
+          "releaseDate": "2019-01-18T00:00:00+03:00",
+          "coverUri": "avatars.yandex.net/get-music-content/17722696/8bcb16e8.a.40382550-1/%%",
+          "ogImage": "avatars.yandex.net/get-music-content/17722696/8bcb16e8.a.40382550-1/%%",
+          "genre": "pop",
+          "trackCount": 42,
+          "recent": false,
+          "veryImportant": false,
+          "artists": [
+            {
+              "id": 171,
+              "name": "сборник",
+              "various": true,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/14299670/83f4071f.a.35195596-1/%%",
+                "prefix": "83f4071f.a.35195596-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "labels": [
+            {
+              "id": 43475,
+              "name": "BMG Rights Management (UK)"
+            }
+          ],
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "availableForMobile": true,
+          "availablePartially": false,
+          "bests": [
+            32123998,
+            609676,
+            609666
+          ],
+          "disclaimers": [
+            "descriptionText:67370c8e13b92b0a60256675"
+          ],
+          "listeningFinished": false,
+          "trackPosition": {
+            "volume": 1,
+            "index": 18
+          }
+        },
+        {
+          "id": 6872604,
+          "title": "Românticas Anos 80",
+          "type": "compilation",
+          "metaType": "music",
+          "year": 2019,
+          "releaseDate": "2019-02-15T00:00:00+03:00",
+          "coverUri": "avatars.yandex.net/get-music-content/108289/ed7723a3.a.6872604-1/%%",
+          "ogImage": "avatars.yandex.net/get-music-content/108289/ed7723a3.a.6872604-1/%%",
+          "trackCount": 58,
+          "likesCount": 991,
+          "recent": false,
+          "veryImportant": false,
+          "artists": [
+            {
+              "id": 171,
+              "name": "сборник",
+              "various": true,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/14299670/83f4071f.a.35195596-1/%%",
+                "prefix": "83f4071f.a.35195596-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "labels": [
+
+          ],
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "availableForMobile": true,
+          "availablePartially": false,
+          "bests": [
+            2834233,
+            609676,
+            649539
+          ],
+          "disclaimers": [
+
+          ],
+          "listeningFinished": false,
+          "trackPosition": {
+            "volume": 1,
+            "index": 36
+          }
+        },
+        {
+          "id": 40391807,
+          "title": "Ultimate Party",
+          "type": "compilation",
+          "metaType": "music",
+          "contentWarning": "explicit",
+          "coverUri": "avatars.yandex.net/get-music-content/17696724/de756d1c.a.40391807-1/%%",
+          "ogImage": "avatars.yandex.net/get-music-content/17696724/de756d1c.a.40391807-1/%%",
+          "genre": "pop",
+          "trackCount": 50,
+          "recent": false,
+          "veryImportant": false,
+          "artists": [
+            {
+              "id": 171,
+              "name": "сборник",
+              "various": true,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/14299670/83f4071f.a.35195596-1/%%",
+                "prefix": "83f4071f.a.35195596-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "labels": [
+            {
+              "id": 3701,
+              "name": "Countdown Media"
+            }
+          ],
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "availableForMobile": true,
+          "availablePartially": false,
+          "bests": [
+            609676,
+            16221952,
+            629351
+          ],
+          "disclaimers": [
+            "descriptionText:67370c8e13b92b0a60256675"
+          ],
+          "listeningFinished": false,
+          "trackPosition": {
+            "volume": 1,
+            "index": 14
+          }
+        },
+        {
+          "id": 40391631,
+          "title": "Ultimate Summer BBQ",
+          "type": "compilation",
+          "metaType": "music",
+          "coverUri": "avatars.yandex.net/get-music-content/18172800/3ae39d2a.a.40391631-1/%%",
+          "ogImage": "avatars.yandex.net/get-music-content/18172800/3ae39d2a.a.40391631-1/%%",
+          "genre": "pop",
+          "trackCount": 50,
+          "recent": false,
+          "veryImportant": false,
+          "artists": [
+            {
+              "id": 171,
+              "name": "сборник",
+              "various": true,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-album-cover",
+                "uri": "avatars.yandex.net/get-music-content/14299670/83f4071f.a.35195596-1/%%",
+                "prefix": "83f4071f.a.35195596-1"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ]
+            }
+          ],
+          "labels": [
+            {
+              "id": 3701,
+              "name": "Countdown Media"
+            }
+          ],
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "availableForMobile": true,
+          "availablePartially": false,
+          "bests": [
+            87457,
+            609676,
+            2983681
+          ],
+          "disclaimers": [
+
+          ],
+          "listeningFinished": false,
+          "trackPosition": {
+            "volume": 1,
+            "index": 5
+          }
+        }
+      ],
+      "coverUri": "avatars.yandex.net/get-music-content/19999910/c1ed9300.a.33628686-3/%%",
+      "derivedColors": {
+        "average": "#8799aa",
+        "waveText": "#c1e0ff",
+        "miniPlayer": "#abb7c4",
+        "accent": "#8799aa"
+      },
+      "ogImage": "avatars.yandex.net/get-music-content/19999910/c1ed9300.a.33628686-3/%%",
+      "lyricsAvailable": true,
+      "type": "music",
+      "rememberPosition": false,
+      "trackSharingFlag": "COVER_ONLY",
+      "lyricsInfo": {
+        "hasAvailableSyncLyrics": true,
+        "hasAvailableTextLyrics": true
+      },
+      "trackSource": "OWN",
+      "specialAudioResources": [
+        "smart_preview"
+      ]
+    }
+  ]
+}

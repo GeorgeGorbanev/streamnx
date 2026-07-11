@@ -1,0 +1,54 @@
+{
+  "kind": "youtube#playlistListResponse",
+  "etag": "38fnrR9ftWTIC-otsTu8_Ou1E2s",
+  "pageInfo": {
+    "totalResults": 1,
+    "resultsPerPage": 5
+  },
+  "items": [
+    {
+      "kind": "youtube#playlist",
+      "etag": "cq2uy0Wkik6ePXTRfvPIOcPMfqM",
+      "id": "PLtgiPVWmOlIYtYfnnutPhJviSrv5Bk8_W",
+      "snippet": {
+        "publishedAt": "2022-05-13T12:41:03.277208Z",
+        "channelId": "UCgEF8dDG1qiOW4fp-RG2-Ow",
+        "title": "Rick Astley - Whenever You Need Somebody (1987) (Album) (Pop)",
+        "description": "",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/lYBUbBu4W08/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/lYBUbBu4W08/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/lYBUbBu4W08/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/lYBUbBu4W08/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/lYBUbBu4W08/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Peter Kolya Jr",
+        "localized": {
+          "title": "Rick Astley - Whenever You Need Somebody (1987) (Album) (Pop)",
+          "description": ""
+        }
+      }
+    }
+  ]
+}
+

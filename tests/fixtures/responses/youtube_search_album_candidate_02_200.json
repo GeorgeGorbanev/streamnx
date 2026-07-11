@@ -1,0 +1,54 @@
+{
+  "kind": "youtube#playlistListResponse",
+  "etag": "He6JtWYevZ-sAn9jsPI2LBKvBEA",
+  "pageInfo": {
+    "totalResults": 1,
+    "resultsPerPage": 5
+  },
+  "items": [
+    {
+      "kind": "youtube#playlist",
+      "etag": "nSFm1HF6KrcqeKtKNnRsZzZOEeU",
+      "id": "PL3aRpGkCm4PEMWuR-3-9oc1ktpNXNpHxk",
+      "snippet": {
+        "publishedAt": "2022-09-19T16:14:23.069141Z",
+        "channelId": "UCxYRBZYMqhrtIcgw0pgfhUQ",
+        "title": "Rick Astley - Whenever You Need Somebody (Album)",
+        "description": "MCADUSAUDIO",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/lYBUbBu4W08/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/lYBUbBu4W08/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/lYBUbBu4W08/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/lYBUbBu4W08/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/lYBUbBu4W08/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "MCADCUVIDEO",
+        "localized": {
+          "title": "Rick Astley - Whenever You Need Somebody (Album)",
+          "description": "MCADUSAUDIO"
+        }
+      }
+    }
+  ]
+}
+

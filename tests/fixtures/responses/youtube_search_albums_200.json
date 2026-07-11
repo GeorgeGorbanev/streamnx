@@ -1,0 +1,353 @@
+{
+  "kind": "youtube#searchListResponse",
+  "etag": "Lt7oXJZjecXOJgDLh2pkxmwQo3k",
+  "nextPageToken": "CAoQAA",
+  "regionCode": "GE",
+  "pageInfo": {
+    "totalResults": 8611,
+    "resultsPerPage": 10
+  },
+  "items": [
+    {
+      "kind": "youtube#searchResult",
+      "etag": "6JLeHVzqtPm_V45dU-6x3rQfnuw",
+      "id": {
+        "kind": "youtube#playlist",
+        "playlistId": "PLtgiPVWmOlIbBLeKL7iH0Bs84cYVF59e8"
+      },
+      "snippet": {
+        "publishedAt": "2022-05-24T06:39:44Z",
+        "channelId": "UCgEF8dDG1qiOW4fp-RG2-Ow",
+        "title": "Rick Astley - Whenever You Need Somebody (Deluxe Edition - 2022 Remaster) [Full Album] (Pop)",
+        "description": "",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/3BFTio5296w/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/3BFTio5296w/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/3BFTio5296w/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Peter Kolya Jr",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-05-24T06:39:44Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "jikwFkwTIKTxvI5_qnzK_zM_PcE",
+      "id": {
+        "kind": "youtube#playlist",
+        "playlistId": "PL3aRpGkCm4PEMWuR-3-9oc1ktpNXNpHxk"
+      },
+      "snippet": {
+        "publishedAt": "2022-09-19T16:14:23Z",
+        "channelId": "UCxYRBZYMqhrtIcgw0pgfhUQ",
+        "title": "Rick Astley - Whenever You Need Somebody (Album)",
+        "description": "MCADUSAUDIO.",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/lYBUbBu4W08/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/lYBUbBu4W08/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/lYBUbBu4W08/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "MCADCUVIDEO",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-09-19T16:14:23Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "j8aEbfrBryOY6GIAP7CijTSSEU0",
+      "id": {
+        "kind": "youtube#playlist",
+        "playlistId": "PL_9gWeiShHFHJDgga5SSJCN8eztoilisC"
+      },
+      "snippet": {
+        "publishedAt": "2016-06-30T10:31:00Z",
+        "channelId": "UCn_cTBTFjHu_V0fw_S8WwoQ",
+        "title": "Rick Astley - Whenever You Need Somebody (Full Album)",
+        "description": "Listen On Spotify: http://smarturl.it/AstleySpotify Buy On iTunes: http://smarturl.it/AstleyGHiTunes Amazon: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/dQw4w9WgXcQ/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Sony Music UK",
+        "liveBroadcastContent": "none",
+        "publishTime": "2016-06-30T10:31:00Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "ZPZauEF1n1lB9Bj98fEaPhPeVo8",
+      "id": {
+        "kind": "youtube#playlist",
+        "playlistId": "PL5l4oM-gW3urbqHYZfxdYuSFM3F7D9qCU"
+      },
+      "snippet": {
+        "publishedAt": "2022-05-22T18:05:34Z",
+        "channelId": "UC3mW4qgS-GnU8RbBF91oPzw",
+        "title": "Rick Astley - Whenever You Need Somebody (Deluxe Edition - 2022 Remaster) (Album)",
+        "description": "",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/3BFTio5296w/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/3BFTio5296w/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/3BFTio5296w/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Denny Li",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-05-22T18:05:34Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "EhCZmD3ctQEMXyIkpRFL_Nxeg2U",
+      "id": {
+        "kind": "youtube#playlist",
+        "playlistId": "PLSYjVXj03FmCkiHQCMCghJSOdOkRNzhAJ"
+      },
+      "snippet": {
+        "publishedAt": "2016-10-27T11:58:05Z",
+        "channelId": "UCJ6SjDkEE-JIFioMqETz3ew",
+        "title": "Rick Astley (1987) Whenever You Need Somebody",
+        "description": "",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/B77NF290LDA/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/B77NF290LDA/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/B77NF290LDA/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Zsolt Rajkó",
+        "liveBroadcastContent": "none",
+        "publishTime": "2016-10-27T11:58:05Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "FoysMRlvkZPenqYjxds4lacffbU",
+      "id": {
+        "kind": "youtube#playlist",
+        "playlistId": "PLcsWXT-BRUUYx0h3cPPX6Gs3J1hqlypme"
+      },
+      "snippet": {
+        "publishedAt": "2023-08-26T04:45:49Z",
+        "channelId": "UCBemnslnz1y7XJxNSfofleQ",
+        "title": "Rick Astley - Whenever You Need Somebody - 432hz",
+        "description": "Artist: Rick Astley Album: Whenever You Need Somebody 432hz No copyright infringement intended. All images and audio ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/qwLQkLTOmqo/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/qwLQkLTOmqo/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/qwLQkLTOmqo/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Hertz Patrol",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-08-26T04:45:49Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "kUdnvcv9Rc5LFWaB0KUZHWkKWIM",
+      "id": {
+        "kind": "youtube#playlist",
+        "playlistId": "PLMynaxX_I0z_f853CNb7_gDYDN2AN59jH"
+      },
+      "snippet": {
+        "publishedAt": "2026-01-05T22:11:27Z",
+        "channelId": "UC5OpM2ME0thMSPiuCmcoPuw",
+        "title": "Rick Astley - Whenever You Need Somebody",
+        "description": "",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/lYBUbBu4W08/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/lYBUbBu4W08/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/lYBUbBu4W08/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Topic Albums Playlists Only",
+        "liveBroadcastContent": "none",
+        "publishTime": "2026-01-05T22:11:27Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "akxJxmKUu0yLgbUBVW-ku27NFD8",
+      "id": {
+        "kind": "youtube#playlist",
+        "playlistId": "PLF-kxtaaTH5UAs61S7du4RmD4lC6RHk4j"
+      },
+      "snippet": {
+        "publishedAt": "2021-03-14T02:36:02Z",
+        "channelId": "UCIf76up2esWZ-Soe86fRklQ",
+        "title": "Rick Astley - Whenever You Need Somebody (1987)",
+        "description": "Tracks 1-4, 6, 10, 12-14: Produced by Mike Stock, Matt Aitken, and Pete Waterman (Stock Aitken Waterman) Tracks 5, 7, 11: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/lYBUbBu4W08/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/lYBUbBu4W08/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/lYBUbBu4W08/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Jennie Music Archive",
+        "liveBroadcastContent": "none",
+        "publishTime": "2021-03-14T02:36:02Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "i1uDnOKJwXG3ch0wqCfwtzkbu84",
+      "id": {
+        "kind": "youtube#playlist",
+        "playlistId": "PLgaFNC_I_ZkkyIFxmCEXnRZSp0xWwbTCU"
+      },
+      "snippet": {
+        "publishedAt": "2026-03-11T06:16:50Z",
+        "channelId": "UCCh7iY0jKvjszpQFy9HykAw",
+        "title": "Rick Astley - Whenever You Need Somebody (Full Album, 1987/Album Completo)",
+        "description": "SUBSCRIBE: https://youtube.com/channel/UCCh7iY0jKvjszpQFy9HykAw RICK ASTLEY GREATEST HITS (GRANDES EXITOS).",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/3BFTio5296w/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/3BFTio5296w/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/3BFTio5296w/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Hits & Best Songs Playlist ",
+        "liveBroadcastContent": "none",
+        "publishTime": "2026-03-11T06:16:50Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "0bEBv-XyC9NKsXSRbvGmARzsjXE",
+      "id": {
+        "kind": "youtube#playlist",
+        "playlistId": "PLtgiPVWmOlIYtYfnnutPhJviSrv5Bk8_W"
+      },
+      "snippet": {
+        "publishedAt": "2022-05-13T12:41:03Z",
+        "channelId": "UCgEF8dDG1qiOW4fp-RG2-Ow",
+        "title": "Rick Astley - Whenever You Need Somebody (1987) (Album) (Pop)",
+        "description": "",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/lYBUbBu4W08/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/lYBUbBu4W08/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/lYBUbBu4W08/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Peter Kolya Jr",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-05-13T12:41:03Z"
+      }
+    }
+  ]
+}
+

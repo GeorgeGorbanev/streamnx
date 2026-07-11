@@ -1,0 +1,81 @@
+{
+  "kind": "youtube#videoListResponse",
+  "etag": "0Tl2veDqLhpSa0k-Tc1Y9R9tDII",
+  "items": [
+    {
+      "kind": "youtube#video",
+      "etag": "cn0MCI7wTrZMbLMcZa0M7dskTxI",
+      "id": "QFK09y01me0",
+      "snippet": {
+        "publishedAt": "2022-04-19T14:00:34Z",
+        "channelId": "UCIq-5ALaaM-hiL_bFUc5GlA",
+        "title": "Rick Astley - Never Gonna Give You Up (Countdown, 1987)",
+        "description": "TV performance by Rick Astley with ‘Never Gonna Give You Up’ on Dutch popshow “Countdown”.  The television show was broadcasted by Veronica from 1976 to 1993 and was \"Europe's Number 1 Rock Show\" with performances by the greatest artists from all over the world like Paul McCartney, David Bowie, Tina Turner, Janet Jackson, Stevie Wonder, The Rolling Stones, George Harrison, U2, The Police, Eric Clapton, Bruce Springsteen, Lenny Kravitz, Depeche Mode, New Order, Whitney Houston, Duran Duran, R.E.M., Frankie Goes To Hollywood, The Cure, Run DMC, Cyndi Lauper, Iron Maiden, New Kids On The Block, LL Cool J.\n\n • Subscribe to our channel: https://bit.ly/3kepHLP\n\n• Playlist met Nederlandstalige acts bij Countdown: https://bit.ly/3qJ0NFQ\n• Playlist met 70's Countdown clips: https://bit.ly/3bBwY4L\n• Playlist met 80's Countdown clips: https://bit.ly/3qVyKE5\n• Playlist met 90's Countdown clips: https://bit.ly/3kmXiUf\n\n====\nOVER COUNTDOWN\n====\nHet Nederlandse televisieprogramma \"Countdown\" was van 1976 t/m 1993 “Europe’s Number 1 Rock Show” en werd uitgezonden bij Veronica. Later werd het programma ook uitgezonden in het buitenland en was het op z'n hoogtepunt in meer dan 20 landen op televisie te zien.\n\nGedurende deze 17 jaar muziekgeschiedenis zijn er opnames gemaakt met talloze internationale sterren, zoals Paul McCartney, David Bowie, Tina Turner, Janet Jackson, Stevie Wonder, The Rolling Stones, George Harrison, U2, The Police, Eric Clapton, Bruce Springsteen, Lenny Kravitz, Depeche Mode, New Order, Whitney Houston, Duran Duran, R.E.M., Frankie Goes To Hollywood, The Cure, Run DMC, Cyndi Lauper, Iron Maiden, New Kids On The Block, LL Cool J.\n\nUiteraard kwamen Nederlandse top-acts als Doe Maar, Andre Hazes, Herman Brood, Frank Boeijen, Spargo, Golden Earring, Time Bandits,  De Dijk, De Raggende Manne, Hans de Booij, Gerard Joling, Drukwerk ook langs voor een optreden in Bussum.\n\nCountdown werd gepresenteerd door oa Lex Harding, Erik de Zwart, Adam Curry, Simone Walraven Wessel van Diepen, Jeroen van Inkel, Rob Stenders, Simone Angel en Jasper Faber.\n\nHet Countdown archief is vrijwel helemaal compleet en sinds 2017 eigendom van het Amerikaanse Reelin’ In The Years Productions (David Peck - https://reelinintheyears.com/) en Double 2 Hilversum (Jan Douwe Kroeske - http://www.double2bv.nl). Het archief bestaat uit meer dan 3.000 analoge mastertapes die allemaal gedigitaliseerd en gearchiveerd zijn. Indien u gebruik wilt maken van beeldmateriaal in een documentaire, tv-programma of andere mediaproductie neemt u voor een licentiedeal contact op met Double 2 BV via info@d2bv.nl. Beeldmateriaal wordt enkel verstrekt aan zakelijke projecten en niet aan particulieren.\n\n===\n#RickAstley",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/QFK09y01me0/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/QFK09y01me0/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/QFK09y01me0/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/QFK09y01me0/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/QFK09y01me0/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Countdown",
+        "tags": [
+          "CountDown",
+          "pop",
+          "top 40",
+          "hit",
+          "live",
+          "download",
+          "mp3",
+          "90s",
+          "tv show",
+          "television",
+          "Countdown",
+          "Veronica",
+          "televisie",
+          "Europe’s Number 1 Rock Show",
+          "pop/rock",
+          "rock classic",
+          "classic rock",
+          "rick n roll",
+          "rick 'n' roll",
+          "never gonna give you up",
+          "never going to give you up"
+        ],
+        "categoryId": "10",
+        "liveBroadcastContent": "none",
+        "defaultLanguage": "en",
+        "localized": {
+          "title": "Rick Astley - Never Gonna Give You Up (Countdown, 1987)",
+          "description": "TV performance by Rick Astley with ‘Never Gonna Give You Up’ on Dutch popshow “Countdown”.  The television show was broadcasted by Veronica from 1976 to 1993 and was \"Europe's Number 1 Rock Show\" with performances by the greatest artists from all over the world like Paul McCartney, David Bowie, Tina Turner, Janet Jackson, Stevie Wonder, The Rolling Stones, George Harrison, U2, The Police, Eric Clapton, Bruce Springsteen, Lenny Kravitz, Depeche Mode, New Order, Whitney Houston, Duran Duran, R.E.M., Frankie Goes To Hollywood, The Cure, Run DMC, Cyndi Lauper, Iron Maiden, New Kids On The Block, LL Cool J.\n\n • Subscribe to our channel: https://bit.ly/3kepHLP\n\n• Playlist met Nederlandstalige acts bij Countdown: https://bit.ly/3qJ0NFQ\n• Playlist met 70's Countdown clips: https://bit.ly/3bBwY4L\n• Playlist met 80's Countdown clips: https://bit.ly/3qVyKE5\n• Playlist met 90's Countdown clips: https://bit.ly/3kmXiUf\n\n====\nOVER COUNTDOWN\n====\nHet Nederlandse televisieprogramma \"Countdown\" was van 1976 t/m 1993 “Europe’s Number 1 Rock Show” en werd uitgezonden bij Veronica. Later werd het programma ook uitgezonden in het buitenland en was het op z'n hoogtepunt in meer dan 20 landen op televisie te zien.\n\nGedurende deze 17 jaar muziekgeschiedenis zijn er opnames gemaakt met talloze internationale sterren, zoals Paul McCartney, David Bowie, Tina Turner, Janet Jackson, Stevie Wonder, The Rolling Stones, George Harrison, U2, The Police, Eric Clapton, Bruce Springsteen, Lenny Kravitz, Depeche Mode, New Order, Whitney Houston, Duran Duran, R.E.M., Frankie Goes To Hollywood, The Cure, Run DMC, Cyndi Lauper, Iron Maiden, New Kids On The Block, LL Cool J.\n\nUiteraard kwamen Nederlandse top-acts als Doe Maar, Andre Hazes, Herman Brood, Frank Boeijen, Spargo, Golden Earring, Time Bandits,  De Dijk, De Raggende Manne, Hans de Booij, Gerard Joling, Drukwerk ook langs voor een optreden in Bussum.\n\nCountdown werd gepresenteerd door oa Lex Harding, Erik de Zwart, Adam Curry, Simone Walraven Wessel van Diepen, Jeroen van Inkel, Rob Stenders, Simone Angel en Jasper Faber.\n\nHet Countdown archief is vrijwel helemaal compleet en sinds 2017 eigendom van het Amerikaanse Reelin’ In The Years Productions (David Peck - https://reelinintheyears.com/) en Double 2 Hilversum (Jan Douwe Kroeske - http://www.double2bv.nl). Het archief bestaat uit meer dan 3.000 analoge mastertapes die allemaal gedigitaliseerd en gearchiveerd zijn. Indien u gebruik wilt maken van beeldmateriaal in een documentaire, tv-programma of andere mediaproductie neemt u voor een licentiedeal contact op met Double 2 BV via info@d2bv.nl. Beeldmateriaal wordt enkel verstrekt aan zakelijke projecten en niet aan particulieren.\n\n===\n#RickAstley"
+        },
+        "defaultAudioLanguage": "en"
+      }
+    }
+  ],
+  "pageInfo": {
+    "totalResults": 1,
+    "resultsPerPage": 1
+  }
+}
+

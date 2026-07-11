@@ -1,0 +1,4898 @@
+{
+  "results": {
+    "album": {
+      "href": "/v1/catalog/us/search?groups=album&l=en-US&limit=21&term=Rick+Astley+Never+Gonna+Give+You+Up&types=activities%2Calbums%2Capple-curators%2Cartists%2Ccurators%2Ceditorial-items%2Cmusic-movies%2Cmusic-videos%2Cplaylists%2Crecord-labels%2Csongs%2Cstations%2Ctv-episodes%2Cuploaded-videos",
+      "next": "/v1/catalog/us/search?groups=album&l=en-US&offset=21&term=Rick+Astley+Never+Gonna+Give+You+Up&types=activities%2Calbums%2Capple-curators%2Cartists%2Ccurators%2Ceditorial-items%2Cmusic-movies%2Cmusic-videos%2Cplaylists%2Crecord-labels%2Csongs%2Cstations%2Ctv-episodes%2Cuploaded-videos",
+      "data": [
+        {
+          "id": "1481080730",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1481080730?l=en-US"
+        },
+        {
+          "id": "1624945511",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1624945511?l=en-US"
+        },
+        {
+          "id": "1770767353",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1770767353?l=en-US"
+        },
+        {
+          "id": "1612648318",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1612648318?l=en-US"
+        },
+        {
+          "id": "1559885420",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1559885420?l=en-US"
+        },
+        {
+          "id": "1485596039",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1485596039?l=en-US"
+        },
+        {
+          "id": "1774986310",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1774986310?l=en-US"
+        },
+        {
+          "id": "1559523357",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1559523357?l=en-US"
+        },
+        {
+          "id": "1559804099",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1559804099?l=en-US"
+        },
+        {
+          "id": "632556615",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/632556615?l=en-US"
+        },
+        {
+          "id": "564412050",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/564412050?l=en-US"
+        },
+        {
+          "id": "6767732417",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/6767732417?l=en-US"
+        },
+        {
+          "id": "1754056128",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1754056128?l=en-US"
+        },
+        {
+          "id": "1489000309",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1489000309?l=en-US"
+        },
+        {
+          "id": "1610829136",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1610829136?l=en-US"
+        },
+        {
+          "id": "1877532390",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1877532390?l=en-US"
+        },
+        {
+          "id": "1877051445",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1877051445?l=en-US"
+        },
+        {
+          "id": "1675485239",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1675485239?l=en-US"
+        },
+        {
+          "id": "1232046522",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1232046522?l=en-US"
+        },
+        {
+          "id": "186774432",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/186774432?l=en-US"
+        },
+        {
+          "id": "1693339026",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1693339026?l=en-US"
+        }
+      ],
+      "name": "Albums",
+      "groupId": "album"
+    },
+    "artist": {
+      "href": "/v1/catalog/us/search?groups=artist&l=en-US&limit=21&term=Rick+Astley+Never+Gonna+Give+You+Up&types=activities%2Calbums%2Capple-curators%2Cartists%2Ccurators%2Ceditorial-items%2Cmusic-movies%2Cmusic-videos%2Cplaylists%2Crecord-labels%2Csongs%2Cstations%2Ctv-episodes%2Cuploaded-videos",
+      "groupId": "artist",
+      "data": [
+        {
+          "id": "669771",
+          "type": "artists",
+          "href": "/v1/catalog/us/artists/669771?l=en-US"
+        }
+      ],
+      "name": "Artists"
+    },
+    "music_video": {
+      "href": "/v1/catalog/us/search?groups=music_video&l=en-US&limit=21&term=Rick+Astley+Never+Gonna+Give+You+Up&types=activities%2Calbums%2Capple-curators%2Cartists%2Ccurators%2Ceditorial-items%2Cmusic-movies%2Cmusic-videos%2Cplaylists%2Crecord-labels%2Csongs%2Cstations%2Ctv-episodes%2Cuploaded-videos",
+      "groupId": "music_video",
+      "data": [
+        {
+          "id": "299199411",
+          "type": "music-videos",
+          "href": "/v1/catalog/us/music-videos/299199411?l=en-US"
+        },
+        {
+          "id": "1560897459",
+          "type": "music-videos",
+          "href": "/v1/catalog/us/music-videos/1560897459?l=en-US"
+        },
+        {
+          "id": "1339832770",
+          "type": "music-videos",
+          "href": "/v1/catalog/us/music-videos/1339832770?l=en-US"
+        },
+        {
+          "id": "1744309858",
+          "type": "music-videos",
+          "href": "/v1/catalog/us/music-videos/1744309858?l=en-US"
+        },
+        {
+          "id": "389916301",
+          "type": "music-videos",
+          "href": "/v1/catalog/us/music-videos/389916301?l=en-US"
+        },
+        {
+          "id": "1707960532",
+          "type": "music-videos",
+          "href": "/v1/catalog/us/music-videos/1707960532?l=en-US"
+        },
+        {
+          "id": "1707960526",
+          "type": "music-videos",
+          "href": "/v1/catalog/us/music-videos/1707960526?l=en-US"
+        }
+      ],
+      "name": "Music Videos"
+    },
+    "playlist": {
+      "href": "/v1/catalog/us/search?groups=playlist&l=en-US&limit=21&term=Rick+Astley+Never+Gonna+Give+You+Up&types=activities%2Calbums%2Capple-curators%2Cartists%2Ccurators%2Ceditorial-items%2Cmusic-movies%2Cmusic-videos%2Cplaylists%2Crecord-labels%2Csongs%2Cstations%2Ctv-episodes%2Cuploaded-videos",
+      "groupId": "playlist",
+      "data": [
+        {
+          "id": "pl.504a9420747e43ec93e4faa999a8bef9",
+          "type": "playlists",
+          "href": "/v1/catalog/us/playlists/pl.504a9420747e43ec93e4faa999a8bef9?l=en-US"
+        },
+        {
+          "id": "pl.af4d982795c6472ea48579eb147cd726",
+          "type": "playlists",
+          "href": "/v1/catalog/us/playlists/pl.af4d982795c6472ea48579eb147cd726?l=en-US"
+        },
+        {
+          "id": "pl.cb828482b0e14db88a2854a48f77e364",
+          "type": "playlists",
+          "href": "/v1/catalog/us/playlists/pl.cb828482b0e14db88a2854a48f77e364?l=en-US"
+        },
+        {
+          "id": "pl.46aca1d8eabd4282bbc6a2de546a2cfd",
+          "type": "playlists",
+          "href": "/v1/catalog/us/playlists/pl.46aca1d8eabd4282bbc6a2de546a2cfd?l=en-US"
+        },
+        {
+          "id": "pl.28f99a3b2d454bab9f87e1fea8a3b8f3",
+          "type": "playlists",
+          "href": "/v1/catalog/us/playlists/pl.28f99a3b2d454bab9f87e1fea8a3b8f3?l=en-US"
+        },
+        {
+          "id": "pl.82ef96d165e54b71b8f98ba8f01902ff",
+          "type": "playlists",
+          "href": "/v1/catalog/us/playlists/pl.82ef96d165e54b71b8f98ba8f01902ff?l=en-US"
+        },
+        {
+          "id": "pl.f2a733befcb645a2a6493edb96a6cd91",
+          "type": "playlists",
+          "href": "/v1/catalog/us/playlists/pl.f2a733befcb645a2a6493edb96a6cd91?l=en-US"
+        },
+        {
+          "id": "pl.88bc653184544ac5a3c88b4e92f8199d",
+          "type": "playlists",
+          "href": "/v1/catalog/us/playlists/pl.88bc653184544ac5a3c88b4e92f8199d?l=en-US"
+        },
+        {
+          "id": "pl.f68f14135e0b4b3eb42eb5776100f064",
+          "type": "playlists",
+          "href": "/v1/catalog/us/playlists/pl.f68f14135e0b4b3eb42eb5776100f064?l=en-US"
+        },
+        {
+          "id": "pl.eed3aed2f4ec4400888ce132cdaed8ef",
+          "type": "playlists",
+          "href": "/v1/catalog/us/playlists/pl.eed3aed2f4ec4400888ce132cdaed8ef?l=en-US"
+        },
+        {
+          "id": "pl.bdb7c5da0c8c44479af4299a62c67b78",
+          "type": "playlists",
+          "href": "/v1/catalog/us/playlists/pl.bdb7c5da0c8c44479af4299a62c67b78?l=en-US"
+        },
+        {
+          "id": "pl.6c6f5b8f53c0401fa6f667375f4526e7",
+          "type": "playlists",
+          "href": "/v1/catalog/us/playlists/pl.6c6f5b8f53c0401fa6f667375f4526e7?l=en-US"
+        },
+        {
+          "id": "pl.707f08d82d8b469d92217fbd67789c78",
+          "type": "playlists",
+          "href": "/v1/catalog/us/playlists/pl.707f08d82d8b469d92217fbd67789c78?l=en-US"
+        },
+        {
+          "id": "pl.e0fa092685824ce895eba7c376cf51d4",
+          "type": "playlists",
+          "href": "/v1/catalog/us/playlists/pl.e0fa092685824ce895eba7c376cf51d4?l=en-US"
+        },
+        {
+          "id": "pl.5f12268564fc4124a127e33d90fe525c",
+          "type": "playlists",
+          "href": "/v1/catalog/us/playlists/pl.5f12268564fc4124a127e33d90fe525c?l=en-US"
+        },
+        {
+          "id": "pl.0aaf8811bff84381b9dd4bf7836d9a47",
+          "type": "playlists",
+          "href": "/v1/catalog/us/playlists/pl.0aaf8811bff84381b9dd4bf7836d9a47?l=en-US"
+        }
+      ],
+      "name": "Playlists"
+    },
+    "song": {
+      "href": "/v1/catalog/us/search?groups=song&l=en-US&limit=21&term=Rick+Astley+Never+Gonna+Give+You+Up&types=activities%2Calbums%2Capple-curators%2Cartists%2Ccurators%2Ceditorial-items%2Cmusic-movies%2Cmusic-videos%2Cplaylists%2Crecord-labels%2Csongs%2Cstations%2Ctv-episodes%2Cuploaded-videos",
+      "next": "/v1/catalog/us/search?groups=song&l=en-US&offset=21&term=Rick+Astley+Never+Gonna+Give+You+Up&types=activities%2Calbums%2Capple-curators%2Cartists%2Ccurators%2Ceditorial-items%2Cmusic-movies%2Cmusic-videos%2Cplaylists%2Crecord-labels%2Csongs%2Cstations%2Ctv-episodes%2Cuploaded-videos",
+      "data": [
+        {
+          "id": "1559885421",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1559885421?l=en-US"
+        },
+        {
+          "id": "1612648434",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1612648434?l=en-US"
+        },
+        {
+          "id": "1600742155",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1600742155?l=en-US"
+        },
+        {
+          "id": "1612648427",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1612648427?l=en-US"
+        },
+        {
+          "id": "1438556832",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1438556832?l=en-US"
+        },
+        {
+          "id": "1612648440",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1612648440?l=en-US"
+        },
+        {
+          "id": "1624945512",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1624945512?l=en-US"
+        },
+        {
+          "id": "1485596041",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1485596041?l=en-US"
+        },
+        {
+          "id": "1773293593",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1773293593?l=en-US"
+        },
+        {
+          "id": "1612648423",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1612648423?l=en-US"
+        },
+        {
+          "id": "1612648319",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1612648319?l=en-US"
+        },
+        {
+          "id": "1773293184",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1773293184?l=en-US"
+        },
+        {
+          "id": "1485596522",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1485596522?l=en-US"
+        },
+        {
+          "id": "1559523359",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1559523359?l=en-US"
+        },
+        {
+          "id": "1446567594",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1446567594?l=en-US"
+        },
+        {
+          "id": "1631804194",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1631804194?l=en-US"
+        },
+        {
+          "id": "1808443180",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1808443180?l=en-US"
+        },
+        {
+          "id": "1770767579",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1770767579?l=en-US"
+        },
+        {
+          "id": "1503050130",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1503050130?l=en-US",
+          "meta": {
+            "snippets": [
+              {
+                "kind": "lyric",
+                "text": "<mark>Never gonna give you up</mark>"
+              }
+            ]
+          }
+        },
+        {
+          "id": "1481080731",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1481080731?l=en-US"
+        },
+        {
+          "id": "1612648437",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1612648437?l=en-US"
+        }
+      ],
+      "name": "Songs",
+      "groupId": "song"
+    },
+    "top": {
+      "groupId": "top",
+      "name": "Top Results",
+      "data": [
+        {
+          "id": "1559885421",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1559885421?l=en-US"
+        },
+        {
+          "id": "669771",
+          "type": "artists",
+          "href": "/v1/catalog/us/artists/669771?l=en-US"
+        },
+        {
+          "id": "1612648434",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1612648434?l=en-US"
+        },
+        {
+          "id": "1600742155",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1600742155?l=en-US"
+        },
+        {
+          "id": "1612648427",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1612648427?l=en-US"
+        },
+        {
+          "id": "pl.f68f14135e0b4b3eb42eb5776100f064",
+          "type": "playlists",
+          "href": "/v1/catalog/us/playlists/pl.f68f14135e0b4b3eb42eb5776100f064?l=en-US"
+        },
+        {
+          "id": "1612648440",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1612648440?l=en-US"
+        },
+        {
+          "id": "1503050130",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1503050130?l=en-US",
+          "meta": {
+            "snippets": [
+              {
+                "kind": "lyric",
+                "text": "<mark>Never gonna give you up</mark>"
+              }
+            ]
+          }
+        },
+        {
+          "id": "1446924456",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1446924456?l=en-US",
+          "meta": {
+            "snippets": [
+              {
+                "kind": "lyric",
+                "text": "I'm <mark>never gonna give you up,</mark> no matter what your mama say, girl"
+              }
+            ]
+          }
+        },
+        {
+          "id": "1559804346",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1559804346?l=en-US",
+          "meta": {
+            "snippets": [
+              {
+                "kind": "lyric",
+                "text": "<mark>Never gonna give, never gonna give (give you up)</mark>"
+              }
+            ]
+          }
+        },
+        {
+          "id": "pl.504a9420747e43ec93e4faa999a8bef9",
+          "type": "playlists",
+          "href": "/v1/catalog/us/playlists/pl.504a9420747e43ec93e4faa999a8bef9?l=en-US"
+        },
+        {
+          "id": "1612648444",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1612648444?l=en-US"
+        },
+        {
+          "id": "1481080730",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1481080730?l=en-US"
+        },
+        {
+          "id": "1612648318",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1612648318?l=en-US"
+        },
+        {
+          "id": "1770767353",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1770767353?l=en-US"
+        },
+        {
+          "id": "1485596039",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1485596039?l=en-US"
+        },
+        {
+          "id": "299199411",
+          "type": "music-videos",
+          "href": "/v1/catalog/us/music-videos/299199411?l=en-US"
+        },
+        {
+          "id": "1774986310",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1774986310?l=en-US"
+        },
+        {
+          "id": "1559523357",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1559523357?l=en-US"
+        },
+        {
+          "id": "1560897459",
+          "type": "music-videos",
+          "href": "/v1/catalog/us/music-videos/1560897459?l=en-US"
+        },
+        {
+          "id": "1559804099",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1559804099?l=en-US"
+        }
+      ]
+    }
+  },
+  "resources": {
+    "albums": {
+      "1232046522": {
+        "id": "1232046522",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/1232046522?l=en-US",
+        "attributes": {
+          "artistName": "ProSource Karaoke Band",
+          "artistUrl": "https://music.apple.com/us/artist/prosource-karaoke-band/509945688",
+          "artwork": {
+            "bgColor": "000000",
+            "hasP3": false,
+            "height": 3000,
+            "textColor1": "c3dbdb",
+            "textColor2": "b7caca",
+            "textColor3": "9cafaf",
+            "textColor4": "92a1a1",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music117/v4/e2/d4/32/e2d432e7-6aeb-c916-24b4-a59de121646f/ProSource_Karaoke_cover.jpg/{w}x{h}bb.{f}",
+            "width": 3000
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "000000",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "c3dbdb",
+              "textColor2": "b7caca",
+              "textColor3": "9cafaf",
+              "textColor4": "92a1a1",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music117/v4/e2/d4/32/e2d432e7-6aeb-c916-24b4-a59de121646f/ProSource_Karaoke_cover.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "Never Gonna Give You Up (Originally Performed by Rick Astley) [Karaoke] - Single",
+          "playParams": {
+            "id": "1232046522",
+            "kind": "album"
+          },
+          "releaseDate": "2010-08-01",
+          "trackCount": 1,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-originally-performed-by-rick/1232046522"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/1232046522/artists?l=en-US",
+            "data": [
+              {
+                "id": "509945688",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/509945688?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1481080730": {
+        "id": "1481080730",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/1481080730?l=en-US",
+        "attributes": {
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "301c06",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f5bf85",
+            "textColor2": "f8ac71",
+            "textColor3": "cd9e6c",
+            "textColor4": "d08f5c",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/66/2e/0c/662e0c37-aae6-d6d7-5a81-6e383dc897ba/4050538551952.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "301c06",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "f5bf85",
+              "textColor2": "f8ac71",
+              "textColor3": "cd9e6c",
+              "textColor4": "d08f5c",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/66/2e/0c/662e0c37-aae6-d6d7-5a81-6e383dc897ba/4050538551952.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "Never Gonna Give You Up (Pianoforte) - Single",
+          "playParams": {
+            "id": "1481080730",
+            "kind": "album"
+          },
+          "releaseDate": "2019-10-22",
+          "trackCount": 3,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-pianoforte-single/1481080730"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/1481080730/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1485596039": {
+        "id": "1485596039",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/1485596039?l=en-US",
+        "attributes": {
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "0f1037",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "fdd09f",
+            "textColor2": "efbd9f",
+            "textColor3": "cdaa8a",
+            "textColor4": "c29a8a",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/17/3c/cb/173ccb70-6d48-24cc-3b5a-ff41560a0fda/4050538545074.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "0f1037",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "fdd09f",
+              "textColor2": "efbd9f",
+              "textColor3": "cdaa8a",
+              "textColor4": "c29a8a",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/17/3c/cb/173ccb70-6d48-24cc-3b5a-ff41560a0fda/4050538545074.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "The Best of Me",
+          "playParams": {
+            "id": "1485596039",
+            "kind": "album"
+          },
+          "releaseDate": "2019-10-25",
+          "trackCount": 30,
+          "url": "https://music.apple.com/us/album/the-best-of-me/1485596039"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/1485596039/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1489000309": {
+        "id": "1489000309",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/1489000309?l=en-US",
+        "attributes": {
+          "artistName": "Singer's Edge Karaoke",
+          "artistUrl": "https://music.apple.com/us/artist/singers-edge-karaoke/667146097",
+          "artwork": {
+            "bgColor": "b03922",
+            "hasP3": false,
+            "height": 3000,
+            "textColor1": "fee51a",
+            "textColor2": "fdc5a3",
+            "textColor3": "eec21c",
+            "textColor4": "eda989",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/f9/95/a2/f995a235-8d86-ad90-5b47-589ba7bcdb29/805570048977.jpg/{w}x{h}bb.{f}",
+            "width": 3000
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "b03922",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "fee51a",
+              "textColor2": "fdc5a3",
+              "textColor3": "eec21c",
+              "textColor4": "eda989",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/f9/95/a2/f995a235-8d86-ad90-5b47-589ba7bcdb29/805570048977.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "Never Gonna Give You Up (Pianoforte) [Originally Performed By Rick Astley] [Instrumental] - Single",
+          "playParams": {
+            "id": "1489000309",
+            "kind": "album"
+          },
+          "releaseDate": "2019-11-23",
+          "trackCount": 1,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-pianoforte-originally-performed/1489000309"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/1489000309/artists?l=en-US",
+            "data": [
+              {
+                "id": "667146097",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/667146097?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1559523357": {
+        "id": "1559523357",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/1559523357?l=en-US",
+        "attributes": {
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "000a33",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f6ece8",
+            "textColor2": "ece7e6",
+            "textColor3": "c5bfc4",
+            "textColor4": "bcbbc2",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/69/5b/e3/695be316-9ddf-7262-177c-e37edd599602/0888880777768.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "000a33",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "f6ece8",
+              "textColor2": "ece7e6",
+              "textColor3": "c5bfc4",
+              "textColor4": "bcbbc2",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/69/5b/e3/695be316-9ddf-7262-177c-e37edd599602/0888880777768.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "3 Originals",
+          "playParams": {
+            "id": "1559523357",
+            "kind": "album"
+          },
+          "releaseDate": "2002-12-07",
+          "trackCount": 31,
+          "url": "https://music.apple.com/us/album/3-originals/1559523357"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/1559523357/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1559804099": {
+        "id": "1559804099",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/1559804099?l=en-US",
+        "attributes": {
+          "artistName": "Home Free",
+          "artistUrl": "https://music.apple.com/us/artist/home-free/266440748",
+          "artwork": {
+            "bgColor": "efccb1",
+            "hasP3": false,
+            "height": 3000,
+            "textColor1": "080d1a",
+            "textColor2": "4e2825",
+            "textColor3": "363338",
+            "textColor4": "6e4941",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/41/50/39/4150396d-4bff-43dc-338f-806aefcf8374/196006358976.jpg/{w}x{h}bb.{f}",
+            "width": 3000
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "efccb1",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "080d1a",
+              "textColor2": "4e2825",
+              "textColor3": "363338",
+              "textColor4": "6e4941",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/41/50/39/4150396d-4bff-43dc-338f-806aefcf8374/196006358976.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "Never Gonna Give You Up - Single",
+          "playParams": {
+            "id": "1559804099",
+            "kind": "album"
+          },
+          "releaseDate": "2021-04-02",
+          "trackCount": 1,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-single/1559804099"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/1559804099/artists?l=en-US",
+            "data": [
+              {
+                "id": "266440748",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/266440748?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1559885420": {
+        "id": "1559885420",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/1559885420?l=en-US",
+        "attributes": {
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "1e1a1a",
+            "hasP3": false,
+            "height": 1500,
+            "textColor1": "f1e4d0",
+            "textColor2": "d3d9db",
+            "textColor3": "c7bbac",
+            "textColor4": "aeb3b5",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/{w}x{h}bb.{f}",
+            "width": 1500
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "1e1a1a",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "f1e4d0",
+              "textColor2": "d3d9db",
+              "textColor3": "c7bbac",
+              "textColor4": "aeb3b5",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "Whenever You Need Somebody",
+          "playParams": {
+            "id": "1559885420",
+            "kind": "album"
+          },
+          "releaseDate": "1987-11-12",
+          "trackCount": 10,
+          "url": "https://music.apple.com/us/album/whenever-you-need-somebody/1559885420"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/1559885420/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1610829136": {
+        "id": "1610829136",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/1610829136?l=en-US",
+        "attributes": {
+          "artistName": "New Kids On the Block",
+          "artistUrl": "https://music.apple.com/us/artist/new-kids-on-the-block/476671",
+          "artwork": {
+            "bgColor": "fe8501",
+            "hasP3": false,
+            "height": 3000,
+            "textColor1": "0a0b0d",
+            "textColor2": "0e2522",
+            "textColor3": "3b230b",
+            "textColor4": "3e381c",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/12/6d/fb/126dfb9f-94dc-8d7a-e368-97b298fe8b58/193436283403_NKOTBBBTTFINALhiresx.jpg/{w}x{h}bb.{f}",
+            "width": 3000
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "fe8501",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "0a0b0d",
+              "textColor2": "0e2522",
+              "textColor3": "3b230b",
+              "textColor4": "3e381c",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/12/6d/fb/126dfb9f-94dc-8d7a-e368-97b298fe8b58/193436283403_NKOTBBBTTFINALhiresx.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "Bring Back the Time (feat. En Vogue, Rick Astley & Salt-N-Pepa) - Single",
+          "playParams": {
+            "id": "1610829136",
+            "kind": "album"
+          },
+          "releaseDate": "2022-03-03",
+          "trackCount": 1,
+          "url": "https://music.apple.com/us/album/bring-back-the-time-feat-en-vogue-rick-astley-salt-n/1610829136"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/1610829136/artists?l=en-US",
+            "data": [
+              {
+                "id": "476671",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/476671?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1612648318": {
+        "id": "1612648318",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/1612648318?l=en-US",
+        "attributes": {
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "282628",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f4e9e9",
+            "textColor2": "99a3d9",
+            "textColor3": "cbc2c2",
+            "textColor4": "828ab5",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/21/d3/b321d3e4-edfe-124b-d0cd-a64ad1df3290/4050538793840.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "282628",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "f4e9e9",
+              "textColor2": "99a3d9",
+              "textColor3": "cbc2c2",
+              "textColor4": "828ab5",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/21/d3/b321d3e4-edfe-124b-d0cd-a64ad1df3290/4050538793840.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
+          "playParams": {
+            "id": "1612648318",
+            "kind": "album"
+          },
+          "releaseDate": "1987-11-16",
+          "trackCount": 36,
+          "url": "https://music.apple.com/us/album/whenever-you-need-somebody-deluxe-edition-2022-remaster/1612648318"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/1612648318/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1624945511": {
+        "id": "1624945511",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/1624945511?l=en-US",
+        "attributes": {
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "211d1c",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f6ebee",
+            "textColor2": "dacde5",
+            "textColor3": "ccc2c4",
+            "textColor4": "b5aabd",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/de/eb/63/deeb63c1-7bc0-9153-cfa3-fd9e4929aacf/4050538826562.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "211d1c",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "f6ebee",
+              "textColor2": "dacde5",
+              "textColor3": "ccc2c4",
+              "textColor4": "b5aabd",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/de/eb/63/deeb63c1-7bc0-9153-cfa3-fd9e4929aacf/4050538826562.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "Whenever You Need Somebody (2022 Remaster)",
+          "playParams": {
+            "id": "1624945511",
+            "kind": "album"
+          },
+          "releaseDate": "1987-01-01",
+          "trackCount": 10,
+          "url": "https://music.apple.com/us/album/whenever-you-need-somebody-2022-remaster/1624945511"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/1624945511/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1675485239": {
+        "id": "1675485239",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/1675485239?l=en-US",
+        "attributes": {
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "201814",
+            "hasP3": false,
+            "height": 1500,
+            "textColor1": "f6cdc0",
+            "textColor2": "d4b8a2",
+            "textColor3": "cba99d",
+            "textColor4": "b09885",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/8f/12/b3/8f12b340-03c9-db37-24cf-a7623b98149a/4050538206425.jpg/{w}x{h}bb.{f}",
+            "width": 1500
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "201814",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "f6cdc0",
+              "textColor2": "d4b8a2",
+              "textColor3": "cba99d",
+              "textColor4": "b09885",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/8f/12/b3/8f12b340-03c9-db37-24cf-a7623b98149a/4050538206425.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "50",
+          "playParams": {
+            "id": "1675485239",
+            "kind": "album"
+          },
+          "releaseDate": "2016-06-10",
+          "trackCount": 12,
+          "url": "https://music.apple.com/us/album/50/1675485239"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/1675485239/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1693339026": {
+        "id": "1693339026",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/1693339026?l=en-US",
+        "attributes": {
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "0883a6",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "040301",
+            "textColor2": "040302",
+            "textColor3": "051c22",
+            "textColor4": "051d23",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/2c/d1/45/2cd145bf-7e4f-ca72-01a1-7a1059024ed6/4050538940282.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "0883a6",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "040301",
+              "textColor2": "040302",
+              "textColor3": "051c22",
+              "textColor4": "051d23",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/2c/d1/45/2cd145bf-7e4f-ca72-01a1-7a1059024ed6/4050538940282.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "Are We There Yet?",
+          "playParams": {
+            "id": "1693339026",
+            "kind": "album"
+          },
+          "releaseDate": "2023-10-06",
+          "trackCount": 12,
+          "url": "https://music.apple.com/us/album/are-we-there-yet/1693339026"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/1693339026/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1754056128": {
+        "id": "1754056128",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/1754056128?l=en-US",
+        "attributes": {
+          "artistName": "Singer's Best",
+          "artistUrl": "https://music.apple.com/us/artist/singers-best/1746651524",
+          "artwork": {
+            "bgColor": "190101",
+            "hasP3": false,
+            "height": 3000,
+            "textColor1": "f9b3b3",
+            "textColor2": "e59594",
+            "textColor3": "cc9090",
+            "textColor4": "bc7776",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/92/57/2a/92572a80-a9d6-cadc-34b4-9a3c6622dcf8/PARK4652.jpg/{w}x{h}bb.{f}",
+            "width": 3000
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "190101",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "f9b3b3",
+              "textColor2": "e59594",
+              "textColor3": "cc9090",
+              "textColor4": "bc7776",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/92/57/2a/92572a80-a9d6-cadc-34b4-9a3c6622dcf8/PARK4652.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "Never Gonna Give You Up (Karaoke Version Originally Performed by Rick Astley) - Single",
+          "playParams": {
+            "id": "1754056128",
+            "kind": "album"
+          },
+          "releaseDate": "2024-06-14",
+          "trackCount": 1,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-karaoke-version-originally/1754056128"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/1754056128/artists?l=en-US",
+            "data": [
+              {
+                "id": "1746651524",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/1746651524?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1770767353": {
+        "id": "1770767353",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/1770767353?l=en-US",
+        "attributes": {
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "f4ce00",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "070601",
+            "textColor2": "0f1015",
+            "textColor3": "362e01",
+            "textColor4": "3d3611",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/aa/f8/19/aaf81950-ca41-ae23-0e98-690f3bd55db2/4099964127713.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "f4ce00",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "070601",
+              "textColor2": "0f1015",
+              "textColor3": "362e01",
+              "textColor4": "3d3611",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/aa/f8/19/aaf81950-ca41-ae23-0e98-690f3bd55db2/4099964127713.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "Never - EP",
+          "playParams": {
+            "id": "1770767353",
+            "kind": "album"
+          },
+          "releaseDate": "2024-10-11",
+          "trackCount": 6,
+          "url": "https://music.apple.com/us/album/never-ep/1770767353"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/1770767353/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1774986310": {
+        "id": "1774986310",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/1774986310?l=en-US",
+        "attributes": {
+          "artistName": "Kapena & High Watah",
+          "artistUrl": "https://music.apple.com/WebObjects/MZStore.woa/wa/viewCollaboration?cc=us&ids=277390846-1758152572",
+          "artwork": {
+            "bgColor": "005977",
+            "hasP3": false,
+            "height": 3000,
+            "textColor1": "c1faf6",
+            "textColor2": "6ff5f9",
+            "textColor3": "9bdadd",
+            "textColor4": "59d6df",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/34/89/19/34891979-ece1-e376-ceba-5d37b2f98d9d/10018.jpg/{w}x{h}bb.{f}",
+            "width": 3000
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "005977",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "c1faf6",
+              "textColor2": "6ff5f9",
+              "textColor3": "9bdadd",
+              "textColor4": "59d6df",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/34/89/19/34891979-ece1-e376-ceba-5d37b2f98d9d/10018.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "Never Gonna Give You Up (Watcha Talkin 'Bout) - Single",
+          "playParams": {
+            "id": "1774986310",
+            "kind": "album"
+          },
+          "releaseDate": "2024-10-25",
+          "trackCount": 1,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-watcha-talkin-bout-single/1774986310"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/1774986310/artists?l=en-US",
+            "data": [
+              {
+                "id": "277390846",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/277390846?l=en-US"
+              },
+              {
+                "id": "1758152572",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/1758152572?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "186774432": {
+        "id": "186774432",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/186774432?l=en-US",
+        "attributes": {
+          "artistName": "Sean Paul",
+          "artistUrl": "https://music.apple.com/us/artist/sean-paul/155138",
+          "artwork": {
+            "bgColor": "ffffff",
+            "hasP3": false,
+            "height": 1425,
+            "textColor1": "0e0603",
+            "textColor2": "481a08",
+            "textColor3": "3e3835",
+            "textColor4": "6d4739",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/6e/15/52/6e15522c-63e3-a045-8557-a1fbf61403cd/mzi.fuinprco.jpg/{w}x{h}bb.{f}",
+            "width": 1425
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "ffffff",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "0e0603",
+              "textColor2": "481a08",
+              "textColor3": "3e3835",
+              "textColor4": "6d4739",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/6e/15/52/6e15522c-63e3-a045-8557-a1fbf61403cd/mzi.fuinprco.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "(When You Gonna) Give It Up to Me - Single",
+          "playParams": {
+            "id": "186774432",
+            "kind": "album"
+          },
+          "releaseDate": "2006-07-04",
+          "trackCount": 3,
+          "url": "https://music.apple.com/us/album/when-you-gonna-give-it-up-to-me-single/186774432"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/186774432/artists?l=en-US",
+            "data": [
+              {
+                "id": "155138",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/155138?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1877051445": {
+        "id": "1877051445",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/1877051445?l=en-US",
+        "attributes": {
+          "artistName": "Uta-Cha-Oh",
+          "artistUrl": "https://music.apple.com/us/artist/uta-cha-oh/1186533981",
+          "artwork": {
+            "bgColor": "ffffff",
+            "hasP3": false,
+            "height": 3000,
+            "textColor1": "130505",
+            "textColor2": "2c2c2c",
+            "textColor3": "423737",
+            "textColor4": "565656",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/b8/1a/ed/b81aedd5-b6fb-25a6-04da-fbec109856bd/4573694976006.jpg/{w}x{h}bb.{f}",
+            "width": 3000
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "ffffff",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "130505",
+              "textColor2": "2c2c2c",
+              "textColor3": "423737",
+              "textColor4": "565656",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/b8/1a/ed/b81aedd5-b6fb-25a6-04da-fbec109856bd/4573694976006.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "Never Gonna Give You Up Karaoke Originally Performed By RICK ASTLEY - Single",
+          "playParams": {
+            "id": "1877051445",
+            "kind": "album"
+          },
+          "releaseDate": "2026-03-02",
+          "trackCount": 1,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-%E3%82%AB%E3%83%A9%E3%82%AA%E3%82%B1-%E5%8E%9F%E6%9B%B2%E6%AD%8C%E6%89%8B-rick-astley-single/1877051445"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/1877051445/artists?l=en-US",
+            "data": [
+              {
+                "id": "1186533981",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/1186533981?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1877532390": {
+        "id": "1877532390",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/1877532390?l=en-US",
+        "attributes": {
+          "artistName": "Uta-Cha-Oh",
+          "artistUrl": "https://music.apple.com/us/artist/uta-cha-oh/1186533981",
+          "artwork": {
+            "bgColor": "ffffff",
+            "hasP3": false,
+            "height": 3000,
+            "textColor1": "130505",
+            "textColor2": "2c2c2c",
+            "textColor3": "423737",
+            "textColor4": "565656",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/fc/1e/0b/fc1e0b9f-867f-1fa0-da2c-99a9df505aa9/4573694976631.jpg/{w}x{h}bb.{f}",
+            "width": 3000
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "ffffff",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "130505",
+              "textColor2": "2c2c2c",
+              "textColor3": "423737",
+              "textColor4": "565656",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/fc/1e/0b/fc1e0b9f-867f-1fa0-da2c-99a9df505aa9/4573694976631.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "Never Gonna Give You Up Karaoke No Guide melody Originally Performed By RICK ASTLEY",
+          "playParams": {
+            "id": "1877532390",
+            "kind": "album"
+          },
+          "releaseDate": "2026-03-02",
+          "trackCount": 11,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-%E3%82%AC%E3%82%A4%E3%83%89%E7%84%A1%E3%81%97%E3%82%AB%E3%83%A9%E3%82%AA%E3%82%B1-%E5%8E%9F%E6%9B%B2%E6%AD%8C%E6%89%8B-rick-astley/1877532390"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/1877532390/artists?l=en-US",
+            "data": [
+              {
+                "id": "1186533981",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/1186533981?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "564412050": {
+        "id": "564412050",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/564412050?l=en-US",
+        "attributes": {
+          "artistName": "Amazing Karaoke",
+          "artistUrl": "https://music.apple.com/us/artist/amazing-karaoke/484928080",
+          "artwork": {
+            "bgColor": "00395e",
+            "hasP3": false,
+            "height": 1440,
+            "textColor1": "d1e1e8",
+            "textColor2": "b0cdde",
+            "textColor3": "a7bfcd",
+            "textColor4": "8dafc4",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music/v4/57/38/28/57382825-6794-b4aa-7798-4366fab31a6e/cover.jpg/{w}x{h}bb.{f}",
+            "width": 1440
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "00395e",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "d1e1e8",
+              "textColor2": "b0cdde",
+              "textColor3": "a7bfcd",
+              "textColor4": "8dafc4",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music/v4/57/38/28/57382825-6794-b4aa-7798-4366fab31a6e/cover.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "Never Gonna Give You Up (Karaoke Version) [Originally Performed by Rick Astley] - Single",
+          "playParams": {
+            "id": "564412050",
+            "kind": "album"
+          },
+          "releaseDate": "2012-09-21",
+          "trackCount": 1,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-karaoke-version-originally/564412050"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/564412050/artists?l=en-US",
+            "data": [
+              {
+                "id": "484928080",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/484928080?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "632556615": {
+        "id": "632556615",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/632556615?l=en-US",
+        "attributes": {
+          "artistName": "Roadhouse Professional Karaoke",
+          "artistUrl": "https://music.apple.com/us/artist/roadhouse-professional-karaoke/622538672",
+          "artwork": {
+            "bgColor": "000000",
+            "hasP3": false,
+            "height": 1400,
+            "textColor1": "ecce79",
+            "textColor2": "dabb6e",
+            "textColor3": "bca461",
+            "textColor4": "ae9558",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music/v4/79/2c/4f/792c4f30-4ed5-9d95-3a3b-f5bc0595c186/NEVERGONNAGIVEUP.jpg/{w}x{h}bb.{f}",
+            "width": 1400
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "000000",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "ecce79",
+              "textColor2": "dabb6e",
+              "textColor3": "bca461",
+              "textColor4": "ae9558",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music/v4/79/2c/4f/792c4f30-4ed5-9d95-3a3b-f5bc0595c186/NEVERGONNAGIVEUP.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "Never gonna give you up (Instrumental version) [Originally by Rick Astley] - Single",
+          "playParams": {
+            "id": "632556615",
+            "kind": "album"
+          },
+          "releaseDate": "2013-04-05",
+          "trackCount": 1,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-instrumental-version-originally/632556615"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/632556615/artists?l=en-US",
+            "data": [
+              {
+                "id": "622538672",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/622538672?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "6767732417": {
+        "id": "6767732417",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/6767732417?l=en-US",
+        "attributes": {
+          "artistName": "Bongo Cat",
+          "artistUrl": "https://music.apple.com/us/artist/bongo-cat/1621904549",
+          "artwork": {
+            "bgColor": "cac6cf",
+            "hasP3": false,
+            "height": 3000,
+            "textColor1": "080809",
+            "textColor2": "0a0908",
+            "textColor3": "2f2e30",
+            "textColor4": "312f30",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/91/92/cd/9192cd16-7256-61f5-7ee6-b2ad32118ed8/7316479870451.jpg/{w}x{h}bb.{f}",
+            "width": 3000
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "cac6cf",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "080809",
+              "textColor2": "0a0908",
+              "textColor3": "2f2e30",
+              "textColor4": "312f30",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/91/92/cd/9192cd16-7256-61f5-7ee6-b2ad32118ed8/7316479870451.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "Never Gonna Give You Up - Single",
+          "playParams": {
+            "id": "6767732417",
+            "kind": "album"
+          },
+          "releaseDate": "2025-08-16",
+          "trackCount": 1,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-single/6767732417"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/6767732417/artists?l=en-US",
+            "data": [
+              {
+                "id": "1621904549",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/1621904549?l=en-US"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "artists": {
+      "1186533981": {
+        "id": "1186533981",
+        "type": "artists",
+        "href": "/v1/catalog/us/artists/1186533981?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "ffffff",
+            "hasP3": false,
+            "height": 5200,
+            "textColor1": "232323",
+            "textColor2": "2d2b2a",
+            "textColor3": "4f4f4f",
+            "textColor4": "575555",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Features115/v4/1b/c1/3d/1bc13d86-3f1a-3dca-29bb-300cb22bd493/mzl.jmzcuyfn.jpg/{w}x{h}bb.{f}",
+            "width": 5200
+          },
+          "name": "Uta-Cha-Oh",
+          "url": "https://music.apple.com/us/artist/uta-cha-oh/1186533981"
+        }
+      },
+      "13458255": {
+        "id": "13458255",
+        "type": "artists",
+        "href": "/v1/catalog/us/artists/13458255?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "c3a026",
+            "hasP3": false,
+            "height": 3000,
+            "textColor1": "111018",
+            "textColor2": "201417",
+            "textColor3": "352c1b",
+            "textColor4": "40301a",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/99/be/51/99be51d9-08c1-2a51-b298-813cb644e8c8/16UMGIM70815.rgb.jpg/{w}x{h}ac.{f}",
+            "width": 3000
+          },
+          "name": "Musical Youth",
+          "url": "https://music.apple.com/us/artist/musical-youth/13458255"
+        }
+      },
+      "1503050128": {
+        "id": "1503050128",
+        "type": "artists",
+        "href": "/v1/catalog/us/artists/1503050128?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "bac9d6",
+            "hasP3": false,
+            "height": 1601,
+            "textColor1": "090b15",
+            "textColor2": "021a58",
+            "textColor3": "2c313c",
+            "textColor4": "273d71",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/bf/10/bb/bf10bb13-fec2-0f8e-4e97-f2ab144bb62f/pr_source.png/{w}x{h}bb.{f}",
+            "width": 1601
+          },
+          "name": "RadioClub",
+          "url": "https://music.apple.com/us/artist/radioclub/1503050128"
+        }
+      },
+      "155138": {
+        "id": "155138",
+        "type": "artists",
+        "href": "/v1/catalog/us/artists/155138?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "101010",
+            "hasP3": false,
+            "height": 2400,
+            "textColor1": "e6d3c6",
+            "textColor2": "c9b096",
+            "textColor3": "bbaca2",
+            "textColor4": "a4907b",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Features125/v4/5f/55/09/5f550930-5673-3ba5-4b9f-6ed6786e9de8/mzl.sclgcibb.jpg/{w}x{h}bb.{f}",
+            "width": 2400
+          },
+          "name": "Sean Paul",
+          "url": "https://music.apple.com/us/artist/sean-paul/155138"
+        }
+      },
+      "1621904549": {
+        "id": "1621904549",
+        "type": "artists",
+        "href": "/v1/catalog/us/artists/1621904549?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "f7f9f9",
+            "hasP3": false,
+            "height": 900,
+            "textColor1": "382821",
+            "textColor2": "362827",
+            "textColor3": "5e514c",
+            "textColor4": "5d5251",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/AMCArtistImages221/v4/06/63/9d/06639dd5-013b-c56b-26bc-d0db75ab3219/ami-identity-ba43ad12373b9c3af3ef13c7c621f302-2025-08-02T12-31-23.892Z_cropped.png/{w}x{h}bb.{f}",
+            "width": 900
+          },
+          "name": "Bongo Cat",
+          "url": "https://music.apple.com/us/artist/bongo-cat/1621904549"
+        }
+      },
+      "16233": {
+        "id": "16233",
+        "type": "artists",
+        "href": "/v1/catalog/us/artists/16233?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "c1cfde",
+            "hasP3": true,
+            "height": 1526,
+            "textColor1": "1a1919",
+            "textColor2": "181c23",
+            "textColor3": "3c3d40",
+            "textColor4": "3a4048",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/AMCArtistImages221/v4/33/90/d3/3390d391-a41f-b524-f22d-12b1378e81ae/ami-identity-f9e642362790cdbce5f9d4a4a98763a6-2026-03-24T06-09-12.454Z_cropped.png/{w}x{h}bb.{f}",
+            "width": 1526
+          },
+          "name": "Barry Manilow",
+          "url": "https://music.apple.com/us/artist/barry-manilow/16233"
+        }
+      },
+      "1746651524": {
+        "id": "1746651524",
+        "type": "artists",
+        "href": "/v1/catalog/us/artists/1746651524?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "fa8a90",
+            "hasP3": false,
+            "height": 3000,
+            "textColor1": "0f0612",
+            "textColor2": "161516",
+            "textColor3": "3e212b",
+            "textColor4": "432c2e",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/e1/c9/eb/e1c9eb32-4aec-a4d9-6c27-92d3e86f304c/PARKA132.jpg/{w}x{h}ac.{f}",
+            "width": 3000
+          },
+          "name": "Singer's Best",
+          "url": "https://music.apple.com/us/artist/singers-best/1746651524"
+        }
+      },
+      "1758152572": {
+        "id": "1758152572",
+        "type": "artists",
+        "href": "/v1/catalog/us/artists/1758152572?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "121015",
+            "hasP3": true,
+            "height": 2500,
+            "textColor1": "d0dbbf",
+            "textColor2": "c4cab1",
+            "textColor3": "aab29d",
+            "textColor4": "a0a592",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/AMCArtistImages221/v4/9f/cd/7f/9fcd7fce-bf83-b426-c722-3aacbd6b7284/ami-identity-c44d06a282ab4170534002121c2e28e0-2026-02-26T00-40-42.600Z_cropped.png/{w}x{h}bb.{f}",
+            "width": 2500
+          },
+          "name": "High Watah",
+          "url": "https://music.apple.com/us/artist/high-watah/1758152572"
+        }
+      },
+      "266440748": {
+        "id": "266440748",
+        "type": "artists",
+        "href": "/v1/catalog/us/artists/266440748?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "d9e3d1",
+            "hasP3": false,
+            "height": 1081,
+            "textColor1": "090608",
+            "textColor2": "291b18",
+            "textColor3": "323231",
+            "textColor4": "4c433d",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/AMCArtistImages211/v4/c6/ab/d3/c6abd3bb-6fa4-8ef5-58ce-ad3db5a79237/ami-identity-a4857f940f04acd57945411be4e12e85-2025-07-11T05-30-15.471Z_cropped.png/{w}x{h}bb.{f}",
+            "width": 1081
+          },
+          "name": "Home Free",
+          "url": "https://music.apple.com/us/artist/home-free/266440748"
+        }
+      },
+      "277390846": {
+        "id": "277390846",
+        "type": "artists",
+        "href": "/v1/catalog/us/artists/277390846?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "141310",
+            "hasP3": false,
+            "height": 1667,
+            "textColor1": "89c0d6",
+            "textColor2": "4cbad8",
+            "textColor3": "719eaf",
+            "textColor4": "4199b0",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/02/de/6f/02de6fdd-400a-06bb-18f0-c7e85f61c335/pr_source.png/{w}x{h}bb.{f}",
+            "width": 1667
+          },
+          "name": "Kapena",
+          "url": "https://music.apple.com/us/artist/kapena/277390846"
+        }
+      },
+      "292488211": {
+        "id": "292488211",
+        "type": "artists",
+        "href": "/v1/catalog/us/artists/292488211?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "e36e4a",
+            "hasP3": false,
+            "height": 1416,
+            "textColor1": "040404",
+            "textColor2": "050504",
+            "textColor3": "311912",
+            "textColor4": "311a12",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/f0/31/d9/f031d94d-7165-6d8d-69b5-f00ad12b9320/886446469904.jpg/{w}x{h}ac.{f}",
+            "width": 1416
+          },
+          "name": "Rex Smith",
+          "url": "https://music.apple.com/us/artist/rex-smith/292488211"
+        }
+      },
+      "460575": {
+        "id": "460575",
+        "type": "artists",
+        "href": "/v1/catalog/us/artists/460575?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "ffffff",
+            "hasP3": false,
+            "height": 2400,
+            "textColor1": "0b0804",
+            "textColor2": "2c2b28",
+            "textColor3": "3c3936",
+            "textColor4": "565553",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Features115/v4/29/90/fa/2990fa33-f83b-1e3c-b3cf-c21bdd8fd658/mzl.tlgdgxxd.jpg/{w}x{h}bb.{f}",
+            "width": 2400
+          },
+          "name": "Lisa Stansfield",
+          "url": "https://music.apple.com/us/artist/lisa-stansfield/460575"
+        }
+      },
+      "476671": {
+        "id": "476671",
+        "type": "artists",
+        "href": "/v1/catalog/us/artists/476671?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "ffffff",
+            "hasP3": false,
+            "height": 1500,
+            "textColor1": "0b0b0b",
+            "textColor2": "2e2d2b",
+            "textColor3": "3c3c3c",
+            "textColor4": "585755",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/AMCArtistImages122/v4/13/3c/9c/133c9cac-2390-35cc-eb9d-b33aec976179/509102e0-d3df-4c16-8b57-8b60afaefc17_file_cropped.png/{w}x{h}bb.{f}",
+            "width": 1500
+          },
+          "name": "New Kids On the Block",
+          "url": "https://music.apple.com/us/artist/new-kids-on-the-block/476671"
+        }
+      },
+      "484928080": {
+        "id": "484928080",
+        "type": "artists",
+        "href": "/v1/catalog/us/artists/484928080?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "ee7100",
+            "hasP3": false,
+            "height": 1440,
+            "textColor1": "161514",
+            "textColor2": "161616",
+            "textColor3": "412810",
+            "textColor4": "412811",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music/fa/6d/bb/mzi.ofuxuacy.jpg/{w}x{h}ac.{f}",
+            "width": 1440
+          },
+          "name": "Amazing Karaoke",
+          "url": "https://music.apple.com/us/artist/amazing-karaoke/484928080"
+        }
+      },
+      "509945688": {
+        "id": "509945688",
+        "type": "artists",
+        "href": "/v1/catalog/us/artists/509945688?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "000000",
+            "hasP3": false,
+            "height": 3000,
+            "textColor1": "c0d7d7",
+            "textColor2": "adc8cd",
+            "textColor3": "99acac",
+            "textColor4": "8aa0a4",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music111/v4/18/4a/9f/184a9f34-9c48-1113-f1e8-dd72bded4ddd/ProSource_Karaoke_Country_cover.jpg/{w}x{h}ac.{f}",
+            "width": 3000
+          },
+          "name": "ProSource Karaoke Band",
+          "url": "https://music.apple.com/us/artist/prosource-karaoke-band/509945688"
+        }
+      },
+      "622538672": {
+        "id": "622538672",
+        "type": "artists",
+        "href": "/v1/catalog/us/artists/622538672?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "ebb716",
+            "hasP3": false,
+            "height": 1400,
+            "textColor1": "000000",
+            "textColor2": "000000",
+            "textColor3": "2f2404",
+            "textColor4": "2f2404",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music4/v4/31/bc/e5/31bce5d4-8fce-bd55-1409-7e4dbde5a534/beatles.jpg/{w}x{h}ac.{f}",
+            "width": 1400
+          },
+          "name": "Roadhouse Professional Karaoke",
+          "url": "https://music.apple.com/us/artist/roadhouse-professional-karaoke/622538672"
+        }
+      },
+      "667146097": {
+        "id": "667146097",
+        "type": "artists",
+        "href": "/v1/catalog/us/artists/667146097?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "230d0c",
+            "hasP3": false,
+            "height": 3000,
+            "textColor1": "fae11a",
+            "textColor2": "e49228",
+            "textColor3": "cfb717",
+            "textColor4": "be7722",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/3a/5e/72/3a5e7221-893c-325f-5cbf-4844ada14edd/805570057115.jpg/{w}x{h}ac.{f}",
+            "width": 3000
+          },
+          "name": "Singer's Edge Karaoke",
+          "url": "https://music.apple.com/us/artist/singers-edge-karaoke/667146097"
+        }
+      },
+      "669771": {
+        "id": "669771",
+        "type": "artists",
+        "href": "/v1/catalog/us/artists/669771?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "68171b",
+            "hasP3": true,
+            "height": 3044,
+            "textColor1": "f1a861",
+            "textColor2": "e28552",
+            "textColor3": "d58b53",
+            "textColor4": "ca6f47",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/AMCArtistImages221/v4/e4/d7/12/e4d7122b-4d7b-f34e-9127-970e4b28f68e/ami-identity-8b8a04c9a5c0e533dd02906e82f07c0f-2026-04-11T06-40-00.200Z_cropped.png/{w}x{h}bb.{f}",
+            "width": 3044
+          },
+          "name": "Rick Astley",
+          "url": "https://music.apple.com/us/artist/rick-astley/669771"
+        }
+      }
+    },
+    "music-videos": {
+      "1339832770": {
+        "id": "1339832770",
+        "type": "music-videos",
+        "href": "/v1/catalog/us/music-videos/1339832770?l=en-US",
+        "attributes": {
+          "artistName": "Rex Smith",
+          "artistUrl": "https://music.apple.com/us/artist/rex-smith/292488211",
+          "artwork": {
+            "bgColor": "4d5086",
+            "hasP3": false,
+            "height": 520,
+            "textColor1": "e7ebec",
+            "textColor2": "e1d2d2",
+            "textColor3": "c8ccd8",
+            "textColor4": "c3b8c3",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Video128/v4/3a/1f/8f/3a1f8fba-a8f7-7176-a9ca-252df4f61a9d/8864468017040101.jpg/{w}x{h}{c}.{f}",
+            "width": 720
+          },
+          "durationInMillis": 174355,
+          "genreNames": [
+            "Pop"
+          ],
+          "has4K": false,
+          "hasHDR": false,
+          "isrc": "USSM21701649",
+          "name": "Never Gonna Give You Up",
+          "playParams": {
+            "id": "1339832770",
+            "kind": "musicVideo"
+          },
+          "previews": [
+            {
+              "artwork": {
+                "bgColor": "2e1915",
+                "hasP3": false,
+                "height": 474,
+                "textColor1": "e0bcaa",
+                "textColor2": "d6aeaf",
+                "textColor3": "bc9b8c",
+                "textColor4": "b49090",
+                "url": "https://is1-ssl.mzstatic.com/image/thumb/Video115/v4/be/60/cf/be60cf71-c741-cf3b-1466-029a96870d2e/Jobb632dcd2-49e3-4eca-a7cf-3cd524564066-100209076-PreviewImage_preview_image_48000_video_sdr-Time1527904694277.png/{w}x{h}{c}.{f}",
+                "width": 620
+              },
+              "hlsUrl": "https://play-edge.itunes.apple.com/WebObjects/MZPlayLocal.woa/hls/playlist.m3u8?cc=US&a=1339832770&id=53823676&aec=HD&l=en",
+              "url": "https://video-ssl.itunes.apple.com/itunes-assets/Video115/v4/a6/c5/f3/a6c5f3ef-a8dd-18d4-8468-0d66984f7f1f/mzvf_2598621645029684470.640x474.h264lc.U.p.m4v"
+            }
+          ],
+          "releaseDate": "1979-01-01",
+          "url": "https://music.apple.com/us/music-video/never-gonna-give-you-up/1339832770",
+          "videoTraits": []
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/music-videos/1339832770/artists?l=en-US",
+            "data": [
+              {
+                "id": "292488211",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/292488211?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1560897459": {
+        "id": "1560897459",
+        "type": "music-videos",
+        "href": "/v1/catalog/us/music-videos/1560897459?l=en-US",
+        "attributes": {
+          "artistName": "Home Free",
+          "artistUrl": "https://music.apple.com/us/artist/home-free/266440748",
+          "artwork": {
+            "bgColor": "b9bbb6",
+            "hasP3": false,
+            "height": 1080,
+            "textColor1": "0d0e0c",
+            "textColor2": "2a1f17",
+            "textColor3": "30302e",
+            "textColor4": "463e37",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Video124/v4/4c/b7/ae/4cb7ae72-3bf5-adf0-ceb3-750e1a1e64ec/196006434120_1_1.jpg/{w}x{h}{c}.{f}",
+            "width": 1920
+          },
+          "durationInMillis": 180372,
+          "genreNames": [
+            "Pop"
+          ],
+          "has4K": false,
+          "hasHDR": false,
+          "isrc": "QZGX42100017",
+          "name": "Never Gonna Give You Up",
+          "playParams": {
+            "id": "1560897459",
+            "kind": "musicVideo"
+          },
+          "previews": [
+            {
+              "artwork": {
+                "bgColor": "000000",
+                "hasP3": false,
+                "height": 1080,
+                "textColor1": "f2f2f2",
+                "textColor2": "e5e5e5",
+                "textColor3": "c1c1c1",
+                "textColor4": "b7b7b7",
+                "url": "https://is1-ssl.mzstatic.com/image/thumb/Video124/v4/5f/71/5b/5f715bb0-7989-0a78-ac33-515ea3c6a055/Jobfc27d5a6-18db-4057-a3a6-08bbed5dd789-110596016-PreviewImage_preview_image_0_video_sdr-Time1617145177204.png/{w}x{h}{c}.{f}",
+                "width": 1920
+              },
+              "hlsUrl": "https://play-edge.itunes.apple.com/WebObjects/MZPlayLocal.woa/hls/playlist.m3u8?cc=US&a=1560897459&id=243200708&aec=HD&l=en",
+              "url": "https://video-ssl.itunes.apple.com/itunes-assets/Video124/v4/0a/16/60/0a16602a-ad41-4990-7225-9ade4dcceeb4/mzvf_7226162364008525703.720w.h264lc.U.p.m4v"
+            }
+          ],
+          "releaseDate": "2021-04-02",
+          "url": "https://music.apple.com/us/music-video/never-gonna-give-you-up/1560897459",
+          "videoTraits": []
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/music-videos/1560897459/artists?l=en-US",
+            "data": [
+              {
+                "id": "266440748",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/266440748?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1707960526": {
+        "id": "1707960526",
+        "type": "music-videos",
+        "href": "/v1/catalog/us/music-videos/1707960526?l=en-US",
+        "attributes": {
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "131217",
+            "hasP3": false,
+            "height": 480,
+            "textColor1": "e7f1e6",
+            "textColor2": "e29a79",
+            "textColor3": "bcc5bc",
+            "textColor4": "b97f65",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Video116/v4/5c/62/d8/5c62d85e-118e-e2ce-28ba-2e2acd99ad62/0884977412222_640.jpg/{w}x{h}{c}.{f}",
+            "width": 640
+          },
+          "durationInMillis": 261335,
+          "genreNames": [
+            "Pop"
+          ],
+          "has4K": false,
+          "hasHDR": false,
+          "isrc": "GB1108800300",
+          "name": "She Wants to Dance With Me",
+          "playParams": {
+            "id": "1707960526",
+            "kind": "musicVideo"
+          },
+          "previews": [
+            {
+              "artwork": {
+                "bgColor": "101825",
+                "hasP3": false,
+                "height": 480,
+                "textColor1": "e5bb72",
+                "textColor2": "d5aca6",
+                "textColor3": "bb9a62",
+                "textColor4": "ae8f8c",
+                "url": "https://is1-ssl.mzstatic.com/image/thumb/Video126/v4/c3/18/85/c318850a-741f-5f21-6dd4-1b840d898f9e/Job67d9b8ab-22f0-423b-8b4b-faf6b9b1f4c8-155864856-PreviewImage_preview_image_45000_video_sdr-Time1695090569603.png/{w}x{h}{c}.{f}",
+                "width": 640
+              },
+              "hlsUrl": "https://play-edge.itunes.apple.com/WebObjects/MZPlayLocal.woa/hls/playlist.m3u8?cc=US&a=1707960526&id=624709975&aec=HD&l=en",
+              "url": "https://video-ssl.itunes.apple.com/itunes-assets/Video116/v4/1f/76/86/1f7686a4-9bd8-d82d-1438-1823e2a60a1b/mzvf_18376476448344652845.640x480.h264lc.U.p.m4v"
+            }
+          ],
+          "releaseDate": "2009-02-02",
+          "url": "https://music.apple.com/us/music-video/she-wants-to-dance-with-me/1707960526",
+          "videoTraits": []
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/music-videos/1707960526/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1707960532": {
+        "id": "1707960532",
+        "type": "music-videos",
+        "href": "/v1/catalog/us/music-videos/1707960532?l=en-US",
+        "attributes": {
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "181607",
+            "hasP3": false,
+            "height": 480,
+            "textColor1": "d6b29c",
+            "textColor2": "d99977",
+            "textColor3": "b0937e",
+            "textColor4": "b27f60",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Video126/v4/9f/ef/b6/9fefb6b5-1199-2897-03ef-b542fe50193b/0884977412239_640.jpg/{w}x{h}{c}.{f}",
+            "width": 640
+          },
+          "durationInMillis": 210935,
+          "genreNames": [
+            "Pop"
+          ],
+          "has4K": false,
+          "hasHDR": false,
+          "isrc": "GB1108800290",
+          "name": "Take Me to Your Heart",
+          "playParams": {
+            "id": "1707960532",
+            "kind": "musicVideo"
+          },
+          "previews": [
+            {
+              "artwork": {
+                "bgColor": "201c04",
+                "hasP3": false,
+                "height": 480,
+                "textColor1": "d2cacd",
+                "textColor2": "c4c4b1",
+                "textColor3": "aea7a4",
+                "textColor4": "a3a28e",
+                "url": "https://is1-ssl.mzstatic.com/image/thumb/Video126/v4/8f/d6/6d/8fd66d7d-a2c4-25b1-58b0-688b57ee6e61/Job26d18759-d49c-4b83-8d76-87b67eb2775c-155864849-PreviewImage_preview_image_45000_video_sdr-Time1695090516794.png/{w}x{h}{c}.{f}",
+                "width": 640
+              },
+              "hlsUrl": "https://play-edge.itunes.apple.com/WebObjects/MZPlayLocal.woa/hls/playlist.m3u8?cc=US&a=1707960532&id=624710143&aec=HD&l=en",
+              "url": "https://video-ssl.itunes.apple.com/itunes-assets/Video126/v4/03/23/37/032337c6-5fe2-1f15-f0ac-cc3b526f0aec/mzvf_16909747390434145159.640x480.h264lc.U.p.m4v"
+            }
+          ],
+          "releaseDate": "2009-02-02",
+          "url": "https://music.apple.com/us/music-video/take-me-to-your-heart/1707960532",
+          "videoTraits": []
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/music-videos/1707960532/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1744309858": {
+        "id": "1744309858",
+        "type": "music-videos",
+        "href": "/v1/catalog/us/music-videos/1744309858?l=en-US",
+        "attributes": {
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "020008",
+            "hasP3": false,
+            "height": 1080,
+            "textColor1": "d8d5e2",
+            "textColor2": "cac5d8",
+            "textColor3": "adaab6",
+            "textColor4": "a29eae",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Video211/v4/82/73/4e/82734e2d-4ba1-8704-6e2d-076c604871ef/4050538964417_1920.jpg/{w}x{h}{c}.{f}",
+            "width": 1920
+          },
+          "durationInMillis": 200064,
+          "genreNames": [
+            "Pop"
+          ],
+          "has4K": false,
+          "hasHDR": false,
+          "isrc": "GBZA42301474",
+          "name": "Never Gonna Stop",
+          "playParams": {
+            "id": "1744309858",
+            "kind": "musicVideo"
+          },
+          "previews": [
+            {
+              "artwork": {
+                "bgColor": "9d9a97",
+                "hasP3": false,
+                "height": 1080,
+                "textColor1": "100400",
+                "textColor2": "251912",
+                "textColor3": "2c221e",
+                "textColor4": "3d322c",
+                "url": "https://is1-ssl.mzstatic.com/image/thumb/Video221/v4/b8/6f/18/b86f1888-628b-3fb9-1bf1-abdb17fc1fda/Jobc51eb83e-70b0-4899-96a2-a8317cea2127-167300452-PreviewImage_preview_image_45000_video_sdr-Time1714642579397.png/{w}x{h}{c}.{f}",
+                "width": 1920
+              },
+              "hlsUrl": "https://play-edge.itunes.apple.com/WebObjects/MZPlayLocal.woa/hls/playlist.m3u8?cc=US&a=1744309858&id=855507133&aec=HD&l=en",
+              "url": "https://video-ssl.itunes.apple.com/itunes-assets/Video211/v4/82/1c/af/821cafe8-b879-9839-3afb-c8e1818bec63/mzvf_16231769844203157561.720w.h264lc.U.p.m4v"
+            }
+          ],
+          "releaseDate": "2023-09-20",
+          "url": "https://music.apple.com/us/music-video/never-gonna-stop/1744309858",
+          "videoTraits": []
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/music-videos/1744309858/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "299199411": {
+        "id": "299199411",
+        "type": "music-videos",
+        "href": "/v1/catalog/us/music-videos/299199411?l=en-US",
+        "attributes": {
+          "artistName": "Barry Manilow",
+          "artistUrl": "https://music.apple.com/us/artist/barry-manilow/16233",
+          "artwork": {
+            "hasP3": false,
+            "height": 464,
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Video/ac/e8/ea/mzi.flwwzvev.jpg/{w}x{h}{c}.{f}",
+            "width": 640
+          },
+          "durationInMillis": 170870,
+          "genreNames": [
+            "Pop"
+          ],
+          "has4K": false,
+          "hasHDR": false,
+          "isrc": "USAV70800276",
+          "name": "Never Gonna Give You Up",
+          "playParams": {
+            "id": "299199411",
+            "kind": "musicVideo"
+          },
+          "previews": [
+            {
+              "artwork": {
+                "bgColor": "00060c",
+                "hasP3": false,
+                "height": 464,
+                "textColor1": "efb9d2",
+                "textColor2": "e8b7a8",
+                "textColor3": "bf95aa",
+                "textColor4": "b99489",
+                "url": "https://is1-ssl.mzstatic.com/image/thumb/Video118/v4/c9/5f/c1/c95fc14c-8ec8-fb7d-9a97-6453330ac875/Job92c11e76-8aaa-40a0-92aa-7f30804a1d8a-99750886-PreviewImage_preview_image_44000_video_sdr-Time1525318140729.png/{w}x{h}{c}.{f}",
+                "width": 640
+              },
+              "hlsUrl": "https://play-edge.itunes.apple.com/WebObjects/MZPlayLocal.woa/hls/playlist.m3u8?cc=US&a=299199411&id=52702303&aec=HD&l=en",
+              "url": "https://video-ssl.itunes.apple.com/itunes-assets/Video118/v4/2c/b7/5d/2cb75d19-181e-0b7a-423d-95f5681f9a85/mzvf_4247151534329016418.640x464.h264lc.U.p.m4v"
+            }
+          ],
+          "releaseDate": "2008-11-19",
+          "url": "https://music.apple.com/us/music-video/never-gonna-give-you-up/299199411",
+          "videoTraits": []
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/music-videos/299199411/artists?l=en-US",
+            "data": [
+              {
+                "id": "16233",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/16233?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "389916301": {
+        "id": "389916301",
+        "type": "music-videos",
+        "href": "/v1/catalog/us/music-videos/389916301?l=en-US",
+        "attributes": {
+          "artistName": "Lisa Stansfield",
+          "artistUrl": "https://music.apple.com/us/artist/lisa-stansfield/460575",
+          "artwork": {
+            "hasP3": false,
+            "height": 334,
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Video/53/48/cd/mzi.ggewcozt.jpg/{w}x{h}{c}.{f}",
+            "width": 640
+          },
+          "durationInMillis": 267600,
+          "genreNames": [
+            "Pop"
+          ],
+          "has4K": false,
+          "hasHDR": false,
+          "isrc": "GB0509700350",
+          "name": "Never, Never Gonna Give You Up",
+          "playParams": {
+            "id": "389916301",
+            "kind": "musicVideo"
+          },
+          "previews": [
+            {
+              "artwork": {
+                "bgColor": "68615a",
+                "hasP3": false,
+                "height": 328,
+                "textColor1": "ececfa",
+                "textColor2": "e7edfe",
+                "textColor3": "d2d1da",
+                "textColor4": "cdd1dd",
+                "url": "https://is1-ssl.mzstatic.com/image/thumb/Video128/v4/83/2a/cf/832acf28-66db-a59f-ac50-1a99d805709d/Job737cde52-8b2c-4dac-9928-1b3184d5f9a0-99704036-PreviewImage_preview_image_82000_video_sdr-Time1525110856300.png/{w}x{h}{c}.{f}",
+                "width": 640
+              },
+              "hlsUrl": "https://play-edge.itunes.apple.com/WebObjects/MZPlayLocal.woa/hls/playlist.m3u8?cc=US&a=389916301&id=52589421&aec=HD&l=en",
+              "url": "https://video-ssl.itunes.apple.com/itunes-assets/Video128/v4/c9/ec/f3/c9ecf3af-ded2-5f73-1a85-05b9e99712da/mzvf_5564428293159147242.640x328.h264lc.U.p.m4v"
+            }
+          ],
+          "releaseDate": "2009-08-03",
+          "url": "https://music.apple.com/us/music-video/never-never-gonna-give-you-up/389916301",
+          "videoTraits": []
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/music-videos/389916301/artists?l=en-US",
+            "data": [
+              {
+                "id": "460575",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/460575?l=en-US"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "playlists": {
+      "pl.0aaf8811bff84381b9dd4bf7836d9a47": {
+        "id": "pl.0aaf8811bff84381b9dd4bf7836d9a47",
+        "type": "playlists",
+        "href": "/v1/catalog/us/playlists/pl.0aaf8811bff84381b9dd4bf7836d9a47?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "68171b",
+            "hasP3": false,
+            "height": 1080,
+            "textColor1": "f1a861",
+            "textColor2": "e28552",
+            "textColor3": "d58b53",
+            "textColor4": "ca6f47",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/AMCArtistImages221/v4/e4/d7/12/e4d7122b-4d7b-f34e-9127-970e4b28f68e/ami-identity-8b8a04c9a5c0e533dd02906e82f07c0f-2026-04-11T06-40-00.200Z_cropped.png/{w}x{h}SC.FPSL02.{f}?l=en-US",
+            "width": 1080
+          },
+          "audioTraits": [],
+          "curatorName": "Apple Music Pop",
+          "editorialNotes": {
+            "name": "Rick Astley's The Reflection Tour Set List"
+          },
+          "editorialPlaylistKind": "artist-franchise",
+          "editorialPlaylistSubKind": "artist-created-set-list",
+          "hasCollaboration": false,
+          "isChart": false,
+          "lastModifiedDate": "2026-04-11T06:44:46Z",
+          "name": "Rick Astley's The Reflection Tour Set List",
+          "playParams": {
+            "id": "pl.0aaf8811bff84381b9dd4bf7836d9a47",
+            "kind": "playlist",
+            "versionHash": "a8326213d5602a769c333e85e54ad005b48284a8359e50c984fb82f1f5961e14"
+          },
+          "playlistType": "editorial",
+          "supportsSing": false,
+          "url": "https://music.apple.com/us/playlist/rick-astleys-the-reflection-tour-set-list/pl.0aaf8811bff84381b9dd4bf7836d9a47"
+        }
+      },
+      "pl.28f99a3b2d454bab9f87e1fea8a3b8f3": {
+        "id": "pl.28f99a3b2d454bab9f87e1fea8a3b8f3",
+        "type": "playlists",
+        "href": "/v1/catalog/us/playlists/pl.28f99a3b2d454bab9f87e1fea8a3b8f3?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "c0c0c0",
+            "hasP3": false,
+            "height": 1080,
+            "textColor1": "0c0a09",
+            "textColor2": "111010",
+            "textColor3": "302e2e",
+            "textColor4": "343333",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/AMCArtistImages211/v4/35/c5/09/35c5098a-13d9-0f33-4135-f8fa3d87d4c5/ami-identity-67a8ac413da9b063bf43d0c47185a4f5-2025-04-10T17-28-56.252Z_cropped.png/{w}x{h}SC.FPSL02.{f}?l=en-US",
+            "width": 1080
+          },
+          "audioTraits": [],
+          "curatorName": "Apple Music Dance",
+          "editorialNotes": {
+            "name": "Tugajr's Retro Night: Halloween Edition Concert Set List"
+          },
+          "editorialPlaylistKind": "artist-franchise",
+          "editorialPlaylistSubKind": "artist-created-set-list",
+          "hasCollaboration": false,
+          "isChart": false,
+          "lastModifiedDate": "2024-10-30T00:05:48Z",
+          "name": "Tugajr's Retro Night: Halloween Edition Concert Set List",
+          "playParams": {
+            "id": "pl.28f99a3b2d454bab9f87e1fea8a3b8f3",
+            "kind": "playlist",
+            "versionHash": "5b4e14ca6a2538c337a8879519c830c7fc13e450db2f151317aebd94c1887812"
+          },
+          "playlistType": "editorial",
+          "supportsSing": false,
+          "url": "https://music.apple.com/us/playlist/tugajrs-retro-night-halloween-edition-concert-set-list/pl.28f99a3b2d454bab9f87e1fea8a3b8f3"
+        }
+      },
+      "pl.46aca1d8eabd4282bbc6a2de546a2cfd": {
+        "id": "pl.46aca1d8eabd4282bbc6a2de546a2cfd",
+        "type": "playlists",
+        "href": "/v1/catalog/us/playlists/pl.46aca1d8eabd4282bbc6a2de546a2cfd?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "6de681",
+            "hasP3": false,
+            "height": 1080,
+            "textColor1": "ffffff",
+            "textColor2": "0e090b",
+            "textColor3": "1d271e",
+            "textColor4": "1d291d",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Features221/v4/66/e1/72/66e17273-f50d-fc9f-6b01-8d0e2a38323e/957592c6-12aa-4a26-9fb1-77c1e99fa59a.png/{w}x{h}SC.DN01.{f}?l=en-US",
+            "width": 1080
+          },
+          "audioTraits": [],
+          "curatorName": "Apple Music",
+          "description": {
+            "short": "The songs from your favorite shows are suddenly everywhere.",
+            "standard": "Here’s where you’ll find all the songs making the jump from your favorite shows and movies and into the collective consciousness. This playlist is updated regularly—if you like a track, add it to your library."
+          },
+          "editorialNotes": {
+            "name": "Viral Syncs",
+            "short": "The songs from your favorite shows are suddenly everywhere.",
+            "standard": "Here’s where you’ll find all the songs making the jump from your favorite shows and movies and into the collective consciousness. This playlist is updated regularly—if you like a track, add it to your library."
+          },
+          "hasCollaboration": false,
+          "isChart": false,
+          "lastModifiedDate": "2026-06-08T21:10:17Z",
+          "name": "Viral Syncs",
+          "playParams": {
+            "id": "pl.46aca1d8eabd4282bbc6a2de546a2cfd",
+            "kind": "playlist",
+            "versionHash": "7d9afa24258b08e9f53f538b51634dc468c9adf3367413390854a95bb482290c"
+          },
+          "playlistType": "editorial",
+          "supportsSing": false,
+          "url": "https://music.apple.com/us/playlist/viral-syncs/pl.46aca1d8eabd4282bbc6a2de546a2cfd"
+        }
+      },
+      "pl.504a9420747e43ec93e4faa999a8bef9": {
+        "id": "pl.504a9420747e43ec93e4faa999a8bef9",
+        "type": "playlists",
+        "href": "/v1/catalog/us/playlists/pl.504a9420747e43ec93e4faa999a8bef9?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "68171b",
+            "hasP3": false,
+            "height": 1080,
+            "textColor1": "f1a861",
+            "textColor2": "e28552",
+            "textColor3": "d58b53",
+            "textColor4": "ca6f47",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/AMCArtistImages221/v4/e4/d7/12/e4d7122b-4d7b-f34e-9127-970e4b28f68e/ami-identity-8b8a04c9a5c0e533dd02906e82f07c0f-2026-04-11T06-40-00.200Z_cropped.png/{w}x{h}SC.FPESS04.{f}?l=en-US",
+            "width": 1080
+          },
+          "audioTraits": [],
+          "curatorName": "Apple Music Pop",
+          "description": {
+            "short": "This British soul singer is never gonna let you down.",
+            "standard": "Rick Astley's 1987 debut, <I>Whenever You Need Somebody</I>, put an of-the-moment spin on the Motown ideal; hitmakers Stock Aitken Waterman paired Astley's vocal with sparkling synth-pop on smashes like the joyous “Together Forever” and the giddily devoted “Never Gonna Give You Up.” After Astley broke with SAW, his smooth yet strong voice gave urgency to the gospel-tinged “Cry for Help” and the wrenching “Hopelessly.” In the mid-'00s, “Never” returned via the fake-out meme known as “Rickrolling”; not long after, Astley came back as well, stripping down on “Keep Singing” and heading to the disco on “Beautiful Life.”"
+          },
+          "editorialNotes": {
+            "name": "Rick Astley Essentials",
+            "short": "This British soul singer is never gonna let you down.",
+            "standard": "Rick Astley's 1987 debut, <i>Whenever You Need Somebody</i>, put an of-the-moment spin on the Motown ideal; hitmakers Stock Aitken Waterman paired Astley's vocal with sparkling synth-pop on smashes like the joyous “Together Forever” and the giddily devoted “Never Gonna Give You Up.” After Astley broke with SAW, his smooth yet strong voice gave urgency to the gospel-tinged “Cry for Help” and the wrenching “Hopelessly.” In the mid-'00s, “Never” returned via the fake-out meme known as “Rickrolling”; not long after, Astley came back as well, stripping down on “Keep Singing” and heading to the disco on “Beautiful Life.”"
+          },
+          "editorialPlaylistKind": "artist-franchise",
+          "hasCollaboration": false,
+          "isChart": false,
+          "lastModifiedDate": "2023-09-08T09:31:33Z",
+          "name": "Rick Astley Essentials",
+          "playParams": {
+            "id": "pl.504a9420747e43ec93e4faa999a8bef9",
+            "kind": "playlist",
+            "versionHash": "76f2a958bbe3010f110ec503499a6ece8d478d710bc05d4ad16f0b6e80470a78"
+          },
+          "playlistType": "editorial",
+          "supportsSing": false,
+          "url": "https://music.apple.com/us/playlist/rick-astley-essentials/pl.504a9420747e43ec93e4faa999a8bef9"
+        }
+      },
+      "pl.5f12268564fc4124a127e33d90fe525c": {
+        "id": "pl.5f12268564fc4124a127e33d90fe525c",
+        "type": "playlists",
+        "href": "/v1/catalog/us/playlists/pl.5f12268564fc4124a127e33d90fe525c?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "68171b",
+            "hasP3": false,
+            "height": 1080,
+            "textColor1": "f1a861",
+            "textColor2": "e28552",
+            "textColor3": "d58b53",
+            "textColor4": "ca6f47",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/AMCArtistImages221/v4/e4/d7/12/e4d7122b-4d7b-f34e-9127-970e4b28f68e/ami-identity-8b8a04c9a5c0e533dd02906e82f07c0f-2026-04-11T06-40-00.200Z_cropped.png/{w}x{h}SC.FPSL02.{f}?l=en-US",
+            "width": 1080
+          },
+          "audioTraits": [],
+          "curatorName": "Apple Music Pop",
+          "editorialNotes": {
+            "name": "Rick Astley's 50 Tour Set List"
+          },
+          "editorialPlaylistKind": "artist-franchise",
+          "editorialPlaylistSubKind": "artist-created-set-list",
+          "hasCollaboration": false,
+          "isChart": false,
+          "lastModifiedDate": "2026-06-04T10:24:22Z",
+          "name": "Rick Astley's 50 Tour Set List",
+          "playParams": {
+            "id": "pl.5f12268564fc4124a127e33d90fe525c",
+            "kind": "playlist",
+            "versionHash": "26136da160ec81878695d7a4a6b1497a517d9813e02fb3c957ba04e0a46522bd"
+          },
+          "playlistType": "editorial",
+          "supportsSing": false,
+          "url": "https://music.apple.com/us/playlist/rick-astleys-50-tour-set-list/pl.5f12268564fc4124a127e33d90fe525c"
+        }
+      },
+      "pl.6c6f5b8f53c0401fa6f667375f4526e7": {
+        "id": "pl.6c6f5b8f53c0401fa6f667375f4526e7",
+        "type": "playlists",
+        "href": "/v1/catalog/us/playlists/pl.6c6f5b8f53c0401fa6f667375f4526e7?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "a2194f",
+            "hasP3": false,
+            "height": 1080,
+            "textColor1": "000000",
+            "textColor2": "000000",
+            "textColor3": "e9a0c6",
+            "textColor4": "ea82ac",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Features/v4/0c/eb/86/0ceb8649-24dc-33f1-997f-00a13c6241ab/d50e85ce-b36d-472e-85d7-906e33c14a43.png/{w}x{h}cc.{f}",
+            "width": 4320
+          },
+          "audioTraits": [],
+          "curatorName": "Apple Music",
+          "editorialNotes": {
+            "name": "Radio Chart 2025: Pop",
+            "short": "Hear what was trending on pop radio stations around the world in 2025."
+          },
+          "hasCollaboration": false,
+          "isChart": true,
+          "lastModifiedDate": "2025-11-21T20:34:29Z",
+          "name": "Radio Chart 2025: Pop",
+          "playParams": {
+            "id": "pl.6c6f5b8f53c0401fa6f667375f4526e7",
+            "kind": "playlist",
+            "versionHash": "2dd5c7890b012a77cfd925befa5cd32c7dfb7cf53743b0f44745ed7f331adc80"
+          },
+          "playlistType": "editorial",
+          "supportsSing": false,
+          "url": "https://music.apple.com/us/playlist/radio-chart-2025-pop/pl.6c6f5b8f53c0401fa6f667375f4526e7"
+        }
+      },
+      "pl.707f08d82d8b469d92217fbd67789c78": {
+        "id": "pl.707f08d82d8b469d92217fbd67789c78",
+        "type": "playlists",
+        "href": "/v1/catalog/us/playlists/pl.707f08d82d8b469d92217fbd67789c78?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "1f38d0",
+            "hasP3": false,
+            "height": 1080,
+            "textColor1": "ffffff",
+            "textColor2": "93aafe",
+            "textColor3": "b6c2f1",
+            "textColor4": "7992f5",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Features221/v4/05/a5/0e/05a50e50-760b-2577-d790-79cb4636d71c/fc4ed97f-15fa-47e2-8025-ce239bd6a884.png/{w}x{h}cc.{f}",
+            "width": 4320
+          },
+          "audioTraits": [],
+          "curatorName": "Apple Music",
+          "description": {
+            "short": "Hear what was trending on radio stations around the world in 2024.",
+            "standard": "All year long, Shazam’s music recognition technology tracked what songs were being played on radio stations around the world. (That’s nearly 1 million hours of music each day, broadcasting on more than 40,000 stations from Sacramento to Stockholm to Seoul.) Country music came up huge worldwide in 2024: Among the year’s top 20 most-played songs were breakthrough hits from Dasha and Shaboozey and Beyoncé’s country crossover. Sabrina Carpenter ends a banner year with a trio of Top 100 hits (“Feather,” “Please Please Please,” “Espresso”). But the queen of the airwaves was Dua Lipa, who nabs the No. 1 spot, plus five more entries on the list. Hear what else the world listened to this year."
+          },
+          "editorialNotes": {
+            "short": "Hear what was trending on radio stations around the world in 2024.",
+            "standard": "All year long, Shazam’s music recognition technology tracked what songs were being played on radio stations around the world. (That’s nearly 1 million hours of music each day, broadcasting on more than 40,000 stations from Sacramento to Stockholm to Seoul.) Country music came up huge worldwide in 2024: Among the year’s top 20 most-played songs were breakthrough hits from Dasha and Shaboozey and Beyoncé’s country crossover. Sabrina Carpenter ends a banner year with a trio of Top 100 hits (“Feather,” “Please Please Please,” “Espresso”). But the queen of the airwaves was Dua Lipa, who nabs the No. 1 spot, plus five more entries on the list. Hear what else the world listened to this year."
+          },
+          "hasCollaboration": false,
+          "isChart": true,
+          "lastModifiedDate": "2024-12-04T10:35:57Z",
+          "name": "Top 100 2024: Shazam Radio Chart: Global",
+          "playParams": {
+            "id": "pl.707f08d82d8b469d92217fbd67789c78",
+            "kind": "playlist",
+            "versionHash": "65acf63ca9c737399f7a6400dfd79254bfc22c02993b55d6fc3d2c9c55fc3c20"
+          },
+          "playlistType": "editorial",
+          "supportsSing": false,
+          "url": "https://music.apple.com/us/playlist/top-100-2024-shazam-radio-chart-global/pl.707f08d82d8b469d92217fbd67789c78"
+        }
+      },
+      "pl.82ef96d165e54b71b8f98ba8f01902ff": {
+        "id": "pl.82ef96d165e54b71b8f98ba8f01902ff",
+        "type": "playlists",
+        "href": "/v1/catalog/us/playlists/pl.82ef96d165e54b71b8f98ba8f01902ff?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "2db674",
+            "hasP3": false,
+            "height": 1080,
+            "textColor1": "ffffff",
+            "textColor2": "000000",
+            "textColor3": "0a281a",
+            "textColor4": "0a281a",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Features/v4/25/b2/dc/25b2dc46-e656-7f83-329a-544709dd40fe/583e71fe-efa8-45bd-ac7d-1a254cbdbf3d.png/{w}x{h}SC.CAESS02.{f}?l=en-US",
+            "width": 1080
+          },
+          "audioTraits": [],
+          "curatorName": "Apple Music ’80s",
+          "description": {
+            "short": "Floor-fillers from the MTV era’s mash-up of pop, hip-hop, and rock.",
+            "standard": "In the ’80s, the future was so bright, everyone not only had to wear shades—they were compelled to head to the dance floor, where beat-forward jams could be found in any section of the record store. While artists like Madonna and Michael Jackson made getting into the groove their music’s top priority, the always-on attitude of the ’80s meant that any pop artist, no matter what genre their music was rooted in, could be a remix away from helping people express themselves through movement. Duran Duran’s glossy New Wave, Janet Jackson’s fiery anthems, Run-DMC’s booming beats, INXS’ sinewy sax-rock, Prince’s hyperactive funk, George Michael’s sex-positive soul, and Cyndi Lauper’s retro-nouveau pop all electrified dance floors, whether they were in high-class clubs or streamer-decorated school gymnasiums—and they still sound vital decades after they first lit up the charts."
+          },
+          "editorialNotes": {
+            "name": "’80s Dance Party Essentials",
+            "short": "Floor-fillers from the MTV era’s mash-up of pop, hip-hop, and rock.",
+            "standard": "In the ’80s, the future was so bright, everyone not only had to wear shades—they were compelled to head to the dance floor, where beat-forward jams could be found in any section of the record store. While artists like Madonna and Michael Jackson made getting into the groove their music’s top priority, the always-on attitude of the ’80s meant that any pop artist, no matter what genre their music was rooted in, could be a remix away from helping people express themselves through movement. Duran Duran’s glossy New Wave, Janet Jackson’s fiery anthems, Run-DMC’s booming beats, INXS’ sinewy sax-rock, Prince’s hyperactive funk, George Michael’s sex-positive soul, and Cyndi Lauper’s retro-nouveau pop all electrified dance floors, whether they were in high-class clubs or streamer-decorated school gymnasiums—and they still sound vital decades after they first lit up the charts."
+          },
+          "hasCollaboration": false,
+          "isChart": false,
+          "lastModifiedDate": "2025-11-04T22:06:54Z",
+          "name": "’80s Dance Party Essentials",
+          "playParams": {
+            "id": "pl.82ef96d165e54b71b8f98ba8f01902ff",
+            "kind": "playlist",
+            "versionHash": "cadf001a5fe9610b837f3a27987b6d9d9a19faeea07d5169253e0fc3c1540d97"
+          },
+          "playlistType": "editorial",
+          "supportsSing": false,
+          "url": "https://music.apple.com/us/playlist/80s-dance-party-essentials/pl.82ef96d165e54b71b8f98ba8f01902ff"
+        }
+      },
+      "pl.88bc653184544ac5a3c88b4e92f8199d": {
+        "id": "pl.88bc653184544ac5a3c88b4e92f8199d",
+        "type": "playlists",
+        "href": "/v1/catalog/us/playlists/pl.88bc653184544ac5a3c88b4e92f8199d?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "f2f3e2",
+            "hasP3": false,
+            "height": 1080,
+            "textColor1": "000000",
+            "textColor2": "080c10",
+            "textColor3": "2b2c2f",
+            "textColor4": "292d30",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Features115/v4/8c/55/01/8c55013d-7c35-d9f8-c545-f0ac13bff4cd/U0MtTVMtV1ctUHVyZV9QYXJ0eS1BREFNX0lEPTEyOTAxMjg5NDgucG5n.png/{w}x{h}SC.DN01.{f}?l=en-US",
+            "width": 1080
+          },
+          "audioTraits": [],
+          "curatorName": "Apple Music Party",
+          "description": {
+            "standard": "Get up and dance with these high-energy smashes."
+          },
+          "editorialNotes": {
+            "name": "Pure Party",
+            "short": "Get up and dance with these high-energy smashes.",
+            "standard": "Get up and dance with these high-energy smashes.",
+            "tagline": "Recommended Playlist"
+          },
+          "hasCollaboration": false,
+          "isChart": false,
+          "lastModifiedDate": "2026-05-14T22:02:34Z",
+          "name": "Pure Party",
+          "playParams": {
+            "id": "pl.88bc653184544ac5a3c88b4e92f8199d",
+            "kind": "playlist",
+            "versionHash": "6e68fd390ebca91c93eece1514ef0fe8284edf35133607a3f46b406ad550fb4e"
+          },
+          "playlistType": "editorial",
+          "supportsSing": false,
+          "url": "https://music.apple.com/us/playlist/pure-party/pl.88bc653184544ac5a3c88b4e92f8199d"
+        }
+      },
+      "pl.af4d982795c6472ea48579eb147cd726": {
+        "id": "pl.af4d982795c6472ea48579eb147cd726",
+        "type": "playlists",
+        "href": "/v1/catalog/us/playlists/pl.af4d982795c6472ea48579eb147cd726?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "d0a40f",
+            "hasP3": false,
+            "height": 1080,
+            "textColor1": "ffffff",
+            "textColor2": "17130a",
+            "textColor3": "2f260a",
+            "textColor4": "342a0a",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Features116/v4/17/10/9c/17109c78-a9f2-05bf-662d-3cd126e47458/82ff49a3-d0ce-497d-bd29-1be6b257f000.png/{w}x{h}SC.CAESS02.{f}?l=en-US",
+            "width": 1080
+          },
+          "audioTraits": [],
+          "curatorName": "Apple Music ’80s",
+          "description": {
+            "short": "The decade when synths and videos took pop to new heights.",
+            "standard": "An irresistible synth melody. A snare drum loaded with reverb. A guitar line that’s tight and powerful. If the song you’re listening to has at least one of these things, it may be from the 1980s, the decade when disco waned and hip-hop emerged, Madonna blew up in the U.S., the hitmaking team of Stock Aitken Waterman pumped out smash singles for Rick Astley and Dead or Alive, and Michael Jackson broke sales and chart records around the world. Of course, thanks to MTV, this was also a decade when the biggest stars weren't just heard but also seen, as the music video gave artists a new medium to explore. Peter Gabriel mastered the form with psychedelic mini-masterpieces to complement his vibrant art-pop, while Prince, in the midst of reinventing rock ’n’ roll, turned out two feature-length film masterpieces with classic soundtracks to match."
+          },
+          "editorialNotes": {
+            "name": "’80s Hits Essentials",
+            "short": "The decade when synths and videos took pop to new heights.",
+            "standard": "An irresistible synth melody. A snare drum loaded with reverb. A guitar line that’s tight and powerful. If the song you’re listening to has at least one of these things, it may be from the 1980s, the decade when disco waned and hip-hop emerged, Madonna blew up in the U.S., the hitmaking team of Stock Aitken Waterman pumped out smash singles for Rick Astley and Dead or Alive, and Michael Jackson broke sales and chart records around the world. Of course, thanks to MTV, this was also a decade when the biggest stars weren't just heard but also seen, as the music video gave artists a new medium to explore. Peter Gabriel mastered the form with psychedelic mini-masterpieces to complement his vibrant art-pop, while Prince, in the midst of reinventing rock ’n’ roll, turned out two feature-length film masterpieces with classic soundtracks to match.",
+            "tagline": "Recommended Playlist"
+          },
+          "hasCollaboration": false,
+          "isChart": false,
+          "lastModifiedDate": "2024-07-18T19:07:00Z",
+          "name": "’80s Hits Essentials",
+          "playParams": {
+            "id": "pl.af4d982795c6472ea48579eb147cd726",
+            "kind": "playlist",
+            "versionHash": "cc7b1ab375631ac8ebda303269b51b04f37e8bd3898e2299d8290c3912398eee"
+          },
+          "playlistType": "editorial",
+          "supportsSing": false,
+          "url": "https://music.apple.com/us/playlist/80s-hits-essentials/pl.af4d982795c6472ea48579eb147cd726"
+        }
+      },
+      "pl.bdb7c5da0c8c44479af4299a62c67b78": {
+        "id": "pl.bdb7c5da0c8c44479af4299a62c67b78",
+        "type": "playlists",
+        "href": "/v1/catalog/us/playlists/pl.bdb7c5da0c8c44479af4299a62c67b78?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "a2194f",
+            "hasP3": false,
+            "height": 1080,
+            "textColor1": "ffffff",
+            "textColor2": "ffffff",
+            "textColor3": "e9a0c6",
+            "textColor4": "ea82ac",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Features/v4/27/48/7b/27487b52-0a7d-628c-991c-4f1a7d900f95/99731cce-8532-42f8-9e13-75143a892f0a.png/{w}x{h}cc.{f}",
+            "width": 4320
+          },
+          "audioTraits": [],
+          "curatorName": "Apple Music",
+          "description": {
+            "short": "Hear what was trending on pop radio stations around the world in 2024.",
+            "standard": "All year long, Shazam’s music recognition technology tracked what songs were being played on radio stations around the world. (That’s nearly 1 million hours of music each day, broadcasting on more than 40,000 stations from Sacramento to Stockholm to Seoul.) Five of the year’s 25 most-played pop songs belonged to Dua Lipa, including three from her third studio album, <i>Radical Optimism</i>. Miley Cyrus’ “Flowers” stayed in heavy rotation, while the award for the year’s biggest pop breakthrough goes to Sabrina Carpenter, who ends 2024 with three songs on the list. Hear what else the world listened to this year."
+          },
+          "editorialNotes": {
+            "short": "Hear what was trending on pop radio stations around the world in 2024.",
+            "standard": "All year long, Shazam’s music recognition technology tracked what songs were being played on radio stations around the world. (That’s nearly 1 million hours of music each day, broadcasting on more than 40,000 stations from Sacramento to Stockholm to Seoul.) Five of the year’s 25 most-played pop songs belonged to Dua Lipa, including three from her third studio album, <i>Radical Optimism</i>. Miley Cyrus’ “Flowers” stayed in heavy rotation, while the award for the year’s biggest pop breakthrough goes to Sabrina Carpenter, who ends 2024 with three songs on the list. Hear what else the world listened to this year."
+          },
+          "hasCollaboration": false,
+          "isChart": true,
+          "lastModifiedDate": "2024-12-02T22:57:29Z",
+          "name": "Top 100 2024: Shazam Radio Chart: Pop",
+          "playParams": {
+            "id": "pl.bdb7c5da0c8c44479af4299a62c67b78",
+            "kind": "playlist",
+            "versionHash": "4ccd5ffc340c347b1a870c6f64110c343d135d968f67f2c70e84009000e0ab52"
+          },
+          "playlistType": "editorial",
+          "supportsSing": false,
+          "url": "https://music.apple.com/us/playlist/top-100-2024-shazam-radio-chart-pop/pl.bdb7c5da0c8c44479af4299a62c67b78"
+        }
+      },
+      "pl.cb828482b0e14db88a2854a48f77e364": {
+        "id": "pl.cb828482b0e14db88a2854a48f77e364",
+        "type": "playlists",
+        "href": "/v1/catalog/us/playlists/pl.cb828482b0e14db88a2854a48f77e364?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "e66a26",
+            "hasP3": false,
+            "height": 1080,
+            "textColor1": "ffffff",
+            "textColor2": "110f0c",
+            "textColor3": "311e10",
+            "textColor4": "311e11",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Features126/v4/a3/a2/35/a3a2356d-f9d0-165d-3f0d-7792b60b524a/1b63d47d-7560-4709-b1d1-49ce53bbf668.png/{w}x{h}SC.DN01.{f}?l=en-US",
+            "width": 1080
+          },
+          "audioTraits": [],
+          "curatorName": "Apple Music Fitness",
+          "description": {
+            "short": "Get physical with caffeinated tunes from the ’80s.",
+            "standard": "Get physical with caffeinated tunes from the ’80s. This playlist is updated regularly with the biggest hits of the ’80s. If you hear something you like, add it to your library."
+          },
+          "editorialNotes": {
+            "name": "’80s Workout",
+            "short": "Get physical with caffeinated tunes from the ’80s.",
+            "standard": "Get physical with caffeinated tunes from the ’80s. This playlist is updated regularly with the biggest hits of the ’80s. If you hear something you like, add it to your library."
+          },
+          "hasCollaboration": false,
+          "isChart": false,
+          "lastModifiedDate": "2026-06-08T19:04:46Z",
+          "name": "’80s Workout",
+          "playParams": {
+            "id": "pl.cb828482b0e14db88a2854a48f77e364",
+            "kind": "playlist",
+            "versionHash": "a9a20fc3053966a302187ca34f7690564528a1acb23ee50959a4e76219cfe304"
+          },
+          "playlistType": "editorial",
+          "supportsSing": false,
+          "url": "https://music.apple.com/us/playlist/80s-workout/pl.cb828482b0e14db88a2854a48f77e364"
+        }
+      },
+      "pl.e0fa092685824ce895eba7c376cf51d4": {
+        "id": "pl.e0fa092685824ce895eba7c376cf51d4",
+        "type": "playlists",
+        "href": "/v1/catalog/us/playlists/pl.e0fa092685824ce895eba7c376cf51d4?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "1c1c1c",
+            "hasP3": false,
+            "height": 1080,
+            "textColor1": "cec0b3",
+            "textColor2": "babec4",
+            "textColor3": "aa9f95",
+            "textColor4": "9a9ea3",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Features221/v4/2f/8f/52/2f8f528c-39a8-7984-6a4f-8eaee8526005/879b1bab-a5fb-43ea-8f05-6bebfd9dc7c7.png/{w}x{h}cc.{f}",
+            "width": 4320
+          },
+          "audioTraits": [],
+          "curatorName": "Apple Music",
+          "description": {
+            "short": "Music from the Apple TV+ Original series.",
+            "standard": "Almost two years after the events of Season 3, the newsroom must grapple with a polarized America. In a world rife with deepfakes, conspiracy theories, and corporate cover-ups, who can you trust—and how can you know what’s actually real? Jennifer Aniston and Reese Witherspoon are joined by Oscar winner Marion Cotillard in the new season of this Emmy winner. Now streaming on Apple TV+."
+          },
+          "editorialNotes": {
+            "name": "Music from The Morning Show Season 4",
+            "short": "Music from the Apple TV+ Original series.",
+            "standard": "Almost two years after the events of Season 3, the newsroom must grapple with a polarized America. In a world rife with deepfakes, conspiracy theories, and corporate cover-ups, who can you trust—and how can you know what’s actually real? Jennifer Aniston and Reese Witherspoon are joined by Oscar winner Marion Cotillard in the new season of this Emmy winner. Now streaming on Apple TV+."
+          },
+          "hasCollaboration": false,
+          "isChart": false,
+          "lastModifiedDate": "2025-08-19T20:59:45Z",
+          "name": "Music from The Morning Show Season 4",
+          "playParams": {
+            "id": "pl.e0fa092685824ce895eba7c376cf51d4",
+            "kind": "playlist",
+            "versionHash": "b1dad2a1351cab4a6e9afdd9f6ebfd4af4152af0f4f40bd76cd502fec52e9634"
+          },
+          "playlistType": "editorial",
+          "supportsSing": false,
+          "url": "https://music.apple.com/us/playlist/music-from-the-morning-show-season-4/pl.e0fa092685824ce895eba7c376cf51d4"
+        }
+      },
+      "pl.eed3aed2f4ec4400888ce132cdaed8ef": {
+        "id": "pl.eed3aed2f4ec4400888ce132cdaed8ef",
+        "type": "playlists",
+        "href": "/v1/catalog/us/playlists/pl.eed3aed2f4ec4400888ce132cdaed8ef?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "f4f4f4",
+            "hasP3": false,
+            "height": 1080,
+            "textColor1": "000000",
+            "textColor2": "100c05",
+            "textColor3": "302d2a",
+            "textColor4": "312e28",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Features125/v4/3e/7d/e4/3e7de400-0331-6a0e-7227-a6c0e50d8d1b/U0MtTVMtV1ctU29saWRfR29sZF9IaXRzLUFEQU1fSUQ9MTQ2OTQyMjcwMy5wbmc.png/{w}x{h}SC.DN01.{f}?l=en-US",
+            "width": 1080
+          },
+          "audioTraits": [],
+          "curatorName": "Apple Music Pop",
+          "description": {
+            "short": "An era- and genre-spanning playlist of the most universal songs in pop.",
+            "standard": "Here’s an era- and genre-spanning playlist of genuine pop classics—the stuff of weddings and barbecues, that transcends old and young; songs so deeply lodged in the cultural memory that you can probably hum them even if you don’t know their names. In other words, music we know, love, and never get tired of. Evergreen as most of this stuff is, our editors do make updates regularly, so if you hear something you like, add it to your library."
+          },
+          "editorialNotes": {
+            "name": "Solid Gold Hits",
+            "short": "An era- and genre-spanning playlist of the most universal songs in pop.",
+            "standard": "Here’s an era- and genre-spanning playlist of genuine pop classics—the stuff of weddings and barbecues, that transcends old and young; songs so deeply lodged in the cultural memory that you can probably hum them even if you don’t know their names. In other words, music we know, love, and never get tired of. Evergreen as most of this stuff is, our editors do make updates regularly, so if you hear something you like, add it to your library.",
+            "tagline": "Songs We’re Loving"
+          },
+          "hasCollaboration": false,
+          "isChart": false,
+          "lastModifiedDate": "2026-05-22T01:13:25Z",
+          "name": "Solid Gold Hits",
+          "playParams": {
+            "id": "pl.eed3aed2f4ec4400888ce132cdaed8ef",
+            "kind": "playlist",
+            "versionHash": "8f2c3b9b4b67275111facd143e1f194dc3b1b183e0db7578da31dc320bd64eb7"
+          },
+          "playlistType": "editorial",
+          "supportsSing": false,
+          "url": "https://music.apple.com/us/playlist/solid-gold-hits/pl.eed3aed2f4ec4400888ce132cdaed8ef"
+        }
+      },
+      "pl.f2a733befcb645a2a6493edb96a6cd91": {
+        "id": "pl.f2a733befcb645a2a6493edb96a6cd91",
+        "type": "playlists",
+        "href": "/v1/catalog/us/playlists/pl.f2a733befcb645a2a6493edb96a6cd91?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "e25a80",
+            "hasP3": false,
+            "height": 1080,
+            "textColor1": "ffffff",
+            "textColor2": "ffffff",
+            "textColor3": "31131c",
+            "textColor4": "33131d",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Features/v4/ca/b9/54/cab95401-9312-ff19-c962-986bf6b00aee/e0860fad-1f96-4ab6-b2d9-b2b823f32445.png/{w}x{h}SC.CAESS02.{f}?l=en-US",
+            "width": 1080
+          },
+          "audioTraits": [],
+          "curatorName": "Apple Music ’80s",
+          "description": {
+            "short": "Spectacular passions and breathtaking breakups.",
+            "standard": "From reserved Quiet Storm balladry to over-the-top devotionals that sounded even better in arenas, romance buoyed the ‘80s pop landscape. Massive superstars, weepy belters, smooth soul singers, notoriously mopey rock heroes—no one was immune to Cupid's charms, and the love songs of that decade remain dedication-worthy years later."
+          },
+          "editorialNotes": {
+            "name": "’80s Love Song Essentials",
+            "short": "Spectacular passions and breathtaking breakups.",
+            "standard": "From reserved Quiet Storm balladry to over-the-top devotionals that sounded even better in arenas, romance buoyed the ‘80s pop landscape. Massive superstars, weepy belters, smooth soul singers, notoriously mopey rock heroes—no one was immune to Cupid's charms, and the love songs of that decade remain dedication-worthy years later."
+          },
+          "hasCollaboration": false,
+          "isChart": false,
+          "lastModifiedDate": "2025-12-18T21:32:42Z",
+          "name": "’80s Love Song Essentials",
+          "playParams": {
+            "id": "pl.f2a733befcb645a2a6493edb96a6cd91",
+            "kind": "playlist",
+            "versionHash": "2aa922338ed1930fda0c1b4a104866873f72ffcff86f878c4c9fab7df4f99e66"
+          },
+          "playlistType": "editorial",
+          "supportsSing": false,
+          "url": "https://music.apple.com/us/playlist/80s-love-song-essentials/pl.f2a733befcb645a2a6493edb96a6cd91"
+        }
+      },
+      "pl.f68f14135e0b4b3eb42eb5776100f064": {
+        "id": "pl.f68f14135e0b4b3eb42eb5776100f064",
+        "type": "playlists",
+        "href": "/v1/catalog/us/playlists/pl.f68f14135e0b4b3eb42eb5776100f064?l=en-US",
+        "attributes": {
+          "artwork": {
+            "hasP3": false,
+            "height": 2400,
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/4ECHJuH4x5nPGLQYY6dxKQ/{w}x{h}bb.{f}",
+            "width": 2400
+          },
+          "audioTraits": [],
+          "curatorName": "Filtr",
+          "description": {
+            "standard": "The best of the 80s throwbacks from 80s pop and 80s rock, to 80s dance and new-wave, from Michael Jackson, Journey, Whitney Houston, TOTO, AC/DC, Kenny Loggins, Billy Joel, Survivor + more. "
+          },
+          "hasCollaboration": false,
+          "isChart": false,
+          "lastModifiedDate": "2026-05-14T15:00:56Z",
+          "name": "80s Hits | Top 100 Songs",
+          "playParams": {
+            "id": "pl.f68f14135e0b4b3eb42eb5776100f064",
+            "kind": "playlist",
+            "versionHash": "c62ea3cf145949673b4d68259f26ff397100dc0950427ef33b257abed8afae73"
+          },
+          "playlistType": "external",
+          "supportsSing": false,
+          "url": "https://music.apple.com/us/playlist/80s-hits-top-100-songs/pl.f68f14135e0b4b3eb42eb5776100f064"
+        }
+      }
+    },
+    "songs": {
+      "1438556832": {
+        "id": "1438556832",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1438556832?l=en-US",
+        "attributes": {
+          "albumName": "The Hit Factory Ultimate Collection",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "ffffff",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "090704",
+            "textColor2": "2c2b2a",
+            "textColor3": "3a3836",
+            "textColor4": "565554",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/8c/a5/f1/8ca5f143-ee2e-49b9-3ad6-b512b88d0fbd/4050538343793.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 212747,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GBARL9300135",
+          "name": "Never Gonna Give You Up",
+          "playParams": {
+            "id": "1438556832",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/19/8b/c2/198bc2e8-87ca-5b6e-ac43-221c24a1e4f7/mzaf_5455311732429381454.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-01-01",
+          "trackNumber": 2,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up/1438556560?i=1438556832"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1438556832/albums?l=en-US",
+            "data": [
+              {
+                "id": "1438556560",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1438556560?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1438556832/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1446567594": {
+        "id": "1446567594",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1446567594?l=en-US",
+        "attributes": {
+          "albumName": "80s Dance",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "47ded3",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "070412",
+            "textColor2": "0b0314",
+            "textColor3": "143039",
+            "textColor4": "172f3a",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/31/f4/16/31f416e3-563a-c7d9-55d2-ce4b8d0f8c9c/4050538457902.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 212747,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GBARL9300135",
+          "name": "Never Gonna Give You Up",
+          "playParams": {
+            "id": "1446567594",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/43/a8/fd/43a8fd68-6bd0-9d83-8614-f0ecc408bd19/mzaf_5475118832491557657.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-01-01",
+          "trackNumber": 7,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up/1446567587?i=1446567594"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1446567594/albums?l=en-US",
+            "data": [
+              {
+                "id": "1446567587",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1446567587?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1446567594/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1446924456": {
+        "id": "1446924456",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1446924456?l=en-US",
+        "attributes": {
+          "albumName": "Anthology",
+          "artistName": "Musical Youth",
+          "artistUrl": "https://music.apple.com/us/artist/musical-youth/13458255",
+          "artwork": {
+            "bgColor": "c3a026",
+            "hasP3": false,
+            "height": 3000,
+            "textColor1": "111018",
+            "textColor2": "201417",
+            "textColor3": "352c1b",
+            "textColor4": "40301a",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/99/be/51/99be51d9-08c1-2a51-b298-813cb644e8c8/16UMGIM70815.rgb.jpg/{w}x{h}bb.{f}",
+            "width": 3000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Patrick Waite, Kelvin Grant, Michael Grant, Dennis Seaton & Freddy Waite",
+          "discNumber": 1,
+          "durationInMillis": 186467,
+          "genreNames": [
+            "Reggae",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GBBBY0300026",
+          "name": "Never Gonna Give You Up",
+          "playParams": {
+            "id": "1446924456",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/21/da/ac/21daacb5-d941-f2a9-210f-e2858cbcea7c/mzaf_33533843448996635.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1982-10-22",
+          "trackNumber": 9,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up/1446924085?i=1446924456"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1446924456/albums?l=en-US",
+            "data": [
+              {
+                "id": "1446924085",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1446924085?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1446924456/artists?l=en-US",
+            "data": [
+              {
+                "id": "13458255",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/13458255?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1481080731": {
+        "id": "1481080731",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1481080731?l=en-US",
+        "attributes": {
+          "albumName": "Never Gonna Give You Up (Pianoforte) - Single",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "301c06",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f5bf85",
+            "textColor2": "f8ac71",
+            "textColor3": "cd9e6c",
+            "textColor4": "d08f5c",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/66/2e/0c/662e0c37-aae6-d6d7-5a81-6e383dc897ba/4050538551952.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 209413,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GB5KW1903177",
+          "name": "Never Gonna Give You Up (Pianoforte)",
+          "playParams": {
+            "id": "1481080731",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/8d/b8/f7/8db8f71f-0d5b-5163-21fe-77544bad1c49/mzaf_15671627450638526833.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-01-01",
+          "trackNumber": 1,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-pianoforte/1481080730?i=1481080731"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1481080731/albums?l=en-US",
+            "data": [
+              {
+                "id": "1481080730",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1481080730?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1481080731/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1485596041": {
+        "id": "1485596041",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1485596041?l=en-US",
+        "attributes": {
+          "albumName": "The Best of Me",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "0f1037",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "fdd09f",
+            "textColor2": "efbd9f",
+            "textColor3": "cdaa8a",
+            "textColor4": "c29a8a",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/17/3c/cb/173ccb70-6d48-24cc-3b5a-ff41560a0fda/4050538545074.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 213960,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GBARL9300135",
+          "name": "Never Gonna Give You Up",
+          "playParams": {
+            "id": "1485596041",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/df/b1/0b/dfb10b0e-2a27-99fd-fc5e-b35cd3469ea3/mzaf_14193351766219576096.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-01-01",
+          "trackNumber": 2,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up/1485596039?i=1485596041"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1485596041/albums?l=en-US",
+            "data": [
+              {
+                "id": "1485596039",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1485596039?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1485596041/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1485596522": {
+        "id": "1485596522",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1485596522?l=en-US",
+        "attributes": {
+          "albumName": "The Best of Me",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "0f1037",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "fdd09f",
+            "textColor2": "efbd9f",
+            "textColor3": "cdaa8a",
+            "textColor4": "c29a8a",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/17/3c/cb/173ccb70-6d48-24cc-3b5a-ff41560a0fda/4050538545074.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 209413,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GB5KW1903177",
+          "name": "Never Gonna Give You Up (Pianoforte)",
+          "playParams": {
+            "id": "1485596522",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/a7/7d/71/a77d7139-fb44-3765-81fa-3a16e8e2c299/mzaf_8702371628833310273.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-01-01",
+          "trackNumber": 20,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-pianoforte/1485596039?i=1485596522"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1485596522/albums?l=en-US",
+            "data": [
+              {
+                "id": "1485596039",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1485596039?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1485596522/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1503050130": {
+        "id": "1503050130",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1503050130?l=en-US",
+        "attributes": {
+          "albumName": "Never Gonna Give You Up - Single",
+          "artistName": "RadioClub",
+          "artistUrl": "https://music.apple.com/us/artist/radioclub/1503050128",
+          "artwork": {
+            "bgColor": "000000",
+            "hasP3": false,
+            "height": 3000,
+            "textColor1": "fac9b7",
+            "textColor2": "ec9679",
+            "textColor3": "c8a192",
+            "textColor4": "bc7861",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/0a/cb/04/0acb041e-0d6c-7e9e-329d-60f140e6eae5/195081167275.jpg/{w}x{h}bb.{f}",
+            "width": 3000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Peter Waterman",
+          "discNumber": 1,
+          "durationInMillis": 165853,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "SEVWR2002701",
+          "name": "Never Gonna Give You Up",
+          "playParams": {
+            "id": "1503050130",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/44/90/e1/4490e17e-3a32-f9be-f2cd-530165527119/mzaf_7484235484082570346.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "2020-04-24",
+          "trackNumber": 1,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up/1503050108?i=1503050130"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1503050130/albums?l=en-US",
+            "data": [
+              {
+                "id": "1503050108",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1503050108?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1503050130/artists?l=en-US",
+            "data": [
+              {
+                "id": "1503050128",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/1503050128?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1559523359": {
+        "id": "1559523359",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1559523359?l=en-US",
+        "attributes": {
+          "albumName": "3 Originals",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "000a33",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f6ece8",
+            "textColor2": "ece7e6",
+            "textColor3": "c5bfc4",
+            "textColor4": "bcbbc2",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/69/5b/e3/695be316-9ddf-7262-177c-e37edd599602/0888880777768.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 214720,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GBARL9300135",
+          "name": "Never Gonna Give You Up",
+          "playParams": {
+            "id": "1559523359",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/1c/0f/a0/1c0fa075-b42d-1f99-a09e-0e440563c4fe/mzaf_13425254859660425668.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-01-01",
+          "trackNumber": 1,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up/1559523357?i=1559523359"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1559523359/albums?l=en-US",
+            "data": [
+              {
+                "id": "1559523357",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1559523357?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1559523359/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1559804346": {
+        "id": "1559804346",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1559804346?l=en-US",
+        "attributes": {
+          "albumName": "Never Gonna Give You Up - Single",
+          "artistName": "Home Free",
+          "artistUrl": "https://music.apple.com/us/artist/home-free/266440748",
+          "artwork": {
+            "bgColor": "efccb1",
+            "hasP3": false,
+            "height": 3000,
+            "textColor1": "080d1a",
+            "textColor2": "4e2825",
+            "textColor3": "363338",
+            "textColor4": "6e4941",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/41/50/39/4150396d-4bff-43dc-338f-806aefcf8374/196006358976.jpg/{w}x{h}bb.{f}",
+            "width": 3000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "M. Aitken, M. Stock & P. Waterman",
+          "discNumber": 1,
+          "durationInMillis": 181093,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "QZGX42100010",
+          "name": "Never Gonna Give You Up",
+          "playParams": {
+            "id": "1559804346",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/24/f9/af/24f9aff5-a66f-35b0-ef8b-d8c4e3db81be/mzaf_13164791977273210148.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "2021-04-02",
+          "trackNumber": 1,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up/1559804099?i=1559804346"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1559804346/albums?l=en-US",
+            "data": [
+              {
+                "id": "1559804099",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1559804099?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1559804346/artists?l=en-US",
+            "data": [
+              {
+                "id": "266440748",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/266440748?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1559885421": {
+        "id": "1559885421",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1559885421?l=en-US",
+        "attributes": {
+          "albumName": "Whenever You Need Somebody",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "1e1a1a",
+            "hasP3": false,
+            "height": 1500,
+            "textColor1": "f1e4d0",
+            "textColor2": "d3d9db",
+            "textColor3": "c7bbac",
+            "textColor4": "aeb3b5",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/{w}x{h}bb.{f}",
+            "width": 1500
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 213573,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GBARL9300135",
+          "name": "Never Gonna Give You Up",
+          "playParams": {
+            "id": "1559885421",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/3a/d6/9a/3ad69a5b-1fdc-c0ca-069b-541cef78e9d6/mzaf_11103729100333690294.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-07-27",
+          "trackNumber": 1,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up/1559885420?i=1559885421"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1559885421/albums?l=en-US",
+            "data": [
+              {
+                "id": "1559885420",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1559885420?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1559885421/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1600742155": {
+        "id": "1600742155",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1600742155?l=en-US",
+        "attributes": {
+          "albumName": "Supermix (DJ Mix)",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "ddc000",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "050400",
+            "textColor2": "151100",
+            "textColor3": "302a00",
+            "textColor4": "3d3400",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/35/6b/88/356b88a4-fab2-87cb-9238-0109c40ebfe5/DF_Supermix_4000.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "discNumber": 1,
+          "durationInMillis": 139875,
+          "genreNames": [
+            "Dance",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": false,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": false,
+          "isrc": "US23A1918472",
+          "name": "Never Gonna Give You Up (Mixed)",
+          "playParams": {
+            "id": "1600742155",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/9b/b2/1b/9bb21b98-5f2c-63c8-9ef6-b3d9c3c97d4c/mzaf_6764526643710984899.plus.aac.p.m4a"
+            }
+          ],
+          "releaseDate": "2021-12-23",
+          "trackNumber": 4,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-mixed/1600742151?i=1600742155"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1600742155/albums?l=en-US",
+            "data": [
+              {
+                "id": "1600742151",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1600742151?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1600742155/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1612648319": {
+        "id": "1612648319",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1612648319?l=en-US",
+        "attributes": {
+          "albumName": "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "282628",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f4e9e9",
+            "textColor2": "99a3d9",
+            "textColor3": "cbc2c2",
+            "textColor4": "828ab5",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/21/d3/b321d3e4-edfe-124b-d0cd-a64ad1df3290/4050538793840.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 213560,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GB5KW2103369",
+          "name": "Never Gonna Give You Up (2022 Remaster)",
+          "playParams": {
+            "id": "1612648319",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/48/8f/a4/488fa4b5-b606-71ee-572e-691f840503c8/mzaf_17729039194440787513.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-07-27",
+          "trackNumber": 1,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-2022-remaster/1612648318?i=1612648319"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1612648319/albums?l=en-US",
+            "data": [
+              {
+                "id": "1612648318",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1612648318?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1612648319/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1612648423": {
+        "id": "1612648423",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1612648423?l=en-US",
+        "attributes": {
+          "albumName": "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "282628",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f4e9e9",
+            "textColor2": "99a3d9",
+            "textColor3": "cbc2c2",
+            "textColor4": "828ab5",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/21/d3/b321d3e4-edfe-124b-d0cd-a64ad1df3290/4050538793840.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 209413,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GB5KW1903177",
+          "name": "Never Gonna Give You Up (Pianoforte)",
+          "playParams": {
+            "id": "1612648423",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/90/00/b9/9000b92a-f3e2-8ddd-c34d-e0a211df425c/mzaf_15999751938232905417.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-01-01",
+          "trackNumber": 14,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-pianoforte/1612648318?i=1612648423"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1612648423/albums?l=en-US",
+            "data": [
+              {
+                "id": "1612648318",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1612648318?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1612648423/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1612648427": {
+        "id": "1612648427",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1612648427?l=en-US",
+        "attributes": {
+          "albumName": "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "282628",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f4e9e9",
+            "textColor2": "99a3d9",
+            "textColor3": "cbc2c2",
+            "textColor4": "828ab5",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/21/d3/b321d3e4-edfe-124b-d0cd-a64ad1df3290/4050538793840.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 441280,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GBARL1001562",
+          "name": "Never Gonna Give You Up (Phil Harding 12\" Mix)",
+          "playParams": {
+            "id": "1612648427",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/02/47/28/024728f2-e20e-aa57-c9f7-8099ad2d8dbf/mzaf_18002132749055654321.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-01-01",
+          "trackNumber": 18,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-phil-harding-12-mix/1612648318?i=1612648427"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1612648427/albums?l=en-US",
+            "data": [
+              {
+                "id": "1612648318",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1612648318?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1612648427/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1612648434": {
+        "id": "1612648434",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1612648434?l=en-US",
+        "attributes": {
+          "albumName": "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "282628",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f4e9e9",
+            "textColor2": "99a3d9",
+            "textColor3": "cbc2c2",
+            "textColor4": "828ab5",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/21/d3/b321d3e4-edfe-124b-d0cd-a64ad1df3290/4050538793840.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 347427,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GBARL8700068",
+          "name": "Never Gonna Give You Up (Cake Mix)",
+          "playParams": {
+            "id": "1612648434",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/a5/f8/3b/a5f83b18-40b1-97bd-96a5-173321a86f25/mzaf_8967547036658880929.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-01-01",
+          "trackNumber": 24,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-cake-mix/1612648318?i=1612648434"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1612648434/albums?l=en-US",
+            "data": [
+              {
+                "id": "1612648318",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1612648318?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1612648434/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1612648437": {
+        "id": "1612648437",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1612648437?l=en-US",
+        "attributes": {
+          "albumName": "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "282628",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f4e9e9",
+            "textColor2": "99a3d9",
+            "textColor3": "cbc2c2",
+            "textColor4": "828ab5",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/21/d3/b321d3e4-edfe-124b-d0cd-a64ad1df3290/4050538793840.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 384267,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GBARL0600788",
+          "name": "Never Gonna Give You Up (Escape from Newton Mix)",
+          "playParams": {
+            "id": "1612648437",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/41/cb/1d/41cb1d06-71f3-e6f2-7656-98dfc8a639a2/mzaf_15324082605461281211.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-01-01",
+          "trackNumber": 27,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-escape-from-newton-mix/1612648318?i=1612648437"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1612648437/albums?l=en-US",
+            "data": [
+              {
+                "id": "1612648318",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1612648318?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1612648437/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1612648440": {
+        "id": "1612648440",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1612648440?l=en-US",
+        "attributes": {
+          "albumName": "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "282628",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f4e9e9",
+            "textColor2": "99a3d9",
+            "textColor3": "cbc2c2",
+            "textColor4": "828ab5",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/21/d3/b321d3e4-edfe-124b-d0cd-a64ad1df3290/4050538793840.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 422600,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GBARL8700008",
+          "name": "Never Gonna Give You Up (Escape to New York Mix)",
+          "playParams": {
+            "id": "1612648440",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/d9/fe/e5/d9fee589-90cb-73a2-2839-6f543282253a/mzaf_13421391565511620256.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-01-01",
+          "trackNumber": 30,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-escape-to-new-york-mix/1612648318?i=1612648440"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1612648440/albums?l=en-US",
+            "data": [
+              {
+                "id": "1612648318",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1612648318?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1612648440/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1612648444": {
+        "id": "1612648444",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1612648444?l=en-US",
+        "attributes": {
+          "albumName": "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "282628",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f4e9e9",
+            "textColor2": "99a3d9",
+            "textColor3": "cbc2c2",
+            "textColor4": "828ab5",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/21/d3/b321d3e4-edfe-124b-d0cd-a64ad1df3290/4050538793840.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "zxx",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 378853,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": false,
+          "hasTimeSyncedLyrics": false,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": false,
+          "isrc": "GBARL0600785",
+          "name": "Never Gonna Give You Up (Instrumental)",
+          "playParams": {
+            "id": "1612648444",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/91/1b/34/911b34ff-c523-8b09-447d-c7234da6efee/mzaf_8227516814035856227.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-01-01",
+          "trackNumber": 34,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-instrumental/1612648318?i=1612648444"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1612648444/albums?l=en-US",
+            "data": [
+              {
+                "id": "1612648318",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1612648318?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1612648444/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1624945512": {
+        "id": "1624945512",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1624945512?l=en-US",
+        "attributes": {
+          "albumName": "Whenever You Need Somebody (2022 Remaster)",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "211d1c",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f6ebee",
+            "textColor2": "dacde5",
+            "textColor3": "ccc2c4",
+            "textColor4": "b5aabd",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/de/eb/63/deeb63c1-7bc0-9153-cfa3-fd9e4929aacf/4050538826562.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "hi-res-lossless",
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 213560,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GB5KW2202504",
+          "name": "Never Gonna Give You Up (2022 Remaster)",
+          "playParams": {
+            "id": "1624945512",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/b0/d8/aa/b0d8aa8e-1a38-6287-508d-27693174249e/mzaf_13677213744690699536.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-01-01",
+          "trackNumber": 1,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-2022-remaster/1624945511?i=1624945512"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1624945512/albums?l=en-US",
+            "data": [
+              {
+                "id": "1624945511",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1624945511?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1624945512/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1631804194": {
+        "id": "1631804194",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1631804194?l=en-US",
+        "attributes": {
+          "albumName": "80s Party Anthems - EP",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "2b5c77",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f4f3f1",
+            "textColor2": "f0dcd0",
+            "textColor3": "ccd5d9",
+            "textColor4": "c9c2be",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/c6/92/fd/c692fddd-f8a8-d168-d23b-274c3a1eb319/4050538835090.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 213560,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GB5KW2103369",
+          "name": "Never Gonna Give You Up (2022 Remaster)",
+          "playParams": {
+            "id": "1631804194",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/a0/dc/0f/a0dc0f62-6996-be28-d293-b7f488cf1372/mzaf_15904573048483267554.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-01-01",
+          "trackNumber": 1,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-2022-remaster/1631804193?i=1631804194"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1631804194/albums?l=en-US",
+            "data": [
+              {
+                "id": "1631804193",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1631804193?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1631804194/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1770767579": {
+        "id": "1770767579",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1770767579?l=en-US",
+        "attributes": {
+          "albumName": "Never - EP",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "f4ce00",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "070601",
+            "textColor2": "0f1015",
+            "textColor3": "362e01",
+            "textColor4": "3d3611",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/aa/f8/19/aaf81950-ca41-ae23-0e98-690f3bd55db2/4099964127713.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 213560,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GB5KW2103369",
+          "name": "Never Gonna Give You Up (2022 Remaster)",
+          "playParams": {
+            "id": "1770767579",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/d6/6d/4e/d66d4e1a-6283-6fee-3051-090998d628a7/mzaf_16574004667217981376.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-01-01",
+          "trackNumber": 1,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-2022-remaster/1770767353?i=1770767579"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1770767579/albums?l=en-US",
+            "data": [
+              {
+                "id": "1770767353",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1770767353?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1770767579/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1773293184": {
+        "id": "1773293184",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1773293184?l=en-US",
+        "attributes": {
+          "albumName": "The Best Of Me: Never Edition",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "808fa2",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "0b0808",
+            "textColor2": "0e0e11",
+            "textColor3": "222327",
+            "textColor4": "25282e",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/db/9e/2a/db9e2ae0-cb9f-f2a9-2774-de399dff2580/4099964133639.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 213960,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GBARL9300135",
+          "name": "Never Gonna Give You Up",
+          "playParams": {
+            "id": "1773293184",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/6e/b3/33/6eb33356-a55e-a371-d05b-1a2fc578099e/mzaf_18314689345312474043.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-01-01",
+          "trackNumber": 2,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up/1773292758?i=1773293184"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1773293184/albums?l=en-US",
+            "data": [
+              {
+                "id": "1773292758",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1773292758?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1773293184/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1773293593": {
+        "id": "1773293593",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1773293593?l=en-US",
+        "attributes": {
+          "albumName": "The Best Of Me: Never Edition",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "808fa2",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "0b0808",
+            "textColor2": "0e0e11",
+            "textColor3": "222327",
+            "textColor4": "25282e",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/db/9e/2a/db9e2ae0-cb9f-f2a9-2774-de399dff2580/4099964133639.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 209413,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GB5KW1903177",
+          "name": "Never Gonna Give You Up (Pianoforte)",
+          "playParams": {
+            "id": "1773293593",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/8b/77/73/8b77731b-3c69-ca29-a8ad-b65f0d9d0937/mzaf_4362906954461475831.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-01-01",
+          "trackNumber": 27,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-pianoforte/1773292758?i=1773293593"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1773293593/albums?l=en-US",
+            "data": [
+              {
+                "id": "1773292758",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1773292758?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1773293593/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1808443180": {
+        "id": "1808443180",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1808443180?l=en-US",
+        "attributes": {
+          "albumName": "Chart Toppers - EP",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "215d6b",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "43d2fd",
+            "textColor2": "43d2fd",
+            "textColor3": "3cbbe0",
+            "textColor4": "3cbbe0",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/32/c4/9d/32c49d47-c938-5525-c18b-0a03d467c0c8/4099964061888.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 213560,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GB5KW2103369",
+          "name": "Never Gonna Give You Up (2022 Remaster)",
+          "playParams": {
+            "id": "1808443180",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/31/1f/8d/311f8db8-565f-2dcc-5435-01813f383863/mzaf_2805983084611473627.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-01-01",
+          "trackNumber": 1,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-2022-remaster/1808443177?i=1808443180"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1808443180/albums?l=en-US",
+            "data": [
+              {
+                "id": "1808443177",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1808443177?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1808443180/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "meta": {
+    "results": {
+      "order": [
+        "top",
+        "artist",
+        "album",
+        "song",
+        "playlist",
+        "music_video"
+      ],
+      "rawOrder": [
+        "top",
+        "artist",
+        "album",
+        "song",
+        "playlist",
+        "radio_show",
+        "radio_episode",
+        "station",
+        "music_video",
+        "video_extra",
+        "category",
+        "curator",
+        "record_label"
+      ]
+    },
+    "metrics": {
+      "dataSetId": "3b76c193-e876-4d71-b580-987e0f299d82"
+    }
+  }
+}

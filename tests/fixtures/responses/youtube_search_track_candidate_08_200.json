@@ -1,0 +1,69 @@
+{
+  "kind": "youtube#videoListResponse",
+  "etag": "AldXt64GhFdM3m2DaiKlqfmp6aY",
+  "items": [
+    {
+      "kind": "youtube#video",
+      "etag": "62L9ATcT2MySZowHGxeqWXKGnKw",
+      "id": "RL6Jq1hHsco",
+      "snippet": {
+        "publishedAt": "2024-04-04T02:11:59Z",
+        "channelId": "UCnjBmRrP1VPWaMDiT2jVc-w",
+        "title": "InsurAAAnce & Rick Astley - Never Gonna Give You Up 2022 4K/8K 60FPS",
+        "description": "this is just an edit, all the credits going to -\n@csaainsurancegroup\n@RickAstleyYT\nwatch the original here - https://youtu.be/GtL1huin9EE\nofficial shortcut to the original - http://bit.ly/get3a\nshortcut to this edit - TBA\nalso check out the first known edit of 2022 version by @DOCOKOCO - https://youtu.be/tgTUtfb0Ok8\n\ni really wanted to include the ending but couldn't really fit it in, will do this instead, thank you for giving us 2022 version -\n\nAAA.com/Insurance\n\"Our legendary service is never gonna let you down.  Start saving today on auto and home coverage that would never run around and desert you. Because with 100 years of experience, InsurAAAnce is no stranger to love or exceptional service.\"\n#RickAstley #Rickroll  #RR #InsurAAAnce #CSAAInsuranceGroup",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/RL6Jq1hHsco/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/RL6Jq1hHsco/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/RL6Jq1hHsco/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/RL6Jq1hHsco/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/RL6Jq1hHsco/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "cskillers1",
+        "tags": [
+          "Rick Astley",
+          "Rickroll",
+          "Never gonna give you up",
+          "Never gonna give you up 2022",
+          "Never gonna give you up 4K",
+          "Never gonna give you up 8K",
+          "Never gonna give you up 4K 60FPS",
+          "Never gonna give you up 8K 60FPS",
+          "InsurAAAnce"
+        ],
+        "categoryId": "10",
+        "liveBroadcastContent": "none",
+        "defaultLanguage": "en",
+        "localized": {
+          "title": "InsurAAAnce & Rick Astley - Never Gonna Give You Up 2022 4K/8K 60FPS",
+          "description": "this is just an edit, all the credits going to -\n@csaainsurancegroup\n@RickAstleyYT\nwatch the original here - https://youtu.be/GtL1huin9EE\nofficial shortcut to the original - http://bit.ly/get3a\nshortcut to this edit - TBA\nalso check out the first known edit of 2022 version by @DOCOKOCO - https://youtu.be/tgTUtfb0Ok8\n\ni really wanted to include the ending but couldn't really fit it in, will do this instead, thank you for giving us 2022 version -\n\nAAA.com/Insurance\n\"Our legendary service is never gonna let you down.  Start saving today on auto and home coverage that would never run around and desert you. Because with 100 years of experience, InsurAAAnce is no stranger to love or exceptional service.\"\n#RickAstley #Rickroll  #RR #InsurAAAnce #CSAAInsuranceGroup"
+        },
+        "defaultAudioLanguage": "en"
+      }
+    }
+  ],
+  "pageInfo": {
+    "totalResults": 1,
+    "resultsPerPage": 1
+  }
+}
+

@@ -11,13 +11,13 @@ import (
 
 const sampleAPIKey = "sampleApiKey"
 
-func TestHTTPClient_GetVideo(t *testing.T) {
+func TestClient_GetVideo(t *testing.T) {
 	tests := []struct {
-		name          string
-		inputID       string
-		responseMock  string
-		expectedVideo *Video
-		expectedErr   error
+		name         string
+		inputID      string
+		responseMock string
+		expectedItem video
+		expectedErr  error
 	}{
 		{
 			name:    "when video found",
@@ -29,14 +29,22 @@ func TestHTTPClient_GetVideo(t *testing.T) {
 						"snippet": {	
 							"title": "Rick Astley - Never Gonna Give You Up (Video)",	
 							"channelTitle": "RickAstleyVEVO"	
+						},
+						"contentDetails": {
+							"duration": "PT3M33S"
 						}
 					}
 				]
 			}`,
-			expectedVideo: &Video{
-				ID:           "dQw4w9WgXcQ",
-				Title:        "Rick Astley - Never Gonna Give You Up (Video)",
-				ChannelTitle: "RickAstleyVEVO",
+			expectedItem: video{
+				ID: "dQw4w9WgXcQ",
+				Snippet: snippet{
+					Title:        "Rick Astley - Never Gonna Give You Up (Video)",
+					ChannelTitle: "RickAstleyVEVO",
+				},
+				ContentDetails: contentDetails{
+					Duration: "PT3M33S",
+				},
 			},
 		},
 		{
@@ -45,8 +53,7 @@ func TestHTTPClient_GetVideo(t *testing.T) {
 			responseMock: `{	
 				"items": []
 			}`,
-			expectedVideo: nil,
-			expectedErr:   NotFoundError,
+			expectedErr: errNotFound,
 		},
 	}
 	for _, tt := range tests {
@@ -55,7 +62,7 @@ func TestHTTPClient_GetVideo(t *testing.T) {
 				require.Equal(t, http.MethodGet, r.Method)
 				require.Equal(t, "/youtube/v3/videos", r.URL.Path)
 				require.Equal(t, sampleAPIKey, r.URL.Query().Get("key"))
-				require.Equal(t, "snippet", r.URL.Query().Get("part"))
+				require.Equal(t, "snippet,contentDetails", r.URL.Query().Get("part"))
 				require.Equal(t, tt.inputID, r.URL.Query().Get("id"))
 
 				_, err := w.Write([]byte(tt.responseMock))
@@ -63,29 +70,29 @@ func TestHTTPClient_GetVideo(t *testing.T) {
 			}))
 			defer apiServerMock.Close()
 
-			client := NewHTTPClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
+			client := NewClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
 
-			video, err := client.GetVideo(t.Context(), tt.inputID)
+			item, err := client.fetchVideo(t.Context(), tt.inputID)
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
 			} else {
 				require.NoError(t, err)
-				require.Equal(t, tt.expectedVideo, video)
+				require.Equal(t, tt.expectedItem, item)
 			}
 		})
 	}
 }
 
-func TestHTTPClient_SearchVideo(t *testing.T) {
+func TestClient_SearchVideo(t *testing.T) {
 	tests := []struct {
-		name             string
-		query            string
-		responseMock     string
-		expectedResponse *SearchResponse
-		expectedErr      error
+		name          string
+		query         string
+		responseMock  string
+		expectedItems []videoSearchResult
+		expectedErr   error
 	}{
 		{
-			name:  "when video found",
+			name:  "when videos found",
 			query: "rick astley - never gonna give you up",
 			responseMock: `{	
 				"items": [
@@ -97,28 +104,38 @@ func TestHTTPClient_SearchVideo(t *testing.T) {
 							"title": "Rick Astley - Never Gonna Give You Up (Video)",	
 							"channelTitle": "RickAstleyVEVO"	
 						}
+					},
+					{
+						"id": {
+							"videoId": "secondVideoID"
+						},
+						"snippet": {
+							"title": "Rick Astley - Never Gonna Give You Up (Live)",
+							"channelTitle": "RickAstleyVEVO"
+						}
 					}
 				]
 			}`,
-			expectedResponse: &SearchResponse{
-				Items: []SearchItem{
-					{
-						ID: SearchID{
-							VideoID:    "dQw4w9WgXcQ",
-							PlaylistID: "",
-						},
+			expectedItems: []videoSearchResult{
+				{
+					ID: videoSearchID{
+						VideoID: "dQw4w9WgXcQ",
+					},
+				},
+				{
+					ID: videoSearchID{
+						VideoID: "secondVideoID",
 					},
 				},
 			},
 		},
 		{
-			name:  "when video not found",
+			name:  "when videos not found",
 			query: "notFoundId",
 			responseMock: `{	
 				"items": []
 			}`,
-			expectedResponse: nil,
-			expectedErr:      NotFoundError,
+			expectedItems: []videoSearchResult{},
 		},
 	}
 	for _, tt := range tests {
@@ -129,7 +146,7 @@ func TestHTTPClient_SearchVideo(t *testing.T) {
 				require.Equal(t, sampleAPIKey, r.URL.Query().Get("key"))
 				require.Equal(t, tt.query, r.URL.Query().Get("q"))
 				require.Equal(t, "10", r.URL.Query().Get("videoCategoryId"))
-				require.Equal(t, "1", r.URL.Query().Get("maxResults"))
+				require.Equal(t, "10", r.URL.Query().Get("maxResults"))
 				require.Equal(t, "video", r.URL.Query().Get("type"))
 
 				_, err := w.Write([]byte(tt.responseMock))
@@ -137,26 +154,26 @@ func TestHTTPClient_SearchVideo(t *testing.T) {
 			}))
 			defer apiServerMock.Close()
 
-			client := NewHTTPClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
+			client := NewClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
 
-			response, err := client.SearchVideo(t.Context(), tt.query)
+			items, err := client.searchVideos(t.Context(), tt.query)
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
 			} else {
 				require.NoError(t, err)
-				require.Equal(t, tt.expectedResponse, response)
+				require.Equal(t, tt.expectedItems, items)
 			}
 		})
 	}
 }
 
-func TestHTTPClient_GetPlaylist(t *testing.T) {
+func TestClient_GetPlaylist(t *testing.T) {
 	tests := []struct {
-		name             string
-		inputID          string
-		responseMock     string
-		expectedPlaylist *Playlist
-		expectedErr      error
+		name         string
+		inputID      string
+		responseMock string
+		expectedItem playlist
+		expectedErr  error
 	}{
 		{
 			name:    "when playlist found",
@@ -167,15 +184,19 @@ func TestHTTPClient_GetPlaylist(t *testing.T) {
 						"id": "PLH1JGOJgZ2u2J7bRnfjl-7kDj_vQKTPa6",
 						"snippet": {	
 							"title": "Portishead - (1994) Dummy [Full Album]",	
-							"channelTitle": "Harry"	
+							"channelTitle": "Harry",
+							"description": "playlist raw description"	
 						}
 					}
 				]
 			}`,
-			expectedPlaylist: &Playlist{
-				ID:           "PLH1JGOJgZ2u2J7bRnfjl-7kDj_vQKTPa6",
-				Title:        "Portishead - (1994) Dummy [Full Album]",
-				ChannelTitle: "Harry",
+			expectedItem: playlist{
+				ID: "PLH1JGOJgZ2u2J7bRnfjl-7kDj_vQKTPa6",
+				Snippet: snippet{
+					Title:        "Portishead - (1994) Dummy [Full Album]",
+					ChannelTitle: "Harry",
+					Description:  "playlist raw description",
+				},
 			},
 		},
 		{
@@ -184,8 +205,7 @@ func TestHTTPClient_GetPlaylist(t *testing.T) {
 			responseMock: `{	
 				"items": []
 			}`,
-			expectedPlaylist: nil,
-			expectedErr:      NotFoundError,
+			expectedErr: errNotFound,
 		},
 	}
 	for _, tt := range tests {
@@ -202,29 +222,29 @@ func TestHTTPClient_GetPlaylist(t *testing.T) {
 			}))
 			defer apiServerMock.Close()
 
-			client := NewHTTPClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
+			client := NewClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
 
-			playlist, err := client.GetPlaylist(t.Context(), tt.inputID)
+			item, err := client.fetchPlaylist(t.Context(), tt.inputID)
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
 			} else {
 				require.NoError(t, err)
-				require.Equal(t, tt.expectedPlaylist, playlist)
+				require.Equal(t, tt.expectedItem, item)
 			}
 		})
 	}
 }
 
-func TestHTTPClient_SearchPlaylist(t *testing.T) {
+func TestClient_SearchPlaylist(t *testing.T) {
 	tests := []struct {
-		name             string
-		query            string
-		responseMock     string
-		expectedResponse *SearchResponse
-		expectedErr      error
+		name          string
+		query         string
+		responseMock  string
+		expectedItems []playlistSearchResult
+		expectedErr   error
 	}{
 		{
-			name:  "when playlist found",
+			name:  "when playlists found",
 			query: "portishead – dummy",
 			responseMock: `{	
 				"items": [
@@ -236,28 +256,38 @@ func TestHTTPClient_SearchPlaylist(t *testing.T) {
 							"title": "Portishead - (1994) Dummy [Full Album]",	
 							"channelTitle": "Harry"	
 						}
+					},
+					{
+						"id": {
+							"playlistId": "secondPlaylistID"
+						},
+						"snippet": {
+							"title": "Portishead - Dummy alternate playlist",
+							"channelTitle": "Harry"
+						}
 					}
 				]
 			}`,
-			expectedResponse: &SearchResponse{
-				Items: []SearchItem{
-					{
-						ID: SearchID{
-							VideoID:    "",
-							PlaylistID: "PLH1JGOJgZ2u2J7bRnfjl-7kDj_vQKTPa6",
-						},
+			expectedItems: []playlistSearchResult{
+				{
+					ID: playlistSearchID{
+						PlaylistID: "PLH1JGOJgZ2u2J7bRnfjl-7kDj_vQKTPa6",
+					},
+				},
+				{
+					ID: playlistSearchID{
+						PlaylistID: "secondPlaylistID",
 					},
 				},
 			},
 		},
 		{
-			name:  "when playlist not found",
+			name:  "when playlists not found",
 			query: "notFoundId",
 			responseMock: `{	
 				"items": []
 			}`,
-			expectedResponse: nil,
-			expectedErr:      NotFoundError,
+			expectedItems: []playlistSearchResult{},
 		},
 	}
 	for _, tt := range tests {
@@ -268,7 +298,7 @@ func TestHTTPClient_SearchPlaylist(t *testing.T) {
 				require.Equal(t, sampleAPIKey, r.URL.Query().Get("key"))
 				require.Equal(t, "snippet", r.URL.Query().Get("part"))
 				require.Equal(t, tt.query, r.URL.Query().Get("q"))
-				require.Equal(t, "1", r.URL.Query().Get("maxResults"))
+				require.Equal(t, "10", r.URL.Query().Get("maxResults"))
 				require.Equal(t, "playlist", r.URL.Query().Get("type"))
 
 				_, err := w.Write([]byte(tt.responseMock))
@@ -276,27 +306,27 @@ func TestHTTPClient_SearchPlaylist(t *testing.T) {
 			}))
 			defer apiServerMock.Close()
 
-			client := NewHTTPClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
+			client := NewClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
 
-			response, err := client.SearchPlaylist(t.Context(), tt.query)
+			items, err := client.searchPlaylists(t.Context(), tt.query)
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
 			} else {
 				require.NoError(t, err)
-				require.Equal(t, tt.expectedResponse, response)
+				require.Equal(t, tt.expectedItems, items)
 			}
 		})
 	}
 }
 
-func TestHTTPClient_GetPlaylistItems(t *testing.T) {
+func TestClient_GetPlaylistItems(t *testing.T) {
 	tests := []struct {
-		name           string
-		inputID        string
-		responseMock   string
-		responseCode   int
-		expectedVideos []Video
-		expectedError  error
+		name          string
+		inputID       string
+		responseMock  string
+		responseCode  int
+		expectedItems []playlistItem
+		expectedError error
 	}{
 		{
 			name:         "when playlist found",
@@ -309,31 +339,40 @@ func TestHTTPClient_GetPlaylistItems(t *testing.T) {
 						"snippet": {	
 							"title": "Space Oddity",	
 							"channelTitle": "YouTube",	
-							"description": "Provided to YouTube by Revolver Records\n\nSpace Oddity · David Bowie · David Bowie · David Bowie\n\nSpace Oddity\n\n℗ 2018 Revolver Records\n\nReleased on: 2020-01-01\n\nAuto-generated by YouTube.",
-							"videoOwnerChannelTitle": "David Bowie - Topic"
+							"description": "Provided to YouTube by Revolver Records\n\nSpace Oddity · David Bowie · David Bowie · David Bowie\n\nSpace Oddity\n\n℗ 2018 Revolver Records\n\nReleased on: 2020-01-01\n\nGenerated by the provider.",
+							"videoOwnerChannelTitle": "David Bowie Topic Channel",
+							"resourceId": {
+								"videoId": "dQw4w9WgXcQ"
+							}
 						}
 					}
 				]
 			}`,
 			expectedError: nil,
-			expectedVideos: []Video{
+			expectedItems: []playlistItem{
 				{
-					ID:           "T0xBSzV1eV9uNHhhdXVzVEpTajZNdHQ0Y0l1cTRLWnppU2ZqQUJZV1UuQjcxRUYzNEU1RkQxODA0OQ",
-					Title:        "Space Oddity",
-					ChannelTitle: "David Bowie - Topic",
-					Description: "Provided to YouTube by Revolver Records\n\nSpace Oddity · David Bowie · David Bowie " +
-						"· David Bowie\n\nSpace Oddity\n\n℗ 2018 Revolver Records\n\nReleased on: 2020-01-01\n\n" +
-						"Auto-generated by YouTube.",
+					ID: "T0xBSzV1eV9uNHhhdXVzVEpTajZNdHQ0Y0l1cTRLWnppU2ZqQUJZV1UuQjcxRUYzNEU1RkQxODA0OQ",
+					Snippet: snippet{
+						Title:        "Space Oddity",
+						ChannelTitle: "YouTube",
+						Description: "Provided to YouTube by Revolver Records\n\nSpace Oddity · David Bowie · David Bowie " +
+							"· David Bowie\n\nSpace Oddity\n\n℗ 2018 Revolver Records\n\nReleased on: 2020-01-01\n\n" +
+							"Generated by the provider.",
+						VideoOwnerChannelTitle: "David Bowie Topic Channel",
+						ResourceID: resourceID{
+							VideoID: "dQw4w9WgXcQ",
+						},
+					},
 				},
 			},
 		},
 		{
-			name:           "when playlist not found",
-			inputID:        "notFoundId",
-			responseCode:   http.StatusNotFound,
-			responseMock:   "nevermind",
-			expectedVideos: nil,
-			expectedError:  fmt.Errorf("non ok http status: 404"),
+			name:          "when playlist not found",
+			inputID:       "notFoundId",
+			responseCode:  http.StatusNotFound,
+			responseMock:  "nevermind",
+			expectedItems: nil,
+			expectedError: fmt.Errorf("non ok http status: 404"),
 		},
 	}
 	for _, tt := range tests {
@@ -343,6 +382,7 @@ func TestHTTPClient_GetPlaylistItems(t *testing.T) {
 				require.Equal(t, "/youtube/v3/playlistItems", r.URL.Path)
 				require.Equal(t, sampleAPIKey, r.URL.Query().Get("key"))
 				require.Equal(t, "snippet", r.URL.Query().Get("part"))
+				require.Equal(t, "50", r.URL.Query().Get("maxResults"))
 				require.Equal(t, tt.inputID, r.URL.Query().Get("playlistId"))
 
 				w.WriteHeader(tt.responseCode)
@@ -351,16 +391,16 @@ func TestHTTPClient_GetPlaylistItems(t *testing.T) {
 			}))
 			defer apiServerMock.Close()
 
-			client := NewHTTPClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
+			client := NewClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
 
-			videos, err := client.GetPlaylistItems(t.Context(), tt.inputID)
+			items, err := client.fetchPlaylistItems(t.Context(), tt.inputID)
 
 			if tt.expectedError != nil {
 				require.Error(t, tt.expectedError, err)
 			} else {
 				require.NoError(t, err)
 			}
-			require.Equal(t, tt.expectedVideos, videos)
+			require.Equal(t, tt.expectedItems, items)
 		})
 	}
 }

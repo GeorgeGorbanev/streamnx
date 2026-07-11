@@ -3,6 +3,7 @@ package spotify
 import (
 	"bytes"
 	"context"
+	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -11,21 +12,11 @@ import (
 	"net/url"
 	"sync"
 	"time"
+
+	"github.com/GeorgeGorbanev/streamnx/v2/internal/release"
 )
 
-const (
-	defaultAuthURL = "https://accounts.spotify.com"
-	defaultAPIURL  = "https://api.spotify.com"
-)
-
-type Client interface {
-	FetchTrack(ctx context.Context, id string) (*Track, error)
-	SearchTrack(ctx context.Context, artist, title string) (*Track, error)
-	FetchAlbum(ctx context.Context, id string) (*Album, error)
-	SearchAlbum(ctx context.Context, artist, title string) (*Album, error)
-}
-
-type HTTPClient struct {
+type Client struct {
 	authURL     string
 	apiURL      string
 	httpClient  *http.Client
@@ -34,11 +25,47 @@ type HTTPClient struct {
 	tokenMutex  sync.RWMutex
 }
 
-// TODO: rename to ErrFoo
-var NotFoundError = errors.New("not found") //nolint:revive
+type Credentials struct {
+	ClientID     string
+	ClientSecret string
+}
 
-func NewHTTPClient(credentials *Credentials, opts ...ClientOption) *HTTPClient {
-	c := HTTPClient{
+type token struct {
+	AccessToken string `json:"access_token"`
+	TokenType   string `json:"token_type"`
+	ExpiresIn   int    `json:"expires_in"`
+	fetchedAt   time.Time
+}
+
+type ClientOption func(client *Client)
+
+func WithAuthURL(url string) ClientOption {
+	return func(client *Client) {
+		client.authURL = url
+	}
+}
+
+func WithAPIURL(url string) ClientOption {
+	return func(client *Client) {
+		client.apiURL = url
+	}
+}
+
+func WithHTTPClient(c *http.Client) ClientOption {
+	return func(client *Client) {
+		client.httpClient = c
+	}
+}
+
+var errNotFound = errors.New("not found")
+
+func NewClient(credentials *Credentials, opts ...ClientOption) *Client {
+	const (
+		defaultAuthURL = "https://accounts.spotify.com"
+		defaultAPIURL  = "https://api.spotify.com"
+	)
+
+	c := Client{
 		authURL:     defaultAuthURL,
 		apiURL:      defaultAPIURL,
 		credentials: credentials,
@@ -51,76 +78,44 @@ func NewHTTPClient(credentials *Credentials, opts ...ClientOption) *HTTPClient {
 }
 
 // https://developer.spotify.com/documentation/web-api/reference/get-track
-func (c *HTTPClient) FetchTrack(ctx context.Context, id string) (*Track, error) {
+func (c *Client) fetchTrack(ctx context.Context, id string) (track, error) {
 	body, err := c.getAPI(ctx, "/v1/tracks/"+id, nil)
 	if err != nil {
-		return nil, err
+		return track{}, err
 	}
 
-	track := Track{}
-	if err := json.Unmarshal(body, &track); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal response body: %w", err)
+	t := track{}
+	if err := json.Unmarshal(body, &t); err != nil {
+		return track{}, fmt.Errorf("failed to unmarshal response body: %w", err)
 	}
 
-	return &track, nil
-}
-
-// https://developer.spotify.com/documentation/web-api/reference/search
-func (c *HTTPClient) SearchTrack(ctx context.Context, artist, title string) (*Track, error) {
-	type searchResult struct {
-		Tracks struct {
-			Items []*Track `json:"items"`
-		} `json:"tracks"`
-	}
-
-	body, err := c.getAPI(ctx, "/v1/search", url.Values{
-		"q":     []string{fmt.Sprintf("artist:%s track:%s", artist, title)},
-		"type":  []string{"track"},
-		"limit": []string{"1"},
-	})
-	if err != nil {
-		return nil, err
-	}
-
-	sr := searchResult{}
-	if err := json.Unmarshal(body, &sr); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal response body: %w", err)
-	}
-	if len(sr.Tracks.Items) == 0 {
-		return nil, NotFoundError
-	}
-
-	return sr.Tracks.Items[0], nil
+	return t, nil
 }
 
 // https://developer.spotify.com/documentation/web-api/reference/get-an-album
-func (c *HTTPClient) FetchAlbum(ctx context.Context, id string) (*Album, error) {
+func (c *Client) fetchAlbum(ctx context.Context, id string) (album, error) {
 	body, err := c.getAPI(ctx, "/v1/albums/"+id, nil)
 	if err != nil {
-		return nil, err
+		return album{}, err
 	}
 
-	album := Album{}
-	if err := json.Unmarshal(body, &album); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal response body: %w", err)
+	a := album{}
+	if err := json.Unmarshal(body, &a); err != nil {
+		return album{}, fmt.Errorf("failed to unmarshal response body: %w", err)
 	}
 
-	return &album, nil
+	return a, nil
 }
 
 // https://developer.spotify.com/documentation/web-api/reference/search
-func (c *HTTPClient) SearchAlbum(ctx context.Context, artist, title string) (*Album, error) {
+func (c *Client) searchTracks(ctx context.Context, artist, title string) ([]track, error) {
 	type searchResult struct {
-		Albums struct {
-			Items []*Album `json:"items"`
-		} `json:"albums"`
+		Tracks struct {
+			Items []track `json:"items"`
+		} `json:"tracks"`
 	}
 
-	body, err := c.getAPI(ctx, "/v1/search", url.Values{
-		"q":     []string{fmt.Sprintf("artist:%s album:%s", artist, title)},
-		"type":  []string{"album"},
-		"limit": []string{"1"},
-	})
+	body, err := c.searchAPI(ctx, release.TypeTrack, artist, title)
 	if err != nil {
 		return nil, err
 	}
@@ -129,15 +124,33 @@ func (c *HTTPClient) SearchAlbum(ctx context.Context, artist, title string) (*Al
 	if err := json.Unmarshal(body, &sr); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal response body: %w", err)
 	}
-	if len(sr.Albums.Items) == 0 {
-		return nil, NotFoundError
+
+	return sr.Tracks.Items, nil
+}
+
+// https://developer.spotify.com/documentation/web-api/reference/search
+func (c *Client) searchAlbums(ctx context.Context, artist, title string) ([]album, error) {
+	type searchResult struct {
+		Albums struct {
+			Items []album `json:"items"`
+		} `json:"albums"`
 	}
 
-	return sr.Albums.Items[0], nil
+	body, err := c.searchAPI(ctx, release.TypeAlbum, artist, title)
+	if err != nil {
+		return nil, err
+	}
+
+	sr := searchResult{}
+	if err := json.Unmarshal(body, &sr); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal response body: %w", err)
+	}
+
+	return sr.Albums.Items, nil
 }
 
 // https://developer.spotify.com/documentation/web-api/tutorials/client-credentials-flow
-func (c *HTTPClient) fetchToken(ctx context.Context) (*token, error) {
+func (c *Client) fetchToken(ctx context.Context) (*token, error) {
 	req, err := http.NewRequestWithContext(
 		ctx,
 		http.MethodPost,
@@ -148,7 +161,10 @@ func (c *HTTPClient) fetchToken(ctx context.Context) (*token, error) {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
 
-	req.Header.Set("Authorization", c.credentials.authHeader())
+	cred := fmt.Sprintf("%s:%s", c.credentials.ClientID, c.credentials.ClientSecret)
+	encodedCred := base64.StdEncoding.EncodeToString([]byte(cred))
+	req.Header.Set("Authorization", fmt.Sprintf("Basic %s", encodedCred))
+
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
@@ -169,22 +185,15 @@ func (c *HTTPClient) fetchToken(ctx context.Context) (*token, error) {
 	return &result, nil
 }
 
-func (c *HTTPClient) getAPI(ctx context.Context, path string, query url.Values) ([]byte, error) {
-	type errorResponse struct {
-		Error struct {
-			Status  int    `json:"status"`
-			Message string `json:"message"`
-		} `json:"error"`
-	}
-
+func (c *Client) getAPI(ctx context.Context, path string, query url.Values) ([]byte, error) {
 	resp, err := c.requestWithAuth(ctx, c.apiURL+path+"?"+query.Encode())
 	if err != nil {
 		return nil, fmt.Errorf("failed to send request: %w", err)
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode == http.StatusBadRequest {
-		return nil, NotFoundError
+	if resp.StatusCode == http.StatusBadRequest || resp.StatusCode == http.StatusNotFound {
+		return nil, errNotFound
 	}
 
 	body, err := io.ReadAll(resp.Body)
@@ -193,17 +202,31 @@ func (c *HTTPClient) getAPI(ctx context.Context, path string, query url.Values) 
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		er := errorResponse{}
+		er := struct {
+			Error struct {
+				Status  int    `json:"status"`
+				Message string `json:"message"`
+			} `json:"error"`
+		}{}
 		if err := json.Unmarshal(body, &er); err != nil {
 			return nil, fmt.Errorf("failed to load error response")
 		}
-		return nil, fmt.Errorf("unexpected API response: %d %s", er.Error.Status, er.Error.Message)
+		return nil, fmt.Errorf("unexpected api response: %d %s", er.Error.Status, er.Error.Message)
 	}
 
 	return body, nil
 }
 
-func (c *HTTPClient) requestWithAuth(ctx context.Context, url string) (*http.Response, error) {
+func (c *Client) searchAPI(ctx context.Context, rt release.Type, artist, title string) ([]byte, error) {
+	const defaultSearchLimit = "10"
+	return c.getAPI(ctx, "/v1/search", url.Values{
+		"q":     []string{fmt.Sprintf("artist:%s %s:%s", artist, rt, title)},
+		"type":  []string{string(rt)},
+		"limit": []string{defaultSearchLimit},
+	})
+}
+
+func (c *Client) requestWithAuth(ctx context.Context, url string) (*http.Response, error) {
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
@@ -221,6 +244,7 @@ func (c *HTTPClient) requestWithAuth(ctx context.Context, url string) (*http.Res
 
 	resp, err := c.httpClient.Do(req)
 	if err == nil && resp.StatusCode == http.StatusUnauthorized {
+		_ = resp.Body.Close()
 		if err = c.refreshToken(ctx, true); err != nil {
 			return nil, fmt.Errorf("failed to refresh token after 401: %w", err)
 		}
@@ -231,21 +255,21 @@ func (c *HTTPClient) requestWithAuth(ctx context.Context, url string) (*http.Res
 	return resp, err
 }
 
-func (c *HTTPClient) authHeader() (string, bool) {
+func (c *Client) authHeader() (string, bool) {
 	c.tokenMutex.RLock()
 	defer c.tokenMutex.RUnlock()
 
-	if c.token == nil || c.token.isExpired() {
+	if c.token == nil || c.isTokenExpired() {
 		return "", true
 	}
-	return c.token.authHeader(), false
+	return fmt.Sprintf("Bearer %s", c.token.AccessToken), false
 }
 
-func (c *HTTPClient) refreshToken(ctx context.Context, force bool) error {
+func (c *Client) refreshToken(ctx context.Context, force bool) error {
 	c.tokenMutex.Lock()
 	defer c.tokenMutex.Unlock()
 
-	if !force && c.token != nil && !c.token.isExpired() {
+	if !force && c.token != nil && !c.isTokenExpired() {
 		return nil
 	}
 
@@ -255,4 +279,8 @@ func (c *HTTPClient) refreshToken(ctx context.Context, force bool) error {
 	}
 	c.token = newToken
 	return nil
+}
+
+func (c *Client) isTokenExpired() bool {
+	return time.Since(c.token.fetchedAt) > time.Duration(c.token.ExpiresIn)*time.Second
 }

@@ -14,14 +14,14 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestHTTPClient_FetchAlbum(t *testing.T) {
+func TestClient_fetchAlbum(t *testing.T) {
 	tests := []struct {
 		name        string
 		id          string
 		artistSlug  string
 		respStatus  int
 		respbody    string
-		want        *Entity
+		want        Entity
 		wantReqHost string
 		wantReqPath string
 		wantErr     error
@@ -36,8 +36,38 @@ func TestHTTPClient_FetchAlbum(t *testing.T) {
 					<script type="application/ld+json">
 					{
 						"name": "Amber",
+						"description": "sample album description",
 						"byArtist": {
 							"name": "Autechre"
+						},
+						"publisher": {
+							"name": "Warp Records"
+						},
+						"track": {
+							"@type": "ItemList",
+							"numberOfItems": 2,
+							"itemListElement": [
+								{
+									"@type": "ListItem",
+									"position": 1,
+									"item": {
+										"@type": "MusicRecording",
+										"@id": "https://autechre.bandcamp.com/track/foil",
+										"name": "Foil",
+										"mainEntityOfPage": "https://autechre.bandcamp.com/track/foil"
+									}
+								},
+								{
+									"@type": "ListItem",
+									"position": 2,
+									"item": {
+										"@type": "MusicRecording",
+										"@id": "https://autechre.bandcamp.com/track/montreal",
+										"name": "Montreal",
+										"mainEntityOfPage": "https://autechre.bandcamp.com/track/montreal"
+									}
+								}
+							]
 						}
 					}
 					</script>
@@ -46,10 +76,16 @@ func TestHTTPClient_FetchAlbum(t *testing.T) {
 			</html>`,
 			wantReqHost: "autechre.bandcamp.com",
 			wantReqPath: "/album/amber",
-			want: &Entity{
-				Name:     "Amber",
-				BandName: "Autechre",
-				URL:      "http://autechre.bandcamp.com/album/amber",
+			want: Entity{
+				Name:        "Amber",
+				BandName:    "Autechre",
+				CreatorName: "Warp Records",
+				Description: "sample album description",
+				URL:         "http://autechre.bandcamp.com/album/amber",
+				TrackURLs: []string{
+					"https://autechre.bandcamp.com/track/foil",
+					"https://autechre.bandcamp.com/track/montreal",
+				},
 			},
 		},
 		{
@@ -59,7 +95,7 @@ func TestHTTPClient_FetchAlbum(t *testing.T) {
 			wantReqHost: "notfound.bandcamp.com",
 			wantReqPath: "/album/notfound",
 			respStatus:  http.StatusNotFound,
-			wantErr:     ErrNotFound,
+			wantErr:     errNotFound,
 		},
 	}
 	for _, tt := range tests {
@@ -73,12 +109,12 @@ func TestHTTPClient_FetchAlbum(t *testing.T) {
 			}))
 			defer srv.Close()
 
-			client := NewHTTPClient(
+			client := NewClient(
 				WithAPIClient(mockSubdomainClient(srv.URL)),
-				WithAPIScheme("http"),
+				WithAPI("http", "bandcamp.com"),
 			)
 
-			result, err := client.FetchAlbum(t.Context(), tt.artistSlug, tt.id)
+			result, err := client.fetchAlbum(t.Context(), tt.artistSlug, tt.id)
 			if tt.wantErr != nil {
 				require.ErrorIs(t, err, tt.wantErr)
 			} else {
@@ -89,14 +125,14 @@ func TestHTTPClient_FetchAlbum(t *testing.T) {
 	}
 }
 
-func TestHTTPClient_FetchTrack(t *testing.T) {
+func TestClient_fetchTrack(t *testing.T) {
 	tests := []struct {
 		name        string
 		id          string
 		artistSlug  string
 		respStatus  int
 		respbody    string
-		want        *Entity
+		want        Entity
 		wantReqHost string
 		wantReqPath string
 		wantErr     error
@@ -111,8 +147,12 @@ func TestHTTPClient_FetchTrack(t *testing.T) {
 					<script type="application/ld+json">
 					{
 						"name": "Nil",
+						"description": "sample track description",
 						"byArtist": {
 							"name": "Autechre"
+						},
+						"publisher": {
+							"name": "Warp Records"
 						}
 					}
 					</script>
@@ -121,10 +161,12 @@ func TestHTTPClient_FetchTrack(t *testing.T) {
 			</html>`,
 			wantReqHost: "autechre.bandcamp.com",
 			wantReqPath: "/track/nil",
-			want: &Entity{
-				Name:     "Nil",
-				BandName: "Autechre",
-				URL:      "http://autechre.bandcamp.com/track/nil",
+			want: Entity{
+				Name:        "Nil",
+				BandName:    "Autechre",
+				CreatorName: "Warp Records",
+				Description: "sample track description",
+				URL:         "http://autechre.bandcamp.com/track/nil",
 			},
 		},
 		{
@@ -134,7 +176,7 @@ func TestHTTPClient_FetchTrack(t *testing.T) {
 			wantReqHost: "notfound.bandcamp.com",
 			wantReqPath: "/track/notfound",
 			respStatus:  http.StatusNotFound,
-			wantErr:     ErrNotFound,
+			wantErr:     errNotFound,
 		},
 	}
 	for _, tt := range tests {
@@ -148,12 +190,12 @@ func TestHTTPClient_FetchTrack(t *testing.T) {
 			}))
 			defer srv.Close()
 
-			client := NewHTTPClient(
+			client := NewClient(
 				WithAPIClient(mockSubdomainClient(srv.URL)),
-				WithAPIScheme("http"),
+				WithAPI("http", "bandcamp.com"),
 			)
 
-			result, err := client.FetchTrack(t.Context(), tt.artistSlug, tt.id)
+			result, err := client.fetchTrack(t.Context(), tt.artistSlug, tt.id)
 			if tt.wantErr != nil {
 				require.ErrorIs(t, err, tt.wantErr)
 			} else {
@@ -164,19 +206,19 @@ func TestHTTPClient_FetchTrack(t *testing.T) {
 	}
 }
 
-func TestHTTPClient_SearchTrack(t *testing.T) {
+func TestClient_searchTracks(t *testing.T) {
 	tests := []struct {
 		name            string
 		artist          string
 		title           string
 		respStatus      int
 		respBody        string
-		want            *Entity
+		want            []Entity
 		wantErr         error
 		wantErrContains string
 	}{
 		{
-			name:       "when track found",
+			name:       "when multiple track candidates found",
 			artist:     "Autechre",
 			title:      "Nil",
 			respStatus: http.StatusOK,
@@ -188,14 +230,27 @@ func TestHTTPClient_SearchTrack(t *testing.T) {
 							"band_name": "Autechre",
 							"item_url_root": "https://autechre.bandcamp.com",
 							"item_url_path": "https://autechre.bandcamp.com/track/nil"
+						},
+						{
+							"name": "Nil (alternate)",
+							"band_name": "Autechre",
+							"item_url_root": "https://autechre.bandcamp.com",
+							"item_url_path": "https://autechre.bandcamp.com/track/nil-alternate"
 						}
 					]
 				}
 			}`,
-			want: &Entity{
-				Name:     "Nil",
-				BandName: "Autechre",
-				URL:      "https://autechre.bandcamp.com/track/nil",
+			want: []Entity{
+				{
+					Name:     "Nil",
+					BandName: "Autechre",
+					URL:      "https://autechre.bandcamp.com/track/nil",
+				},
+				{
+					Name:     "Nil (alternate)",
+					BandName: "Autechre",
+					URL:      "https://autechre.bandcamp.com/track/nil-alternate",
+				},
 			},
 		},
 		{
@@ -208,7 +263,7 @@ func TestHTTPClient_SearchTrack(t *testing.T) {
 					"results": []
 				}
 			}`,
-			wantErr: ErrNotFound,
+			want: []Entity{},
 		},
 		{
 			name:            "when api responds with error",
@@ -228,10 +283,12 @@ func TestHTTPClient_SearchTrack(t *testing.T) {
 				var body struct {
 					SearchText   string `json:"search_text"`
 					SearchFilter string `json:"search_filter"`
+					FullPage     bool   `json:"full_page"`
 				}
 				require.NoError(t, json.NewDecoder(r.Body).Decode(&body))
 				require.Equal(t, tt.artist+" "+tt.title, body.SearchText)
 				require.Equal(t, string(trackEntityType), body.SearchFilter)
+				require.True(t, body.FullPage)
 				w.WriteHeader(tt.respStatus)
 				if tt.respBody != "" {
 					_, err := w.Write([]byte(tt.respBody))
@@ -243,12 +300,11 @@ func TestHTTPClient_SearchTrack(t *testing.T) {
 			srvURL, err := url.Parse(srv.URL)
 			require.NoError(t, err)
 
-			client := NewHTTPClient(
-				WithAPIHost(srvURL.Host),
-				WithAPIScheme(srvURL.Scheme),
+			client := NewClient(
+				WithAPI(srvURL.Scheme, srvURL.Host),
 			)
 
-			result, err := client.SearchTrack(t.Context(), tt.artist, tt.title)
+			result, err := client.searchTracks(t.Context(), tt.artist, tt.title)
 			if tt.wantErr != nil {
 				require.ErrorIs(t, err, tt.wantErr)
 			} else if tt.wantErrContains != "" {
@@ -262,19 +318,19 @@ func TestHTTPClient_SearchTrack(t *testing.T) {
 	}
 }
 
-func TestHTTPClient_SearchAlbum(t *testing.T) {
+func TestClient_searchAlbums(t *testing.T) {
 	tests := []struct {
 		name            string
 		artist          string
 		title           string
 		respStatus      int
 		respBody        string
-		want            *Entity
+		want            []Entity
 		wantErr         error
 		wantErrContains string
 	}{
 		{
-			name:       "when album found",
+			name:       "when multiple album candidates found",
 			artist:     "Boards of Canada",
 			title:      "Music Has The Right To Children",
 			respStatus: http.StatusOK,
@@ -286,14 +342,27 @@ func TestHTTPClient_SearchAlbum(t *testing.T) {
 							"band_name": "Boards of Canada",
 							"item_url_root": "https://boardsofcanada.bandcamp.com",
 							"item_url_path": "https://boardsofcanada.bandcamp.com/album/music-has-the-right-to-children"
+						},
+						{
+							"name": "Hi Scores",
+							"band_name": "Boards of Canada",
+							"item_url_root": "https://boardsofcanada.bandcamp.com",
+							"item_url_path": "https://boardsofcanada.bandcamp.com/album/hi-scores"
 						}
 					]
 				}
 			}`,
-			want: &Entity{
-				Name:     "Music Has The Right To Children",
-				BandName: "Boards of Canada",
-				URL:      "https://boardsofcanada.bandcamp.com/album/music-has-the-right-to-children",
+			want: []Entity{
+				{
+					Name:     "Music Has The Right To Children",
+					BandName: "Boards of Canada",
+					URL:      "https://boardsofcanada.bandcamp.com/album/music-has-the-right-to-children",
+				},
+				{
+					Name:     "Hi Scores",
+					BandName: "Boards of Canada",
+					URL:      "https://boardsofcanada.bandcamp.com/album/hi-scores",
+				},
 			},
 		},
 		{
@@ -306,7 +375,7 @@ func TestHTTPClient_SearchAlbum(t *testing.T) {
 					"results": []
 				}
 			}`,
-			wantErr: ErrNotFound,
+			want: []Entity{},
 		},
 		{
 			name:            "when api responds with error",
@@ -326,10 +395,12 @@ func TestHTTPClient_SearchAlbum(t *testing.T) {
 				var body struct {
 					SearchText   string `json:"search_text"`
 					SearchFilter string `json:"search_filter"`
+					FullPage     bool   `json:"full_page"`
 				}
 				require.NoError(t, json.NewDecoder(r.Body).Decode(&body))
 				require.Equal(t, tt.artist+" "+tt.title, body.SearchText)
 				require.Equal(t, string(albumEntityType), body.SearchFilter)
+				require.True(t, body.FullPage)
 				w.WriteHeader(tt.respStatus)
 				if tt.respBody != "" {
 					_, err := w.Write([]byte(tt.respBody))
@@ -341,12 +412,11 @@ func TestHTTPClient_SearchAlbum(t *testing.T) {
 			srvURL, err := url.Parse(srv.URL)
 			require.NoError(t, err)
 
-			client := NewHTTPClient(
-				WithAPIHost(srvURL.Host),
-				WithAPIScheme(srvURL.Scheme),
+			client := NewClient(
+				WithAPI(srvURL.Scheme, srvURL.Host),
 			)
 
-			result, err := client.SearchAlbum(t.Context(), tt.artist, tt.title)
+			result, err := client.searchAlbums(t.Context(), tt.artist, tt.title)
 			if tt.wantErr != nil {
 				require.ErrorIs(t, err, tt.wantErr)
 			} else if tt.wantErrContains != "" {

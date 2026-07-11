@@ -10,12 +10,12 @@ import (
 )
 
 // https://api.deezer.com/track/3135556
-func TestHTTPClient_FetchTrack(t *testing.T) {
+func TestClient_fetchTrack(t *testing.T) {
 	tests := []struct {
 		name          string
 		inputID       string
 		responseMock  string
-		expectedTrack *Track
+		expectedTrack track
 		expectedErr   error
 	}{
 		{
@@ -32,13 +32,13 @@ func TestHTTPClient_FetchTrack(t *testing.T) {
 					"title": "Discovery"
 				}
 			}`,
-			expectedTrack: &Track{
+			expectedTrack: track{
 				ID:    3135556,
 				Title: "Harder, Better, Faster, Stronger",
-				Artist: Artist{
+				Artist: artist{
 					Name: "Daft Punk",
 				},
-				Album: AlbumInfo{
+				Album: albumInfo{
 					ID:    302127,
 					Title: "Discovery",
 				},
@@ -54,8 +54,7 @@ func TestHTTPClient_FetchTrack(t *testing.T) {
 					"code": 800
 				}
 			}`,
-			expectedTrack: nil,
-			expectedErr:   NotFoundError,
+			expectedErr: errNotFound,
 		},
 	}
 	for _, tt := range tests {
@@ -69,11 +68,11 @@ func TestHTTPClient_FetchTrack(t *testing.T) {
 			}))
 			defer apiServerMock.Close()
 
-			client := NewHTTPClient(
+			client := NewClient(
 				WithAPIURL(apiServerMock.URL),
 			)
 
-			track, err := client.FetchTrack(t.Context(), tt.inputID)
+			track, err := client.fetchTrack(t.Context(), tt.inputID)
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
 			} else {
@@ -85,14 +84,14 @@ func TestHTTPClient_FetchTrack(t *testing.T) {
 }
 
 // https://api.deezer.com/search?q=artist:"aloe blacc" track:"i need a dollar"
-func TestHTTPClient_SearchTrack(t *testing.T) {
+func TestClient_searchTracks(t *testing.T) {
 	tests := []struct {
-		name          string
-		artist        string
-		title         string
-		responseMock  string
-		expectedTrack *Track
-		expectedErr   error
+		name           string
+		artist         string
+		title          string
+		responseMock   string
+		expectedTracks []track
+		expectedErr    string
 	}{
 		{
 			name:   "when track found",
@@ -110,18 +109,42 @@ func TestHTTPClient_SearchTrack(t *testing.T) {
 							"id": 44290462,
 							"title": "Good Things"
 						}
+					},
+					{
+						"id": 445997983,
+						"title": "I Need A Dollar - Live",
+						"artist": {
+							"name": "Aloe Blacc"
+						},
+						"album": {
+							"id": 44290463,
+							"title": "Good Things Live"
+						}
 					}
 				]
 			}`,
-			expectedTrack: &Track{
-				ID:    445997982,
-				Title: "I Need A Dollar",
-				Artist: Artist{
-					Name: "Aloe Blacc",
+			expectedTracks: []track{
+				{
+					ID:    445997982,
+					Title: "I Need A Dollar",
+					Artist: artist{
+						Name: "Aloe Blacc",
+					},
+					Album: albumInfo{
+						ID:    44290462,
+						Title: "Good Things",
+					},
 				},
-				Album: AlbumInfo{
-					ID:    44290462,
-					Title: "Good Things",
+				{
+					ID:    445997983,
+					Title: "I Need A Dollar - Live",
+					Artist: artist{
+						Name: "Aloe Blacc",
+					},
+					Album: albumInfo{
+						ID:    44290463,
+						Title: "Good Things Live",
+					},
 				},
 			},
 		},
@@ -132,8 +155,7 @@ func TestHTTPClient_SearchTrack(t *testing.T) {
 			responseMock: `{
 				"data": []
 			}`,
-			expectedTrack: nil,
-			expectedErr:   NotFoundError,
+			expectedTracks: []track{},
 		},
 	}
 	for _, tt := range tests {
@@ -148,28 +170,29 @@ func TestHTTPClient_SearchTrack(t *testing.T) {
 			}))
 			defer apiServerMock.Close()
 
-			client := NewHTTPClient(
+			client := NewClient(
 				WithAPIURL(apiServerMock.URL),
 			)
 
-			track, err := client.SearchTrack(t.Context(), tt.artist, tt.title)
-			if tt.expectedErr != nil {
-				require.ErrorIs(t, err, tt.expectedErr)
+			tracks, err := client.searchTracks(t.Context(), tt.artist, tt.title)
+			if tt.expectedErr != "" {
+				require.EqualError(t, err, tt.expectedErr)
+				require.Nil(t, tracks)
 			} else {
 				require.NoError(t, err)
-				require.Equal(t, tt.expectedTrack, track)
+				require.Equal(t, tt.expectedTracks, tracks)
 			}
 		})
 	}
 }
 
 // https://api.deezer.com/album/302127
-func TestHTTPClient_FetchAlbum(t *testing.T) {
+func TestClient_fetchAlbum(t *testing.T) {
 	tests := []struct {
 		name          string
 		inputID       string
 		responseMock  string
-		expectedAlbum *Album
+		expectedAlbum album
 		expectedErr   error
 	}{
 		{
@@ -178,15 +201,69 @@ func TestHTTPClient_FetchAlbum(t *testing.T) {
 			responseMock: `{
 				"id": 302127,
 				"title": "Discovery",
+				"label": "Daft Life",
 				"artist": {
 					"name": "Daft Punk"
+				},
+				"tracks": {
+					"data": [
+						{
+							"id": 3135556,
+							"title": "Harder, Better, Faster, Stronger",
+							"artist": {
+								"name": "Daft Punk"
+							},
+							"album": {
+								"id": 302127,
+								"title": "Discovery"
+							}
+						},
+						{
+							"id": 3135557,
+							"title": "One More Time",
+							"artist": {
+								"name": "Daft Punk"
+							},
+							"album": {
+								"id": 302127,
+								"title": "Discovery"
+							}
+						}
+					]
 				}
 			}`,
-			expectedAlbum: &Album{
+			expectedAlbum: album{
 				ID:    302127,
 				Title: "Discovery",
-				Artist: Artist{
+				Label: "Daft Life",
+				Artist: artist{
 					Name: "Daft Punk",
+				},
+				Tracks: trackData{
+					Data: []track{
+						{
+							ID:    3135556,
+							Title: "Harder, Better, Faster, Stronger",
+							Artist: artist{
+								Name: "Daft Punk",
+							},
+							Album: albumInfo{
+								ID:    302127,
+								Title: "Discovery",
+							},
+						},
+						{
+							ID:    3135557,
+							Title: "One More Time",
+							Artist: artist{
+								Name: "Daft Punk",
+							},
+							Album: albumInfo{
+								ID:    302127,
+								Title: "Discovery",
+							},
+						},
+					},
 				},
 			},
 		},
@@ -200,8 +277,7 @@ func TestHTTPClient_FetchAlbum(t *testing.T) {
 					"code": 800
 				}
 			}`,
-			expectedAlbum: nil,
-			expectedErr:   NotFoundError,
+			expectedErr: errNotFound,
 		},
 	}
 	for _, tt := range tests {
@@ -215,11 +291,11 @@ func TestHTTPClient_FetchAlbum(t *testing.T) {
 			}))
 			defer apiServerMock.Close()
 
-			client := NewHTTPClient(
+			client := NewClient(
 				WithAPIURL(apiServerMock.URL),
 			)
 
-			album, err := client.FetchAlbum(t.Context(), tt.inputID)
+			album, err := client.fetchAlbum(t.Context(), tt.inputID)
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
 			} else {
@@ -231,14 +307,14 @@ func TestHTTPClient_FetchAlbum(t *testing.T) {
 }
 
 // https://api.deezer.com/search?q=artist:"massive attack" album:"mezzanine"
-func TestHTTPClient_SearchAlbum(t *testing.T) {
+func TestClient_searchAlbums(t *testing.T) {
 	tests := []struct {
-		name          string
-		artist        string
-		title         string
-		responseMock  string
-		expectedAlbum *Album
-		expectedErr   error
+		name           string
+		artist         string
+		title          string
+		responseMock   string
+		expectedAlbums []album
+		expectedErr    string
 	}{
 		{
 			name:   "when album found",
@@ -249,17 +325,37 @@ func TestHTTPClient_SearchAlbum(t *testing.T) {
 					{
 						"id": 302127,
 						"title": "Mezzanine",
+						"label": "Virgin Records",
+						"artist": {
+							"name": "Massive Attack"
+						}
+					},
+					{
+						"id": 302128,
+						"title": "Mezzanine (Deluxe)",
+						"label": "Virgin Records",
 						"artist": {
 							"name": "Massive Attack"
 						}
 					}
 				]
 			}`,
-			expectedAlbum: &Album{
-				ID:    302127,
-				Title: "Mezzanine",
-				Artist: Artist{
-					Name: "Massive Attack",
+			expectedAlbums: []album{
+				{
+					ID:    302127,
+					Title: "Mezzanine",
+					Label: "Virgin Records",
+					Artist: artist{
+						Name: "Massive Attack",
+					},
+				},
+				{
+					ID:    302128,
+					Title: "Mezzanine (Deluxe)",
+					Label: "Virgin Records",
+					Artist: artist{
+						Name: "Massive Attack",
+					},
 				},
 			},
 		},
@@ -270,8 +366,7 @@ func TestHTTPClient_SearchAlbum(t *testing.T) {
 			responseMock: `{
 				"data": []
 			}`,
-			expectedAlbum: nil,
-			expectedErr:   NotFoundError,
+			expectedAlbums: []album{},
 		},
 	}
 	for _, tt := range tests {
@@ -286,22 +381,23 @@ func TestHTTPClient_SearchAlbum(t *testing.T) {
 			}))
 			defer apiServerMock.Close()
 
-			client := NewHTTPClient(
+			client := NewClient(
 				WithAPIURL(apiServerMock.URL),
 			)
 
-			album, err := client.SearchAlbum(t.Context(), tt.artist, tt.title)
-			if tt.expectedErr != nil {
-				require.ErrorIs(t, err, tt.expectedErr)
+			albums, err := client.searchAlbums(t.Context(), tt.artist, tt.title)
+			if tt.expectedErr != "" {
+				require.EqualError(t, err, tt.expectedErr)
+				require.Nil(t, albums)
 			} else {
 				require.NoError(t, err)
-				require.Equal(t, tt.expectedAlbum, album)
+				require.Equal(t, tt.expectedAlbums, albums)
 			}
 		})
 	}
 }
 
-func TestHTTPClient_FollowCloak(t *testing.T) {
+func TestClient_FollowCloak(t *testing.T) {
 	tests := []struct {
 		name             string
 		inputID          string
@@ -355,12 +451,12 @@ func TestHTTPClient_FollowCloak(t *testing.T) {
 			}))
 			defer cloakServerMock.Close()
 
-			client := NewHTTPClient(
+			client := NewClient(
 				WithCloakBaseURL(cloakServerMock.URL),
 				WithAPIURL(apiServerMock.URL),
 			)
 
-			location, err := client.FollowCloak(t.Context(), tt.inputID)
+			location, err := client.followCloak(t.Context(), tt.inputID)
 			if tt.expectedErr {
 				require.Error(t, err)
 			} else {

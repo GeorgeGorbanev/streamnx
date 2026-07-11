@@ -1,0 +1,77 @@
+{
+  "data": [
+    {
+      "id": "1559885421",
+      "type": "songs",
+      "href": "/v1/catalog/us/songs/1559885421",
+      "attributes": {
+        "albumName": "Whenever You Need Somebody",
+        "artistName": "Rick Astley",
+        "artwork": {
+          "bgColor": "1e1a1a",
+          "hasP3": false,
+          "height": 1500,
+          "textColor1": "f1e4d0",
+          "textColor2": "d3d9db",
+          "textColor3": "c7bbac",
+          "textColor4": "aeb3b5",
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/{w}x{h}bb.jpg",
+          "width": 1500
+        },
+        "audioLocale": "en-US",
+        "audioTraits": [
+          "lossless",
+          "lossy-stereo"
+        ],
+        "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+        "discNumber": 1,
+        "durationInMillis": 213573,
+        "genreNames": [
+          "Pop",
+          "Music"
+        ],
+        "hasLyrics": true,
+        "hasTimeSyncedLyrics": true,
+        "isAppleDigitalMaster": false,
+        "isMasteredForItunes": false,
+        "isVocalAttenuationAllowed": true,
+        "isrc": "GBARL9300135",
+        "name": "Never Gonna Give You Up",
+        "playParams": {
+          "id": "1559885421",
+          "kind": "song"
+        },
+        "previews": [
+          {
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/3a/d6/9a/3ad69a5b-1fdc-c0ca-069b-541cef78e9d6/mzaf_11103729100333690294.plus.aac.ep.m4a"
+          }
+        ],
+        "releaseDate": "1987-07-27",
+        "trackNumber": 1,
+        "url": "https://music.apple.com/us/album/never-gonna-give-you-up/1559885420?i=1559885421"
+      },
+      "relationships": {
+        "albums": {
+          "href": "/v1/catalog/us/songs/1559885421/albums",
+          "data": [
+            {
+              "id": "1559885420",
+              "type": "albums",
+              "href": "/v1/catalog/us/albums/1559885420"
+            }
+          ]
+        },
+        "artists": {
+          "href": "/v1/catalog/us/songs/1559885421/artists",
+          "data": [
+            {
+              "id": "669771",
+              "type": "artists",
+              "href": "/v1/catalog/us/artists/669771"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

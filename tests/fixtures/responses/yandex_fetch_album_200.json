@@ -1,0 +1,1591 @@
+{
+  "invocationInfo": {
+    "req-id": "1781216571784970-16614152640615491898",
+    "hostname": "music-web-default-production-music-99.sas.yp-c.yandex.net",
+    "exec-duration-millis": 7
+  },
+  "result": {
+    "id": 14599266,
+    "title": "Whenever You Need Somebody",
+    "metaType": "music",
+    "year": 1987,
+    "releaseDate": "1987-11-12T00:00:00+03:00",
+    "coverUri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+    "cover": {
+      "uri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+      "color": "#1f2f39"
+    },
+    "ogImage": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+    "genre": "pop",
+    "metaTagId": "58e3c0796ebb3476087d190b",
+    "trackCount": 10,
+    "likesCount": 1096,
+    "recent": false,
+    "veryImportant": false,
+    "artists": [
+      {
+        "id": 34466,
+        "name": "Rick Astley",
+        "various": false,
+        "composer": false,
+        "available": true,
+        "cover": {
+          "type": "from-artist-photos",
+          "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+          "prefix": "f8c365f5.p.34466/"
+        },
+        "genres": [
+
+        ],
+        "disclaimers": [
+
+        ],
+        "cutoutCover": {
+          "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+        }
+      }
+    ],
+    "labels": [
+      {
+        "id": 43475,
+        "name": "BMG Rights Management (UK)"
+      }
+    ],
+    "available": true,
+    "availableForPremiumUsers": true,
+    "availableForOptions": [
+      "bookmate"
+    ],
+    "availableForMobile": true,
+    "availablePartially": false,
+    "bests": [
+      609676,
+      609700
+    ],
+    "disclaimers": [
+
+    ],
+    "hasTrailer": true,
+    "trailer": {
+      "available": true
+    },
+    "derivedColors": {
+      "average": "#1f2f39",
+      "waveText": "#c1e7ff",
+      "miniPlayer": "#a2bccc",
+      "accent": "#7a9fb7"
+    },
+    "duplicates": [
+      {
+        "id": 40481460,
+        "title": "Whenever You Need Somebody",
+        "metaType": "music",
+        "version": "Deluxe Edition / Remastered 2022",
+        "year": 2022,
+        "releaseDate": "2022-05-20T00:00:00+03:00",
+        "coverUri": "avatars.yandex.net/get-music-content/17784780/45eaa6f2.a.40481460-1/%%",
+        "cover": {
+          "uri": "avatars.yandex.net/get-music-content/17784780/45eaa6f2.a.40481460-1/%%"
+        },
+        "ogImage": "avatars.yandex.net/get-music-content/17784780/45eaa6f2.a.40481460-1/%%",
+        "genre": "pop",
+        "trackCount": 36,
+        "likesCount": 24,
+        "recent": false,
+        "veryImportant": false,
+        "artists": [
+          {
+            "id": 34466,
+            "name": "Rick Astley",
+            "various": false,
+            "composer": false,
+            "available": true,
+            "cover": {
+              "type": "from-artist-photos",
+              "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+              "prefix": "f8c365f5.p.34466/"
+            },
+            "genres": [
+
+            ],
+            "disclaimers": [
+
+            ],
+            "cutoutCover": {
+              "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+            }
+          }
+        ],
+        "labels": [
+          {
+            "id": 43475,
+            "name": "BMG Rights Management (UK)"
+          }
+        ],
+        "available": true,
+        "availableForPremiumUsers": true,
+        "availableForOptions": [
+          "bookmate"
+        ],
+        "availableForMobile": true,
+        "availablePartially": false,
+        "bests": [
+          647752,
+          104616101,
+          103426576
+        ],
+        "disclaimers": [
+
+        ],
+        "hasTrailer": false
+      }
+    ],
+    "customWave": {
+      "title": "Whenever You Need Somebody",
+      "animationUrl": "https://music-custom-wave-media.s3.yandex.net/base.json",
+      "header": "Моя волна по альбому",
+      "backgroundImageUrl": "avatars.mds.yandex.net/get-music-misc/28052/custom-wave-default-album-background.image/%%"
+    },
+    "sortOrder": "asc",
+    "volumes": [
+      [
+        {
+          "id": "609676",
+          "realId": "609676",
+          "title": "Never Gonna Give You Up",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 212740,
+          "fileSize": 0,
+          "r128": {
+            "i": -11.04,
+            "tp": 0.56
+          },
+          "fade": {
+            "inStart": 0.1,
+            "inStop": 1.5,
+            "outStart": 206.3,
+            "outStop": 210.9
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 34466,
+              "name": "Rick Astley",
+              "various": false,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-artist-photos",
+                "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                "prefix": "f8c365f5.p.34466/"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "cutoutCover": {
+                "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+              }
+            }
+          ],
+          "albums": [
+            {
+              "id": 14599266,
+              "title": "Whenever You Need Somebody",
+              "metaType": "music",
+              "year": 1987,
+              "releaseDate": "1987-11-12T00:00:00+03:00",
+              "coverUri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+              "cover": {
+                "uri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%"
+              },
+              "ogImage": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+              "genre": "pop",
+              "trackCount": 10,
+              "likesCount": 1096,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 34466,
+                  "name": "Rick Astley",
+                  "various": false,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-artist-photos",
+                    "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                    "prefix": "f8c365f5.p.34466/"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ],
+                  "cutoutCover": {
+                    "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+                  }
+                }
+              ],
+              "labels": [
+                {
+                  "id": 43475,
+                  "name": "BMG Rights Management (UK)"
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+                609676,
+                609700
+              ],
+              "disclaimers": [
+
+              ],
+              "hasTrailer": false,
+              "trackPosition": {
+                "volume": 1,
+                "index": 1
+              }
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+          "derivedColors": {
+            "average": "#1f2f39",
+            "waveText": "#c1e7ff",
+            "miniPlayer": "#a2bccc",
+            "accent": "#7a9fb7"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+          "lyricsAvailable": true,
+          "best": true,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": true,
+            "hasAvailableTextLyrics": true
+          },
+          "trackSource": "OWN",
+          "specialAudioResources": [
+            "smart_preview"
+          ]
+        },
+        {
+          "id": "648090",
+          "realId": "648090",
+          "title": "Whenever You Need Somebody",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 235130,
+          "fileSize": 0,
+          "r128": {
+            "i": -10.79,
+            "tp": 1.02
+          },
+          "fade": {
+            "inStart": 0.3,
+            "inStop": 1.5,
+            "outStart": 226.2,
+            "outStop": 231.2
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 34466,
+              "name": "Rick Astley",
+              "various": false,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-artist-photos",
+                "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                "prefix": "f8c365f5.p.34466/"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "cutoutCover": {
+                "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+              }
+            }
+          ],
+          "albums": [
+            {
+              "id": 14599266,
+              "title": "Whenever You Need Somebody",
+              "metaType": "music",
+              "year": 1987,
+              "releaseDate": "1987-11-12T00:00:00+03:00",
+              "coverUri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+              "cover": {
+                "uri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%"
+              },
+              "ogImage": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+              "genre": "pop",
+              "trackCount": 10,
+              "likesCount": 1096,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 34466,
+                  "name": "Rick Astley",
+                  "various": false,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-artist-photos",
+                    "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                    "prefix": "f8c365f5.p.34466/"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ],
+                  "cutoutCover": {
+                    "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+                  }
+                }
+              ],
+              "labels": [
+                {
+                  "id": 43475,
+                  "name": "BMG Rights Management (UK)"
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+                609676,
+                609700
+              ],
+              "disclaimers": [
+
+              ],
+              "hasTrailer": false,
+              "trackPosition": {
+                "volume": 1,
+                "index": 2
+              }
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+          "derivedColors": {
+            "average": "#1f2f39",
+            "waveText": "#c1e7ff",
+            "miniPlayer": "#a2bccc",
+            "accent": "#7a9fb7"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+          "lyricsAvailable": true,
+          "best": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": true,
+            "hasAvailableTextLyrics": true
+          },
+          "trackSource": "OWN",
+          "specialAudioResources": [
+            "smart_preview"
+          ]
+        },
+        {
+          "id": "609700",
+          "realId": "609700",
+          "title": "Together Forever",
+          "version": "7\" Version",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 203760,
+          "fileSize": 0,
+          "r128": {
+            "i": -9.58,
+            "tp": 1.22
+          },
+          "fade": {
+            "inStart": 0.1,
+            "inStop": 1.5,
+            "outStart": 196.2,
+            "outStop": 201.2
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 34466,
+              "name": "Rick Astley",
+              "various": false,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-artist-photos",
+                "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                "prefix": "f8c365f5.p.34466/"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "cutoutCover": {
+                "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+              }
+            }
+          ],
+          "albums": [
+            {
+              "id": 14599266,
+              "title": "Whenever You Need Somebody",
+              "metaType": "music",
+              "year": 1987,
+              "releaseDate": "1987-11-12T00:00:00+03:00",
+              "coverUri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+              "cover": {
+                "uri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%"
+              },
+              "ogImage": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+              "genre": "pop",
+              "trackCount": 10,
+              "likesCount": 1096,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 34466,
+                  "name": "Rick Astley",
+                  "various": false,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-artist-photos",
+                    "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                    "prefix": "f8c365f5.p.34466/"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ],
+                  "cutoutCover": {
+                    "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+                  }
+                }
+              ],
+              "labels": [
+                {
+                  "id": 43475,
+                  "name": "BMG Rights Management (UK)"
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+                609676,
+                609700
+              ],
+              "disclaimers": [
+
+              ],
+              "hasTrailer": false,
+              "trackPosition": {
+                "volume": 1,
+                "index": 3
+              }
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+          "derivedColors": {
+            "average": "#1f2f39",
+            "waveText": "#c1e7ff",
+            "miniPlayer": "#a2bccc",
+            "accent": "#7a9fb7"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+          "lyricsAvailable": true,
+          "best": true,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": true,
+            "hasAvailableTextLyrics": true
+          },
+          "trackSource": "OWN",
+          "specialAudioResources": [
+            "smart_preview"
+          ]
+        },
+        {
+          "id": "647753",
+          "realId": "647753",
+          "title": "It Would Take a Strong Strong Man",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 221600,
+          "fileSize": 0,
+          "r128": {
+            "i": -11.05,
+            "tp": 0.69
+          },
+          "fade": {
+            "inStart": 0.1,
+            "inStop": 1.5,
+            "outStart": 212.1,
+            "outStop": 217.1
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 34466,
+              "name": "Rick Astley",
+              "various": false,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-artist-photos",
+                "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                "prefix": "f8c365f5.p.34466/"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "cutoutCover": {
+                "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+              }
+            }
+          ],
+          "albums": [
+            {
+              "id": 14599266,
+              "title": "Whenever You Need Somebody",
+              "metaType": "music",
+              "year": 1987,
+              "releaseDate": "1987-11-12T00:00:00+03:00",
+              "coverUri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+              "cover": {
+                "uri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%"
+              },
+              "ogImage": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+              "genre": "pop",
+              "trackCount": 10,
+              "likesCount": 1096,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 34466,
+                  "name": "Rick Astley",
+                  "various": false,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-artist-photos",
+                    "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                    "prefix": "f8c365f5.p.34466/"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ],
+                  "cutoutCover": {
+                    "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+                  }
+                }
+              ],
+              "labels": [
+                {
+                  "id": 43475,
+                  "name": "BMG Rights Management (UK)"
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+                609676,
+                609700
+              ],
+              "disclaimers": [
+
+              ],
+              "hasTrailer": false,
+              "trackPosition": {
+                "volume": 1,
+                "index": 4
+              }
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+          "derivedColors": {
+            "average": "#1f2f39",
+            "waveText": "#c1e7ff",
+            "miniPlayer": "#a2bccc",
+            "accent": "#7a9fb7"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+          "lyricsAvailable": true,
+          "best": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": true,
+            "hasAvailableTextLyrics": true
+          },
+          "trackSource": "OWN",
+          "specialAudioResources": [
+            "smart_preview"
+          ]
+        },
+        {
+          "id": "648043",
+          "realId": "648043",
+          "title": "The Love Has Gone",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 260930,
+          "fileSize": 0,
+          "r128": {
+            "i": -10.98,
+            "tp": 0.99
+          },
+          "fade": {
+            "inStart": 0.2,
+            "inStop": 1.5,
+            "outStart": 249.9,
+            "outStop": 254.9
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 34466,
+              "name": "Rick Astley",
+              "various": false,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-artist-photos",
+                "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                "prefix": "f8c365f5.p.34466/"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "cutoutCover": {
+                "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+              }
+            }
+          ],
+          "albums": [
+            {
+              "id": 14599266,
+              "title": "Whenever You Need Somebody",
+              "metaType": "music",
+              "year": 1987,
+              "releaseDate": "1987-11-12T00:00:00+03:00",
+              "coverUri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+              "cover": {
+                "uri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%"
+              },
+              "ogImage": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+              "genre": "pop",
+              "trackCount": 10,
+              "likesCount": 1096,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 34466,
+                  "name": "Rick Astley",
+                  "various": false,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-artist-photos",
+                    "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                    "prefix": "f8c365f5.p.34466/"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ],
+                  "cutoutCover": {
+                    "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+                  }
+                }
+              ],
+              "labels": [
+                {
+                  "id": 43475,
+                  "name": "BMG Rights Management (UK)"
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+                609676,
+                609700
+              ],
+              "disclaimers": [
+
+              ],
+              "hasTrailer": false,
+              "trackPosition": {
+                "volume": 1,
+                "index": 5
+              }
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+          "derivedColors": {
+            "average": "#1f2f39",
+            "waveText": "#c1e7ff",
+            "miniPlayer": "#a2bccc",
+            "accent": "#7a9fb7"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+          "lyricsAvailable": true,
+          "best": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": true,
+            "hasAvailableTextLyrics": true
+          },
+          "trackSource": "OWN",
+          "specialAudioResources": [
+            "smart_preview"
+          ]
+        },
+        {
+          "id": "648044",
+          "realId": "648044",
+          "title": "Don't Say Goodbye",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 250080,
+          "fileSize": 0,
+          "r128": {
+            "i": -10.0,
+            "tp": 0.86
+          },
+          "fade": {
+            "inStart": 0.4,
+            "inStop": 1.5,
+            "outStart": 242.5,
+            "outStop": 247.1
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 34466,
+              "name": "Rick Astley",
+              "various": false,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-artist-photos",
+                "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                "prefix": "f8c365f5.p.34466/"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "cutoutCover": {
+                "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+              }
+            }
+          ],
+          "albums": [
+            {
+              "id": 14599266,
+              "title": "Whenever You Need Somebody",
+              "metaType": "music",
+              "year": 1987,
+              "releaseDate": "1987-11-12T00:00:00+03:00",
+              "coverUri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+              "cover": {
+                "uri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%"
+              },
+              "ogImage": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+              "genre": "pop",
+              "trackCount": 10,
+              "likesCount": 1096,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 34466,
+                  "name": "Rick Astley",
+                  "various": false,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-artist-photos",
+                    "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                    "prefix": "f8c365f5.p.34466/"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ],
+                  "cutoutCover": {
+                    "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+                  }
+                }
+              ],
+              "labels": [
+                {
+                  "id": 43475,
+                  "name": "BMG Rights Management (UK)"
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+                609676,
+                609700
+              ],
+              "disclaimers": [
+
+              ],
+              "hasTrailer": false,
+              "trackPosition": {
+                "volume": 1,
+                "index": 6
+              }
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+          "derivedColors": {
+            "average": "#1f2f39",
+            "waveText": "#c1e7ff",
+            "miniPlayer": "#a2bccc",
+            "accent": "#7a9fb7"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+          "lyricsAvailable": true,
+          "best": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": true,
+            "hasAvailableTextLyrics": true
+          },
+          "trackSource": "OWN",
+          "specialAudioResources": [
+            "smart_preview"
+          ]
+        },
+        {
+          "id": "648045",
+          "realId": "648045",
+          "title": "Slipping Away",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 233780,
+          "fileSize": 0,
+          "r128": {
+            "i": -10.35,
+            "tp": 0.93
+          },
+          "fade": {
+            "inStart": 0.3,
+            "inStop": 1.5,
+            "outStart": 223.3,
+            "outStop": 228.3
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 34466,
+              "name": "Rick Astley",
+              "various": false,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-artist-photos",
+                "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                "prefix": "f8c365f5.p.34466/"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "cutoutCover": {
+                "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+              }
+            }
+          ],
+          "albums": [
+            {
+              "id": 14599266,
+              "title": "Whenever You Need Somebody",
+              "metaType": "music",
+              "year": 1987,
+              "releaseDate": "1987-11-12T00:00:00+03:00",
+              "coverUri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+              "cover": {
+                "uri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%"
+              },
+              "ogImage": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+              "genre": "pop",
+              "trackCount": 10,
+              "likesCount": 1096,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 34466,
+                  "name": "Rick Astley",
+                  "various": false,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-artist-photos",
+                    "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                    "prefix": "f8c365f5.p.34466/"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ],
+                  "cutoutCover": {
+                    "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+                  }
+                }
+              ],
+              "labels": [
+                {
+                  "id": 43475,
+                  "name": "BMG Rights Management (UK)"
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+                609676,
+                609700
+              ],
+              "disclaimers": [
+
+              ],
+              "hasTrailer": false,
+              "trackPosition": {
+                "volume": 1,
+                "index": 7
+              }
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+          "derivedColors": {
+            "average": "#1f2f39",
+            "waveText": "#c1e7ff",
+            "miniPlayer": "#a2bccc",
+            "accent": "#7a9fb7"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+          "lyricsAvailable": true,
+          "best": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": true,
+            "hasAvailableTextLyrics": true
+          },
+          "trackSource": "OWN",
+          "specialAudioResources": [
+            "smart_preview"
+          ]
+        },
+        {
+          "id": "648046",
+          "realId": "648046",
+          "title": "No More Looking for Love",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 194700,
+          "fileSize": 0,
+          "r128": {
+            "i": -11.18,
+            "tp": 0.78
+          },
+          "fade": {
+            "inStart": 2.2,
+            "inStop": 3.4,
+            "outStart": 186.2,
+            "outStop": 191.2
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 34466,
+              "name": "Rick Astley",
+              "various": false,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-artist-photos",
+                "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                "prefix": "f8c365f5.p.34466/"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "cutoutCover": {
+                "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+              }
+            }
+          ],
+          "albums": [
+            {
+              "id": 14599266,
+              "title": "Whenever You Need Somebody",
+              "metaType": "music",
+              "year": 1987,
+              "releaseDate": "1987-11-12T00:00:00+03:00",
+              "coverUri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+              "cover": {
+                "uri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%"
+              },
+              "ogImage": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+              "genre": "pop",
+              "trackCount": 10,
+              "likesCount": 1096,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 34466,
+                  "name": "Rick Astley",
+                  "various": false,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-artist-photos",
+                    "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                    "prefix": "f8c365f5.p.34466/"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ],
+                  "cutoutCover": {
+                    "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+                  }
+                }
+              ],
+              "labels": [
+                {
+                  "id": 43475,
+                  "name": "BMG Rights Management (UK)"
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+                609676,
+                609700
+              ],
+              "disclaimers": [
+
+              ],
+              "hasTrailer": false,
+              "trackPosition": {
+                "volume": 1,
+                "index": 8
+              }
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+          "derivedColors": {
+            "average": "#1f2f39",
+            "waveText": "#c1e7ff",
+            "miniPlayer": "#a2bccc",
+            "accent": "#7a9fb7"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+          "lyricsAvailable": true,
+          "best": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": true,
+            "hasAvailableTextLyrics": true
+          },
+          "trackSource": "OWN",
+          "specialAudioResources": [
+            "smart_preview"
+          ]
+        },
+        {
+          "id": "648047",
+          "realId": "648047",
+          "title": "You Move Me",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 223490,
+          "fileSize": 0,
+          "r128": {
+            "i": -10.69,
+            "tp": 0.81
+          },
+          "fade": {
+            "inStart": 0.2,
+            "inStop": 1.5,
+            "outStart": 214.7,
+            "outStop": 219.7
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 34466,
+              "name": "Rick Astley",
+              "various": false,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-artist-photos",
+                "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                "prefix": "f8c365f5.p.34466/"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "cutoutCover": {
+                "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+              }
+            }
+          ],
+          "albums": [
+            {
+              "id": 14599266,
+              "title": "Whenever You Need Somebody",
+              "metaType": "music",
+              "year": 1987,
+              "releaseDate": "1987-11-12T00:00:00+03:00",
+              "coverUri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+              "cover": {
+                "uri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%"
+              },
+              "ogImage": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+              "genre": "pop",
+              "trackCount": 10,
+              "likesCount": 1096,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 34466,
+                  "name": "Rick Astley",
+                  "various": false,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-artist-photos",
+                    "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                    "prefix": "f8c365f5.p.34466/"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ],
+                  "cutoutCover": {
+                    "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+                  }
+                }
+              ],
+              "labels": [
+                {
+                  "id": 43475,
+                  "name": "BMG Rights Management (UK)"
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+                609676,
+                609700
+              ],
+              "disclaimers": [
+
+              ],
+              "hasTrailer": false,
+              "trackPosition": {
+                "volume": 1,
+                "index": 9
+              }
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+          "derivedColors": {
+            "average": "#1f2f39",
+            "waveText": "#c1e7ff",
+            "miniPlayer": "#a2bccc",
+            "accent": "#7a9fb7"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+          "lyricsAvailable": true,
+          "best": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": true,
+            "hasAvailableTextLyrics": true
+          },
+          "trackSource": "OWN",
+          "specialAudioResources": [
+            "smart_preview"
+          ]
+        },
+        {
+          "id": "633410",
+          "realId": "633410",
+          "title": "When I Fall in Love",
+          "major": {
+            "id": 0,
+            "name": "-"
+          },
+          "available": true,
+          "availableForPremiumUsers": true,
+          "availableFullWithoutPermission": false,
+          "availableForOptions": [
+            "bookmate"
+          ],
+          "disclaimers": [
+
+          ],
+          "storageDir": "",
+          "durationMs": 182440,
+          "fileSize": 0,
+          "r128": {
+            "i": -14.21,
+            "tp": 0.11
+          },
+          "fade": {
+            "inStart": 0.2,
+            "inStop": 1.5,
+            "outStart": 179.6,
+            "outStop": 180.4
+          },
+          "previewDurationMs": 30000,
+          "artists": [
+            {
+              "id": 34466,
+              "name": "Rick Astley",
+              "various": false,
+              "composer": false,
+              "available": true,
+              "cover": {
+                "type": "from-artist-photos",
+                "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                "prefix": "f8c365f5.p.34466/"
+              },
+              "genres": [
+
+              ],
+              "disclaimers": [
+
+              ],
+              "cutoutCover": {
+                "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+              }
+            }
+          ],
+          "albums": [
+            {
+              "id": 14599266,
+              "title": "Whenever You Need Somebody",
+              "metaType": "music",
+              "year": 1987,
+              "releaseDate": "1987-11-12T00:00:00+03:00",
+              "coverUri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+              "cover": {
+                "uri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%"
+              },
+              "ogImage": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+              "genre": "pop",
+              "trackCount": 10,
+              "likesCount": 1096,
+              "recent": false,
+              "veryImportant": false,
+              "artists": [
+                {
+                  "id": 34466,
+                  "name": "Rick Astley",
+                  "various": false,
+                  "composer": false,
+                  "available": true,
+                  "cover": {
+                    "type": "from-artist-photos",
+                    "uri": "avatars.yandex.net/get-music-content/117546/f8c365f5.p.34466/%%",
+                    "prefix": "f8c365f5.p.34466/"
+                  },
+                  "genres": [
+
+                  ],
+                  "disclaimers": [
+
+                  ],
+                  "cutoutCover": {
+                    "uri": "avatars.yandex.net/get-music-content/17722696/fbaa3e25.c.1033739/%%"
+                  }
+                }
+              ],
+              "labels": [
+                {
+                  "id": 43475,
+                  "name": "BMG Rights Management (UK)"
+                }
+              ],
+              "available": true,
+              "availableForPremiumUsers": true,
+              "availableForOptions": [
+                "bookmate"
+              ],
+              "availableForMobile": true,
+              "availablePartially": false,
+              "bests": [
+                609676,
+                609700
+              ],
+              "disclaimers": [
+
+              ],
+              "hasTrailer": false,
+              "trackPosition": {
+                "volume": 1,
+                "index": 10
+              }
+            }
+          ],
+          "coverUri": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+          "derivedColors": {
+            "average": "#1f2f39",
+            "waveText": "#c1e7ff",
+            "miniPlayer": "#a2bccc",
+            "accent": "#7a9fb7"
+          },
+          "ogImage": "avatars.yandex.net/get-music-content/20031403/274495a5.a.14599266-4/%%",
+          "lyricsAvailable": false,
+          "best": false,
+          "type": "music",
+          "rememberPosition": false,
+          "trackSharingFlag": "COVER_ONLY",
+          "lyricsInfo": {
+            "hasAvailableSyncLyrics": true,
+            "hasAvailableTextLyrics": true
+          },
+          "trackSource": "OWN",
+          "specialAudioResources": [
+            "smart_preview"
+          ]
+        }
+      ]
+    ],
+    "pager": {
+      "page": 0,
+      "perPage": 10,
+      "total": 10
+    }
+  }
+}

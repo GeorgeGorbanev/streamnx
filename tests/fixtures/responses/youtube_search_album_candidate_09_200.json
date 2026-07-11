@@ -1,0 +1,54 @@
+{
+  "kind": "youtube#playlistListResponse",
+  "etag": "j_mZmQdNlM4xUtRr1xVM_0H0ysc",
+  "pageInfo": {
+    "totalResults": 1,
+    "resultsPerPage": 5
+  },
+  "items": [
+    {
+      "kind": "youtube#playlist",
+      "etag": "anSO5uI4aMk70_bDMdYJcUaUsPI",
+      "id": "PLgaFNC_I_ZkkyIFxmCEXnRZSp0xWwbTCU",
+      "snippet": {
+        "publishedAt": "2026-03-11T06:16:50.714331Z",
+        "channelId": "UCCh7iY0jKvjszpQFy9HykAw",
+        "title": "Rick Astley - Whenever You Need Somebody (Full Album, 1987/Album Completo)",
+        "description": "SUBSCRIBE: https://youtube.com/channel/UCCh7iY0jKvjszpQFy9HykAw\n\nRICK ASTLEY GREATEST HITS (GRANDES EXITOS)...\n\nRICK ASTLEY DISCOGRAFIA COMPLETA...\n\n\n(11 de marzo del 2026)\n\nTRACKLIST: CANCIONES: SONGS:\n\n1. Never gonna give you up\n\nAlbum Completo, Disco Completo, CD Completo, Full Album, DVD Completo, Ep Completo, Vinilo Completo, Lp completo, Vinilo, Nuevo Disco, New Album, Album De Duetos, Concierto Completo, Full Concert, OST, Original Motion Picture",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/3BFTio5296w/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/3BFTio5296w/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/3BFTio5296w/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/3BFTio5296w/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/3BFTio5296w/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Hits & Best Songs Playlist ",
+        "localized": {
+          "title": "Rick Astley - Whenever You Need Somebody (Full Album, 1987/Album Completo)",
+          "description": "SUBSCRIBE: https://youtube.com/channel/UCCh7iY0jKvjszpQFy9HykAw\n\nRICK ASTLEY GREATEST HITS (GRANDES EXITOS)...\n\nRICK ASTLEY DISCOGRAFIA COMPLETA...\n\n\n(11 de marzo del 2026)\n\nTRACKLIST: CANCIONES: SONGS:\n\n1. Never gonna give you up\n\nAlbum Completo, Disco Completo, CD Completo, Full Album, DVD Completo, Ep Completo, Vinilo Completo, Lp completo, Vinilo, Nuevo Disco, New Album, Album De Duetos, Concierto Completo, Full Concert, OST, Original Motion Picture"
+        }
+      }
+    }
+  ]
+}
+

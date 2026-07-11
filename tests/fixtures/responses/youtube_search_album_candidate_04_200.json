@@ -1,0 +1,54 @@
+{
+  "kind": "youtube#playlistListResponse",
+  "etag": "mO8QXkLpMf67e9Qv8nG_s2wJsWM",
+  "pageInfo": {
+    "totalResults": 1,
+    "resultsPerPage": 5
+  },
+  "items": [
+    {
+      "kind": "youtube#playlist",
+      "etag": "SWJi6FgDpS1Xk1SL67d_-RxCpVQ",
+      "id": "PL5l4oM-gW3urbqHYZfxdYuSFM3F7D9qCU",
+      "snippet": {
+        "publishedAt": "2022-05-22T18:05:34.02973Z",
+        "channelId": "UC3mW4qgS-GnU8RbBF91oPzw",
+        "title": "Rick Astley - Whenever You Need Somebody (Deluxe Edition - 2022 Remaster) (Album)",
+        "description": "",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/3BFTio5296w/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/3BFTio5296w/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/3BFTio5296w/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/3BFTio5296w/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/3BFTio5296w/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Denny Li",
+        "localized": {
+          "title": "Rick Astley - Whenever You Need Somebody (Deluxe Edition - 2022 Remaster) (Album)",
+          "description": ""
+        }
+      }
+    }
+  ]
+}
+

@@ -1,0 +1,1709 @@
+{
+  "collection": [
+    {
+      "artwork_url": "https://i1.sndcdn.com/artworks-keikGz8pxIhJ-0-large.jpg",
+      "caption": null,
+      "commentable": true,
+      "comment_count": 161,
+      "created_at": "2016-03-20T14:47:23Z",
+      "description": null,
+      "downloadable": false,
+      "download_count": 0,
+      "duration": 30000,
+      "full_duration": 213603,
+      "embeddable_by": "all",
+      "genre": "Pop",
+      "has_downloads_left": false,
+      "id": 253508261,
+      "kind": "track",
+      "label_name": "BMG Rights Management (UK) Ltd.",
+      "last_modified": "2026-06-12T09:50:05Z",
+      "license": "all-rights-reserved",
+      "likes_count": 9010,
+      "permalink": "never-gonna-give-you-up",
+      "permalink_url": "https://soundcloud.com/rick-astley-official/never-gonna-give-you-up",
+      "playback_count": 304527,
+      "public": true,
+      "publisher_metadata": {
+        "id": 253508261,
+        "urn": "soundcloud:tracks:253508261",
+        "artist": "Rick Astley",
+        "album_title": "Whenever You Need Somebody",
+        "contains_music": true,
+        "upc_or_ean": "00859381157694",
+        "isrc": "GBARL9300135",
+        "explicit": false,
+        "p_line": "℗ 1987 BMG Rights Management (UK) Limited",
+        "p_line_for_display": "℗ 1987 BMG Rights Management (UK) Limited",
+        "c_line": "© 1987 BMG Rights Management (UK) Limited",
+        "c_line_for_display": "© 1987 BMG Rights Management (UK) Limited",
+        "release_title": "Never Gonna Give You Up"
+      },
+      "purchase_title": null,
+      "purchase_url": null,
+      "release_date": "2026-01-28T00:00:00Z",
+      "reposts_count": 240,
+      "secret_token": null,
+      "sharing": "public",
+      "state": "finished",
+      "streamable": true,
+      "tag_list": "",
+      "title": "Never Gonna Give You Up",
+      "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A253508261",
+      "urn": "soundcloud:tracks:253508261",
+      "user_id": 207997261,
+      "visuals": null,
+      "waveform_url": "https://wave.sndcdn.com/TCZe748bkH9q_m.json",
+      "display_date": "2026-01-28T00:00:00Z",
+      "media": {
+        "transcodings": [
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:253508261/76d5370f-eaf8-4107-80e6-ffed84668dad/preview/hls",
+            "preset": "mp3_1_0",
+            "duration": 30000,
+            "snipped": true,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mpeg"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": true
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:253508261/76d5370f-eaf8-4107-80e6-ffed84668dad/preview/progressive",
+            "preset": "mp3_1_0",
+            "duration": 30000,
+            "snipped": true,
+            "format": {
+              "protocol": "progressive",
+              "mime_type": "audio/mpeg"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": true
+          }
+        ]
+      },
+      "station_urn": "soundcloud:system-playlists:track-stations:253508261",
+      "station_permalink": "track-stations:253508261",
+      "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJHRSIsInN1YiI6IiIsInJpZCI6ImE3OTQ5NmZiLWMzNDMtNDFkZC1hMmMwLTM5N2I4OGU3YzFjNiIsImlhdCI6MTc4MTI3NTc1Nn0.5XzqAWbDMf87R7BDLpuMlggak56Itui_1h6ixHroHd8",
+      "monetization_model": "NOT_APPLICABLE",
+      "policy": "SNIP",
+      "user": {
+        "avatar_url": "https://i1.sndcdn.com/avatars-lqAKKzeNtTwn7oRX-FjYl5A-large.jpg",
+        "city": null,
+        "comments_count": 0,
+        "country_code": null,
+        "created_at": null,
+        "creator_subscriptions": [
+          {
+            "product": {
+              "id": "creator-pro-unlimited"
+            }
+          }
+        ],
+        "creator_subscription": {
+          "product": {
+            "id": "creator-pro-unlimited"
+          }
+        },
+        "description": "Never: The Autobiography -  Out now 📚",
+        "followers_count": 10607,
+        "followings_count": 0,
+        "first_name": "Rick",
+        "full_name": "Rick Astley",
+        "groups_count": 0,
+        "id": 207997261,
+        "kind": "user",
+        "last_modified": "2024-10-10T10:42:06Z",
+        "last_name": "Astley",
+        "likes_count": 0,
+        "playlist_likes_count": 0,
+        "permalink": "rick-astley-official",
+        "permalink_url": "https://soundcloud.com/rick-astley-official",
+        "playlist_count": 47,
+        "reposts_count": null,
+        "track_count": 236,
+        "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A207997261",
+        "urn": "soundcloud:users:207997261",
+        "username": "Rick Astley",
+        "verified": false,
+        "visuals": {
+          "urn": "soundcloud:users:207997261",
+          "enabled": true,
+          "visuals": [
+            {
+              "urn": "soundcloud:visuals:226677981",
+              "entry_time": 0,
+              "visual_url": "https://i1.sndcdn.com/visuals-000207997261-uN8spI-original.jpg"
+            }
+          ],
+          "tracking": null
+        },
+        "badges": {
+          "pro": false,
+          "creator_mid_tier": false,
+          "pro_unlimited": true,
+          "verified": false
+        },
+        "station_urn": "soundcloud:system-playlists:artist-stations:207997261",
+        "station_permalink": "artist-stations:207997261",
+        "date_of_birth": null
+      }
+    },
+    {
+      "artwork_url": "https://i1.sndcdn.com/artworks-YE40JIgqUheZ-0-large.jpg",
+      "caption": null,
+      "commentable": true,
+      "comment_count": 48,
+      "created_at": "2022-04-24T02:28:44Z",
+      "description": null,
+      "downloadable": false,
+      "download_count": 0,
+      "duration": 30000,
+      "full_duration": 213603,
+      "embeddable_by": "all",
+      "genre": "Pop",
+      "has_downloads_left": false,
+      "id": 1255857928,
+      "kind": "track",
+      "label_name": "BMG Rights Management (UK) Ltd.",
+      "last_modified": "2026-04-10T19:56:25Z",
+      "license": "all-rights-reserved",
+      "likes_count": 3006,
+      "permalink": "never-gonna-give-you-up-2022",
+      "permalink_url": "https://soundcloud.com/rick-astley-official/never-gonna-give-you-up-2022",
+      "playback_count": 160459,
+      "public": true,
+      "publisher_metadata": {
+        "id": 1255857928,
+        "urn": "soundcloud:tracks:1255857928",
+        "artist": "Rick Astley",
+        "album_title": "Chart Toppers",
+        "contains_music": true,
+        "upc_or_ean": "04099964061888",
+        "isrc": "GB5KW2103369",
+        "explicit": false,
+        "p_line": "℗ 2022 BMG Rights Management (UK) Limited",
+        "p_line_for_display": "℗ 2022 BMG Rights Management (UK) Limited",
+        "c_line": "© 2025 BMG Rights Management (UK) Limited",
+        "c_line_for_display": "© 2025 BMG Rights Management (UK) Limited",
+        "release_title": "Never Gonna Give You Up (Remastered 2022)"
+      },
+      "purchase_title": null,
+      "purchase_url": null,
+      "release_date": "2026-01-28T00:00:00Z",
+      "reposts_count": 38,
+      "secret_token": null,
+      "sharing": "public",
+      "state": "finished",
+      "streamable": true,
+      "tag_list": "",
+      "title": "Never Gonna Give You Up (Remastered 2022)",
+      "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1255857928",
+      "urn": "soundcloud:tracks:1255857928",
+      "user_id": 207997261,
+      "visuals": null,
+      "waveform_url": "https://wave.sndcdn.com/lPtynCCXkaTL_m.json",
+      "display_date": "2026-01-28T00:00:00Z",
+      "media": {
+        "transcodings": [
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1255857928/c88301a3-7cef-4d26-a59d-a797c6575449/preview/hls",
+            "preset": "mp3_1_0",
+            "duration": 30000,
+            "snipped": true,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mpeg"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": true
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1255857928/c88301a3-7cef-4d26-a59d-a797c6575449/preview/progressive",
+            "preset": "mp3_1_0",
+            "duration": 30000,
+            "snipped": true,
+            "format": {
+              "protocol": "progressive",
+              "mime_type": "audio/mpeg"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": true
+          }
+        ]
+      },
+      "station_urn": "soundcloud:system-playlists:track-stations:1255857928",
+      "station_permalink": "track-stations:1255857928",
+      "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJHRSIsInN1YiI6IiIsInJpZCI6IjIzMDRmNWZlLTYwNTEtNDhlOS1iOTFlLWY2YmI3OGY5NGNhMCIsImlhdCI6MTc4MTI3NTc1Nn0.3ZeMDGZL4HsWMkI6FtZ0TSnZF0FPJsBS1hTrh05nQl0",
+      "monetization_model": "NOT_APPLICABLE",
+      "policy": "SNIP",
+      "user": {
+        "avatar_url": "https://i1.sndcdn.com/avatars-lqAKKzeNtTwn7oRX-FjYl5A-large.jpg",
+        "city": null,
+        "comments_count": 0,
+        "country_code": null,
+        "created_at": null,
+        "creator_subscriptions": [
+          {
+            "product": {
+              "id": "creator-pro-unlimited"
+            }
+          }
+        ],
+        "creator_subscription": {
+          "product": {
+            "id": "creator-pro-unlimited"
+          }
+        },
+        "description": "Never: The Autobiography -  Out now 📚",
+        "followers_count": 10607,
+        "followings_count": 0,
+        "first_name": "Rick",
+        "full_name": "Rick Astley",
+        "groups_count": 0,
+        "id": 207997261,
+        "kind": "user",
+        "last_modified": "2024-10-10T10:42:06Z",
+        "last_name": "Astley",
+        "likes_count": 0,
+        "playlist_likes_count": 0,
+        "permalink": "rick-astley-official",
+        "permalink_url": "https://soundcloud.com/rick-astley-official",
+        "playlist_count": 47,
+        "reposts_count": null,
+        "track_count": 236,
+        "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A207997261",
+        "urn": "soundcloud:users:207997261",
+        "username": "Rick Astley",
+        "verified": false,
+        "visuals": {
+          "urn": "soundcloud:users:207997261",
+          "enabled": true,
+          "visuals": [
+            {
+              "urn": "soundcloud:visuals:226677981",
+              "entry_time": 0,
+              "visual_url": "https://i1.sndcdn.com/visuals-000207997261-uN8spI-original.jpg"
+            }
+          ],
+          "tracking": null
+        },
+        "badges": {
+          "pro": false,
+          "creator_mid_tier": false,
+          "pro_unlimited": true,
+          "verified": false
+        },
+        "station_urn": "soundcloud:system-playlists:artist-stations:207997261",
+        "station_permalink": "artist-stations:207997261",
+        "date_of_birth": null
+      }
+    },
+    {
+      "artwork_url": "https://i1.sndcdn.com/artworks-000244572658-tgywx3-large.jpg",
+      "caption": null,
+      "commentable": true,
+      "comment_count": 3184,
+      "created_at": "2016-11-20T19:35:46Z",
+      "description": "Free download: http://thehusk.ca/gate.asp?t=404988519\n\n►Timmo Hendriks:\n@timmohendriks\nwww.facebook.com/TimmoHendriksofficial\ntwitter.com/Timmo_Hendriks\nwww.instagram.com/timmohendriks/\nwww.youtube.com/c/TimmoHendriks\nSnapchat: Timmo_Hendriks\n\nArtwork by: www.facebook.com/AkralDesign/",
+      "downloadable": false,
+      "download_count": 0,
+      "duration": 260278,
+      "full_duration": 260308,
+      "embeddable_by": "all",
+      "genre": "TIMMO HENDRIKS",
+      "has_downloads_left": false,
+      "id": 293956543,
+      "kind": "track",
+      "label_name": null,
+      "last_modified": "2022-05-18T10:26:34Z",
+      "license": "all-rights-reserved",
+      "likes_count": 23580,
+      "permalink": "never-gonna-give-you-up-remix",
+      "permalink_url": "https://soundcloud.com/timmohendriks/never-gonna-give-you-up-remix",
+      "playback_count": 551508,
+      "public": true,
+      "publisher_metadata": {
+        "id": 293956543,
+        "urn": "soundcloud:tracks:293956543"
+      },
+      "purchase_title": "FREE DOWNLOAD",
+      "purchase_url": "http://thehusk.ca/gate.asp?t=293956543",
+      "release_date": null,
+      "reposts_count": 2811,
+      "secret_token": null,
+      "sharing": "public",
+      "state": "finished",
+      "streamable": true,
+      "tag_list": "",
+      "title": "Rick Astley - Never Gonna Give You Up (Timmo Hendriks Remix)",
+      "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A293956543",
+      "urn": "soundcloud:tracks:293956543",
+      "user_id": 13673885,
+      "visuals": null,
+      "waveform_url": "https://wave.sndcdn.com/afFBluHIDO2h_m.json",
+      "display_date": "2016-11-20T19:35:46Z",
+      "media": {
+        "transcodings": [
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:293956543/93e139a6-a245-401f-8a6a-eb6ab841dfff/stream/hls",
+            "preset": "aac_160k",
+            "duration": 260278,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": false
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:293956543/ffd03f96-8140-4dc3-8dee-b8b68f2b85f0/stream/hls",
+            "preset": "aac_96k",
+            "duration": 260278,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+            },
+            "quality": "lq",
+            "is_legacy_transcoding": false
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:293956543/b2ff485f-9e94-4a6e-84d6-1dbc63bb37bb/stream/hls",
+            "preset": "abr_sq",
+            "duration": 260278,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mpegurl"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": false
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:293956543/cf741e09-1ae2-4f48-872e-84a7d5b24dcb/stream/hls",
+            "preset": "mp3_0_0",
+            "duration": 260308,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mpeg"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": true
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:293956543/cf741e09-1ae2-4f48-872e-84a7d5b24dcb/stream/progressive",
+            "preset": "mp3_0_0",
+            "duration": 260308,
+            "snipped": false,
+            "format": {
+              "protocol": "progressive",
+              "mime_type": "audio/mpeg"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": true
+          }
+        ]
+      },
+      "station_urn": "soundcloud:system-playlists:track-stations:293956543",
+      "station_permalink": "track-stations:293956543",
+      "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJHRSIsInN1YiI6IiIsInJpZCI6IiIsImlhdCI6MTc4MTI3NTc1Nn0.xihJpxUhGxybVvbnHKQNMfNG6hyNq-loh8OKLH8JGCA",
+      "monetization_model": "NOT_APPLICABLE",
+      "policy": "ALLOW",
+      "user": {
+        "avatar_url": "https://i1.sndcdn.com/avatars-FST7AebuZV1BcXkw-vtF4bw-large.jpg",
+        "city": "Haarlem",
+        "comments_count": 0,
+        "country_code": "NL",
+        "created_at": null,
+        "creator_subscriptions": [
+          {
+            "product": {
+              "id": "free"
+            }
+          }
+        ],
+        "creator_subscription": {
+          "product": {
+            "id": "free"
+          }
+        },
+        "description": "Stream my new single 'Feel It Again' ▶️ https://prot.cl/feel-it-again\n\nDutch DJ/producer Timmo Hendriks, known for his signature melodic progressive house style, signed a record deal with Nicky Romero’s Protocol Recordings back in 2018. After making his debut on the label with \"In My Head,\" Hendriks promptly followed up with \"Thinking About You\", which has currently garnered over 3.5M streams on Spotify alone.\n\nHis next releases, such as \"Magical\" with Lindequist, \"By Your Side\" with Jordan Grace, or \"Be Alright\" with Marc Benjamin, continued to show increased energy and a more mature production style, which resulted in more great collaborations such as \"Into The Light\" with Nicky Romero, \"Keep Me Close\" with Dash Berlin, \"Hold Me Down\" with Marc Benjamin, \"Remember\" with Stadiumx, along with solo single \"Something To Believe In\" and 3-track debut artist EP \"Follow You.\"\n\nBesides producing music, Hendriks has performed live across the world at for example the Melkweg and Escape in Amsterdam as well as the Ministry Of Sounds in London and a six-city tour in India. With lots of music in the pipeline, 2022 marks another year to keep Timmo Hendriks on your radar!",
+        "followers_count": 49891,
+        "followings_count": 230,
+        "first_name": "",
+        "full_name": "",
+        "groups_count": 0,
+        "id": 13673885,
+        "kind": "user",
+        "last_modified": "2026-03-10T17:09:41Z",
+        "last_name": "",
+        "likes_count": 2615,
+        "playlist_likes_count": 25,
+        "permalink": "timmohendriks",
+        "permalink_url": "https://soundcloud.com/timmohendriks",
+        "playlist_count": 0,
+        "reposts_count": null,
+        "track_count": 29,
+        "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A13673885",
+        "urn": "soundcloud:users:13673885",
+        "username": "Timmo Hendriks",
+        "verified": true,
+        "visuals": {
+          "urn": "soundcloud:users:13673885",
+          "enabled": true,
+          "visuals": [
+            {
+              "urn": "soundcloud:visuals:218380767",
+              "entry_time": 0,
+              "visual_url": "https://i1.sndcdn.com/visuals-000013673885-xoYGNC-original.jpg"
+            }
+          ],
+          "tracking": null
+        },
+        "badges": {
+          "pro": false,
+          "creator_mid_tier": false,
+          "pro_unlimited": false,
+          "verified": true
+        },
+        "station_urn": "soundcloud:system-playlists:artist-stations:13673885",
+        "station_permalink": "artist-stations:13673885",
+        "date_of_birth": null
+      }
+    },
+    {
+      "artwork_url": "https://i1.sndcdn.com/artworks-nhUhMzYnIzWgL9l7-Bu64NQ-large.jpg",
+      "caption": null,
+      "commentable": true,
+      "comment_count": 13,
+      "created_at": "2020-07-16T11:34:29Z",
+      "description": "After rickrolling some livestreams here and there, it's time to give away our bootleg of 'Never Gonna Give You Up' for free! Enjoy the Primeshock-injected bootleg of this alltime classic by Rick Astley! 🤩⚡\n\n♫ Free download: https://primeshocklive.com/music/nggyubootleg\n\nEnergy, power, entertainment; keywords that describe Primeshock on their way to the top. Devouring the Hard Dance scene with a flood of energy, their shockwave is expanding at the speed of sound!\n\nPrimeshock delivers crazy powerful sets that will pump up crowds and blow up stages. In addition they represent the best Hardstyle in their monthly Powermode Podcast, broadcasted at Q-dance Radio.\n\nPrimeshock is ready to take over the world of Hardstyle with their energy, positive vibes and powerful music. Switch into Powermode! ⚡\n\n▼ Follow Primeshock:\nwww.primeshocklive.com\nwww.primeshocklive.com/instagram\nwww.primeshocklive.com/spotify\nwww.primeshocklive.com/facebook\nwww.primeshocklive.com/soundcloud\nwww.primeshocklive.com/mixcloud\nwww.primeshocklive.com/youtube\nwww.primeshocklive.com/twitter\n\n♫ Follow the Powermode Hardstyle Playlist on Spotify!\nwww.primeshocklive.com/powermode-spotify\n\n⌁ Join our 'Primeshock | Plugged In' server on Discord!\nhttps://discord.gg/8UM2zrX",
+      "downloadable": false,
+      "download_count": 0,
+      "duration": 125542,
+      "full_duration": 125544,
+      "embeddable_by": "all",
+      "genre": "Hardstyle",
+      "has_downloads_left": false,
+      "id": 858927622,
+      "kind": "track",
+      "label_name": null,
+      "last_modified": "2020-07-20T12:56:42Z",
+      "license": "all-rights-reserved",
+      "likes_count": 1609,
+      "permalink": "rick-astley-never-gonna-give-you-up-primeshock-bootleg",
+      "permalink_url": "https://soundcloud.com/primeshocklive/rick-astley-never-gonna-give-you-up-primeshock-bootleg",
+      "playback_count": 57500,
+      "public": true,
+      "publisher_metadata": {
+        "id": 858927622,
+        "urn": "soundcloud:tracks:858927622",
+        "contains_music": true
+      },
+      "purchase_title": null,
+      "purchase_url": null,
+      "release_date": null,
+      "reposts_count": 84,
+      "secret_token": null,
+      "sharing": "public",
+      "state": "finished",
+      "streamable": true,
+      "tag_list": "Primeshock \"Never Gonna Give You Up\" \"Rick Astley\" Rickroll Hardstyle Harddance Bootleg Remix Meme QONNECT",
+      "title": "Rick Astley - Never Gonna Give You Up (Primeshock Bootleg)",
+      "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A858927622",
+      "urn": "soundcloud:tracks:858927622",
+      "user_id": 269647383,
+      "visuals": null,
+      "waveform_url": "https://wave.sndcdn.com/aJDa0I3bRyyi_m.json",
+      "display_date": "2020-07-16T11:34:29Z",
+      "media": {
+        "transcodings": [
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:858927622/755236a6-fff9-4053-8cf9-2457742ee6f6/stream/hls",
+            "preset": "aac_160k",
+            "duration": 125542,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": false
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:858927622/94138454-a42c-4050-a534-86e7f89d2c10/stream/hls",
+            "preset": "aac_96k",
+            "duration": 125542,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+            },
+            "quality": "lq",
+            "is_legacy_transcoding": false
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:858927622/5753cf38-7b27-4448-a945-faa0154c600a/stream/hls",
+            "preset": "abr_sq",
+            "duration": 125542,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mpegurl"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": false
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:858927622/23bda194-18b5-4fc4-b423-ef5607836f77/stream/hls",
+            "preset": "mp3_0_1",
+            "duration": 125544,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mpeg"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": true
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:858927622/23bda194-18b5-4fc4-b423-ef5607836f77/stream/progressive",
+            "preset": "mp3_0_1",
+            "duration": 125544,
+            "snipped": false,
+            "format": {
+              "protocol": "progressive",
+              "mime_type": "audio/mpeg"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": true
+          }
+        ]
+      },
+      "station_urn": "soundcloud:system-playlists:track-stations:858927622",
+      "station_permalink": "track-stations:858927622",
+      "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJHRSIsInN1YiI6IiIsInJpZCI6IjRlZTk2Mzc1LWJiN2MtNDNiOC1iNDY4LTFiMGIzOTQzNDYxNyIsImlhdCI6MTc4MTI3NTc1Nn0.6cjle45jS8HuWU_e5fl7plfsqAtZKp3WK2oMfCnAhlM",
+      "monetization_model": "NOT_APPLICABLE",
+      "policy": "ALLOW",
+      "user": {
+        "avatar_url": "https://i1.sndcdn.com/avatars-BzBfvSh59JGpGxmu-nr4lpg-large.jpg",
+        "city": null,
+        "comments_count": 0,
+        "country_code": "NL",
+        "created_at": null,
+        "creator_subscriptions": [
+          {
+            "product": {
+              "id": "creator-pro-unlimited"
+            }
+          }
+        ],
+        "creator_subscription": {
+          "product": {
+            "id": "creator-pro-unlimited"
+          }
+        },
+        "description": "When you think of Primeshock, you think of pure energy, explosive power, and unstoppable entertainment! This Dutch Hardstyle duo, consisting of Bart Peters & Thijs Verdegaal, is electrifying the scene with an unstoppable shockwave of high-energy, insane crowd interaction, and a signature uplifting sound.\n\nKnown for their crazy DJ performances, Primeshock redefines what it means to party! Praised for honoring the old and celebrating the new, they blend classics hits with fresh bangers, creating a rollercoaster of fun, nostalgia, and innovation. With their catchy, feel-good, and motivational tracks, they ignite dancefloors worldwide. Their Powermode Podcast is proof that they don’t just play Hardstyle: They live and breathe it. \n\nFrom festivals like Defqon.1, Mysteryland, Intents Festival, Sziget, Reverze, Electric Love Festival, and Tomorrowland to legendary clubs like Bootshaus and Fabrik Madrid, Primeshock has dominated the biggest stages, backed by support from Hardstyle’s elite names like Headhunterz, Wildstylez, Coone, and Brennan Heart. With multi-million streaming hits like Fitness Move (with Villain), Use Somebody (with Tony Junior), and Glitchfest (with Da Tweekaz), they’ve cemented themselves at the top of the game.\n\nIn 2025, Primeshock is leveling up with their first-ever album, LIFEH4CK! More than just a collection of tracks, this album is an all-out experience, complete with a vlog series taking fans behind the scenes of the creative process. LIFEH4CK is built around four chapters: CTRL (Lose Control), ALT (Alter Your Mind), DEL (Take The Lead), and ESC (Escape), each representing a different way to let go, embrace the moment, and feel the energy that Hardstyle brings. Primeshock's LIFEH4CK proves that Hardstyle isn’t just music; it’s the ultimate lifehack to feeling good!\n\nSwitch into Powermode! ⚡",
+        "followers_count": 5674,
+        "followings_count": 147,
+        "first_name": "Primeshock",
+        "full_name": "Primeshock",
+        "groups_count": 0,
+        "id": 269647383,
+        "kind": "user",
+        "last_modified": "2026-02-11T10:00:47Z",
+        "last_name": "",
+        "likes_count": 195,
+        "playlist_likes_count": 9,
+        "permalink": "primeshocklive",
+        "permalink_url": "https://soundcloud.com/primeshocklive",
+        "playlist_count": 15,
+        "reposts_count": null,
+        "track_count": 177,
+        "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A269647383",
+        "urn": "soundcloud:users:269647383",
+        "username": "Primeshock",
+        "verified": true,
+        "visuals": {
+          "urn": "soundcloud:users:269647383",
+          "enabled": true,
+          "visuals": [
+            {
+              "urn": "soundcloud:visuals:235468470",
+              "entry_time": 0,
+              "visual_url": "https://i1.sndcdn.com/visuals-000269647383-ctlF8c-original.jpg"
+            }
+          ],
+          "tracking": null
+        },
+        "badges": {
+          "pro": false,
+          "creator_mid_tier": false,
+          "pro_unlimited": true,
+          "verified": true
+        },
+        "station_urn": "soundcloud:system-playlists:artist-stations:269647383",
+        "station_permalink": "artist-stations:269647383",
+        "date_of_birth": null
+      }
+    },
+    {
+      "artwork_url": "https://i1.sndcdn.com/artworks-000196755418-x4u4ma-large.jpg",
+      "caption": null,
+      "commentable": true,
+      "comment_count": 1309,
+      "created_at": "2016-11-18T03:50:07Z",
+      "description": "BPM STUDIOS : www.facebook.com/bpmstudiospt/\nOFFICIAL FACEBOOCK : www.facebook.com/EricFariaOficial\nOFFICIAL FACEBOOCK PAGE : www.facebook.com/EricFariaOfficialPage\n\n<a href=\"https://theartistunion.com/tracks/521ebe\" rel=\"nofollow\">Download for free on The Artist Union</a>",
+      "downloadable": false,
+      "download_count": 0,
+      "duration": 389558,
+      "full_duration": 389600,
+      "embeddable_by": "all",
+      "genre": "Deep House",
+      "has_downloads_left": false,
+      "id": 293589003,
+      "kind": "track",
+      "label_name": "Bpm Studios",
+      "last_modified": "2022-06-19T07:45:00Z",
+      "license": "all-rights-reserved",
+      "likes_count": 2919,
+      "permalink": "eric-faria-oni-remix-rick-astley-never-gonna-give-you-up-out-soon",
+      "permalink_url": "https://soundcloud.com/djericfaria/eric-faria-oni-remix-rick-astley-never-gonna-give-you-up-out-soon",
+      "playback_count": 99636,
+      "public": true,
+      "publisher_metadata": {
+        "id": 293589003,
+        "urn": "soundcloud:tracks:293589003",
+        "artist": "djericfaria",
+        "contains_music": true,
+        "isrc": "QM8DG1898534"
+      },
+      "purchase_title": "Free Download",
+      "purchase_url": "https://theartistunion.com/tracks/521ebe",
+      "release_date": null,
+      "reposts_count": 1064,
+      "secret_token": null,
+      "sharing": "public",
+      "state": "finished",
+      "streamable": true,
+      "tag_list": "Eric Faria & Oni Remix - Rick Astley Never Gonna Give You Up",
+      "title": "Eric Faria & Oni Remix - Rick Astley - Never Gonna Give You Up ------FREE DOWNLOAD",
+      "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A293589003",
+      "urn": "soundcloud:tracks:293589003",
+      "user_id": 41604,
+      "visuals": null,
+      "waveform_url": "https://wave.sndcdn.com/k2uiVi57Faf0_m.json",
+      "display_date": "2016-11-18T03:50:07Z",
+      "media": {
+        "transcodings": [
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:293589003/813053e5-17cf-4fce-a49e-a86043d73be9/stream/hls",
+            "preset": "aac_160k",
+            "duration": 389558,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": false
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:293589003/eb6f896a-81fd-442a-b277-47e6beba1847/stream/hls",
+            "preset": "aac_96k",
+            "duration": 389558,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+            },
+            "quality": "lq",
+            "is_legacy_transcoding": false
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:293589003/167e8c02-adea-49d9-a2ce-c156f1155db3/stream/hls",
+            "preset": "abr_sq",
+            "duration": 389558,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mpegurl"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": false
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:293589003/b10b1a5b-6b32-4e4d-b07d-8f3c5eea9482/stream/hls",
+            "preset": "mp3_0_0",
+            "duration": 389600,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mpeg"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": true
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:293589003/b10b1a5b-6b32-4e4d-b07d-8f3c5eea9482/stream/progressive",
+            "preset": "mp3_0_0",
+            "duration": 389600,
+            "snipped": false,
+            "format": {
+              "protocol": "progressive",
+              "mime_type": "audio/mpeg"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": true
+          }
+        ]
+      },
+      "station_urn": "soundcloud:system-playlists:track-stations:293589003",
+      "station_permalink": "track-stations:293589003",
+      "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJHRSIsInN1YiI6IiIsInJpZCI6ImY2N2M4ODJlLTM3MWItNGQ0Yy1iZjkwLTBjYTk3NWVhZmY4MSIsImlhdCI6MTc4MTI3NTc1Nn0.aTWJYTaIMSeQ53_lRjgpvr9n3NSuBZk-XTc2XOv6zPQ",
+      "monetization_model": "NOT_APPLICABLE",
+      "policy": "ALLOW",
+      "user": {
+        "avatar_url": "https://i1.sndcdn.com/avatars-2r7UWJwSfRsrFBnI-GzZzPw-large.jpg",
+        "city": "Braga",
+        "comments_count": 0,
+        "country_code": "PT",
+        "created_at": null,
+        "creator_subscriptions": [
+          {
+            "product": {
+              "id": "creator-pro-unlimited"
+            }
+          }
+        ],
+        "creator_subscription": {
+          "product": {
+            "id": "creator-pro-unlimited"
+          }
+        },
+        "description": "Eric Faria – DJ & Music Producer\nBorn in Paris and living in Portugal. Active since the 90s, with over 600 releases and performances\nin several countries.\nFounder of Soul Touch Records and studio manager for more than 15 years, working in production,\nmixing, mastering, and training in DJing and music production.\nIn 2025, he reached 2nd place in Afro House and 42nd overall in Traxsource’s Best Tracks of the\nYear.\nHouse | Soulful | Deep | Afro House\nDJ | Producer | Instructor | Soul Touch Records",
+        "followers_count": 17831,
+        "followings_count": 39,
+        "first_name": "Eric",
+        "full_name": "Eric Faria",
+        "groups_count": 0,
+        "id": 41604,
+        "kind": "user",
+        "last_modified": "2026-04-24T12:20:09Z",
+        "last_name": "Faria",
+        "likes_count": 503,
+        "playlist_likes_count": 25,
+        "permalink": "djericfaria",
+        "permalink_url": "https://soundcloud.com/djericfaria",
+        "playlist_count": 1,
+        "reposts_count": null,
+        "track_count": 256,
+        "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A41604",
+        "urn": "soundcloud:users:41604",
+        "username": "Eric Faria",
+        "verified": true,
+        "visuals": {
+          "urn": "soundcloud:users:41604",
+          "enabled": true,
+          "visuals": [
+            {
+              "urn": "soundcloud:visuals:211047978",
+              "entry_time": 0,
+              "visual_url": "https://i1.sndcdn.com/visuals-000000041604-63lbTr-original.jpg"
+            }
+          ],
+          "tracking": null
+        },
+        "badges": {
+          "pro": false,
+          "creator_mid_tier": false,
+          "pro_unlimited": true,
+          "verified": true
+        },
+        "station_urn": "soundcloud:system-playlists:artist-stations:41604",
+        "station_permalink": "artist-stations:41604",
+        "date_of_birth": null
+      }
+    },
+    {
+      "artwork_url": "https://i1.sndcdn.com/artworks-5bj7WTkBvCZhtuNO-Dz8vpg-large.png",
+      "caption": null,
+      "commentable": true,
+      "comment_count": 1465,
+      "created_at": "2026-03-13T17:21:29Z",
+      "description": "",
+      "downloadable": false,
+      "download_count": 0,
+      "duration": 51194,
+      "full_duration": 51174,
+      "embeddable_by": "all",
+      "genre": "",
+      "has_downloads_left": false,
+      "id": 2283207164,
+      "kind": "track",
+      "label_name": "",
+      "last_modified": "2026-03-13T17:27:19Z",
+      "license": "all-rights-reserved",
+      "likes_count": 1654,
+      "permalink": "rick-astley-never-gonna-give-3",
+      "permalink_url": "https://soundcloud.com/lesbisousmusic2/rick-astley-never-gonna-give-3",
+      "playback_count": 12217,
+      "public": true,
+      "publisher_metadata": {
+        "id": 2283207164,
+        "urn": "soundcloud:tracks:2283207164",
+        "artist": "LES BISOUS",
+        "explicit": false
+      },
+      "purchase_title": "Free Download",
+      "purchase_url": "https://hypeddit.com/rickastley/nevergonnagiveyouuplesbisousremix",
+      "release_date": null,
+      "reposts_count": 1318,
+      "secret_token": null,
+      "sharing": "public",
+      "state": "finished",
+      "streamable": true,
+      "tag_list": "",
+      "title": "Rick Astley - Never Gonna Give You Up ( LES BISOUS REMIX ) SAMPLE FOR SOUDCLOUD",
+      "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A2283207164",
+      "urn": "soundcloud:tracks:2283207164",
+      "user_id": 1604946960,
+      "visuals": null,
+      "waveform_url": "https://wave.sndcdn.com/JDZcW0gFRuvG_m.json",
+      "display_date": "2026-03-13T17:21:29Z",
+      "media": {
+        "transcodings": [
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2283207164/7e920403-c44a-44e1-81e5-1b4e30b49383/stream/hls",
+            "preset": "aac_160k",
+            "duration": 51194,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": false
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2283207164/71b2976d-147c-4ced-bb20-28548246a864/stream/hls",
+            "preset": "aac_96k",
+            "duration": 51194,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+            },
+            "quality": "lq",
+            "is_legacy_transcoding": false
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2283207164/ddfb1594-4b63-41b3-bc42-821bcfe5cc07/stream/hls",
+            "preset": "abr_sq",
+            "duration": 51194,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mpegurl"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": false
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2283207164/cdbe0e03-b4d2-46d0-9638-a5d66d106a6e/stream/hls",
+            "preset": "mp3_1_0",
+            "duration": 51174,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mpeg"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": true
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2283207164/cdbe0e03-b4d2-46d0-9638-a5d66d106a6e/stream/progressive",
+            "preset": "mp3_1_0",
+            "duration": 51174,
+            "snipped": false,
+            "format": {
+              "protocol": "progressive",
+              "mime_type": "audio/mpeg"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": true
+          }
+        ]
+      },
+      "station_urn": "soundcloud:system-playlists:track-stations:2283207164",
+      "station_permalink": "track-stations:2283207164",
+      "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJHRSIsInN1YiI6IiIsInJpZCI6Ijg0NDY4MzRkLTQzM2YtNDk0OC05Zjg3LTEzODY5OWY0YTM1MCIsImlhdCI6MTc4MTI3NTc1Nn0.OW0pvKltd_jIqosN72ZcGb6UcoijdAGpDNLNiex3BwU",
+      "monetization_model": "NOT_APPLICABLE",
+      "policy": "ALLOW",
+      "user": {
+        "avatar_url": "https://i1.sndcdn.com/avatars-w6P04pnnDlM8LYLY-eLAuUQ-large.jpg",
+        "city": "PARIS",
+        "comments_count": 0,
+        "country_code": "FR",
+        "created_at": null,
+        "creator_subscriptions": [
+          {
+            "product": {
+              "id": "creator-pro-unlimited"
+            }
+          }
+        ],
+        "creator_subscription": {
+          "product": {
+            "id": "creator-pro-unlimited"
+          }
+        },
+        "description": "LES BISOUS is a French DJ duo made up of Rodolphe and Julien. Their meeting in a club marked\nthe beginning of a friendship and a shared passion for Disco-House, with Italo-disco and funk\ninfluences.\nSpotted thanks to their remixes on social networks, they attract the attention of Dimitri Vegas &\nLike Mike and sign a single on Smash Records. In 2020, they release *Everybody Dancing*,\nfollowed by a remix of *Shine On Me* (Praise Cats) on Subliminal Records, a classic with over 17\nmillion streams. Their collaboration with Ultra Naté, *Dangerous (Dare Me)*, quickly reached the\ntop 5 of the Armada charts, paving the way for new projects with international DJs.\nRenowned for their highly acclaimed mixes and remixes (totalling millions of listens), LES BISOUS\nare followed by artists such as Bob Sinclar, The Avener and The Shapeshifters, as well as radio\nstations such as Radio FG and Fun Radio. In demand by numerous labels and artists, they\ncontinue to impose their signature sound on the international electronic scene.",
+        "followers_count": 8786,
+        "followings_count": 11,
+        "first_name": "Les bisous",
+        "full_name": "Les bisous music",
+        "groups_count": 0,
+        "id": 1604946960,
+        "kind": "user",
+        "last_modified": "2026-05-15T06:11:22Z",
+        "last_name": "music",
+        "likes_count": 7,
+        "playlist_likes_count": 0,
+        "permalink": "lesbisousmusic2",
+        "permalink_url": "https://soundcloud.com/lesbisousmusic2",
+        "playlist_count": 0,
+        "reposts_count": null,
+        "track_count": 14,
+        "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A1604946960",
+        "urn": "soundcloud:users:1604946960",
+        "username": "LES BISOUS",
+        "verified": false,
+        "visuals": {
+          "urn": "soundcloud:users:1604946960",
+          "enabled": true,
+          "visuals": [
+            {
+              "urn": "soundcloud:visuals:250260030",
+              "entry_time": 0,
+              "visual_url": "https://i1.sndcdn.com/visuals-001604946960-6XhCnG-original.jpg"
+            }
+          ],
+          "tracking": null
+        },
+        "badges": {
+          "pro": false,
+          "creator_mid_tier": false,
+          "pro_unlimited": true,
+          "verified": false
+        },
+        "station_urn": "soundcloud:system-playlists:artist-stations:1604946960",
+        "station_permalink": "artist-stations:1604946960",
+        "date_of_birth": null
+      }
+    },
+    {
+      "artwork_url": "https://i1.sndcdn.com/artworks-P14eXXDwFuGt47fw-B1A2XA-large.png",
+      "caption": "New Remix 😎🔥 Free Download 🩵",
+      "commentable": true,
+      "comment_count": 1726,
+      "created_at": "2025-04-29T15:48:10Z",
+      "description": "Enjoy my new remix of « Never Gonna Give You Up » by Rick Astley 🩵 \n\nFREE DOWNLOAD : https://hypeddit.com/daymaan/rickastleynevergonnagiveyouupdaymaanremix\n\nMix & Mastered by @neus 📀",
+      "downloadable": false,
+      "download_count": 0,
+      "duration": 376046,
+      "full_duration": 376033,
+      "embeddable_by": "all",
+      "genre": "House",
+      "has_downloads_left": false,
+      "id": 2087172675,
+      "kind": "track",
+      "label_name": "",
+      "last_modified": "2025-04-29T15:59:07Z",
+      "license": "all-rights-reserved",
+      "likes_count": 2366,
+      "permalink": "rick-astley-never-gonna-give",
+      "permalink_url": "https://soundcloud.com/daymaan/rick-astley-never-gonna-give",
+      "playback_count": 30262,
+      "public": true,
+      "publisher_metadata": {
+        "id": 2087172675,
+        "urn": "soundcloud:tracks:2087172675",
+        "artist": "Daymaan",
+        "explicit": false
+      },
+      "purchase_title": null,
+      "purchase_url": "https://hypeddit.com/daymaan/rickastleynevergonnagiveyouupdaymaanremix",
+      "release_date": null,
+      "reposts_count": 1559,
+      "secret_token": null,
+      "sharing": "public",
+      "state": "finished",
+      "streamable": true,
+      "tag_list": "Afrohouse \"Deep House\" House",
+      "title": "Rick Astley - Never Gonna Give You Up (Daymaan Remix)",
+      "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A2087172675",
+      "urn": "soundcloud:tracks:2087172675",
+      "user_id": 1372372815,
+      "visuals": null,
+      "waveform_url": "https://wave.sndcdn.com/zsk1TQaj3tob_m.json",
+      "display_date": "2025-04-29T15:48:10Z",
+      "media": {
+        "transcodings": [
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2087172675/d5779c59-9f37-48cb-87f0-b1fb6c89920b/stream/hls",
+            "preset": "aac_160k",
+            "duration": 376046,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": false
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2087172675/394b29b0-fe60-4935-b0e0-7c2c3df70bf7/stream/hls",
+            "preset": "aac_96k",
+            "duration": 376046,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+            },
+            "quality": "lq",
+            "is_legacy_transcoding": false
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2087172675/1f59dcf9-e47f-4b32-bcd7-2a00fd0c621e/stream/hls",
+            "preset": "abr_sq",
+            "duration": 376046,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mpegurl"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": false
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2087172675/97d15ea7-dae9-4b9e-a7f9-8d81aec4f484/stream/hls",
+            "preset": "mp3_1_0",
+            "duration": 376033,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mpeg"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": true
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2087172675/97d15ea7-dae9-4b9e-a7f9-8d81aec4f484/stream/progressive",
+            "preset": "mp3_1_0",
+            "duration": 376033,
+            "snipped": false,
+            "format": {
+              "protocol": "progressive",
+              "mime_type": "audio/mpeg"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": true
+          }
+        ]
+      },
+      "station_urn": "soundcloud:system-playlists:track-stations:2087172675",
+      "station_permalink": "track-stations:2087172675",
+      "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJHRSIsInN1YiI6IiIsInJpZCI6IjkwZmIxOTc5LTNiOTEtNDc0NC05YTJlLWMzODJkOGRmZjE5MCIsImlhdCI6MTc4MTI3NTc1Nn0.ZyDfWHj9Dx8ztXtS_YKu3P0lcES-GVGxSd8kl4lXtNU",
+      "monetization_model": "NOT_APPLICABLE",
+      "policy": "ALLOW",
+      "user": {
+        "avatar_url": "https://i1.sndcdn.com/avatars-1evolyQffZ6pq60B-AMfs1g-large.jpg",
+        "city": "Paris",
+        "comments_count": 0,
+        "country_code": "FR",
+        "created_at": null,
+        "creator_subscriptions": [
+          {
+            "product": {
+              "id": "free"
+            }
+          }
+        ],
+        "creator_subscription": {
+          "product": {
+            "id": "free"
+          }
+        },
+        "description": "DJ/Producer from France 🇫🇷\n\nBooking : daymaansounds@gmail.com",
+        "followers_count": 7578,
+        "followings_count": 19,
+        "first_name": "",
+        "full_name": "",
+        "groups_count": 0,
+        "id": 1372372815,
+        "kind": "user",
+        "last_modified": "2026-04-16T14:29:48Z",
+        "last_name": "",
+        "likes_count": 15,
+        "playlist_likes_count": 0,
+        "permalink": "daymaan",
+        "permalink_url": "https://soundcloud.com/daymaan",
+        "playlist_count": 0,
+        "reposts_count": null,
+        "track_count": 1,
+        "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A1372372815",
+        "urn": "soundcloud:users:1372372815",
+        "username": "Daymaan",
+        "verified": false,
+        "visuals": {
+          "urn": "soundcloud:users:1372372815",
+          "enabled": true,
+          "visuals": [
+            {
+              "urn": "soundcloud:visuals:263957100",
+              "entry_time": 0,
+              "visual_url": "https://i1.sndcdn.com/visuals-001372372815-FqOSHv-original.jpg"
+            }
+          ],
+          "tracking": null
+        },
+        "badges": {
+          "pro": false,
+          "creator_mid_tier": false,
+          "pro_unlimited": false,
+          "verified": false
+        },
+        "station_urn": "soundcloud:system-playlists:artist-stations:1372372815",
+        "station_permalink": "artist-stations:1372372815",
+        "date_of_birth": null
+      }
+    },
+    {
+      "artwork_url": "https://i1.sndcdn.com/artworks-qAlHEW9eiQy229sC-uPjpyA-large.jpg",
+      "caption": "New track \"Rise\" out now",
+      "commentable": true,
+      "comment_count": 10,
+      "created_at": "2026-02-11T00:06:18Z",
+      "description": "Rick rolled",
+      "downloadable": true,
+      "download_count": 2,
+      "duration": 333361,
+      "full_duration": 333349,
+      "embeddable_by": "all",
+      "genre": "hardwave",
+      "has_downloads_left": true,
+      "id": 2263943714,
+      "kind": "track",
+      "label_name": "",
+      "last_modified": "2026-05-12T23:41:13Z",
+      "license": "all-rights-reserved",
+      "likes_count": 97,
+      "permalink": "rick-roll-flip",
+      "permalink_url": "https://soundcloud.com/capsounds/rick-roll-flip",
+      "playback_count": 4823,
+      "public": true,
+      "publisher_metadata": {
+        "id": 2263943714,
+        "urn": "soundcloud:tracks:2263943714",
+        "publisher": "",
+        "explicit": false,
+        "p_line": "℗ ",
+        "p_line_for_display": "℗ "
+      },
+      "purchase_title": null,
+      "purchase_url": null,
+      "release_date": null,
+      "reposts_count": 6,
+      "secret_token": null,
+      "sharing": "public",
+      "state": "finished",
+      "streamable": true,
+      "tag_list": "",
+      "title": "Never Gonna Give You Up - Rick Astley (CAP Bootleg)",
+      "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A2263943714",
+      "urn": "soundcloud:tracks:2263943714",
+      "user_id": 1054740235,
+      "visuals": null,
+      "waveform_url": "https://wave.sndcdn.com/iaDqNwqEFUEM_m.json",
+      "display_date": "2026-02-11T19:45:33Z",
+      "media": {
+        "transcodings": [
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2263943714/206b6ae4-d5ec-4cc5-b462-ab3145b558e5/stream/hls",
+            "preset": "aac_160k",
+            "duration": 333361,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": false
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2263943714/506ea0d7-9137-47f4-acbd-afa4fc1cd99b/stream/hls",
+            "preset": "aac_96k",
+            "duration": 333361,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+            },
+            "quality": "lq",
+            "is_legacy_transcoding": false
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2263943714/e3f0b2cb-d2b8-4f16-a37a-66a67772d029/stream/hls",
+            "preset": "abr_sq",
+            "duration": 333361,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mpegurl"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": false
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2263943714/5c85f40f-e66e-4052-aefd-5ddb47302f74/stream/hls",
+            "preset": "mp3_1_0",
+            "duration": 333349,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mpeg"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": true
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2263943714/5c85f40f-e66e-4052-aefd-5ddb47302f74/stream/progressive",
+            "preset": "mp3_1_0",
+            "duration": 333349,
+            "snipped": false,
+            "format": {
+              "protocol": "progressive",
+              "mime_type": "audio/mpeg"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": true
+          }
+        ]
+      },
+      "station_urn": "soundcloud:system-playlists:track-stations:2263943714",
+      "station_permalink": "track-stations:2263943714",
+      "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJHRSIsInN1YiI6IiIsInJpZCI6ImNhNTI5YTkwLWY2NTItNGE0NC1iZGQ1LWEyOGMxMTA0MjNiNCIsImlhdCI6MTc4MTI3NTc1Nn0.g-lSyUB6cl6dOMSMddaDP9-zeRM2mBOMG7qQesdxMOk",
+      "monetization_model": "NOT_APPLICABLE",
+      "policy": "ALLOW",
+      "user": {
+        "avatar_url": "https://i1.sndcdn.com/avatars-OKJRv8fSyqTuQFzT-aSCQnA-large.jpg",
+        "city": "Reno",
+        "comments_count": 0,
+        "country_code": "US",
+        "created_at": null,
+        "creator_subscriptions": [
+          {
+            "product": {
+              "id": "creator-pro-unlimited"
+            }
+          }
+        ],
+        "creator_subscription": {
+          "product": {
+            "id": "creator-pro-unlimited"
+          }
+        },
+        "description": "nightdrive vibes, but in a spaceship",
+        "followers_count": 146,
+        "followings_count": 82,
+        "first_name": "",
+        "full_name": "",
+        "groups_count": 0,
+        "id": 1054740235,
+        "kind": "user",
+        "last_modified": "2026-06-09T18:16:58Z",
+        "last_name": "",
+        "likes_count": 849,
+        "playlist_likes_count": 12,
+        "permalink": "capsounds",
+        "permalink_url": "https://soundcloud.com/capsounds",
+        "playlist_count": 6,
+        "reposts_count": null,
+        "track_count": 12,
+        "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A1054740235",
+        "urn": "soundcloud:users:1054740235",
+        "username": "CAP",
+        "verified": false,
+        "visuals": {
+          "urn": "soundcloud:users:1054740235",
+          "enabled": true,
+          "visuals": [
+            {
+              "urn": "soundcloud:visuals:259992582",
+              "entry_time": 0,
+              "visual_url": "https://i1.sndcdn.com/visuals-001054740235-IFI5fa-original.jpg"
+            }
+          ],
+          "tracking": null
+        },
+        "badges": {
+          "pro": false,
+          "creator_mid_tier": false,
+          "pro_unlimited": true,
+          "verified": false
+        },
+        "station_urn": "soundcloud:system-playlists:artist-stations:1054740235",
+        "station_permalink": "artist-stations:1054740235",
+        "date_of_birth": null
+      }
+    },
+    {
+      "artwork_url": "https://i1.sndcdn.com/artworks-QoTvqdk3kIJh1JMZ-HyyKrw-large.jpg",
+      "caption": null,
+      "commentable": true,
+      "comment_count": 519,
+      "created_at": "2021-02-17T13:28:24Z",
+      "description": "Questa traccia è monetizzabile.\nClick \"Buy/Acquista\" for FREEDOWNLOAD.\n\nFollow us//\nInstagram: www.instagram.com/damicoandvalax/\nFacebook: www.facebook.com/damicoandvalax",
+      "downloadable": false,
+      "download_count": 2,
+      "duration": 245760,
+      "full_duration": 245760,
+      "embeddable_by": "all",
+      "genre": "House",
+      "has_downloads_left": false,
+      "id": 987382330,
+      "kind": "track",
+      "label_name": null,
+      "last_modified": "2022-06-09T17:14:10Z",
+      "license": "all-rights-reserved",
+      "likes_count": 2050,
+      "permalink": "never-gonna-give-you-up-damicoandvalax-bootleg-edit-rick-astley",
+      "permalink_url": "https://soundcloud.com/damicoandvalax/never-gonna-give-you-up-damicoandvalax-bootleg-edit-rick-astley",
+      "playback_count": 42606,
+      "public": true,
+      "publisher_metadata": {
+        "id": 987382330,
+        "urn": "soundcloud:tracks:987382330",
+        "contains_music": true
+      },
+      "purchase_title": null,
+      "purchase_url": "https://hypeddit.com/track/cdca2j",
+      "release_date": null,
+      "reposts_count": 852,
+      "secret_token": null,
+      "sharing": "public",
+      "state": "finished",
+      "streamable": true,
+      "tag_list": "\"Rick Astey\" damicoandvalax DBMAFIA \"Never gonna give you up\" Remix Bootleg Edit Tech",
+      "title": "Never Gonna Give You Up (D'Amico & Valax Bootleg Edit) - Rick Astley",
+      "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A987382330",
+      "urn": "soundcloud:tracks:987382330",
+      "user_id": 585734514,
+      "visuals": null,
+      "waveform_url": "https://wave.sndcdn.com/Eh9woLmL8GkM_m.json",
+      "display_date": "2021-02-21T22:06:24Z",
+      "media": {
+        "transcodings": [
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:987382330/76855966-a27e-4570-a49f-0b70cb09cd5b/stream/hls",
+            "preset": "aac_160k",
+            "duration": 245760,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": false
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:987382330/705b2014-6bf5-4f0d-a538-4447bfa7fa04/stream/hls",
+            "preset": "aac_96k",
+            "duration": 245760,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+            },
+            "quality": "lq",
+            "is_legacy_transcoding": false
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:987382330/27aa053c-2b00-4726-b401-3dbac46f584d/stream/hls",
+            "preset": "abr_sq",
+            "duration": 245760,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mpegurl"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": false
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:987382330/9164800f-8713-43cc-be34-4379900b387c/stream/hls",
+            "preset": "mp3_0_1",
+            "duration": 245760,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mpeg"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": true
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:987382330/9164800f-8713-43cc-be34-4379900b387c/stream/progressive",
+            "preset": "mp3_0_1",
+            "duration": 245760,
+            "snipped": false,
+            "format": {
+              "protocol": "progressive",
+              "mime_type": "audio/mpeg"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": true
+          }
+        ]
+      },
+      "station_urn": "soundcloud:system-playlists:track-stations:987382330",
+      "station_permalink": "track-stations:987382330",
+      "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJHRSIsInN1YiI6IiIsInJpZCI6ImRlYWFmNjJkLWMwOWUtNDNkOS1iNmRhLTc2MDNlYjhkM2ZlYyIsImlhdCI6MTc4MTI3NTc1Nn0.ItSvp74sEa-GK1R1oWDHSaKJM-JFCH1Faju4JwkoPPQ",
+      "monetization_model": "NOT_APPLICABLE",
+      "policy": "ALLOW",
+      "user": {
+        "avatar_url": "https://i1.sndcdn.com/avatars-qX3pAw3YFy82BmV7-GTOEhQ-large.jpg",
+        "city": "",
+        "comments_count": 0,
+        "country_code": "IT",
+        "created_at": null,
+        "creator_subscriptions": [
+          {
+            "product": {
+              "id": "free"
+            }
+          }
+        ],
+        "creator_subscription": {
+          "product": {
+            "id": "free"
+          }
+        },
+        "description": "DJs & Producers 🇮🇹\n\n☛ DEMO/PROMO : \npromo.damicoandvalax@gmail.com",
+        "followers_count": 23554,
+        "followings_count": 306,
+        "first_name": "D'Amico &",
+        "full_name": "D'Amico & Valax",
+        "groups_count": 0,
+        "id": 585734514,
+        "kind": "user",
+        "last_modified": "2024-02-14T17:38:52Z",
+        "last_name": "Valax",
+        "likes_count": 433,
+        "playlist_likes_count": 26,
+        "permalink": "damicoandvalax",
+        "permalink_url": "https://soundcloud.com/damicoandvalax",
+        "playlist_count": 10,
+        "reposts_count": null,
+        "track_count": 44,
+        "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A585734514",
+        "urn": "soundcloud:users:585734514",
+        "username": "D'Amico & Valax",
+        "verified": true,
+        "visuals": {
+          "urn": "soundcloud:users:585734514",
+          "enabled": true,
+          "visuals": [
+            {
+              "urn": "soundcloud:visuals:253184238",
+              "entry_time": 0,
+              "visual_url": "https://i1.sndcdn.com/visuals-000585734514-WHxsyc-original.jpg"
+            }
+          ],
+          "tracking": null
+        },
+        "badges": {
+          "pro": false,
+          "creator_mid_tier": false,
+          "pro_unlimited": false,
+          "verified": true
+        },
+        "station_urn": "soundcloud:system-playlists:artist-stations:585734514",
+        "station_permalink": "artist-stations:585734514",
+        "date_of_birth": null
+      }
+    },
+    {
+      "artwork_url": "https://i1.sndcdn.com/artworks-000134411874-8yipeh-large.jpg",
+      "caption": null,
+      "commentable": true,
+      "comment_count": 353,
+      "created_at": "2015-10-29T23:18:44Z",
+      "description": "Check out my Spotify page for more songs! \nLink: https://open.spotify.com/artist/5ASrs5UBOQ8FAKX2cl4D7n",
+      "downloadable": true,
+      "download_count": 100,
+      "duration": 198048,
+      "full_duration": 198105,
+      "embeddable_by": "all",
+      "genre": "Pop #World",
+      "has_downloads_left": false,
+      "id": 230707340,
+      "kind": "track",
+      "label_name": "",
+      "last_modified": "2022-04-29T12:08:37Z",
+      "license": "all-rights-reserved",
+      "likes_count": 4263,
+      "permalink": "ruan-c-elias-never-gonna-give",
+      "permalink_url": "https://soundcloud.com/ruanelias/ruan-c-elias-never-gonna-give",
+      "playback_count": 355187,
+      "public": true,
+      "publisher_metadata": {
+        "id": 230707340,
+        "urn": "soundcloud:tracks:230707340"
+      },
+      "purchase_title": null,
+      "purchase_url": null,
+      "release_date": null,
+      "reposts_count": 136,
+      "secret_token": null,
+      "sharing": "public",
+      "state": "finished",
+      "streamable": true,
+      "tag_list": "",
+      "title": "Branime Studios - Never Gonna Give You Up ( Rick Astley Cover )",
+      "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A230707340",
+      "urn": "soundcloud:tracks:230707340",
+      "user_id": 3208264,
+      "visuals": null,
+      "waveform_url": "https://wave.sndcdn.com/GGTUd4fOcwiF_m.json",
+      "display_date": "2015-10-29T23:18:44Z",
+      "media": {
+        "transcodings": [
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:230707340/5ba34255-749b-4511-96c8-21e059bb729c/stream/hls",
+            "preset": "aac_160k",
+            "duration": 198048,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": false
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:230707340/db28d4a6-07ec-4d4d-95b4-0c6b68c2404f/stream/hls",
+            "preset": "aac_96k",
+            "duration": 198048,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+            },
+            "quality": "lq",
+            "is_legacy_transcoding": false
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:230707340/5de74d6c-a3c2-49de-ac00-357169f489da/stream/hls",
+            "preset": "abr_sq",
+            "duration": 198048,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mpegurl"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": false
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:230707340/bed5737b-5a1b-4bf0-94de-671f820246de/stream/hls",
+            "preset": "mp3_0_0",
+            "duration": 198105,
+            "snipped": false,
+            "format": {
+              "protocol": "hls",
+              "mime_type": "audio/mpeg"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": true
+          },
+          {
+            "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:230707340/bed5737b-5a1b-4bf0-94de-671f820246de/stream/progressive",
+            "preset": "mp3_0_0",
+            "duration": 198105,
+            "snipped": false,
+            "format": {
+              "protocol": "progressive",
+              "mime_type": "audio/mpeg"
+            },
+            "quality": "sq",
+            "is_legacy_transcoding": true
+          }
+        ]
+      },
+      "station_urn": "soundcloud:system-playlists:track-stations:230707340",
+      "station_permalink": "track-stations:230707340",
+      "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJHRSIsInN1YiI6IiIsInJpZCI6Ijc4OTY1NDUwLWRmOGUtNDJlZC1iOTU5LTE2NTgzNzc2OWI3NiIsImlhdCI6MTc4MTI3NTc1Nn0.N6Glde34UzQk_Y97nCozThAubuA0DQyGXl1b03JqSFk",
+      "monetization_model": "NOT_APPLICABLE",
+      "policy": "ALLOW",
+      "user": {
+        "avatar_url": "https://i1.sndcdn.com/avatars-000317050385-yh7arf-large.jpg",
+        "city": "São Paulo",
+        "comments_count": 0,
+        "country_code": "BR",
+        "created_at": null,
+        "creator_subscriptions": [
+          {
+            "product": {
+              "id": "free"
+            }
+          }
+        ],
+        "creator_subscription": {
+          "product": {
+            "id": "free"
+          }
+        },
+        "description": "",
+        "followers_count": 525,
+        "followings_count": 50,
+        "first_name": "Ruan",
+        "full_name": "Ruan Elias",
+        "groups_count": 0,
+        "id": 3208264,
+        "kind": "user",
+        "last_modified": "2021-10-08T22:37:51Z",
+        "last_name": "Elias",
+        "likes_count": 6,
+        "playlist_likes_count": 0,
+        "permalink": "ruanelias",
+        "permalink_url": "https://soundcloud.com/ruanelias",
+        "playlist_count": 0,
+        "reposts_count": null,
+        "track_count": 41,
+        "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A3208264",
+        "urn": "soundcloud:users:3208264",
+        "username": "Ruan Elias",
+        "verified": false,
+        "visuals": null,
+        "badges": {
+          "pro": false,
+          "creator_mid_tier": false,
+          "pro_unlimited": false,
+          "verified": false
+        },
+        "station_urn": "soundcloud:system-playlists:artist-stations:3208264",
+        "station_permalink": "artist-stations:3208264",
+        "date_of_birth": null
+      }
+    }
+  ],
+  "total_results": 4650,
+  "next_href": "https://api-v2.soundcloud.com/search/tracks?query_urn=soundcloud%3Asearch%3A82459fde99ac4fae9ad6bfdb7a385562&limit=10&offset=10&q=Rick%20Astley%20Never%20Gonna%20Give%20You%20Up",
+  "query_urn": "soundcloud:search:82459fde99ac4fae9ad6bfdb7a385562"
+}

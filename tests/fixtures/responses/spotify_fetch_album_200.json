@@ -1,0 +1,450 @@
+{
+  "album_type": "album",
+  "total_tracks": 10,
+  "available_markets": [],
+  "external_urls": {
+    "spotify": "https://open.spotify.com/album/5Z9iiGl2FcIfa3BMiv6OIw"
+  },
+  "href": "https://api.spotify.com/v1/albums/5Z9iiGl2FcIfa3BMiv6OIw",
+  "id": "5Z9iiGl2FcIfa3BMiv6OIw",
+  "images": [
+    {
+      "url": "https://i.scdn.co/image/ab67616d0000b273baf89eb11ec7c657805d2da0",
+      "height": 640,
+      "width": 640
+    },
+    {
+      "url": "https://i.scdn.co/image/ab67616d00001e02baf89eb11ec7c657805d2da0",
+      "height": 300,
+      "width": 300
+    },
+    {
+      "url": "https://i.scdn.co/image/ab67616d00004851baf89eb11ec7c657805d2da0",
+      "height": 64,
+      "width": 64
+    }
+  ],
+  "name": "Whenever You Need Somebody",
+  "release_date": "1987-11-12",
+  "release_date_precision": "day",
+  "type": "album",
+  "uri": "spotify:album:5Z9iiGl2FcIfa3BMiv6OIw",
+  "artists": [
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/0gxyHStUsqpMadRV0Di1Qt"
+      },
+      "href": "https://api.spotify.com/v1/artists/0gxyHStUsqpMadRV0Di1Qt",
+      "id": "0gxyHStUsqpMadRV0Di1Qt",
+      "name": "Rick Astley",
+      "type": "artist",
+      "uri": "spotify:artist:0gxyHStUsqpMadRV0Di1Qt"
+    }
+  ],
+  "tracks": {
+    "href": "https://api.spotify.com/v1/albums/5Z9iiGl2FcIfa3BMiv6OIw/tracks?offset=0&limit=50",
+    "limit": 50,
+    "next": null,
+    "offset": 0,
+    "previous": null,
+    "total": 10,
+    "items": [
+      {
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/0gxyHStUsqpMadRV0Di1Qt"
+            },
+            "href": "https://api.spotify.com/v1/artists/0gxyHStUsqpMadRV0Di1Qt",
+            "id": "0gxyHStUsqpMadRV0Di1Qt",
+            "name": "Rick Astley",
+            "type": "artist",
+            "uri": "spotify:artist:0gxyHStUsqpMadRV0Di1Qt"
+          }
+        ],
+        "available_markets": [],
+        "disc_number": 1,
+        "duration_ms": 213573,
+        "explicit": false,
+        "external_urls": {
+          "spotify": "https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT"
+        },
+        "href": "https://api.spotify.com/v1/tracks/4PTG3Z6ehGkBFwjybzWkR8",
+        "id": "4PTG3Z6ehGkBFwjybzWkR8",
+        "linked_from": {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT"
+          },
+          "href": "https://api.spotify.com/v1/tracks/4cOdK2wGLETKBW3PvgPWqT",
+          "id": "4cOdK2wGLETKBW3PvgPWqT",
+          "type": "track",
+          "uri": "spotify:track:4cOdK2wGLETKBW3PvgPWqT"
+        },
+        "name": "Never Gonna Give You Up",
+        "preview_url": null,
+        "track_number": 1,
+        "type": "track",
+        "uri": "spotify:track:4PTG3Z6ehGkBFwjybzWkR8",
+        "is_local": false
+      },
+      {
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/0gxyHStUsqpMadRV0Di1Qt"
+            },
+            "href": "https://api.spotify.com/v1/artists/0gxyHStUsqpMadRV0Di1Qt",
+            "id": "0gxyHStUsqpMadRV0Di1Qt",
+            "name": "Rick Astley",
+            "type": "artist",
+            "uri": "spotify:artist:0gxyHStUsqpMadRV0Di1Qt"
+          }
+        ],
+        "available_markets": [],
+        "disc_number": 1,
+        "duration_ms": 233666,
+        "explicit": false,
+        "external_urls": {
+          "spotify": "https://open.spotify.com/track/5owW7rEIdQkbL39wt0iEv8"
+        },
+        "href": "https://api.spotify.com/v1/tracks/3X4r1d2VDYjgPYjAEjbEM7",
+        "id": "3X4r1d2VDYjgPYjAEjbEM7",
+        "linked_from": {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/5owW7rEIdQkbL39wt0iEv8"
+          },
+          "href": "https://api.spotify.com/v1/tracks/5owW7rEIdQkbL39wt0iEv8",
+          "id": "5owW7rEIdQkbL39wt0iEv8",
+          "type": "track",
+          "uri": "spotify:track:5owW7rEIdQkbL39wt0iEv8"
+        },
+        "name": "Whenever You Need Somebody",
+        "preview_url": null,
+        "track_number": 2,
+        "type": "track",
+        "uri": "spotify:track:3X4r1d2VDYjgPYjAEjbEM7",
+        "is_local": false
+      },
+      {
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/0gxyHStUsqpMadRV0Di1Qt"
+            },
+            "href": "https://api.spotify.com/v1/artists/0gxyHStUsqpMadRV0Di1Qt",
+            "id": "0gxyHStUsqpMadRV0Di1Qt",
+            "name": "Rick Astley",
+            "type": "artist",
+            "uri": "spotify:artist:0gxyHStUsqpMadRV0Di1Qt"
+          }
+        ],
+        "available_markets": [],
+        "disc_number": 1,
+        "duration_ms": 205533,
+        "explicit": false,
+        "external_urls": {
+          "spotify": "https://open.spotify.com/track/5eFiEFtrq5dLgVHSZANUNl"
+        },
+        "href": "https://api.spotify.com/v1/tracks/00isIFJWVpXIQ8HkGICSQp",
+        "id": "00isIFJWVpXIQ8HkGICSQp",
+        "linked_from": {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/5eFiEFtrq5dLgVHSZANUNl"
+          },
+          "href": "https://api.spotify.com/v1/tracks/5eFiEFtrq5dLgVHSZANUNl",
+          "id": "5eFiEFtrq5dLgVHSZANUNl",
+          "type": "track",
+          "uri": "spotify:track:5eFiEFtrq5dLgVHSZANUNl"
+        },
+        "name": "Together Forever",
+        "preview_url": null,
+        "track_number": 3,
+        "type": "track",
+        "uri": "spotify:track:00isIFJWVpXIQ8HkGICSQp",
+        "is_local": false
+      },
+      {
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/0gxyHStUsqpMadRV0Di1Qt"
+            },
+            "href": "https://api.spotify.com/v1/artists/0gxyHStUsqpMadRV0Di1Qt",
+            "id": "0gxyHStUsqpMadRV0Di1Qt",
+            "name": "Rick Astley",
+            "type": "artist",
+            "uri": "spotify:artist:0gxyHStUsqpMadRV0Di1Qt"
+          }
+        ],
+        "available_markets": [],
+        "disc_number": 1,
+        "duration_ms": 220826,
+        "explicit": false,
+        "external_urls": {
+          "spotify": "https://open.spotify.com/track/1YdjBLwswLbmoK2abgdp3P"
+        },
+        "href": "https://api.spotify.com/v1/tracks/29K9hk3LXfbg12O2tH355c",
+        "id": "29K9hk3LXfbg12O2tH355c",
+        "linked_from": {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/1YdjBLwswLbmoK2abgdp3P"
+          },
+          "href": "https://api.spotify.com/v1/tracks/1YdjBLwswLbmoK2abgdp3P",
+          "id": "1YdjBLwswLbmoK2abgdp3P",
+          "type": "track",
+          "uri": "spotify:track:1YdjBLwswLbmoK2abgdp3P"
+        },
+        "name": "It Would Take a Strong Strong Man",
+        "preview_url": null,
+        "track_number": 4,
+        "type": "track",
+        "uri": "spotify:track:29K9hk3LXfbg12O2tH355c",
+        "is_local": false
+      },
+      {
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/0gxyHStUsqpMadRV0Di1Qt"
+            },
+            "href": "https://api.spotify.com/v1/artists/0gxyHStUsqpMadRV0Di1Qt",
+            "id": "0gxyHStUsqpMadRV0Di1Qt",
+            "name": "Rick Astley",
+            "type": "artist",
+            "uri": "spotify:artist:0gxyHStUsqpMadRV0Di1Qt"
+          }
+        ],
+        "available_markets": [],
+        "disc_number": 1,
+        "duration_ms": 260160,
+        "explicit": false,
+        "external_urls": {
+          "spotify": "https://open.spotify.com/track/6RFfPtZrp24dizU3Vq38EP"
+        },
+        "href": "https://api.spotify.com/v1/tracks/7DljnkkhQ9fiByyuOKZVgZ",
+        "id": "7DljnkkhQ9fiByyuOKZVgZ",
+        "linked_from": {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/6RFfPtZrp24dizU3Vq38EP"
+          },
+          "href": "https://api.spotify.com/v1/tracks/6RFfPtZrp24dizU3Vq38EP",
+          "id": "6RFfPtZrp24dizU3Vq38EP",
+          "type": "track",
+          "uri": "spotify:track:6RFfPtZrp24dizU3Vq38EP"
+        },
+        "name": "The Love Has Gone",
+        "preview_url": null,
+        "track_number": 5,
+        "type": "track",
+        "uri": "spotify:track:7DljnkkhQ9fiByyuOKZVgZ",
+        "is_local": false
+      },
+      {
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/0gxyHStUsqpMadRV0Di1Qt"
+            },
+            "href": "https://api.spotify.com/v1/artists/0gxyHStUsqpMadRV0Di1Qt",
+            "id": "0gxyHStUsqpMadRV0Di1Qt",
+            "name": "Rick Astley",
+            "type": "artist",
+            "uri": "spotify:artist:0gxyHStUsqpMadRV0Di1Qt"
+          }
+        ],
+        "available_markets": [],
+        "disc_number": 1,
+        "duration_ms": 249240,
+        "explicit": false,
+        "external_urls": {
+          "spotify": "https://open.spotify.com/track/0hTSv1xPoQ6PIJp8OMzSql"
+        },
+        "href": "https://api.spotify.com/v1/tracks/7EyrWqVQ3bAYGWPOFG6HMZ",
+        "id": "7EyrWqVQ3bAYGWPOFG6HMZ",
+        "linked_from": {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/0hTSv1xPoQ6PIJp8OMzSql"
+          },
+          "href": "https://api.spotify.com/v1/tracks/0hTSv1xPoQ6PIJp8OMzSql",
+          "id": "0hTSv1xPoQ6PIJp8OMzSql",
+          "type": "track",
+          "uri": "spotify:track:0hTSv1xPoQ6PIJp8OMzSql"
+        },
+        "name": "Don't Say Goodbye",
+        "preview_url": null,
+        "track_number": 6,
+        "type": "track",
+        "uri": "spotify:track:7EyrWqVQ3bAYGWPOFG6HMZ",
+        "is_local": false
+      },
+      {
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/0gxyHStUsqpMadRV0Di1Qt"
+            },
+            "href": "https://api.spotify.com/v1/artists/0gxyHStUsqpMadRV0Di1Qt",
+            "id": "0gxyHStUsqpMadRV0Di1Qt",
+            "name": "Rick Astley",
+            "type": "artist",
+            "uri": "spotify:artist:0gxyHStUsqpMadRV0Di1Qt"
+          }
+        ],
+        "available_markets": [],
+        "disc_number": 1,
+        "duration_ms": 232893,
+        "explicit": false,
+        "external_urls": {
+          "spotify": "https://open.spotify.com/track/3bvrkDfaPU5hELptyFqIBV"
+        },
+        "href": "https://api.spotify.com/v1/tracks/2vT7vbzj0IpWSn7u1893Cr",
+        "id": "2vT7vbzj0IpWSn7u1893Cr",
+        "linked_from": {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/3bvrkDfaPU5hELptyFqIBV"
+          },
+          "href": "https://api.spotify.com/v1/tracks/3bvrkDfaPU5hELptyFqIBV",
+          "id": "3bvrkDfaPU5hELptyFqIBV",
+          "type": "track",
+          "uri": "spotify:track:3bvrkDfaPU5hELptyFqIBV"
+        },
+        "name": "Slipping Away",
+        "preview_url": null,
+        "track_number": 7,
+        "type": "track",
+        "uri": "spotify:track:2vT7vbzj0IpWSn7u1893Cr",
+        "is_local": false
+      },
+      {
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/0gxyHStUsqpMadRV0Di1Qt"
+            },
+            "href": "https://api.spotify.com/v1/artists/0gxyHStUsqpMadRV0Di1Qt",
+            "id": "0gxyHStUsqpMadRV0Di1Qt",
+            "name": "Rick Astley",
+            "type": "artist",
+            "uri": "spotify:artist:0gxyHStUsqpMadRV0Di1Qt"
+          }
+        ],
+        "available_markets": [],
+        "disc_number": 1,
+        "duration_ms": 192800,
+        "explicit": false,
+        "external_urls": {
+          "spotify": "https://open.spotify.com/track/7ksH5cE4jUYXoTCfcrcq0H"
+        },
+        "href": "https://api.spotify.com/v1/tracks/7KzUl0WI3PPorUqwxg0tlD",
+        "id": "7KzUl0WI3PPorUqwxg0tlD",
+        "linked_from": {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/7ksH5cE4jUYXoTCfcrcq0H"
+          },
+          "href": "https://api.spotify.com/v1/tracks/7ksH5cE4jUYXoTCfcrcq0H",
+          "id": "7ksH5cE4jUYXoTCfcrcq0H",
+          "type": "track",
+          "uri": "spotify:track:7ksH5cE4jUYXoTCfcrcq0H"
+        },
+        "name": "No More Looking for Love",
+        "preview_url": null,
+        "track_number": 8,
+        "type": "track",
+        "uri": "spotify:track:7KzUl0WI3PPorUqwxg0tlD",
+        "is_local": false
+      },
+      {
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/0gxyHStUsqpMadRV0Di1Qt"
+            },
+            "href": "https://api.spotify.com/v1/artists/0gxyHStUsqpMadRV0Di1Qt",
+            "id": "0gxyHStUsqpMadRV0Di1Qt",
+            "name": "Rick Astley",
+            "type": "artist",
+            "uri": "spotify:artist:0gxyHStUsqpMadRV0Di1Qt"
+          }
+        ],
+        "available_markets": [],
+        "disc_number": 1,
+        "duration_ms": 222533,
+        "explicit": false,
+        "external_urls": {
+          "spotify": "https://open.spotify.com/track/5Su2VhRNod6YDjE65BYJy3"
+        },
+        "href": "https://api.spotify.com/v1/tracks/2H8A6GdlmOcG3iahhOmZNZ",
+        "id": "2H8A6GdlmOcG3iahhOmZNZ",
+        "linked_from": {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/5Su2VhRNod6YDjE65BYJy3"
+          },
+          "href": "https://api.spotify.com/v1/tracks/5Su2VhRNod6YDjE65BYJy3",
+          "id": "5Su2VhRNod6YDjE65BYJy3",
+          "type": "track",
+          "uri": "spotify:track:5Su2VhRNod6YDjE65BYJy3"
+        },
+        "name": "You Move Me",
+        "preview_url": null,
+        "track_number": 9,
+        "type": "track",
+        "uri": "spotify:track:2H8A6GdlmOcG3iahhOmZNZ",
+        "is_local": false
+      },
+      {
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/0gxyHStUsqpMadRV0Di1Qt"
+            },
+            "href": "https://api.spotify.com/v1/artists/0gxyHStUsqpMadRV0Di1Qt",
+            "id": "0gxyHStUsqpMadRV0Di1Qt",
+            "name": "Rick Astley",
+            "type": "artist",
+            "uri": "spotify:artist:0gxyHStUsqpMadRV0Di1Qt"
+          }
+        ],
+        "available_markets": [],
+        "disc_number": 1,
+        "duration_ms": 183026,
+        "explicit": false,
+        "external_urls": {
+          "spotify": "https://open.spotify.com/track/38kgUGexsy9l9mUMGyi8oH"
+        },
+        "href": "https://api.spotify.com/v1/tracks/7bQ3PzSOamBuf77yAfbSUc",
+        "id": "7bQ3PzSOamBuf77yAfbSUc",
+        "linked_from": {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/38kgUGexsy9l9mUMGyi8oH"
+          },
+          "href": "https://api.spotify.com/v1/tracks/38kgUGexsy9l9mUMGyi8oH",
+          "id": "38kgUGexsy9l9mUMGyi8oH",
+          "type": "track",
+          "uri": "spotify:track:38kgUGexsy9l9mUMGyi8oH"
+        },
+        "name": "When I Fall in Love",
+        "preview_url": null,
+        "track_number": 10,
+        "type": "track",
+        "uri": "spotify:track:7bQ3PzSOamBuf77yAfbSUc",
+        "is_local": false
+      }
+    ]
+  },
+  "copyrights": [
+    {
+      "text": "© 1987 BMG Rights Management (UK) Limited",
+      "type": "C"
+    },
+    {
+      "text": "℗ 1987 BMG Rights Management (UK) Limited",
+      "type": "P"
+    }
+  ],
+  "external_ids": {
+    "upc": "859381157694"
+  },
+  "genres": [],
+  "label": "BMG Rights Management (UK) Ltd",
+  "popularity": 3
+}

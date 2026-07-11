@@ -1,0 +1,63 @@
+{
+  "data": [
+    {
+      "id": 901415162,
+      "title": "Whenever You Need Somebody",
+      "link": "https://www.deezer.com/album/901415162",
+      "cover": "https://api.deezer.com/album/901415162/image",
+      "cover_small": "https://cdn-images.dzcdn.net/images/cover/07de029f6cbc9ce63d9b6064f68b7455/56x56-000000-80-0-0.jpg",
+      "cover_medium": "https://cdn-images.dzcdn.net/images/cover/07de029f6cbc9ce63d9b6064f68b7455/250x250-000000-80-0-0.jpg",
+      "cover_big": "https://cdn-images.dzcdn.net/images/cover/07de029f6cbc9ce63d9b6064f68b7455/500x500-000000-80-0-0.jpg",
+      "cover_xl": "https://cdn-images.dzcdn.net/images/cover/07de029f6cbc9ce63d9b6064f68b7455/1000x1000-000000-80-0-0.jpg",
+      "md5_image": "07de029f6cbc9ce63d9b6064f68b7455",
+      "genre_id": 132,
+      "nb_tracks": 10,
+      "record_type": "album",
+      "tracklist": "https://api.deezer.com/album/901415162/tracks",
+      "explicit_lyrics": false,
+      "artist": {
+        "id": 6160,
+        "name": "Rick Astley",
+        "link": "https://www.deezer.com/artist/6160",
+        "picture": "https://api.deezer.com/artist/6160/image",
+        "picture_small": "https://cdn-images.dzcdn.net/images/artist/6759ecf77a12ffbd9b642ce4b2c53ef0/56x56-000000-80-0-0.jpg",
+        "picture_medium": "https://cdn-images.dzcdn.net/images/artist/6759ecf77a12ffbd9b642ce4b2c53ef0/250x250-000000-80-0-0.jpg",
+        "picture_big": "https://cdn-images.dzcdn.net/images/artist/6759ecf77a12ffbd9b642ce4b2c53ef0/500x500-000000-80-0-0.jpg",
+        "picture_xl": "https://cdn-images.dzcdn.net/images/artist/6759ecf77a12ffbd9b642ce4b2c53ef0/1000x1000-000000-80-0-0.jpg",
+        "tracklist": "https://api.deezer.com/artist/6160/top?limit=50",
+        "type": "artist"
+      },
+      "type": "album"
+    },
+    {
+      "id": 909591702,
+      "title": "Whenever You Need Somebody (Deluxe Edition / Remastered 2022)",
+      "link": "https://www.deezer.com/album/909591702",
+      "cover": "https://api.deezer.com/album/909591702/image",
+      "cover_small": "https://cdn-images.dzcdn.net/images/cover/f93d54aa0c8411c092d93c65546a8f41/56x56-000000-80-0-0.jpg",
+      "cover_medium": "https://cdn-images.dzcdn.net/images/cover/f93d54aa0c8411c092d93c65546a8f41/250x250-000000-80-0-0.jpg",
+      "cover_big": "https://cdn-images.dzcdn.net/images/cover/f93d54aa0c8411c092d93c65546a8f41/500x500-000000-80-0-0.jpg",
+      "cover_xl": "https://cdn-images.dzcdn.net/images/cover/f93d54aa0c8411c092d93c65546a8f41/1000x1000-000000-80-0-0.jpg",
+      "md5_image": "f93d54aa0c8411c092d93c65546a8f41",
+      "genre_id": 132,
+      "nb_tracks": 36,
+      "record_type": "album",
+      "tracklist": "https://api.deezer.com/album/909591702/tracks",
+      "explicit_lyrics": false,
+      "artist": {
+        "id": 6160,
+        "name": "Rick Astley",
+        "link": "https://www.deezer.com/artist/6160",
+        "picture": "https://api.deezer.com/artist/6160/image",
+        "picture_small": "https://cdn-images.dzcdn.net/images/artist/6759ecf77a12ffbd9b642ce4b2c53ef0/56x56-000000-80-0-0.jpg",
+        "picture_medium": "https://cdn-images.dzcdn.net/images/artist/6759ecf77a12ffbd9b642ce4b2c53ef0/250x250-000000-80-0-0.jpg",
+        "picture_big": "https://cdn-images.dzcdn.net/images/artist/6759ecf77a12ffbd9b642ce4b2c53ef0/500x500-000000-80-0-0.jpg",
+        "picture_xl": "https://cdn-images.dzcdn.net/images/artist/6759ecf77a12ffbd9b642ce4b2c53ef0/1000x1000-000000-80-0-0.jpg",
+        "tracklist": "https://api.deezer.com/artist/6160/top?limit=50",
+        "type": "artist"
+      },
+      "type": "album"
+    }
+  ],
+  "total": 2
+}

@@ -1,0 +1,34 @@
+{
+  "kind": "youtube#playlistItemListResponse",
+  "etag": "sample-playlist-items",
+  "items": [
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "sample-first-item",
+      "id": "firstPlaylistItemID",
+      "snippet": {
+        "title": "Never Gonna Give You Up",
+        "channelTitle": "YouTube",
+        "videoOwnerChannelTitle": "Rick Astley - Topic",
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "firstVideoID"
+        }
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "sample-second-item",
+      "id": "secondPlaylistItemID",
+      "snippet": {
+        "title": "Whenever You Need Somebody",
+        "channelTitle": "YouTube",
+        "videoOwnerChannelTitle": "Rick Astley - Topic",
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "secondVideoID"
+        }
+      }
+    }
+  ]
+}

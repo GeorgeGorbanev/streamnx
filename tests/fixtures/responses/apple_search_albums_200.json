@@ -1,0 +1,2530 @@
+{
+  "results": {
+    "album": {
+      "href": "/v1/catalog/us/search?groups=album&l=en-US&limit=21&term=Rick+Astley+Whenever+You+Need+Somebody&types=activities%2Calbums%2Capple-curators%2Cartists%2Ccurators%2Ceditorial-items%2Cmusic-movies%2Cmusic-videos%2Cplaylists%2Crecord-labels%2Csongs%2Cstations%2Ctv-episodes%2Cuploaded-videos",
+      "groupId": "album",
+      "data": [
+        {
+          "id": "1612648318",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1612648318?l=en-US"
+        },
+        {
+          "id": "1624945511",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1624945511?l=en-US"
+        },
+        {
+          "id": "1559885420",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1559885420?l=en-US"
+        },
+        {
+          "id": "1773292758",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1773292758?l=en-US"
+        },
+        {
+          "id": "1485596039",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1485596039?l=en-US"
+        },
+        {
+          "id": "784225734",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/784225734?l=en-US"
+        },
+        {
+          "id": "1559523357",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1559523357?l=en-US"
+        }
+      ],
+      "name": "Albums"
+    },
+    "artist": {
+      "href": "/v1/catalog/us/search?groups=artist&l=en-US&limit=21&term=Rick+Astley+Whenever+You+Need+Somebody&types=activities%2Calbums%2Capple-curators%2Cartists%2Ccurators%2Ceditorial-items%2Cmusic-movies%2Cmusic-videos%2Cplaylists%2Crecord-labels%2Csongs%2Cstations%2Ctv-episodes%2Cuploaded-videos",
+      "groupId": "artist",
+      "data": [
+        {
+          "id": "669771",
+          "type": "artists",
+          "href": "/v1/catalog/us/artists/669771?l=en-US"
+        }
+      ],
+      "name": "Artists"
+    },
+    "music_video": {
+      "href": "/v1/catalog/us/search?groups=music_video&l=en-US&limit=21&term=Rick+Astley+Whenever+You+Need+Somebody&types=activities%2Calbums%2Capple-curators%2Cartists%2Ccurators%2Ceditorial-items%2Cmusic-movies%2Cmusic-videos%2Cplaylists%2Crecord-labels%2Csongs%2Cstations%2Ctv-episodes%2Cuploaded-videos",
+      "groupId": "music_video",
+      "data": [
+        {
+          "id": "1707960592",
+          "type": "music-videos",
+          "href": "/v1/catalog/us/music-videos/1707960592?l=en-US"
+        }
+      ],
+      "name": "Music Videos"
+    },
+    "playlist": {
+      "href": "/v1/catalog/us/search?groups=playlist&l=en-US&limit=21&term=Rick+Astley+Whenever+You+Need+Somebody&types=activities%2Calbums%2Capple-curators%2Cartists%2Ccurators%2Ceditorial-items%2Cmusic-movies%2Cmusic-videos%2Cplaylists%2Crecord-labels%2Csongs%2Cstations%2Ctv-episodes%2Cuploaded-videos",
+      "groupId": "playlist",
+      "data": [
+        {
+          "id": "pl.5f12268564fc4124a127e33d90fe525c",
+          "type": "playlists",
+          "href": "/v1/catalog/us/playlists/pl.5f12268564fc4124a127e33d90fe525c?l=en-US"
+        },
+        {
+          "id": "pl.0aaf8811bff84381b9dd4bf7836d9a47",
+          "type": "playlists",
+          "href": "/v1/catalog/us/playlists/pl.0aaf8811bff84381b9dd4bf7836d9a47?l=en-US"
+        }
+      ],
+      "name": "Playlists"
+    },
+    "song": {
+      "href": "/v1/catalog/us/search?groups=song&l=en-US&limit=21&term=Rick+Astley+Whenever+You+Need+Somebody&types=activities%2Calbums%2Capple-curators%2Cartists%2Ccurators%2Ceditorial-items%2Cmusic-movies%2Cmusic-videos%2Cplaylists%2Crecord-labels%2Csongs%2Cstations%2Ctv-episodes%2Cuploaded-videos",
+      "next": "/v1/catalog/us/search?groups=song&l=en-US&offset=21&term=Rick+Astley+Whenever+You+Need+Somebody&types=activities%2Calbums%2Capple-curators%2Cartists%2Ccurators%2Ceditorial-items%2Cmusic-movies%2Cmusic-videos%2Cplaylists%2Crecord-labels%2Csongs%2Cstations%2Ctv-episodes%2Cuploaded-videos",
+      "data": [
+        {
+          "id": "1612648320",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1612648320?l=en-US"
+        },
+        {
+          "id": "1612648430",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1612648430?l=en-US"
+        },
+        {
+          "id": "1612648432",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1612648432?l=en-US"
+        },
+        {
+          "id": "1612648435",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1612648435?l=en-US"
+        },
+        {
+          "id": "1624945513",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1624945513?l=en-US"
+        },
+        {
+          "id": "1559885422",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1559885422?l=en-US"
+        },
+        {
+          "id": "1612648425",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1612648425?l=en-US"
+        },
+        {
+          "id": "1485596042",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1485596042?l=en-US"
+        },
+        {
+          "id": "1612648439",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1612648439?l=en-US"
+        },
+        {
+          "id": "1485596524",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1485596524?l=en-US"
+        },
+        {
+          "id": "1612648476",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1612648476?l=en-US"
+        },
+        {
+          "id": "1559523362",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1559523362?l=en-US"
+        },
+        {
+          "id": "1770767786",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1770767786?l=en-US"
+        },
+        {
+          "id": "1773293185",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1773293185?l=en-US"
+        },
+        {
+          "id": "1438556849",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1438556849?l=en-US"
+        },
+        {
+          "id": "1773293597",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1773293597?l=en-US"
+        },
+        {
+          "id": "1624945512",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1624945512?l=en-US"
+        },
+        {
+          "id": "1624945514",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1624945514?l=en-US"
+        },
+        {
+          "id": "1559885423",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1559885423?l=en-US"
+        },
+        {
+          "id": "1559885421",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1559885421?l=en-US"
+        },
+        {
+          "id": "1612648319",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1612648319?l=en-US"
+        }
+      ],
+      "name": "Songs",
+      "groupId": "song"
+    },
+    "top": {
+      "groupId": "top",
+      "name": "Top Results",
+      "data": [
+        {
+          "id": "1612648318",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1612648318?l=en-US"
+        },
+        {
+          "id": "1612648320",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1612648320?l=en-US"
+        },
+        {
+          "id": "669771",
+          "type": "artists",
+          "href": "/v1/catalog/us/artists/669771?l=en-US"
+        },
+        {
+          "id": "1612648430",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1612648430?l=en-US"
+        },
+        {
+          "id": "1612648432",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1612648432?l=en-US"
+        },
+        {
+          "id": "1612648435",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1612648435?l=en-US"
+        },
+        {
+          "id": "1612648439",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1612648439?l=en-US"
+        },
+        {
+          "id": "1612648476",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1612648476?l=en-US"
+        },
+        {
+          "id": "1624945512",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1624945512?l=en-US"
+        },
+        {
+          "id": "1707960592",
+          "type": "music-videos",
+          "href": "/v1/catalog/us/music-videos/1707960592?l=en-US"
+        },
+        {
+          "id": "1624945514",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1624945514?l=en-US"
+        },
+        {
+          "id": "1559885423",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1559885423?l=en-US"
+        },
+        {
+          "id": "1612648426",
+          "type": "songs",
+          "href": "/v1/catalog/us/songs/1612648426?l=en-US"
+        },
+        {
+          "id": "1773292758",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1773292758?l=en-US"
+        },
+        {
+          "id": "1485596039",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1485596039?l=en-US"
+        },
+        {
+          "id": "784225734",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/784225734?l=en-US"
+        },
+        {
+          "id": "1559523357",
+          "type": "albums",
+          "href": "/v1/catalog/us/albums/1559523357?l=en-US"
+        },
+        {
+          "id": "pl.5f12268564fc4124a127e33d90fe525c",
+          "type": "playlists",
+          "href": "/v1/catalog/us/playlists/pl.5f12268564fc4124a127e33d90fe525c?l=en-US"
+        },
+        {
+          "id": "pl.0aaf8811bff84381b9dd4bf7836d9a47",
+          "type": "playlists",
+          "href": "/v1/catalog/us/playlists/pl.0aaf8811bff84381b9dd4bf7836d9a47?l=en-US"
+        }
+      ]
+    }
+  },
+  "resources": {
+    "albums": {
+      "1485596039": {
+        "id": "1485596039",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/1485596039?l=en-US",
+        "attributes": {
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "0f1037",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "fdd09f",
+            "textColor2": "efbd9f",
+            "textColor3": "cdaa8a",
+            "textColor4": "c29a8a",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/17/3c/cb/173ccb70-6d48-24cc-3b5a-ff41560a0fda/4050538545074.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "0f1037",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "fdd09f",
+              "textColor2": "efbd9f",
+              "textColor3": "cdaa8a",
+              "textColor4": "c29a8a",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/17/3c/cb/173ccb70-6d48-24cc-3b5a-ff41560a0fda/4050538545074.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "The Best of Me",
+          "playParams": {
+            "id": "1485596039",
+            "kind": "album"
+          },
+          "releaseDate": "2019-10-25",
+          "trackCount": 30,
+          "url": "https://music.apple.com/us/album/the-best-of-me/1485596039"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/1485596039/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1559523357": {
+        "id": "1559523357",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/1559523357?l=en-US",
+        "attributes": {
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "000a33",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f6ece8",
+            "textColor2": "ece7e6",
+            "textColor3": "c5bfc4",
+            "textColor4": "bcbbc2",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/69/5b/e3/695be316-9ddf-7262-177c-e37edd599602/0888880777768.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "000a33",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "f6ece8",
+              "textColor2": "ece7e6",
+              "textColor3": "c5bfc4",
+              "textColor4": "bcbbc2",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/69/5b/e3/695be316-9ddf-7262-177c-e37edd599602/0888880777768.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "3 Originals",
+          "playParams": {
+            "id": "1559523357",
+            "kind": "album"
+          },
+          "releaseDate": "2002-12-07",
+          "trackCount": 31,
+          "url": "https://music.apple.com/us/album/3-originals/1559523357"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/1559523357/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1559885420": {
+        "id": "1559885420",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/1559885420?l=en-US",
+        "attributes": {
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "1e1a1a",
+            "hasP3": false,
+            "height": 1500,
+            "textColor1": "f1e4d0",
+            "textColor2": "d3d9db",
+            "textColor3": "c7bbac",
+            "textColor4": "aeb3b5",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/{w}x{h}bb.{f}",
+            "width": 1500
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "1e1a1a",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "f1e4d0",
+              "textColor2": "d3d9db",
+              "textColor3": "c7bbac",
+              "textColor4": "aeb3b5",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "Whenever You Need Somebody",
+          "playParams": {
+            "id": "1559885420",
+            "kind": "album"
+          },
+          "releaseDate": "1987-11-12",
+          "trackCount": 10,
+          "url": "https://music.apple.com/us/album/whenever-you-need-somebody/1559885420"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/1559885420/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1612648318": {
+        "id": "1612648318",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/1612648318?l=en-US",
+        "attributes": {
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "282628",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f4e9e9",
+            "textColor2": "99a3d9",
+            "textColor3": "cbc2c2",
+            "textColor4": "828ab5",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/21/d3/b321d3e4-edfe-124b-d0cd-a64ad1df3290/4050538793840.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "282628",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "f4e9e9",
+              "textColor2": "99a3d9",
+              "textColor3": "cbc2c2",
+              "textColor4": "828ab5",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/21/d3/b321d3e4-edfe-124b-d0cd-a64ad1df3290/4050538793840.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
+          "playParams": {
+            "id": "1612648318",
+            "kind": "album"
+          },
+          "releaseDate": "1987-11-16",
+          "trackCount": 36,
+          "url": "https://music.apple.com/us/album/whenever-you-need-somebody-deluxe-edition-2022-remaster/1612648318"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/1612648318/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1624945511": {
+        "id": "1624945511",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/1624945511?l=en-US",
+        "attributes": {
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "211d1c",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f6ebee",
+            "textColor2": "dacde5",
+            "textColor3": "ccc2c4",
+            "textColor4": "b5aabd",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/de/eb/63/deeb63c1-7bc0-9153-cfa3-fd9e4929aacf/4050538826562.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "211d1c",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "f6ebee",
+              "textColor2": "dacde5",
+              "textColor3": "ccc2c4",
+              "textColor4": "b5aabd",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/de/eb/63/deeb63c1-7bc0-9153-cfa3-fd9e4929aacf/4050538826562.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "Whenever You Need Somebody (2022 Remaster)",
+          "playParams": {
+            "id": "1624945511",
+            "kind": "album"
+          },
+          "releaseDate": "1987-01-01",
+          "trackCount": 10,
+          "url": "https://music.apple.com/us/album/whenever-you-need-somebody-2022-remaster/1624945511"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/1624945511/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1773292758": {
+        "id": "1773292758",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/1773292758?l=en-US",
+        "attributes": {
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "808fa2",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "0b0808",
+            "textColor2": "0e0e11",
+            "textColor3": "222327",
+            "textColor4": "25282e",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/db/9e/2a/db9e2ae0-cb9f-f2a9-2774-de399dff2580/4099964133639.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "808fa2",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "0b0808",
+              "textColor2": "0e0e11",
+              "textColor3": "222327",
+              "textColor4": "25282e",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/db/9e/2a/db9e2ae0-cb9f-f2a9-2774-de399dff2580/4099964133639.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "The Best Of Me: Never Edition",
+          "playParams": {
+            "id": "1773292758",
+            "kind": "album"
+          },
+          "releaseDate": "2019-12-29",
+          "trackCount": 38,
+          "url": "https://music.apple.com/us/album/the-best-of-me-never-edition/1773292758"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/1773292758/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "784225734": {
+        "id": "784225734",
+        "type": "albums",
+        "href": "/v1/catalog/us/albums/784225734?l=en-US",
+        "attributes": {
+          "artistName": "Ameritz - Karaoke",
+          "artistUrl": "https://music.apple.com/us/artist/ameritz-karaoke/80226733",
+          "artwork": {
+            "bgColor": "ffffff",
+            "hasP3": false,
+            "height": 1500,
+            "textColor1": "2c1823",
+            "textColor2": "2f2f2f",
+            "textColor3": "56464f",
+            "textColor4": "585858",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music6/v4/8d/91/87/8d9187d0-e7c2-16ee-ce0f-87ef8e5fea95/888003796942.jpg/{w}x{h}bb.{f}",
+            "width": 1500
+          },
+          "editorialArtwork": {
+            "superHeroTall": {
+              "bgColor": "ffffff",
+              "gradient": {},
+              "hasP3": false,
+              "height": 2240,
+              "textColor1": "2c1823",
+              "textColor2": "2f2f2f",
+              "textColor3": "56464f",
+              "textColor4": "585858",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music6/v4/8d/91/87/8d9187d0-e7c2-16ee-ce0f-87ef8e5fea95/888003796942.jpg/{w}x{h}SHT.AMTPPS01.{f}?l=en-US",
+              "width": 1680
+            }
+          },
+          "name": "Whenever You Need Somebody (In the Style of Rick Astley) [Karaoke Version] - Single",
+          "playParams": {
+            "id": "784225734",
+            "kind": "album"
+          },
+          "releaseDate": "2013-11-12",
+          "trackCount": 1,
+          "url": "https://music.apple.com/us/album/whenever-you-need-somebody-in-the-style-of-rick/784225734"
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/albums/784225734/artists?l=en-US",
+            "data": [
+              {
+                "id": "80226733",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/80226733?l=en-US"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "artists": {
+      "669771": {
+        "id": "669771",
+        "type": "artists",
+        "href": "/v1/catalog/us/artists/669771?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "68171b",
+            "hasP3": true,
+            "height": 3044,
+            "textColor1": "f1a861",
+            "textColor2": "e28552",
+            "textColor3": "d58b53",
+            "textColor4": "ca6f47",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/AMCArtistImages221/v4/e4/d7/12/e4d7122b-4d7b-f34e-9127-970e4b28f68e/ami-identity-8b8a04c9a5c0e533dd02906e82f07c0f-2026-04-11T06-40-00.200Z_cropped.png/{w}x{h}bb.{f}",
+            "width": 3044
+          },
+          "name": "Rick Astley",
+          "url": "https://music.apple.com/us/artist/rick-astley/669771"
+        }
+      },
+      "80226733": {
+        "id": "80226733",
+        "type": "artists",
+        "href": "/v1/catalog/us/artists/80226733?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "1286c0",
+            "hasP3": false,
+            "height": 1500,
+            "textColor1": "0e1215",
+            "textColor2": "111415",
+            "textColor3": "0f2937",
+            "textColor4": "112b37",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music/53/bc/5d/mzi.mttgwrbr.tif/{w}x{h}ac.{f}",
+            "width": 1500
+          },
+          "name": "Ameritz - Karaoke",
+          "url": "https://music.apple.com/us/artist/ameritz-karaoke/80226733"
+        }
+      }
+    },
+    "music-videos": {
+      "1707960592": {
+        "id": "1707960592",
+        "type": "music-videos",
+        "href": "/v1/catalog/us/music-videos/1707960592?l=en-US",
+        "attributes": {
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "241e18",
+            "hasP3": false,
+            "height": 480,
+            "textColor1": "f2ecf8",
+            "textColor2": "f2def2",
+            "textColor3": "c9c3cb",
+            "textColor4": "c9b7c6",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Video116/v4/c5/94/5b/c5945bf1-3ea8-5e33-54b1-2689295e9c85/0888880502452_640.jpg/{w}x{h}{c}.{f}",
+            "width": 640
+          },
+          "durationInMillis": 207720,
+          "genreNames": [
+            "Pop"
+          ],
+          "has4K": false,
+          "hasHDR": false,
+          "isrc": "GB1108700410",
+          "name": "Whenever You Need Somebody",
+          "playParams": {
+            "id": "1707960592",
+            "kind": "musicVideo"
+          },
+          "previews": [
+            {
+              "artwork": {
+                "bgColor": "060605",
+                "hasP3": false,
+                "height": 480,
+                "textColor1": "f0e4e3",
+                "textColor2": "d1ced1",
+                "textColor3": "c1b7b6",
+                "textColor4": "a8a6a8",
+                "url": "https://is1-ssl.mzstatic.com/image/thumb/Video126/v4/a8/7a/9f/a87a9f07-1c14-a5c2-6685-e758755eb618/Job6f51eb53-c7b8-4ee4-9f47-d2dc3d3ca3dc-155864637-PreviewImage_preview_image_45000_video_sdr-Time1695090282645.png/{w}x{h}{c}.{f}",
+                "width": 640
+              },
+              "hlsUrl": "https://play-edge.itunes.apple.com/WebObjects/MZPlayLocal.woa/hls/playlist.m3u8?cc=US&a=1707960592&id=624709990&aec=HD&l=en",
+              "url": "https://video-ssl.itunes.apple.com/itunes-assets/Video116/v4/a8/da/c2/a8dac2c9-db6d-12b0-9a11-810b019bdc6f/mzvf_4450858771388996914.640x480.h264lc.U.p.m4v"
+            }
+          ],
+          "releaseDate": "2004-05-16",
+          "url": "https://music.apple.com/us/music-video/whenever-you-need-somebody/1707960592",
+          "videoTraits": []
+        },
+        "relationships": {
+          "artists": {
+            "href": "/v1/catalog/us/music-videos/1707960592/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "playlists": {
+      "pl.0aaf8811bff84381b9dd4bf7836d9a47": {
+        "id": "pl.0aaf8811bff84381b9dd4bf7836d9a47",
+        "type": "playlists",
+        "href": "/v1/catalog/us/playlists/pl.0aaf8811bff84381b9dd4bf7836d9a47?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "68171b",
+            "hasP3": false,
+            "height": 1080,
+            "textColor1": "f1a861",
+            "textColor2": "e28552",
+            "textColor3": "d58b53",
+            "textColor4": "ca6f47",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/AMCArtistImages221/v4/e4/d7/12/e4d7122b-4d7b-f34e-9127-970e4b28f68e/ami-identity-8b8a04c9a5c0e533dd02906e82f07c0f-2026-04-11T06-40-00.200Z_cropped.png/{w}x{h}SC.FPSL02.{f}?l=en-US",
+            "width": 1080
+          },
+          "audioTraits": [],
+          "curatorName": "Apple Music Pop",
+          "editorialNotes": {
+            "name": "Rick Astley's The Reflection Tour Set List"
+          },
+          "editorialPlaylistKind": "artist-franchise",
+          "editorialPlaylistSubKind": "artist-created-set-list",
+          "hasCollaboration": false,
+          "isChart": false,
+          "lastModifiedDate": "2026-04-11T06:44:46Z",
+          "name": "Rick Astley's The Reflection Tour Set List",
+          "playParams": {
+            "id": "pl.0aaf8811bff84381b9dd4bf7836d9a47",
+            "kind": "playlist",
+            "versionHash": "a8326213d5602a769c333e85e54ad005b48284a8359e50c984fb82f1f5961e14"
+          },
+          "playlistType": "editorial",
+          "supportsSing": false,
+          "url": "https://music.apple.com/us/playlist/rick-astleys-the-reflection-tour-set-list/pl.0aaf8811bff84381b9dd4bf7836d9a47"
+        }
+      },
+      "pl.5f12268564fc4124a127e33d90fe525c": {
+        "id": "pl.5f12268564fc4124a127e33d90fe525c",
+        "type": "playlists",
+        "href": "/v1/catalog/us/playlists/pl.5f12268564fc4124a127e33d90fe525c?l=en-US",
+        "attributes": {
+          "artwork": {
+            "bgColor": "68171b",
+            "hasP3": false,
+            "height": 1080,
+            "textColor1": "f1a861",
+            "textColor2": "e28552",
+            "textColor3": "d58b53",
+            "textColor4": "ca6f47",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/AMCArtistImages221/v4/e4/d7/12/e4d7122b-4d7b-f34e-9127-970e4b28f68e/ami-identity-8b8a04c9a5c0e533dd02906e82f07c0f-2026-04-11T06-40-00.200Z_cropped.png/{w}x{h}SC.FPSL02.{f}?l=en-US",
+            "width": 1080
+          },
+          "audioTraits": [],
+          "curatorName": "Apple Music Pop",
+          "editorialNotes": {
+            "name": "Rick Astley's 50 Tour Set List"
+          },
+          "editorialPlaylistKind": "artist-franchise",
+          "editorialPlaylistSubKind": "artist-created-set-list",
+          "hasCollaboration": false,
+          "isChart": false,
+          "lastModifiedDate": "2026-06-04T10:24:22Z",
+          "name": "Rick Astley's 50 Tour Set List",
+          "playParams": {
+            "id": "pl.5f12268564fc4124a127e33d90fe525c",
+            "kind": "playlist",
+            "versionHash": "26136da160ec81878695d7a4a6b1497a517d9813e02fb3c957ba04e0a46522bd"
+          },
+          "playlistType": "editorial",
+          "supportsSing": false,
+          "url": "https://music.apple.com/us/playlist/rick-astleys-50-tour-set-list/pl.5f12268564fc4124a127e33d90fe525c"
+        }
+      }
+    },
+    "songs": {
+      "1438556849": {
+        "id": "1438556849",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1438556849?l=en-US",
+        "attributes": {
+          "albumName": "The Hit Factory Ultimate Collection",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "ffffff",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "090704",
+            "textColor2": "2c2b2a",
+            "textColor3": "3a3836",
+            "textColor4": "565554",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/8c/a5/f1/8ca5f143-ee2e-49b9-3ad6-b512b88d0fbd/4050538343793.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Matt Aitken, Mike Stock & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 206160,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GBARL8700047",
+          "name": "Whenever You Need Somebody (Radio Edit)",
+          "playParams": {
+            "id": "1438556849",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/9f/fa/05/9ffa0535-54af-49d3-215e-5ac1d65d52c5/mzaf_17960852523721425021.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-11-12",
+          "trackNumber": 9,
+          "url": "https://music.apple.com/us/album/whenever-you-need-somebody-radio-edit/1438556560?i=1438556849"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1438556849/albums?l=en-US",
+            "data": [
+              {
+                "id": "1438556560",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1438556560?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1438556849/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1485596042": {
+        "id": "1485596042",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1485596042?l=en-US",
+        "attributes": {
+          "albumName": "The Best of Me",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "0f1037",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "fdd09f",
+            "textColor2": "efbd9f",
+            "textColor3": "cdaa8a",
+            "textColor4": "c29a8a",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/17/3c/cb/173ccb70-6d48-24cc-3b5a-ff41560a0fda/4050538545074.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Matt Aitken, Mike Stock & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 235480,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GBARL9300134",
+          "name": "Whenever You Need Somebody",
+          "playParams": {
+            "id": "1485596042",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/c9/37/13/c93713ab-ed0d-8a49-7e8a-24955c8aee0b/mzaf_3155938032666467738.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-10-31",
+          "trackNumber": 3,
+          "url": "https://music.apple.com/us/album/whenever-you-need-somebody/1485596039?i=1485596042"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1485596042/albums?l=en-US",
+            "data": [
+              {
+                "id": "1485596039",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1485596039?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1485596042/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1485596524": {
+        "id": "1485596524",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1485596524?l=en-US",
+        "attributes": {
+          "albumName": "The Best of Me",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "0f1037",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "fdd09f",
+            "textColor2": "efbd9f",
+            "textColor3": "cdaa8a",
+            "textColor4": "c29a8a",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/17/3c/cb/173ccb70-6d48-24cc-3b5a-ff41560a0fda/4050538545074.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Matt Aitken, Mike Stock & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 240227,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GB5KW1903179",
+          "name": "Whenever You Need Somebody (Reimagined)",
+          "playParams": {
+            "id": "1485596524",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/d3/89/e3/d389e37c-add3-5740-7d33-ea8a99f4226c/mzaf_5566560555462400499.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-11-12",
+          "trackNumber": 22,
+          "url": "https://music.apple.com/us/album/whenever-you-need-somebody-reimagined/1485596039?i=1485596524"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1485596524/albums?l=en-US",
+            "data": [
+              {
+                "id": "1485596039",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1485596039?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1485596524/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1559523362": {
+        "id": "1559523362",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1559523362?l=en-US",
+        "attributes": {
+          "albumName": "3 Originals",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "000a33",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f6ece8",
+            "textColor2": "ece7e6",
+            "textColor3": "c5bfc4",
+            "textColor4": "bcbbc2",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/69/5b/e3/695be316-9ddf-7262-177c-e37edd599602/0888880777768.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Matt Aitken, Mike Stock & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 235133,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GBARL9300134",
+          "name": "Whenever You Need Somebody",
+          "playParams": {
+            "id": "1559523362",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/b1/5c/d4/b15cd4c6-de55-2636-0352-b8d1985328bb/mzaf_8825019154573299872.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-10-31",
+          "trackNumber": 2,
+          "url": "https://music.apple.com/us/album/whenever-you-need-somebody/1559523357?i=1559523362"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1559523362/albums?l=en-US",
+            "data": [
+              {
+                "id": "1559523357",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1559523357?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1559523362/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1559885421": {
+        "id": "1559885421",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1559885421?l=en-US",
+        "attributes": {
+          "albumName": "Whenever You Need Somebody",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "1e1a1a",
+            "hasP3": false,
+            "height": 1500,
+            "textColor1": "f1e4d0",
+            "textColor2": "d3d9db",
+            "textColor3": "c7bbac",
+            "textColor4": "aeb3b5",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/{w}x{h}bb.{f}",
+            "width": 1500
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 213573,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GBARL9300135",
+          "name": "Never Gonna Give You Up",
+          "playParams": {
+            "id": "1559885421",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/3a/d6/9a/3ad69a5b-1fdc-c0ca-069b-541cef78e9d6/mzaf_11103729100333690294.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-07-27",
+          "trackNumber": 1,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up/1559885420?i=1559885421"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1559885421/albums?l=en-US",
+            "data": [
+              {
+                "id": "1559885420",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1559885420?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1559885421/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1559885422": {
+        "id": "1559885422",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1559885422?l=en-US",
+        "attributes": {
+          "albumName": "Whenever You Need Somebody",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "1e1a1a",
+            "hasP3": false,
+            "height": 1500,
+            "textColor1": "f1e4d0",
+            "textColor2": "d3d9db",
+            "textColor3": "c7bbac",
+            "textColor4": "aeb3b5",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/{w}x{h}bb.{f}",
+            "width": 1500
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Matt Aitken, Mike Stock & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 233667,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GBARL9300134",
+          "name": "Whenever You Need Somebody",
+          "playParams": {
+            "id": "1559885422",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/75/4d/5a/754d5a1a-dca5-04eb-4e8f-f374757e5600/mzaf_3231355820899018251.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-10-31",
+          "trackNumber": 2,
+          "url": "https://music.apple.com/us/album/whenever-you-need-somebody/1559885420?i=1559885422"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1559885422/albums?l=en-US",
+            "data": [
+              {
+                "id": "1559885420",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1559885420?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1559885422/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1559885423": {
+        "id": "1559885423",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1559885423?l=en-US",
+        "attributes": {
+          "albumName": "Whenever You Need Somebody",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "1e1a1a",
+            "hasP3": false,
+            "height": 1500,
+            "textColor1": "f1e4d0",
+            "textColor2": "d3d9db",
+            "textColor3": "c7bbac",
+            "textColor4": "aeb3b5",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/{w}x{h}bb.{f}",
+            "width": 1500
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 205533,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GBARL9300136",
+          "name": "Together Forever",
+          "playParams": {
+            "id": "1559885423",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/e0/97/f6/e097f6e2-edda-e229-7620-d3c2ca27fa88/mzaf_5701848339442682038.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-11-13",
+          "trackNumber": 3,
+          "url": "https://music.apple.com/us/album/together-forever/1559885420?i=1559885423"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1559885423/albums?l=en-US",
+            "data": [
+              {
+                "id": "1559885420",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1559885420?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1559885423/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1612648319": {
+        "id": "1612648319",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1612648319?l=en-US",
+        "attributes": {
+          "albumName": "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "282628",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f4e9e9",
+            "textColor2": "99a3d9",
+            "textColor3": "cbc2c2",
+            "textColor4": "828ab5",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/21/d3/b321d3e4-edfe-124b-d0cd-a64ad1df3290/4050538793840.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 213560,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GB5KW2103369",
+          "name": "Never Gonna Give You Up (2022 Remaster)",
+          "playParams": {
+            "id": "1612648319",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/48/8f/a4/488fa4b5-b606-71ee-572e-691f840503c8/mzaf_17729039194440787513.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-07-27",
+          "trackNumber": 1,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-2022-remaster/1612648318?i=1612648319"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1612648319/albums?l=en-US",
+            "data": [
+              {
+                "id": "1612648318",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1612648318?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1612648319/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1612648320": {
+        "id": "1612648320",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1612648320?l=en-US",
+        "attributes": {
+          "albumName": "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "282628",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f4e9e9",
+            "textColor2": "99a3d9",
+            "textColor3": "cbc2c2",
+            "textColor4": "828ab5",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/21/d3/b321d3e4-edfe-124b-d0cd-a64ad1df3290/4050538793840.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Matt Aitken, Mike Stock & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 233413,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GB5KW2103370",
+          "name": "Whenever You Need Somebody (2022 Remaster)",
+          "playParams": {
+            "id": "1612648320",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/d9/94/40/d9944089-341c-c703-4db5-b298b6ca37df/mzaf_1724275334134767751.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-10-31",
+          "trackNumber": 2,
+          "url": "https://music.apple.com/us/album/whenever-you-need-somebody-2022-remaster/1612648318?i=1612648320"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1612648320/albums?l=en-US",
+            "data": [
+              {
+                "id": "1612648318",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1612648318?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1612648320/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1612648425": {
+        "id": "1612648425",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1612648425?l=en-US",
+        "attributes": {
+          "albumName": "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "282628",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f4e9e9",
+            "textColor2": "99a3d9",
+            "textColor3": "cbc2c2",
+            "textColor4": "828ab5",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/21/d3/b321d3e4-edfe-124b-d0cd-a64ad1df3290/4050538793840.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Matt Aitken, Mike Stock & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 240227,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GB5KW1903179",
+          "name": "Whenever You Need Somebody (Reimagined)",
+          "playParams": {
+            "id": "1612648425",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/57/d6/5b/57d65b75-3150-5020-d627-e203039df294/mzaf_14478805931189164423.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-11-12",
+          "trackNumber": 16,
+          "url": "https://music.apple.com/us/album/whenever-you-need-somebody-reimagined/1612648318?i=1612648425"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1612648425/albums?l=en-US",
+            "data": [
+              {
+                "id": "1612648318",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1612648318?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1612648425/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1612648426": {
+        "id": "1612648426",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1612648426?l=en-US",
+        "attributes": {
+          "albumName": "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "282628",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f4e9e9",
+            "textColor2": "99a3d9",
+            "textColor3": "cbc2c2",
+            "textColor4": "828ab5",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/21/d3/b321d3e4-edfe-124b-d0cd-a64ad1df3290/4050538793840.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Victor Young",
+          "discNumber": 1,
+          "durationInMillis": 217880,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GB5KW1903180",
+          "name": "When I Fall in Love (Reimagined)",
+          "playParams": {
+            "id": "1612648426",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/78/01/f7/7801f75d-98fa-5b69-7092-68ba7ec582a8/mzaf_4891105684460539629.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-01-01",
+          "trackNumber": 17,
+          "url": "https://music.apple.com/us/album/when-i-fall-in-love-reimagined/1612648318?i=1612648426"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1612648426/albums?l=en-US",
+            "data": [
+              {
+                "id": "1612648318",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1612648318?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1612648426/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1612648430": {
+        "id": "1612648430",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1612648430?l=en-US",
+        "attributes": {
+          "albumName": "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "282628",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f4e9e9",
+            "textColor2": "99a3d9",
+            "textColor3": "cbc2c2",
+            "textColor4": "828ab5",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/21/d3/b321d3e4-edfe-124b-d0cd-a64ad1df3290/4050538793840.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Matt Aitken, Mike Stock & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 206147,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GBARL8700047",
+          "name": "Whenever You Need Somebody (Radio Edit)",
+          "playParams": {
+            "id": "1612648430",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/83/db/f9/83dbf91e-4927-9a0a-ed85-bbfdc0e1b6b5/mzaf_17855610689540687285.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-11-12",
+          "trackNumber": 20,
+          "url": "https://music.apple.com/us/album/whenever-you-need-somebody-radio-edit/1612648318?i=1612648430"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1612648430/albums?l=en-US",
+            "data": [
+              {
+                "id": "1612648318",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1612648318?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1612648430/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1612648432": {
+        "id": "1612648432",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1612648432?l=en-US",
+        "attributes": {
+          "albumName": "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "282628",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f4e9e9",
+            "textColor2": "99a3d9",
+            "textColor3": "cbc2c2",
+            "textColor4": "828ab5",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/21/d3/b321d3e4-edfe-124b-d0cd-a64ad1df3290/4050538793840.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "zxx",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Matt Aitken, Mike Stock & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 279627,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": false,
+          "hasTimeSyncedLyrics": false,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": false,
+          "isrc": "GBARL1000085",
+          "name": "Whenever You Need Somebody (XK150 Mix)",
+          "playParams": {
+            "id": "1612648432",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/fd/bc/c6/fdbcc69f-31dc-d9a5-a7f6-336c89ace5f5/mzaf_15285829180616332992.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-11-12",
+          "trackNumber": 22,
+          "url": "https://music.apple.com/us/album/whenever-you-need-somebody-xk150-mix/1612648318?i=1612648432"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1612648432/albums?l=en-US",
+            "data": [
+              {
+                "id": "1612648318",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1612648318?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1612648432/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1612648435": {
+        "id": "1612648435",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1612648435?l=en-US",
+        "attributes": {
+          "albumName": "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "282628",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f4e9e9",
+            "textColor2": "99a3d9",
+            "textColor3": "cbc2c2",
+            "textColor4": "828ab5",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/21/d3/b321d3e4-edfe-124b-d0cd-a64ad1df3290/4050538793840.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Matt Aitken, Mike Stock & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 454600,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GBARL0901345",
+          "name": "Whenever You Need Somebody (Lonely Hearts Mix)",
+          "playParams": {
+            "id": "1612648435",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/64/a0/56/64a0566b-87bd-bd63-37e0-0170eef12523/mzaf_12488916176495734776.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-11-12",
+          "trackNumber": 25,
+          "url": "https://music.apple.com/us/album/whenever-you-need-somebody-lonely-hearts-mix/1612648318?i=1612648435"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1612648435/albums?l=en-US",
+            "data": [
+              {
+                "id": "1612648318",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1612648318?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1612648435/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1612648439": {
+        "id": "1612648439",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1612648439?l=en-US",
+        "attributes": {
+          "albumName": "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "282628",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f4e9e9",
+            "textColor2": "99a3d9",
+            "textColor3": "cbc2c2",
+            "textColor4": "828ab5",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/21/d3/b321d3e4-edfe-124b-d0cd-a64ad1df3290/4050538793840.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Matt Aitken, Mike Stock & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 474880,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GBARL0401365",
+          "name": "Whenever You Need Somebody (Rick Sets It Off Mix)",
+          "playParams": {
+            "id": "1612648439",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/49/7e/23/497e2391-fab1-e7ce-197e-c50df525c537/mzaf_3684578527695910514.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-11-12",
+          "trackNumber": 29,
+          "url": "https://music.apple.com/us/album/whenever-you-need-somebody-rick-sets-it-off-mix/1612648318?i=1612648439"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1612648439/albums?l=en-US",
+            "data": [
+              {
+                "id": "1612648318",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1612648318?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1612648439/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1612648476": {
+        "id": "1612648476",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1612648476?l=en-US",
+        "attributes": {
+          "albumName": "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "282628",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f4e9e9",
+            "textColor2": "99a3d9",
+            "textColor3": "cbc2c2",
+            "textColor4": "828ab5",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/21/d3/b321d3e4-edfe-124b-d0cd-a64ad1df3290/4050538793840.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "zxx",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Matt Aitken, Mike Stock & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 232120,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": false,
+          "hasTimeSyncedLyrics": false,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": false,
+          "isrc": "GBARL0901346",
+          "name": "Whenever You Need Somebody (Instrumental)",
+          "playParams": {
+            "id": "1612648476",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/77/d0/43/77d043f1-bf5b-97cf-4770-54d6fff0490b/mzaf_16265570644670668525.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-11-12",
+          "trackNumber": 36,
+          "url": "https://music.apple.com/us/album/whenever-you-need-somebody-instrumental/1612648318?i=1612648476"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1612648476/albums?l=en-US",
+            "data": [
+              {
+                "id": "1612648318",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1612648318?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1612648476/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1624945512": {
+        "id": "1624945512",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1624945512?l=en-US",
+        "attributes": {
+          "albumName": "Whenever You Need Somebody (2022 Remaster)",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "211d1c",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f6ebee",
+            "textColor2": "dacde5",
+            "textColor3": "ccc2c4",
+            "textColor4": "b5aabd",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/de/eb/63/deeb63c1-7bc0-9153-cfa3-fd9e4929aacf/4050538826562.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "hi-res-lossless",
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 213560,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GB5KW2202504",
+          "name": "Never Gonna Give You Up (2022 Remaster)",
+          "playParams": {
+            "id": "1624945512",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/b0/d8/aa/b0d8aa8e-1a38-6287-508d-27693174249e/mzaf_13677213744690699536.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-01-01",
+          "trackNumber": 1,
+          "url": "https://music.apple.com/us/album/never-gonna-give-you-up-2022-remaster/1624945511?i=1624945512"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1624945512/albums?l=en-US",
+            "data": [
+              {
+                "id": "1624945511",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1624945511?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1624945512/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1624945513": {
+        "id": "1624945513",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1624945513?l=en-US",
+        "attributes": {
+          "albumName": "Whenever You Need Somebody (2022 Remaster)",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "211d1c",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f6ebee",
+            "textColor2": "dacde5",
+            "textColor3": "ccc2c4",
+            "textColor4": "b5aabd",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/de/eb/63/deeb63c1-7bc0-9153-cfa3-fd9e4929aacf/4050538826562.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "hi-res-lossless",
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Matt Aitken, Mike Stock & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 233413,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GB5KW2202505",
+          "name": "Whenever You Need Somebody (2022 Remaster)",
+          "playParams": {
+            "id": "1624945513",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/38/aa/8e/38aa8e65-6539-0c38-20e8-40b2923e6103/mzaf_4371237515906860586.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-10-31",
+          "trackNumber": 2,
+          "url": "https://music.apple.com/us/album/whenever-you-need-somebody-2022-remaster/1624945511?i=1624945513"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1624945513/albums?l=en-US",
+            "data": [
+              {
+                "id": "1624945511",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1624945511?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1624945513/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1624945514": {
+        "id": "1624945514",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1624945514?l=en-US",
+        "attributes": {
+          "albumName": "Whenever You Need Somebody (2022 Remaster)",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "211d1c",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "f6ebee",
+            "textColor2": "dacde5",
+            "textColor3": "ccc2c4",
+            "textColor4": "b5aabd",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/de/eb/63/deeb63c1-7bc0-9153-cfa3-fd9e4929aacf/4050538826562.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "hi-res-lossless",
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 205573,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GB5KW2202506",
+          "name": "Together Forever (2022 Remaster)",
+          "playParams": {
+            "id": "1624945514",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/34/f0/79/34f079e9-5d15-c3d1-82ae-357faee5d319/mzaf_18364424081946298864.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-11-16",
+          "trackNumber": 3,
+          "url": "https://music.apple.com/us/album/together-forever-2022-remaster/1624945511?i=1624945514"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1624945514/albums?l=en-US",
+            "data": [
+              {
+                "id": "1624945511",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1624945511?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1624945514/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1770767786": {
+        "id": "1770767786",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1770767786?l=en-US",
+        "attributes": {
+          "albumName": "Never - EP",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "f4ce00",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "070601",
+            "textColor2": "0f1015",
+            "textColor3": "362e01",
+            "textColor4": "3d3611",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/aa/f8/19/aaf81950-ca41-ae23-0e98-690f3bd55db2/4099964127713.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Matt Aitken, Mike Stock & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 233413,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GB5KW2103370",
+          "name": "Whenever You Need Somebody (2022 Remaster)",
+          "playParams": {
+            "id": "1770767786",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/7e/37/37/7e3737f4-e845-f7a5-8683-aa9cd65eadc7/mzaf_5299698104486668280.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-10-31",
+          "trackNumber": 5,
+          "url": "https://music.apple.com/us/album/whenever-you-need-somebody-2022-remaster/1770767353?i=1770767786"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1770767786/albums?l=en-US",
+            "data": [
+              {
+                "id": "1770767353",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1770767353?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1770767786/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1773293185": {
+        "id": "1773293185",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1773293185?l=en-US",
+        "attributes": {
+          "albumName": "The Best Of Me: Never Edition",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "808fa2",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "0b0808",
+            "textColor2": "0e0e11",
+            "textColor3": "222327",
+            "textColor4": "25282e",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/db/9e/2a/db9e2ae0-cb9f-f2a9-2774-de399dff2580/4099964133639.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Matt Aitken, Mike Stock & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 235480,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GBARL9300134",
+          "name": "Whenever You Need Somebody",
+          "playParams": {
+            "id": "1773293185",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/51/c8/9f/51c89fa3-9eab-4ae7-78fa-500d2a9f331d/mzaf_1477379966937245017.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-10-31",
+          "trackNumber": 3,
+          "url": "https://music.apple.com/us/album/whenever-you-need-somebody/1773292758?i=1773293185"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1773293185/albums?l=en-US",
+            "data": [
+              {
+                "id": "1773292758",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1773292758?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1773293185/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      },
+      "1773293597": {
+        "id": "1773293597",
+        "type": "songs",
+        "href": "/v1/catalog/us/songs/1773293597?l=en-US",
+        "attributes": {
+          "albumName": "The Best Of Me: Never Edition",
+          "artistName": "Rick Astley",
+          "artistUrl": "https://music.apple.com/us/artist/rick-astley/669771",
+          "artwork": {
+            "bgColor": "808fa2",
+            "hasP3": false,
+            "height": 4000,
+            "textColor1": "0b0808",
+            "textColor2": "0e0e11",
+            "textColor3": "222327",
+            "textColor4": "25282e",
+            "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/db/9e/2a/db9e2ae0-cb9f-f2a9-2774-de399dff2580/4099964133639.jpg/{w}x{h}bb.{f}",
+            "width": 4000
+          },
+          "audioLocale": "en-US",
+          "audioTraits": [
+            "lossless",
+            "lossy-stereo"
+          ],
+          "composerName": "Matt Aitken, Mike Stock & Pete Waterman",
+          "discNumber": 1,
+          "durationInMillis": 240227,
+          "genreNames": [
+            "Pop",
+            "Music"
+          ],
+          "hasLyrics": true,
+          "hasTimeSyncedLyrics": true,
+          "isAppleDigitalMaster": false,
+          "isMasteredForItunes": false,
+          "isVocalAttenuationAllowed": true,
+          "isrc": "GB5KW1903179",
+          "name": "Whenever You Need Somebody (Reimagined)",
+          "playParams": {
+            "id": "1773293597",
+            "kind": "song"
+          },
+          "previews": [
+            {
+              "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/1b/bc/ec/1bbcec52-4505-2dcf-48eb-8e5ba3b13607/mzaf_4600311148043532207.plus.aac.ep.m4a"
+            }
+          ],
+          "releaseDate": "1987-11-12",
+          "trackNumber": 29,
+          "url": "https://music.apple.com/us/album/whenever-you-need-somebody-reimagined/1773292758?i=1773293597"
+        },
+        "relationships": {
+          "albums": {
+            "href": "/v1/catalog/us/songs/1773293597/albums?l=en-US",
+            "data": [
+              {
+                "id": "1773292758",
+                "type": "albums",
+                "href": "/v1/catalog/us/albums/1773292758?l=en-US"
+              }
+            ]
+          },
+          "artists": {
+            "href": "/v1/catalog/us/songs/1773293597/artists?l=en-US",
+            "data": [
+              {
+                "id": "669771",
+                "type": "artists",
+                "href": "/v1/catalog/us/artists/669771?l=en-US"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "meta": {
+    "results": {
+      "order": [
+        "top",
+        "artist",
+        "album",
+        "song",
+        "playlist",
+        "music_video"
+      ],
+      "rawOrder": [
+        "top",
+        "artist",
+        "album",
+        "song",
+        "playlist",
+        "radio_show",
+        "radio_episode",
+        "station",
+        "music_video",
+        "video_extra",
+        "category",
+        "curator",
+        "record_label"
+      ]
+    },
+    "metrics": {
+      "dataSetId": "40a80a4c-721b-489b-b866-c261442829a9"
+    }
+  }
+}

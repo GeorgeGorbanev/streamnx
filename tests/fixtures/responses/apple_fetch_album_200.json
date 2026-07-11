@@ -1,0 +1,578 @@
+{
+  "data": [
+    {
+      "id": "1559885420",
+      "type": "albums",
+      "href": "/v1/catalog/us/albums/1559885420",
+      "attributes": {
+        "artistName": "Rick Astley",
+        "artwork": {
+          "bgColor": "1e1a1a",
+          "hasP3": false,
+          "height": 1500,
+          "textColor1": "f1e4d0",
+          "textColor2": "d3d9db",
+          "textColor3": "c7bbac",
+          "textColor4": "aeb3b5",
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/{w}x{h}bb.jpg",
+          "width": 1500
+        },
+        "audioTraits": [
+          "lossless",
+          "lossy-stereo"
+        ],
+        "copyright": "℗ 1987 BMG Rights Management (UK) Limited",
+        "genreNames": [
+          "Pop",
+          "Music",
+          "Electronic",
+          "Adult Contemporary",
+          "Soft Rock",
+          "Dance"
+        ],
+        "isCompilation": false,
+        "isComplete": true,
+        "isMasteredForItunes": false,
+        "isPrerelease": false,
+        "isSingle": false,
+        "name": "Whenever You Need Somebody",
+        "playParams": {
+          "id": "1559885420",
+          "kind": "album"
+        },
+        "recordLabel": "BMG Rights Management (UK) Ltd.",
+        "releaseDate": "1987-11-12",
+        "trackCount": 10,
+        "upc": "0859381157694",
+        "url": "https://music.apple.com/us/album/whenever-you-need-somebody/1559885420"
+      },
+      "relationships": {
+        "artists": {
+          "href": "/v1/catalog/us/albums/1559885420/artists",
+          "data": [
+            {
+              "id": "669771",
+              "type": "artists",
+              "href": "/v1/catalog/us/artists/669771"
+            }
+          ]
+        },
+        "tracks": {
+          "href": "/v1/catalog/us/albums/1559885420/tracks",
+          "data": [
+            {
+              "id": "1559885421",
+              "type": "songs",
+              "href": "/v1/catalog/us/songs/1559885421",
+              "attributes": {
+                "albumName": "Whenever You Need Somebody",
+                "artistName": "Rick Astley",
+                "artwork": {
+                  "bgColor": "1e1a1a",
+                  "hasP3": false,
+                  "height": 1500,
+                  "textColor1": "f1e4d0",
+                  "textColor2": "d3d9db",
+                  "textColor3": "c7bbac",
+                  "textColor4": "aeb3b5",
+                  "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/{w}x{h}bb.jpg",
+                  "width": 1500
+                },
+                "audioLocale": "en-US",
+                "audioTraits": [
+                  "lossless",
+                  "lossy-stereo"
+                ],
+                "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+                "discNumber": 1,
+                "durationInMillis": 213573,
+                "genreNames": [
+                  "Pop",
+                  "Music"
+                ],
+                "hasLyrics": true,
+                "hasTimeSyncedLyrics": true,
+                "isAppleDigitalMaster": false,
+                "isMasteredForItunes": false,
+                "isVocalAttenuationAllowed": true,
+                "isrc": "GBARL9300135",
+                "name": "Never Gonna Give You Up",
+                "playParams": {
+                  "id": "1559885421",
+                  "kind": "song"
+                },
+                "previews": [
+                  {
+                    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/3a/d6/9a/3ad69a5b-1fdc-c0ca-069b-541cef78e9d6/mzaf_11103729100333690294.plus.aac.ep.m4a"
+                  }
+                ],
+                "releaseDate": "1987-07-27",
+                "trackNumber": 1,
+                "url": "https://music.apple.com/us/album/never-gonna-give-you-up/1559885420?i=1559885421"
+              }
+            },
+            {
+              "id": "1559885422",
+              "type": "songs",
+              "href": "/v1/catalog/us/songs/1559885422",
+              "attributes": {
+                "albumName": "Whenever You Need Somebody",
+                "artistName": "Rick Astley",
+                "artwork": {
+                  "bgColor": "1e1a1a",
+                  "hasP3": false,
+                  "height": 1500,
+                  "textColor1": "f1e4d0",
+                  "textColor2": "d3d9db",
+                  "textColor3": "c7bbac",
+                  "textColor4": "aeb3b5",
+                  "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/{w}x{h}bb.jpg",
+                  "width": 1500
+                },
+                "audioLocale": "en-US",
+                "audioTraits": [
+                  "lossless",
+                  "lossy-stereo"
+                ],
+                "composerName": "Matt Aitken, Mike Stock & Pete Waterman",
+                "discNumber": 1,
+                "durationInMillis": 233667,
+                "genreNames": [
+                  "Pop",
+                  "Music"
+                ],
+                "hasLyrics": true,
+                "hasTimeSyncedLyrics": true,
+                "isAppleDigitalMaster": false,
+                "isMasteredForItunes": false,
+                "isVocalAttenuationAllowed": true,
+                "isrc": "GBARL9300134",
+                "name": "Whenever You Need Somebody",
+                "playParams": {
+                  "id": "1559885422",
+                  "kind": "song"
+                },
+                "previews": [
+                  {
+                    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/75/4d/5a/754d5a1a-dca5-04eb-4e8f-f374757e5600/mzaf_3231355820899018251.plus.aac.ep.m4a"
+                  }
+                ],
+                "releaseDate": "1987-10-31",
+                "trackNumber": 2,
+                "url": "https://music.apple.com/us/album/whenever-you-need-somebody/1559885420?i=1559885422"
+              }
+            },
+            {
+              "id": "1559885423",
+              "type": "songs",
+              "href": "/v1/catalog/us/songs/1559885423",
+              "attributes": {
+                "albumName": "Whenever You Need Somebody",
+                "artistName": "Rick Astley",
+                "artwork": {
+                  "bgColor": "1e1a1a",
+                  "hasP3": false,
+                  "height": 1500,
+                  "textColor1": "f1e4d0",
+                  "textColor2": "d3d9db",
+                  "textColor3": "c7bbac",
+                  "textColor4": "aeb3b5",
+                  "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/{w}x{h}bb.jpg",
+                  "width": 1500
+                },
+                "audioLocale": "en-US",
+                "audioTraits": [
+                  "lossless",
+                  "lossy-stereo"
+                ],
+                "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+                "discNumber": 1,
+                "durationInMillis": 205533,
+                "genreNames": [
+                  "Pop",
+                  "Music"
+                ],
+                "hasLyrics": true,
+                "hasTimeSyncedLyrics": true,
+                "isAppleDigitalMaster": false,
+                "isMasteredForItunes": false,
+                "isVocalAttenuationAllowed": true,
+                "isrc": "GBARL9300136",
+                "name": "Together Forever",
+                "playParams": {
+                  "id": "1559885423",
+                  "kind": "song"
+                },
+                "previews": [
+                  {
+                    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/e0/97/f6/e097f6e2-edda-e229-7620-d3c2ca27fa88/mzaf_5701848339442682038.plus.aac.ep.m4a"
+                  }
+                ],
+                "releaseDate": "1987-11-13",
+                "trackNumber": 3,
+                "url": "https://music.apple.com/us/album/together-forever/1559885420?i=1559885423"
+              }
+            },
+            {
+              "id": "1559885424",
+              "type": "songs",
+              "href": "/v1/catalog/us/songs/1559885424",
+              "attributes": {
+                "albumName": "Whenever You Need Somebody",
+                "artistName": "Rick Astley",
+                "artwork": {
+                  "bgColor": "1e1a1a",
+                  "hasP3": false,
+                  "height": 1500,
+                  "textColor1": "f1e4d0",
+                  "textColor2": "d3d9db",
+                  "textColor3": "c7bbac",
+                  "textColor4": "aeb3b5",
+                  "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/{w}x{h}bb.jpg",
+                  "width": 1500
+                },
+                "audioLocale": "en-US",
+                "audioTraits": [
+                  "lossless",
+                  "lossy-stereo"
+                ],
+                "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+                "discNumber": 1,
+                "durationInMillis": 220827,
+                "genreNames": [
+                  "Pop",
+                  "Music"
+                ],
+                "hasLyrics": true,
+                "hasTimeSyncedLyrics": true,
+                "isAppleDigitalMaster": false,
+                "isMasteredForItunes": false,
+                "isVocalAttenuationAllowed": true,
+                "isrc": "GBARL8700022",
+                "name": "It Would Take a Strong Strong Man",
+                "playParams": {
+                  "id": "1559885424",
+                  "kind": "song"
+                },
+                "previews": [
+                  {
+                    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/77/92/37/7792377b-4b9a-fc56-043a-1d21f8177109/mzaf_775890902790631309.plus.aac.ep.m4a"
+                  }
+                ],
+                "releaseDate": "1987-11-16",
+                "trackNumber": 4,
+                "url": "https://music.apple.com/us/album/it-would-take-a-strong-strong-man/1559885420?i=1559885424"
+              }
+            },
+            {
+              "id": "1559885425",
+              "type": "songs",
+              "href": "/v1/catalog/us/songs/1559885425",
+              "attributes": {
+                "albumName": "Whenever You Need Somebody",
+                "artistName": "Rick Astley",
+                "artwork": {
+                  "bgColor": "1e1a1a",
+                  "hasP3": false,
+                  "height": 1500,
+                  "textColor1": "f1e4d0",
+                  "textColor2": "d3d9db",
+                  "textColor3": "c7bbac",
+                  "textColor4": "aeb3b5",
+                  "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/{w}x{h}bb.jpg",
+                  "width": 1500
+                },
+                "audioLocale": "en-US",
+                "audioTraits": [
+                  "lossless",
+                  "lossy-stereo"
+                ],
+                "composerName": "Dick Spatsley & Rick Astley",
+                "discNumber": 1,
+                "durationInMillis": 260160,
+                "genreNames": [
+                  "Pop",
+                  "Music"
+                ],
+                "hasLyrics": true,
+                "hasTimeSyncedLyrics": true,
+                "isAppleDigitalMaster": false,
+                "isMasteredForItunes": false,
+                "isVocalAttenuationAllowed": true,
+                "isrc": "GBARL8700025",
+                "name": "The Love Has Gone",
+                "playParams": {
+                  "id": "1559885425",
+                  "kind": "song"
+                },
+                "previews": [
+                  {
+                    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/9c/11/73/9c1173d8-1375-d365-1635-a6dcc1821e20/mzaf_9686093002932012739.plus.aac.ep.m4a"
+                  }
+                ],
+                "releaseDate": "1987-11-16",
+                "trackNumber": 5,
+                "url": "https://music.apple.com/us/album/the-love-has-gone/1559885420?i=1559885425"
+              }
+            },
+            {
+              "id": "1559885426",
+              "type": "songs",
+              "href": "/v1/catalog/us/songs/1559885426",
+              "attributes": {
+                "albumName": "Whenever You Need Somebody",
+                "artistName": "Rick Astley",
+                "artwork": {
+                  "bgColor": "1e1a1a",
+                  "hasP3": false,
+                  "height": 1500,
+                  "textColor1": "f1e4d0",
+                  "textColor2": "d3d9db",
+                  "textColor3": "c7bbac",
+                  "textColor4": "aeb3b5",
+                  "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/{w}x{h}bb.jpg",
+                  "width": 1500
+                },
+                "audioLocale": "en-US",
+                "audioTraits": [
+                  "lossless",
+                  "lossy-stereo"
+                ],
+                "composerName": "Matt Aitken, Mike Stock & Pete Waterman",
+                "discNumber": 1,
+                "durationInMillis": 249240,
+                "genreNames": [
+                  "Pop",
+                  "Music"
+                ],
+                "hasLyrics": true,
+                "hasTimeSyncedLyrics": true,
+                "isAppleDigitalMaster": false,
+                "isMasteredForItunes": false,
+                "isVocalAttenuationAllowed": true,
+                "isrc": "GBARL8700020",
+                "name": "Don't Say Goodbye",
+                "playParams": {
+                  "id": "1559885426",
+                  "kind": "song"
+                },
+                "previews": [
+                  {
+                    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/99/b2/04/99b20490-5693-6098-0d12-7d0b8be4ef0a/mzaf_11295090837865761427.plus.aac.ep.m4a"
+                  }
+                ],
+                "releaseDate": "1987-11-16",
+                "trackNumber": 6,
+                "url": "https://music.apple.com/us/album/dont-say-goodbye/1559885420?i=1559885426"
+              }
+            },
+            {
+              "id": "1559885427",
+              "type": "songs",
+              "href": "/v1/catalog/us/songs/1559885427",
+              "attributes": {
+                "albumName": "Whenever You Need Somebody",
+                "artistName": "Rick Astley",
+                "artwork": {
+                  "bgColor": "1e1a1a",
+                  "hasP3": false,
+                  "height": 1500,
+                  "textColor1": "f1e4d0",
+                  "textColor2": "d3d9db",
+                  "textColor3": "c7bbac",
+                  "textColor4": "aeb3b5",
+                  "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/{w}x{h}bb.jpg",
+                  "width": 1500
+                },
+                "audioLocale": "en-US",
+                "audioTraits": [
+                  "lossless",
+                  "lossy-stereo"
+                ],
+                "composerName": "Rick Astley",
+                "discNumber": 1,
+                "durationInMillis": 232893,
+                "genreNames": [
+                  "Pop",
+                  "Music"
+                ],
+                "hasLyrics": true,
+                "hasTimeSyncedLyrics": true,
+                "isAppleDigitalMaster": false,
+                "isMasteredForItunes": false,
+                "isVocalAttenuationAllowed": true,
+                "isrc": "GBARL8700021",
+                "name": "Slipping Away",
+                "playParams": {
+                  "id": "1559885427",
+                  "kind": "song"
+                },
+                "previews": [
+                  {
+                    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/f1/85/ea/f185ea41-41f5-d0a5-806b-a5625d23096e/mzaf_5761311414177050250.plus.aac.ep.m4a"
+                  }
+                ],
+                "releaseDate": "1987-11-16",
+                "trackNumber": 7,
+                "url": "https://music.apple.com/us/album/slipping-away/1559885420?i=1559885427"
+              }
+            },
+            {
+              "id": "1559885428",
+              "type": "songs",
+              "href": "/v1/catalog/us/songs/1559885428",
+              "attributes": {
+                "albumName": "Whenever You Need Somebody",
+                "artistName": "Rick Astley",
+                "artwork": {
+                  "bgColor": "1e1a1a",
+                  "hasP3": false,
+                  "height": 1500,
+                  "textColor1": "f1e4d0",
+                  "textColor2": "d3d9db",
+                  "textColor3": "c7bbac",
+                  "textColor4": "aeb3b5",
+                  "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/{w}x{h}bb.jpg",
+                  "width": 1500
+                },
+                "audioLocale": "en-US",
+                "audioTraits": [
+                  "lossless",
+                  "lossy-stereo"
+                ],
+                "composerName": "Rick Astley",
+                "discNumber": 1,
+                "durationInMillis": 192800,
+                "genreNames": [
+                  "Pop",
+                  "Music"
+                ],
+                "hasLyrics": true,
+                "hasTimeSyncedLyrics": true,
+                "isAppleDigitalMaster": false,
+                "isMasteredForItunes": false,
+                "isVocalAttenuationAllowed": true,
+                "isrc": "GBARL8700024",
+                "name": "No More Looking for Love",
+                "playParams": {
+                  "id": "1559885428",
+                  "kind": "song"
+                },
+                "previews": [
+                  {
+                    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/b0/73/69/b073698c-05d6-5ca3-77ad-8d03e5f53f84/mzaf_15583969607729762847.plus.aac.ep.m4a"
+                  }
+                ],
+                "releaseDate": "1987-11-16",
+                "trackNumber": 8,
+                "url": "https://music.apple.com/us/album/no-more-looking-for-love/1559885420?i=1559885428"
+              }
+            },
+            {
+              "id": "1559885429",
+              "type": "songs",
+              "href": "/v1/catalog/us/songs/1559885429",
+              "attributes": {
+                "albumName": "Whenever You Need Somebody",
+                "artistName": "Rick Astley",
+                "artwork": {
+                  "bgColor": "1e1a1a",
+                  "hasP3": false,
+                  "height": 1500,
+                  "textColor1": "f1e4d0",
+                  "textColor2": "d3d9db",
+                  "textColor3": "c7bbac",
+                  "textColor4": "aeb3b5",
+                  "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/{w}x{h}bb.jpg",
+                  "width": 1500
+                },
+                "audioLocale": "en-US",
+                "audioTraits": [
+                  "lossless",
+                  "lossy-stereo"
+                ],
+                "composerName": "Rick Astley",
+                "discNumber": 1,
+                "durationInMillis": 222533,
+                "genreNames": [
+                  "Pop",
+                  "Music"
+                ],
+                "hasLyrics": true,
+                "hasTimeSyncedLyrics": true,
+                "isAppleDigitalMaster": false,
+                "isMasteredForItunes": false,
+                "isVocalAttenuationAllowed": true,
+                "isrc": "GBARL8700023",
+                "name": "You Move Me",
+                "playParams": {
+                  "id": "1559885429",
+                  "kind": "song"
+                },
+                "previews": [
+                  {
+                    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/69/a0/8e/69a08ec9-549f-2885-10ed-6d0eac50963b/mzaf_15138826231286780753.plus.aac.ep.m4a"
+                  }
+                ],
+                "releaseDate": "1987-11-16",
+                "trackNumber": 9,
+                "url": "https://music.apple.com/us/album/you-move-me/1559885420?i=1559885429"
+              }
+            },
+            {
+              "id": "1559885430",
+              "type": "songs",
+              "href": "/v1/catalog/us/songs/1559885430",
+              "attributes": {
+                "albumName": "Whenever You Need Somebody",
+                "artistName": "Rick Astley",
+                "artwork": {
+                  "bgColor": "1e1a1a",
+                  "hasP3": false,
+                  "height": 1500,
+                  "textColor1": "f1e4d0",
+                  "textColor2": "d3d9db",
+                  "textColor3": "c7bbac",
+                  "textColor4": "aeb3b5",
+                  "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/{w}x{h}bb.jpg",
+                  "width": 1500
+                },
+                "audioLocale": "en-US",
+                "audioTraits": [
+                  "lossless",
+                  "lossy-stereo"
+                ],
+                "composerName": "Victor Young",
+                "discNumber": 1,
+                "durationInMillis": 183027,
+                "genreNames": [
+                  "Pop",
+                  "Music"
+                ],
+                "hasLyrics": true,
+                "hasTimeSyncedLyrics": true,
+                "isAppleDigitalMaster": false,
+                "isMasteredForItunes": false,
+                "isVocalAttenuationAllowed": true,
+                "isrc": "GBARL9300132",
+                "name": "When I Fall in Love",
+                "playParams": {
+                  "id": "1559885430",
+                  "kind": "song"
+                },
+                "previews": [
+                  {
+                    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/ad/f8/5b/adf85b5b-8cc7-dadc-ef15-153be652cd9c/mzaf_12759779166697071076.plus.aac.ep.m4a"
+                  }
+                ],
+                "releaseDate": "1987-11-16",
+                "trackNumber": 10,
+                "url": "https://music.apple.com/us/album/when-i-fall-in-love/1559885420?i=1559885430"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

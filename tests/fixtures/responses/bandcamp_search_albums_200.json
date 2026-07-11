@@ -1,0 +1,28 @@
+{
+  "auto": {
+    "results": [
+      {
+        "type": "a",
+        "id": 1214195311,
+        "art_id": 3419300230,
+        "img_id": null,
+        "name": "Whenever You Need Somebody",
+        "band_id": 917330379,
+        "band_name": "Rick Astley",
+        "item_url_root": "https://matthewrobertadamski2.bandcamp.com",
+        "item_url_path": "https://matthewrobertadamski2.bandcamp.com/album/whenever-you-need-somebody",
+        "img": "https://f4.bcbits.com/img/3419300230_3.jpg",
+        "tag_names": [
+          "Pop",
+          "United States",
+          "Michigan"
+        ],
+        "stat_params": "search_item_id=1214195311&search_item_type=a&search_match_part=%3F&search_page_id=5494694152&search_page_no=0&search_rank=1"
+      }
+    ],
+    "stat_params_for_tag": "search_item_id=2&search_item_type=%40&search_match_part=%3F&search_page_id=5494694152&search_page_no=0&search_rank=1",
+    "time_ms": 5
+  },
+  "tag": {},
+  "genre": {}
+}

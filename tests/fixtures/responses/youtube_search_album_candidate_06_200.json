@@ -1,0 +1,54 @@
+{
+  "kind": "youtube#playlistListResponse",
+  "etag": "Eha8z7fsrYz8InS98Sqcq0kEqdY",
+  "pageInfo": {
+    "totalResults": 1,
+    "resultsPerPage": 5
+  },
+  "items": [
+    {
+      "kind": "youtube#playlist",
+      "etag": "qyYteWUzW2tPkr_LMsw3ZEgq_dY",
+      "id": "PLcsWXT-BRUUYx0h3cPPX6Gs3J1hqlypme",
+      "snippet": {
+        "publishedAt": "2023-08-26T04:45:49.522473Z",
+        "channelId": "UCBemnslnz1y7XJxNSfofleQ",
+        "title": "Rick Astley - Whenever You Need Somebody - 432hz",
+        "description": "Artist: Rick Astley\nAlbum: Whenever You Need Somebody\n\n432hz\n\nNo copyright infringement intended.\nAll images and audio belong to Rick Astley.",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/qwLQkLTOmqo/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/qwLQkLTOmqo/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/qwLQkLTOmqo/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/qwLQkLTOmqo/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/qwLQkLTOmqo/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Hertz Patrol",
+        "localized": {
+          "title": "Rick Astley - Whenever You Need Somebody - 432hz",
+          "description": "Artist: Rick Astley\nAlbum: Whenever You Need Somebody\n\n432hz\n\nNo copyright infringement intended.\nAll images and audio belong to Rick Astley."
+        }
+      }
+    }
+  ]
+}
+

@@ -457,7 +457,7 @@ func TestBandcampCatalogSearchTracks(t *testing.T) {
 		{
 			ID:         "polarmaxbit:rick-astley-never-gonna-give-you-up-mix-polarmaxbit-2",
 			AlbumID:    "",
-			AlbumTitle: "POLARMAXBIT Remixes y Mashups for djs N​​​-​​​3",
+			AlbumTitle: "POLARMAXBIT Remixes y Mashups for djs N\u200b\u200b\u200b-\u200b\u200b\u200b3",
 			CoverURL:   "https://f4.bcbits.com/img/2676347592_3.jpg",
 			Title:      "Rick Astley - Never Gonna Give You Up MIX POLARMAXBIT",
 			Artist:     "Polarmaxbit",
@@ -468,7 +468,7 @@ func TestBandcampCatalogSearchTracks(t *testing.T) {
 		{
 			ID:         "polarmaxbit:rick-astley-never-gonna-give-you-up-mix-polarmaxbit",
 			AlbumID:    "",
-			AlbumTitle: "POLARMAXBIT Remixes y Mashups for djs N​-​2",
+			AlbumTitle: "POLARMAXBIT Remixes y Mashups for djs N\u200b-\u200b2",
 			CoverURL:   "https://f4.bcbits.com/img/3285644934_3.jpg",
 			Title:      "Rick Astley- Never Gonna Give You Up MIX POLARMAXBIT",
 			Artist:     "Polarmaxbit",

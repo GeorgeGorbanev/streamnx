@@ -17,6 +17,7 @@ func TestCatalog_ParseLink(t *testing.T) {
 		WithSoundcloud(),
 		WithYandex(),
 		WithYoutube(YoutubeCredentials{}),
+		WithYoutubeMusic(),
 	)
 
 	tests := []struct {
@@ -96,6 +97,16 @@ func TestCatalog_ParseLink(t *testing.T) {
 			},
 		},
 		{
+			name: "Youtube Music track",
+			url:  "https://music.youtube.com/watch?v=5PgdZDXg0z0&si=LkthPMI6H_I04dhP",
+			want: Link{
+				URL:         "https://music.youtube.com/watch?v=5PgdZDXg0z0&si=LkthPMI6H_I04dhP",
+				Provider:    YoutubeMusic,
+				ReleaseID:   "5PgdZDXg0z0",
+				ReleaseType: ReleaseTypeTrack,
+			},
+		},
+		{
 			name: "Deezer track",
 			url:  "https://www.deezer.com/track/123456789",
 			want: Link{
@@ -166,6 +177,7 @@ func TestNewCatalogIgnoresNilOptions(t *testing.T) {
 		WithSoundcloud(nil, WithSoundcloudHTTPClient(nil)),
 		WithYandex(nil, WithYandexHTTPClient(nil)),
 		WithYoutube(YoutubeCredentials{}, nil, WithYoutubeHTTPClient(nil)),
+		WithYoutubeMusic(nil, WithYoutubeMusicHTTPClient(nil)),
 	)
 
 	require.NoError(t, err)

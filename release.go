@@ -21,13 +21,14 @@ const (
 	ReleaseTypeAlbum = release.TypeAlbum
 	ReleaseTypeCloak = release.TypeCloak
 
-	Apple      = release.Apple
-	Bandcamp   = release.Bandcamp
-	Deezer     = release.Deezer
-	Spotify    = release.Spotify
-	Soundcloud = release.Soundcloud
-	Yandex     = release.Yandex
-	Youtube    = release.Youtube
+	Apple        = release.Apple
+	Bandcamp     = release.Bandcamp
+	Deezer       = release.Deezer
+	Spotify      = release.Spotify
+	Soundcloud   = release.Soundcloud
+	Yandex       = release.Yandex
+	Youtube      = release.Youtube
+	YoutubeMusic = release.YoutubeMusic
 )
 
 var (

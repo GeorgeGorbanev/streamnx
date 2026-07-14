@@ -15,6 +15,8 @@ Typical use cases include:
 * release matching across streaming services
 * music catalog enrichment pipelines
 
+## Table of contents
+
 - [Streaming providers list](#streaming-providers-list)
 - [Installation](#installation)
 - [Streaming API access](#streaming-api-access)

@@ -75,13 +75,14 @@ const (
 type Provider string
 
 const (
-	Apple      Provider = "ap"
-	Bandcamp   Provider = "bc"
-	Deezer     Provider = "dz"
-	Spotify    Provider = "sf"
-	Soundcloud Provider = "sc"
-	Yandex     Provider = "ya"
-	Youtube    Provider = "yt"
+	Apple        Provider = "ap"
+	Bandcamp     Provider = "bc"
+	Deezer       Provider = "dz"
+	Spotify      Provider = "sf"
+	Soundcloud   Provider = "sc"
+	Yandex       Provider = "ya"
+	Youtube      Provider = "yt"
+	YoutubeMusic Provider = "ym"
 )
 
 var Providers = []Provider{
@@ -92,6 +93,7 @@ var Providers = []Provider{
 	Soundcloud,
 	Yandex,
 	Youtube,
+	YoutubeMusic,
 }
 
 var (

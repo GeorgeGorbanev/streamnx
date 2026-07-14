@@ -33,6 +33,13 @@ func TestYoutubeAdapter_ParseLink(t *testing.T) {
 			expectedOK:   true,
 		},
 		{
+			name:         "track URL without scheme",
+			input:        "youtube.com/watch?v=dQw4w9WgXcQ",
+			expectedType: release.TypeTrack,
+			expectedID:   "dQw4w9WgXcQ",
+			expectedOK:   true,
+		},
+		{
 			name:         "track URL with extra parameters",
 			input:        "https://www.youtube.com/watch?v=dQw4w9WgXcQ&feature=youtu.be",
 			expectedType: release.TypeTrack,
@@ -40,11 +47,9 @@ func TestYoutubeAdapter_ParseLink(t *testing.T) {
 			expectedOK:   true,
 		},
 		{
-			name:         "youtube music track URL",
-			input:        "https://music.youtube.com/watch?v=5PgdZDXg0z0&si=LkthPMI6H_I04dhP",
-			expectedType: release.TypeTrack,
-			expectedID:   "5PgdZDXg0z0",
-			expectedOK:   true,
+			name:       "youtube music track URL belongs to another provider",
+			input:      "https://music.youtube.com/watch?v=5PgdZDXg0z0&si=LkthPMI6H_I04dhP",
+			expectedOK: false,
 		},
 		{
 			name:         "standard album URL",
@@ -68,11 +73,9 @@ func TestYoutubeAdapter_ParseLink(t *testing.T) {
 			expectedOK:   true,
 		},
 		{
-			name:         "youtube music album URL",
-			input:        "https://music.youtube.com/playlist?list=OLAK5uy_n4xauusTJSj6Mtt4cIuq4KZziSfjABYWU",
-			expectedType: release.TypeAlbum,
-			expectedID:   "OLAK5uy_n4xauusTJSj6Mtt4cIuq4KZziSfjABYWU",
-			expectedOK:   true,
+			name:       "youtube music album URL belongs to another provider",
+			input:      "https://music.youtube.com/playlist?list=OLAK5uy_n4xauusTJSj6Mtt4cIuq4KZziSfjABYWU",
+			expectedOK: false,
 		},
 		{
 			name:       "track URL without ID",

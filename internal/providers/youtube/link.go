@@ -6,8 +6,8 @@ import (
 )
 
 var (
-	videoRe    = regexp.MustCompile(`(?:youtu\.be/|youtube\.com/watch\?v=)([a-zA-Z0-9_-]{11})`)
-	playlistRe = regexp.MustCompile(`(?:youtube\.com/playlist\?list=|youtu\.be/playlist\?list=)([a-zA-Z0-9_-]+)`)
+	videoRe    = regexp.MustCompile(`(?:^|[^.[:alnum:]_-])(?:(?:https?://)?(?:www\.)?youtube\.com/watch\?(?:[^#\s]*&)?v=|(?:https?://)?youtu\.be/)([a-zA-Z0-9_-]{11})`)
+	playlistRe = regexp.MustCompile(`(?:^|[^.[:alnum:]_-])(?:(?:https?://)?(?:www\.)?youtube\.com/playlist\?(?:[^#\s]*&)?list=|(?:https?://)?youtu\.be/playlist\?(?:[^#\s]*&)?list=)([a-zA-Z0-9_-]+)`)
 )
 
 func parseTrackURL(trackURL string) string {

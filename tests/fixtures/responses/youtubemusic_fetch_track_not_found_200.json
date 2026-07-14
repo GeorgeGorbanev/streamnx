@@ -1,0 +1,85 @@
+{
+  "responseContext": {
+    "visitorData": "CgtoUWR5WGFQUWxENCj4pNXSBjIKCgJHRRIEGgAgLQ%3D%3D",
+    "serviceTrackingParams": [
+      {
+        "service": "GFEEDBACK",
+        "params": [
+          {
+            "key": "is_viewed_live",
+            "value": "False"
+          },
+          {
+            "key": "logged_in",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "service": "CSI",
+        "params": [
+          {
+            "key": "c",
+            "value": "WEB_REMIX"
+          },
+          {
+            "key": "cver",
+            "value": "1.20260713.01.00"
+          },
+          {
+            "key": "yt_li",
+            "value": "0"
+          },
+          {
+            "key": "GetPlayer_rid",
+            "value": "0x4985b94b3c41218a"
+          }
+        ]
+      },
+      {
+        "service": "ECATCHER",
+        "params": [
+          {
+            "key": "client.version",
+            "value": "1.20000101"
+          },
+          {
+            "key": "client.name",
+            "value": "WEB_REMIX"
+          }
+        ]
+      }
+    ],
+    "maxAgeSeconds": 0,
+    "responseId": "IhMIxrv9zMbQlQMV2_JCBR1PIQCL"
+  },
+  "playabilityStatus": {
+    "status": "ERROR",
+    "reason": "Video unavailable",
+    "errorScreen": {
+      "playerErrorMessageRenderer": {
+        "reason": {
+          "runs": [
+            {
+              "text": "Video unavailable"
+            }
+          ]
+        },
+        "thumbnail": {
+          "thumbnails": [
+            {
+              "url": "//s.ytimg.com/yts/img/meh7-vflGevej7.png",
+              "width": 140,
+              "height": 100
+            }
+          ]
+        },
+        "icon": {
+          "iconType": "ERROR_OUTLINE"
+        }
+      }
+    },
+    "contextParams": "Q0FBU0FnZ0E="
+  },
+  "trackingParams": "CAAQu2kiEwjGu_3MxtCVAxXb8kIFHU8hAIvKAQRa36LH"
+}

@@ -39,7 +39,8 @@ The library supports the following music streaming providers:
 - Soundcloud
 - Spotify
 - Yandex Music
-- YouTube (compatible with YouTube Music)
+- YouTube
+- YouTube Music
 
 ## Installation
 
@@ -77,7 +78,7 @@ Provider availability, from easiest to most restricted:
 3. Apple Music: official API with developer registration and a paid Apple
    Developer Program membership; Streamnx currently uses the free web-player
    token from the public web player, with its limits.
-4. Yandex Music: unofficial API only, no registration.
+4. Yandex Music and YouTube Music: unofficial APIs, no registration. 
 5. Soundcloud and Bandcamp: official API access is closed or granted by
    individual agreement, so Streamnx uses HTML scraping; these integrations may
    require proxies or anti-bot handling.
@@ -115,6 +116,7 @@ catalog, err := streamnx.NewCatalog(
     streamnx.WithYoutube(streamnx.YoutubeCredentials{
         APIKey: "[your youtube api key]",
     }),
+    streamnx.WithYoutubeMusic(),
 )
 if err != nil {
     // Handle error
@@ -245,6 +247,9 @@ Known providers are exported as constants:
 ``` golang
 provider := streamnx.Apple
 // => "ap"
+
+youtubeMusic := streamnx.YoutubeMusic
+// => "ym"
 ```
 
 #### Link
@@ -324,6 +329,10 @@ catalog, err := streamnx.NewCatalog(
         streamnx.YoutubeCredentials{},
         streamnx.WithYoutubeAPIURL(youtubeMockServer.URL),
         streamnx.WithYoutubeHTTPClient(youtubeHTTPClient),
+    ),
+    streamnx.WithYoutubeMusic(
+        streamnx.WithYoutubeMusicAPIURL(youtubeMusicMockServer.URL),
+        streamnx.WithYoutubeMusicHTTPClient(youtubeMusicHTTPClient),
     ),
 )
 ```

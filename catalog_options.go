@@ -10,6 +10,7 @@ import (
 	"github.com/GeorgeGorbanev/streamnx/v2/internal/providers/spotify"
 	"github.com/GeorgeGorbanev/streamnx/v2/internal/providers/yandex"
 	"github.com/GeorgeGorbanev/streamnx/v2/internal/providers/youtube"
+	"github.com/GeorgeGorbanev/streamnx/v2/internal/providers/youtubemusic"
 )
 
 type CatalogOption func(catalog *Catalog) error
@@ -287,5 +288,39 @@ func WithYoutubeHTTPClient(client *http.Client) YoutubeOption {
 			return
 		}
 		cfg.client = append(cfg.client, youtube.WithHTTPClient(client))
+	}
+}
+
+type YoutubeMusicOption func(*youtubeMusicOptions)
+
+type youtubeMusicOptions struct {
+	client []youtubemusic.ClientOption
+}
+
+func WithYoutubeMusic(opts ...YoutubeMusicOption) CatalogOption {
+	return func(r *Catalog) error {
+		cfg := youtubeMusicOptions{}
+		for _, opt := range opts {
+			if opt == nil {
+				continue
+			}
+			opt(&cfg)
+		}
+		return r.register(YoutubeMusic, youtubemusic.NewAdapter(youtubemusic.NewClient(cfg.client...)))
+	}
+}
+
+func WithYoutubeMusicAPIURL(url string) YoutubeMusicOption {
+	return func(cfg *youtubeMusicOptions) {
+		cfg.client = append(cfg.client, youtubemusic.WithAPIURL(url))
+	}
+}
+
+func WithYoutubeMusicHTTPClient(client *http.Client) YoutubeMusicOption {
+	return func(cfg *youtubeMusicOptions) {
+		if client == nil {
+			return
+		}
+		cfg.client = append(cfg.client, youtubemusic.WithHTTPClient(client))
 	}
 }

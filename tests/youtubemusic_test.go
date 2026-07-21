@@ -85,6 +85,27 @@ func TestYoutubeMusicCatalogFetchTrackNotFound(t *testing.T) {
 	require.ErrorIs(t, err, streamnx.ErrNotFound)
 }
 
+func TestYoutubeMusicCatalogFetchTrackScrapingBlocked(t *testing.T) {
+	server := newYoutubeMusicFixtureServer(t, fixtures.Route{
+		Method:  http.MethodPost,
+		Path:    "/player",
+		Query:   map[string]string{"alt": "json"},
+		Status:  http.StatusOK,
+		Fixture: "youtubemusic_fetch_track_login_required_200.json",
+	})
+	defer server.Close()
+
+	got, err := newYoutubeMusicCatalog(t, server.URL).FetchTrack(
+		t.Context(),
+		streamnx.YoutubeMusic,
+		"challenged",
+	)
+
+	require.Zero(t, got)
+	require.ErrorIs(t, err, streamnx.ErrScrapingBlocked)
+	require.NotErrorIs(t, err, streamnx.ErrNotFound)
+}
+
 func TestYoutubeMusicCatalogFetchAlbum(t *testing.T) {
 	server := newYoutubeMusicFixtureServer(t, fixtures.Route{
 		Method:  http.MethodPost,

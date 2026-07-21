@@ -72,7 +72,7 @@ func TestClientRequestsAndDecodes(t *testing.T) {
 			require.NoError(t, err)
 		case "/search":
 			require.Equal(t, "Artist – Title", body["query"])
-			require.Contains(t, []any{songsParams, albumsParams}, body["params"])
+			require.Contains(t, []any{"EgWKAQIIAWoMEA4QChADEAQQCRAF", "EgWKAQIYAWoMEA4QChADEAQQCRAF"}, body["params"])
 			_, err := w.Write([]byte(`{
 				"contents":{"tabbedSearchResultsRenderer":{"tabs":[{"tabRenderer":{"content":{"sectionListRenderer":{"contents":[
 					{"musicShelfRenderer":{"contents":[{"musicResponsiveListItemRenderer":{
@@ -168,4 +168,23 @@ func TestClientNotFound(t *testing.T) {
 			require.ErrorIs(t, err, errNotFound)
 		})
 	}
+}
+
+func TestClientLoginRequired(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		_, err := w.Write([]byte(`{
+			"playabilityStatus": {
+				"status": "LOGIN_REQUIRED",
+				"reason": "Sign in to confirm you’re not a bot"
+			}
+		}`))
+		require.NoError(t, err)
+	}))
+	defer server.Close()
+
+	got, err := NewClient(WithAPIURL(server.URL)).fetchTrack(t.Context(), "challenged")
+
+	require.Zero(t, got)
+	require.ErrorIs(t, err, errLoginRequired)
+	require.NotErrorIs(t, err, errNotFound)
 }

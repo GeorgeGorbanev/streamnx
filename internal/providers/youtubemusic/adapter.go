@@ -40,6 +40,8 @@ func (a *Adapter) ParseLink(rawURL string) (release.Type, string, bool) {
 func (a *Adapter) FetchTrack(ctx context.Context, id string) (release.Track, error) {
 	found, err := a.client.fetchTrack(ctx, id)
 	switch {
+	case errors.Is(err, errLoginRequired):
+		return release.Track{}, release.ErrScrapingBlocked
 	case errors.Is(err, errNotFound):
 		return release.Track{}, release.ErrNotFound
 	case err != nil:

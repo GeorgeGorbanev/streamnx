@@ -12,11 +12,6 @@ import (
 	"time"
 )
 
-const (
-	songsParams  = "EgWKAQIIAWoMEA4QChADEAQQCRAF"
-	albumsParams = "EgWKAQIYAWoMEA4QChADEAQQCRAF"
-)
-
 type Client struct {
 	apiURL     string
 	httpClient *http.Client
@@ -36,7 +31,10 @@ func WithHTTPClient(httpClient *http.Client) ClientOption {
 	}
 }
 
-var errNotFound = errors.New("not found")
+var (
+	errNotFound      = errors.New("not found")
+	errLoginRequired = errors.New("login required")
+)
 
 func NewClient(opts ...ClientOption) *Client {
 	const defaultAPIURL = "https://music.youtube.com/youtubei/v1"
@@ -68,10 +66,14 @@ func (c *Client) fetchTrack(ctx context.Context, id string) (playerResponse, err
 	if err := json.Unmarshal(body, &player); err != nil {
 		return playerResponse{}, fmt.Errorf("failed to decode player response: %w", err)
 	}
-	if player.VideoDetails.VideoID == "" {
+	switch {
+	case player.PlayabilityStatus.Status == "LOGIN_REQUIRED":
+		return playerResponse{}, errLoginRequired
+	case player.VideoDetails.VideoID == "":
 		return playerResponse{}, errNotFound
+	default:
+		return player, nil
 	}
-	return player, nil
 }
 
 func (c *Client) fetchWatchNext(ctx context.Context, id string) (playlistPanelVideoRenderer, error) {
@@ -101,10 +103,12 @@ func (c *Client) fetchWatchNext(ctx context.Context, id string) (playlistPanelVi
 }
 
 func (c *Client) searchTracks(ctx context.Context, query string) ([]responsiveListItem, error) {
+	const songsParams = "EgWKAQIIAWoMEA4QChADEAQQCRAF"
 	return c.search(ctx, query, songsParams)
 }
 
 func (c *Client) searchAlbums(ctx context.Context, query string) ([]responsiveListItem, error) {
+	const albumsParams = "EgWKAQIYAWoMEA4QChADEAQQCRAF"
 	return c.search(ctx, query, albumsParams)
 }
 

@@ -16,12 +16,16 @@ type navigationEndpoint struct {
 }
 
 type browseEndpoint struct {
-	BrowseID string `json:"browseId"`
-	Context  struct {
-		Music struct {
-			PageType string `json:"pageType"`
-		} `json:"browseEndpointContextMusicConfig"`
-	} `json:"browseEndpointContextSupportedConfigs"`
+	BrowseID string                `json:"browseId"`
+	Context  browseEndpointContext `json:"browseEndpointContextSupportedConfigs"`
+}
+
+type browseEndpointContext struct {
+	Music browseEndpointMusic `json:"browseEndpointContextMusicConfig"`
+}
+
+type browseEndpointMusic struct {
+	PageType string `json:"pageType"`
 }
 
 type watchEndpoint struct {
@@ -39,24 +43,30 @@ type thumbnailList struct {
 }
 
 type itemThumbnail struct {
-	Renderer struct {
-		Thumbnail thumbnailList `json:"thumbnail"`
-	} `json:"musicThumbnailRenderer"`
+	Renderer thumbnailRenderer `json:"musicThumbnailRenderer"`
+}
+
+type thumbnailRenderer struct {
+	Thumbnail thumbnailList `json:"thumbnail"`
 }
 
 type responsiveListItem struct {
 	FlexColumns        []flexColumn       `json:"flexColumns"`
 	Thumbnail          itemThumbnail      `json:"thumbnail"`
 	NavigationEndpoint navigationEndpoint `json:"navigationEndpoint"`
-	PlaylistItemData   struct {
-		VideoID string `json:"videoId"`
-	} `json:"playlistItemData"`
+	PlaylistItemData   playlistItemData   `json:"playlistItemData"`
+}
+
+type playlistItemData struct {
+	VideoID string `json:"videoId"`
 }
 
 type flexColumn struct {
-	Renderer struct {
-		Text text `json:"text"`
-	} `json:"musicResponsiveListItemFlexColumnRenderer"`
+	Renderer flexColumnRenderer `json:"musicResponsiveListItemFlexColumnRenderer"`
+}
+
+type flexColumnRenderer struct {
+	Text text `json:"text"`
 }
 
 type responsiveListItemContainer struct {

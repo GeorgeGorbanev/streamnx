@@ -98,9 +98,25 @@ func TestAdapterFetchTrack(t *testing.T) {
 	m.On("fetchWatchNext", "track-id").Return(playlistPanelVideoRenderer{
 		VideoID: "track-id",
 		LongBylineText: text{Runs: []run{
-			metadataRun("Artist", "artist-id", "MUSIC_PAGE_TYPE_ARTIST"),
+			{
+				Text: "Artist",
+				NavigationEndpoint: navigationEndpoint{BrowseEndpoint: browseEndpoint{
+					BrowseID: "artist-id",
+					Context: browseEndpointContext{Music: browseEndpointMusic{
+						PageType: "MUSIC_PAGE_TYPE_ARTIST",
+					}},
+				}},
+			},
 			{Text: " • "},
-			metadataRun("Album title", "MPREalbum", "MUSIC_PAGE_TYPE_ALBUM"),
+			{
+				Text: "Album title",
+				NavigationEndpoint: navigationEndpoint{BrowseEndpoint: browseEndpoint{
+					BrowseID: "MPREalbum",
+					Context: browseEndpointContext{Music: browseEndpointMusic{
+						PageType: "MUSIC_PAGE_TYPE_ALBUM",
+					}},
+				}},
+			},
 			{Text: " • "},
 			{Text: "1995"},
 		}},
@@ -136,9 +152,25 @@ func TestAdapterFetchTrackUsesWatchNextFallbacks(t *testing.T) {
 		Title:     text{Runs: []run{{Text: "Track title"}}},
 		Thumbnail: thumbnailList{Thumbnails: []thumbnail{{URL: "cover", Width: 544, Height: 544}}},
 		LongBylineText: text{Runs: []run{
-			metadataRun("Artist", "artist-id", "MUSIC_PAGE_TYPE_ARTIST"),
+			{
+				Text: "Artist",
+				NavigationEndpoint: navigationEndpoint{BrowseEndpoint: browseEndpoint{
+					BrowseID: "artist-id",
+					Context: browseEndpointContext{Music: browseEndpointMusic{
+						PageType: "MUSIC_PAGE_TYPE_ARTIST",
+					}},
+				}},
+			},
 			{Text: " • "},
-			metadataRun("Album title", "MPREalbum", "MUSIC_PAGE_TYPE_ALBUM"),
+			{
+				Text: "Album title",
+				NavigationEndpoint: navigationEndpoint{BrowseEndpoint: browseEndpoint{
+					BrowseID: "MPREalbum",
+					Context: browseEndpointContext{Music: browseEndpointMusic{
+						PageType: "MUSIC_PAGE_TYPE_ALBUM",
+					}},
+				}},
+			},
 		}},
 	}, nil).Once()
 
@@ -213,8 +245,22 @@ func TestAdapterFetchAlbum(t *testing.T) {
 	header.Thumbnail.Renderer.Thumbnail.Thumbnails = []thumbnail{{URL: "cover", Width: 544, Height: 544}}
 	header.Description.Shelf.Description.Runs = []run{{Text: "First "}, {Text: "second"}}
 	m.On("fetchAlbum", "MPREalbum").Return(header, []responsiveListItem{
-		itemWithVideoID("track-1"),
-		itemWithWatchEndpoint("track-2"),
+		{PlaylistItemData: playlistItemData{VideoID: "track-1"}},
+		{
+			FlexColumns: []flexColumn{
+				{
+					Renderer: flexColumnRenderer{
+						Text: text{Runs: []run{
+							{
+								NavigationEndpoint: navigationEndpoint{
+									WatchEndpoint: watchEndpoint{VideoID: "track-2"},
+								},
+							},
+						}},
+					},
+				},
+			},
+		},
 		{},
 	}, nil).Once()
 
@@ -238,7 +284,40 @@ func TestAdapterFetchAlbum(t *testing.T) {
 func TestAdapterSearchTracks(t *testing.T) {
 	m := &clientMock{}
 	m.On("searchTracks", "Artist – Track").Return([]responsiveListItem{
-		searchItem("video-1", "Track", "Artist", "MPREalbum", "Album", "cover"),
+		{
+			FlexColumns: []flexColumn{
+				{
+					Renderer: flexColumnRenderer{Text: text{Runs: []run{{Text: "Track"}}}},
+				},
+				{
+					Renderer: flexColumnRenderer{Text: text{Runs: []run{
+						{
+							Text: "Artist",
+							NavigationEndpoint: navigationEndpoint{BrowseEndpoint: browseEndpoint{
+								BrowseID: "Artist-id",
+								Context: browseEndpointContext{Music: browseEndpointMusic{
+									PageType: "MUSIC_PAGE_TYPE_ARTIST",
+								}},
+							}},
+						},
+						{Text: " • "},
+						{
+							Text: "Album",
+							NavigationEndpoint: navigationEndpoint{BrowseEndpoint: browseEndpoint{
+								BrowseID: "MPREalbum",
+								Context: browseEndpointContext{Music: browseEndpointMusic{
+									PageType: "MUSIC_PAGE_TYPE_ALBUM",
+								}},
+							}},
+						},
+					}}},
+				},
+			},
+			Thumbnail: itemThumbnail{Renderer: thumbnailRenderer{
+				Thumbnail: thumbnailList{Thumbnails: []thumbnail{{URL: "cover", Width: 120, Height: 120}}},
+			}},
+			PlaylistItemData: playlistItemData{VideoID: "video-1"},
+		},
 		{},
 	}, nil).Once()
 
@@ -260,9 +339,41 @@ func TestAdapterSearchTracks(t *testing.T) {
 
 func TestAdapterSearchAlbums(t *testing.T) {
 	m := &clientMock{}
-	item := searchItem("", "Album", "Artist", "", "", "cover")
-	item.NavigationEndpoint.BrowseEndpoint.BrowseID = "MPREalbum"
-	m.On("searchAlbums", "Artist – Album").Return([]responsiveListItem{item, {}}, nil).Once()
+	m.On("searchAlbums", "Artist – Album").Return([]responsiveListItem{
+		{
+			FlexColumns: []flexColumn{
+				{
+					Renderer: flexColumnRenderer{Text: text{Runs: []run{{Text: "Album"}}}},
+				},
+				{
+					Renderer: flexColumnRenderer{Text: text{Runs: []run{
+						{
+							Text: "Artist",
+							NavigationEndpoint: navigationEndpoint{BrowseEndpoint: browseEndpoint{
+								BrowseID: "Artist-id",
+								Context: browseEndpointContext{Music: browseEndpointMusic{
+									PageType: "MUSIC_PAGE_TYPE_ARTIST",
+								}},
+							}},
+						},
+						{Text: " • "},
+						{
+							NavigationEndpoint: navigationEndpoint{BrowseEndpoint: browseEndpoint{
+								Context: browseEndpointContext{Music: browseEndpointMusic{
+									PageType: "MUSIC_PAGE_TYPE_ALBUM",
+								}},
+							}},
+						},
+					}}},
+				},
+			},
+			Thumbnail: itemThumbnail{Renderer: thumbnailRenderer{
+				Thumbnail: thumbnailList{Thumbnails: []thumbnail{{URL: "cover", Width: 120, Height: 120}}},
+			}},
+			NavigationEndpoint: navigationEndpoint{BrowseEndpoint: browseEndpoint{BrowseID: "MPREalbum"}},
+		},
+		{},
+	}, nil).Once()
 
 	got, err := NewAdapter(m).SearchAlbums(t.Context(), "Artist", "Album")
 
@@ -284,44 +395,6 @@ func TestAdapterUncloak(t *testing.T) {
 	require.Empty(t, gotType)
 	require.Empty(t, gotID)
 	require.ErrorIs(t, err, release.ErrUnsupportedOperation)
-}
-
-func searchItem(videoID, title, artist, albumID, albumTitle, cover string) responsiveListItem {
-	artistRun := metadataRun(artist, artist+"-id", "MUSIC_PAGE_TYPE_ARTIST")
-	albumRun := metadataRun(albumTitle, albumID, "MUSIC_PAGE_TYPE_ALBUM")
-	item := responsiveListItem{
-		FlexColumns: []flexColumn{{}, {}},
-	}
-	item.Thumbnail.Renderer.Thumbnail.Thumbnails = []thumbnail{{URL: cover, Width: 120, Height: 120}}
-	item.PlaylistItemData.VideoID = videoID
-	item.FlexColumns[0].Renderer.Text.Runs = []run{{Text: title}}
-	item.FlexColumns[1].Renderer.Text.Runs = []run{artistRun, {Text: " • "}, albumRun}
-	return item
-}
-
-func metadataRun(textValue, browseID, pageType string) run {
-	value := run{
-		Text: textValue,
-		NavigationEndpoint: navigationEndpoint{BrowseEndpoint: browseEndpoint{
-			BrowseID: browseID,
-		}},
-	}
-	value.NavigationEndpoint.BrowseEndpoint.Context.Music.PageType = pageType
-	return value
-}
-
-func itemWithVideoID(id string) responsiveListItem {
-	item := responsiveListItem{}
-	item.PlaylistItemData.VideoID = id
-	return item
-}
-
-func itemWithWatchEndpoint(id string) responsiveListItem {
-	item := responsiveListItem{FlexColumns: []flexColumn{{}}}
-	item.FlexColumns[0].Renderer.Text.Runs = []run{{
-		NavigationEndpoint: navigationEndpoint{WatchEndpoint: watchEndpoint{VideoID: id}},
-	}}
-	return item
 }
 
 type clientMock struct {

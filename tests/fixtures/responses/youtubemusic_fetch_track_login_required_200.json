@@ -1,0 +1,30 @@
+{
+  "playabilityStatus": {
+    "status": "LOGIN_REQUIRED",
+    "reason": "Sign in to confirm you’re not a bot",
+    "errorScreen": {
+      "playerErrorMessageRenderer": {
+        "reason": {
+          "runs": [
+            {
+              "text": "Sign in to confirm you’re not a bot"
+            }
+          ]
+        },
+        "subreason": {
+          "runs": [
+            {
+              "text": "This helps protect our community. "
+            },
+            {
+              "text": "Learn more"
+            }
+          ]
+        },
+        "icon": {
+          "iconType": "ERROR_OUTLINE"
+        }
+      }
+    }
+  }
+}

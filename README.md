@@ -229,7 +229,9 @@ needs it.
 `FetchTrack`, `FetchAlbum`, and `Uncloak` require a non-empty ID. They return
 `ErrInvalidID` for an empty or whitespace-only ID. A fetch returns
 `ErrNotFound` when the provider reports that no release exists for the supplied
-ID. Searches use `ErrInvalidSearchQuery` only when both query fields are empty.
+ID, or `ErrScrapingBlocked` when the provider blocks automated metadata
+retrieval. Searches use `ErrInvalidSearchQuery` only when both query fields are
+empty.
 
 #### Provider
 

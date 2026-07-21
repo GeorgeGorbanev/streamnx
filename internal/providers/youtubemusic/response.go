@@ -119,6 +119,9 @@ type responsiveHeader struct {
 }
 
 type playerResponse struct {
+	PlayabilityStatus struct {
+		Status string `json:"status"`
+	} `json:"playabilityStatus"`
 	VideoDetails videoDetails `json:"videoDetails"`
 	Microformat  struct {
 		Renderer struct {

@@ -167,6 +167,7 @@ func TestAdapterFetchTrackErrors(t *testing.T) {
 		message string
 	}{
 		{name: "not found", input: errNotFound, want: release.ErrNotFound},
+		{name: "login required", input: errLoginRequired, want: release.ErrScrapingBlocked},
 		{name: "client error", input: errors.New("boom"), message: "failed to get track from youtube music: boom"},
 	}
 

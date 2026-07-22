@@ -53,6 +53,11 @@ func TestBandcampAdapter_ParseLink(t *testing.T) {
 			expectedOK: false,
 		},
 		{
+			name:       "custom domain is not recognized without search context",
+			input:      "https://fantasticvoyage.com/track/natalie-imbruglia-torn-mad-gavs-909-edit",
+			expectedOK: false,
+		},
+		{
 			name:       "album URL with invalid host",
 			input:      "https://autechre.danbcamp.com/album/amber",
 			expectedOK: false,
@@ -260,12 +265,24 @@ func TestBandcampAdapter_searchTracks(t *testing.T) {
 							URL:         "https://autechre.bandcamp.com/track/nil",
 						},
 						{
+							NumericID:  852027615,
+							Name:       "Natalie Imbruglia - Torn (mad gavs 909 Edit)",
+							AlbumTitle: "mad gavs' 909 Edits",
+							BandName:   "mad gavs",
+							CoverURL:   "https://f4.bcbits.com/img/2537644019_3.jpg",
+							URL:        "https://fantasticvoyage.com/track/natalie-imbruglia-torn-mad-gavs-909-edit",
+						},
+						{
 							Name:        "Foil",
 							BandName:    "Autechre",
 							Description: "second track description",
 							URL:         "https://autechre.bandcamp.com/track/foil",
 						},
 					}, nil).
+					Once()
+				m.
+					On("resolveSearchResultURL", trackEntityType, uint64(852027615)).
+					Return("https://fantastictrax.bandcamp.com/track/natalie-imbruglia-torn-mad-gavs-909-edit", nil).
 					Once()
 			},
 			expectedTracks: []release.SearchTrack{
@@ -277,6 +294,16 @@ func TestBandcampAdapter_searchTracks(t *testing.T) {
 					Provider:    release.Bandcamp,
 					Creator:     "Autechre",
 					Description: "first track description",
+				},
+				{
+					ID:         "fantastictrax:natalie-imbruglia-torn-mad-gavs-909-edit",
+					Title:      "Natalie Imbruglia - Torn (mad gavs 909 Edit)",
+					Artist:     "mad gavs",
+					AlbumTitle: "mad gavs' 909 Edits",
+					URL:        "https://fantastictrax.bandcamp.com/track/natalie-imbruglia-torn-mad-gavs-909-edit",
+					CoverURL:   "https://f4.bcbits.com/img/2537644019_3.jpg",
+					Provider:   release.Bandcamp,
+					Creator:    "mad gavs",
 				},
 				{
 					ID:          "autechre:foil",
@@ -312,9 +339,31 @@ func TestBandcampAdapter_searchTracks(t *testing.T) {
 					Once()
 			},
 			expectedErr: errNotFound,
+			errContains: "failed to search track on bandcamp",
 		},
 		{
-			name:   "invalid candidate URL",
+			name:   "unresolvable candidate fails the whole search",
+			artist: "sample artist",
+			title:  "sample track",
+			mockClient: func(m *clientMock) {
+				m.
+					On("searchTracks", "sample artist", "sample track").
+					Return([]Entity{
+						{Name: "First", BandName: "First Artist", URL: "https://first.bandcamp.com/track/first"},
+						{NumericID: 852027615, Name: "Invalid", BandName: "Invalid Artist", URL: "https://custom.example/track/invalid"},
+						{Name: "Last", BandName: "Last Artist", URL: "https://last.bandcamp.com/track/last"},
+					}, nil).
+					Once()
+				m.
+					On("resolveSearchResultURL", trackEntityType, uint64(852027615)).
+					Return("", errNotFound).
+					Once()
+			},
+			expectedErr: errNotFound,
+			errContains: "failed to adapt track search result at index 1 (\"https://custom.example/track/invalid\")",
+		},
+		{
+			name:   "unresolvable candidate without numeric id fails",
 			artist: "sample artist",
 			title:  "sample track",
 			mockClient: func(m *clientMock) {
@@ -328,8 +377,13 @@ func TestBandcampAdapter_searchTracks(t *testing.T) {
 						},
 					}, nil).
 					Once()
+				m.
+					On("resolveSearchResultURL", trackEntityType, uint64(0)).
+					Return("", errNotFound).
+					Once()
 			},
-			errContains: "failed to parse composite key from url",
+			expectedErr: errNotFound,
+			errContains: "failed to adapt track search result at index 0 (\"https://bandcamp.com/login\")",
 		},
 	}
 	for _, tt := range tests {
@@ -343,6 +397,9 @@ func TestBandcampAdapter_searchTracks(t *testing.T) {
 			if tt.expectedErr != nil {
 				require.Nil(t, result)
 				require.ErrorIs(t, err, tt.expectedErr)
+				if tt.errContains != "" {
+					require.ErrorContains(t, err, tt.errContains)
+				}
 			} else if tt.errContains != "" {
 				require.Nil(t, result)
 				require.ErrorContains(t, err, tt.errContains)
@@ -386,7 +443,18 @@ func TestBandcampAdapter_searchAlbums(t *testing.T) {
 							Description: "second album description",
 							URL:         "https://autechre.bandcamp.com/album/tri-repetae",
 						},
+						{
+							NumericID:   1884059585,
+							Name:        "mad gavs' 909 Edits",
+							BandName:    "mad gavs",
+							Description: "custom-domain album",
+							URL:         "https://fantasticvoyage.com/album/mad-gavs-909-edits",
+						},
 					}, nil).
+					Once()
+				m.
+					On("resolveSearchResultURL", albumEntityType, uint64(1884059585)).
+					Return("https://fantastictrax.bandcamp.com/album/mad-gavs-909-edits", nil).
 					Once()
 			},
 			expectedAlbums: []release.SearchAlbum{
@@ -407,6 +475,15 @@ func TestBandcampAdapter_searchAlbums(t *testing.T) {
 					Provider:    release.Bandcamp,
 					Creator:     "Autechre",
 					Description: "second album description",
+				},
+				{
+					ID:          "fantastictrax:mad-gavs-909-edits",
+					Title:       "mad gavs' 909 Edits",
+					Artist:      "mad gavs",
+					URL:         "https://fantastictrax.bandcamp.com/album/mad-gavs-909-edits",
+					Provider:    release.Bandcamp,
+					Creator:     "mad gavs",
+					Description: "custom-domain album",
 				},
 			},
 		},
@@ -433,9 +510,10 @@ func TestBandcampAdapter_searchAlbums(t *testing.T) {
 					Once()
 			},
 			expectedErr: errNotFound,
+			errContains: "failed to search album on bandcamp",
 		},
 		{
-			name:   "invalid candidate URL",
+			name:   "unresolvable candidate fails the whole search",
 			artist: "sample artist",
 			title:  "sample album",
 			mockClient: func(m *clientMock) {
@@ -449,8 +527,13 @@ func TestBandcampAdapter_searchAlbums(t *testing.T) {
 						},
 					}, nil).
 					Once()
+				m.
+					On("resolveSearchResultURL", albumEntityType, uint64(0)).
+					Return("", errNotFound).
+					Once()
 			},
-			errContains: "failed to parse composite key from url",
+			expectedErr: errNotFound,
+			errContains: "failed to adapt album search result at index 0 (\"https://bandcamp.com/login\")",
 		},
 	}
 	for _, tt := range tests {
@@ -464,6 +547,9 @@ func TestBandcampAdapter_searchAlbums(t *testing.T) {
 			if tt.expectedErr != nil {
 				require.Nil(t, result)
 				require.ErrorIs(t, err, tt.expectedErr)
+				if tt.errContains != "" {
+					require.ErrorContains(t, err, tt.errContains)
+				}
 			} else if tt.errContains != "" {
 				require.Nil(t, result)
 				require.ErrorContains(t, err, tt.errContains)
@@ -511,4 +597,9 @@ func (m *clientMock) searchAlbums(_ context.Context, artist, title string) ([]En
 		return nil, args.Error(1)
 	}
 	return args.Get(0).([]Entity), args.Error(1)
+}
+
+func (m *clientMock) resolveSearchResultURL(_ context.Context, et entityType, id uint64) (string, error) {
+	args := m.Called(et, id)
+	return args.String(0), args.Error(1)
 }

@@ -1,0 +1,43 @@
+{
+  "auto": {
+    "results": [
+      {
+        "type": "t",
+        "id": 101,
+        "name": "First canonical track",
+        "band_name": "Label One",
+        "album_name": "Search Neighbours",
+        "item_url_root": "https://labelone.bandcamp.com",
+        "item_url_path": "https://labelone.bandcamp.com/track/first-canonical-track",
+        "img": "https://f4.bcbits.com/img/101_3.jpg"
+      },
+      {
+        "type": "t",
+        "id": 852027615,
+        "album_id": 1884059585,
+        "album_name": "mad gavs' 909 Edits",
+        "art_id": 2537644019,
+        "band_id": 2672175732,
+        "band_name": "mad gavs",
+        "name": "Natalie Imbruglia - Torn (mad gavs 909 Edit)",
+        "img": "https://f4.bcbits.com/img/2537644019_3.jpg",
+        "item_url_root": "https://fantasticvoyage.com",
+        "item_url_path": "https://fantasticvoyage.com/track/natalie-imbruglia-torn-mad-gavs-909-edit",
+        "stat_params": "search_item_id=852027615&search_item_type=t&search_rank=2"
+      },
+      {
+        "type": "t",
+        "id": 103,
+        "name": "Last canonical track",
+        "band_name": "Label Two",
+        "album_name": "Search Neighbours",
+        "item_url_root": "https://labeltwo.bandcamp.com",
+        "item_url_path": "https://labeltwo.bandcamp.com/track/last-canonical-track",
+        "img": "https://f4.bcbits.com/img/103_3.jpg"
+      }
+    ],
+    "time_ms": 4
+  },
+  "tag": {},
+  "genre": {}
+}

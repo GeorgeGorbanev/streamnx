@@ -1,0 +1,38 @@
+{
+  "auto": {
+    "results": [
+      {
+        "type": "a",
+        "id": 201,
+        "name": "First canonical album",
+        "band_name": "Label One",
+        "item_url_root": "https://labelone.bandcamp.com",
+        "item_url_path": "https://labelone.bandcamp.com/album/first-canonical-album",
+        "img": "https://f4.bcbits.com/img/201_3.jpg"
+      },
+      {
+        "type": "a",
+        "id": 1884059585,
+        "name": "mad gavs' 909 Edits",
+        "band_id": 2672175732,
+        "band_name": "mad gavs",
+        "item_url_root": "https://fantasticvoyage.com",
+        "item_url_path": "https://fantasticvoyage.com/album/mad-gavs-909-edits",
+        "img": "https://f4.bcbits.com/img/2537644019_3.jpg",
+        "stat_params": "search_item_id=1884059585&search_item_type=a&search_rank=2"
+      },
+      {
+        "type": "a",
+        "id": 203,
+        "name": "Last canonical album",
+        "band_name": "Label Two",
+        "item_url_root": "https://labeltwo.bandcamp.com",
+        "item_url_path": "https://labeltwo.bandcamp.com/album/last-canonical-album",
+        "img": "https://f4.bcbits.com/img/203_3.jpg"
+      }
+    ],
+    "time_ms": 3
+  },
+  "tag": {},
+  "genre": {}
+}

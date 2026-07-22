@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"html"
 	"io"
 	"net/http"
 )
@@ -170,6 +171,7 @@ func (c *Client) searchEntity(ctx context.Context, et entityType, artist, title 
 	entities := make([]Entity, 0, len(respBody.Auto.Results))
 	for _, result := range respBody.Auto.Results {
 		entities = append(entities, Entity{
+			NumericID:  result.ID,
 			Name:       result.Name,
 			AlbumTitle: result.AlbumName,
 			BandName:   result.BandName,
@@ -179,4 +181,105 @@ func (c *Client) searchEntity(ctx context.Context, et entityType, artist, title 
 	}
 
 	return entities, nil
+}
+
+func (c *Client) resolveSearchResultURL(ctx context.Context, et entityType, id uint64) (string, error) {
+	if id == 0 {
+		return "", errors.New("missing numeric search result id")
+	}
+
+	entityName, err := c.embeddedPlayerEntityName(et)
+	if err != nil {
+		return "", err
+	}
+	u := fmt.Sprintf("%s://%s/EmbeddedPlayer/%s=%d/", c.apiScheme, c.apiHost, entityName, id)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, u, nil)
+	if err != nil {
+		return "", fmt.Errorf("failed to create embedded player request: %w", err)
+	}
+
+	resp, err := c.apiClient.Do(req)
+	if err != nil {
+		return "", fmt.Errorf("failed to perform embedded player request: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return "", fmt.Errorf("unexpected embedded player status code: %d", resp.StatusCode)
+	}
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return "", fmt.Errorf("failed to read embedded player response body: %w", err)
+	}
+
+	data, err := c.parseEmbeddedPlayerData(body)
+	if err != nil {
+		return "", err
+	}
+	return c.embeddedPlayerCanonicalURL(data, et, id)
+}
+
+func (c *Client) parseEmbeddedPlayerData(body []byte) (embeddedPlayerData, error) {
+	matches := embeddedPlayerDataRe.FindSubmatch(body)
+	if len(matches) != 3 {
+		return embeddedPlayerData{}, errors.New("data-player-data attribute not found in embedded player html")
+	}
+
+	raw := matches[1]
+	if len(raw) == 0 {
+		raw = matches[2]
+	}
+	if len(raw) == 0 {
+		return embeddedPlayerData{}, errors.New("data-player-data attribute is empty")
+	}
+
+	var data embeddedPlayerData
+	if err := json.Unmarshal([]byte(html.UnescapeString(string(raw))), &data); err != nil {
+		return embeddedPlayerData{}, fmt.Errorf("failed to decode data-player-data: %w", err)
+	}
+	return data, nil
+}
+
+func (c *Client) embeddedPlayerCanonicalURL(data embeddedPlayerData, et entityType, id uint64) (string, error) {
+	if isCanonicalEntityURL(et, data.Linkback) {
+		return data.Linkback, nil
+	}
+	if et == trackEntityType {
+		for _, track := range data.Tracks {
+			if track.ID == id && isCanonicalEntityURL(et, track.TitleLink) {
+				return track.TitleLink, nil
+			}
+		}
+	}
+
+	entityName, err := c.embeddedPlayerEntityName(et)
+	if err != nil {
+		return "", err
+	}
+	return "", fmt.Errorf("canonical %s url not found in embedded player data", entityName)
+}
+
+func (c *Client) embeddedPlayerEntityName(et entityType) (string, error) {
+	switch et {
+	case trackEntityType:
+		return "track", nil
+	case albumEntityType:
+		return "album", nil
+	default:
+		return "", fmt.Errorf("unsupported entity type: %q", et)
+	}
+}
+
+func isCanonicalEntityURL(et entityType, rawURL string) bool {
+	switch et {
+	case trackEntityType:
+		_, err := parseTrackLink(rawURL)
+		return err == nil
+	case albumEntityType:
+		_, err := parseAlbumLink(rawURL)
+		return err == nil
+	default:
+		return false
+	}
 }

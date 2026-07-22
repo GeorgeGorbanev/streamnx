@@ -742,6 +742,146 @@ func TestBandcampCatalogSearchAlbums(t *testing.T) {
 	}, got)
 }
 
+func TestBandcampCatalogSearchTracksResolvesCustomDomain(t *testing.T) {
+	server := newBandcampFixtureServer(t,
+		fixtures.Route{
+			Method:  http.MethodPost,
+			Path:    "/api/bcsearch_public_api/1/autocomplete_elastic",
+			Status:  http.StatusOK,
+			Fixture: "bandcamp_search_tracks_custom_domain_200.json",
+			Assert: func(t *testing.T, r *http.Request) {
+				assertBandcampSearchRequest(t, r, "mad gavs Torn", "t")
+			},
+		},
+		fixtures.Route{
+			Method:  http.MethodGet,
+			Path:    "/EmbeddedPlayer/track=852027615/",
+			Status:  http.StatusOK,
+			Fixture: "bandcamp_embedded_player_track_custom_domain_200.html",
+			Assert: func(t *testing.T, r *http.Request) {
+				require.Equal(t, "bandcamp.com", r.Host)
+			},
+		},
+		fixtures.Route{
+			Method:  http.MethodGet,
+			Path:    "/track/natalie-imbruglia-torn-mad-gavs-909-edit",
+			Status:  http.StatusOK,
+			Fixture: "bandcamp_fetch_track_custom_domain_200.html",
+			Assert: func(t *testing.T, r *http.Request) {
+				require.Equal(t, "fantastictrax.bandcamp.com", r.Host)
+			},
+		},
+	)
+	defer server.Close()
+
+	catalog := newBandcampCatalog(t, server.URL)
+	got, err := catalog.SearchTracks(t.Context(), streamnx.Bandcamp, streamnx.SearchQuery{
+		Artist: "mad gavs",
+		Title:  "Torn",
+	})
+
+	require.NoError(t, err)
+	require.Equal(t, []streamnx.SearchTrack{
+		{
+			ID:         "labelone:first-canonical-track",
+			Title:      "First canonical track",
+			Artist:     "Label One",
+			AlbumTitle: "Search Neighbours",
+			URL:        "https://labelone.bandcamp.com/track/first-canonical-track",
+			CoverURL:   "https://f4.bcbits.com/img/101_3.jpg",
+			Provider:   streamnx.Bandcamp,
+			Creator:    "Label One",
+		},
+		{
+			ID:         "fantastictrax:natalie-imbruglia-torn-mad-gavs-909-edit",
+			Title:      "Natalie Imbruglia - Torn (mad gavs 909 Edit)",
+			Artist:     "mad gavs",
+			AlbumTitle: "mad gavs' 909 Edits",
+			URL:        "https://fantastictrax.bandcamp.com/track/natalie-imbruglia-torn-mad-gavs-909-edit",
+			CoverURL:   "https://f4.bcbits.com/img/2537644019_3.jpg",
+			Provider:   streamnx.Bandcamp,
+			Creator:    "mad gavs",
+		},
+		{
+			ID:         "labeltwo:last-canonical-track",
+			Title:      "Last canonical track",
+			Artist:     "Label Two",
+			AlbumTitle: "Search Neighbours",
+			URL:        "https://labeltwo.bandcamp.com/track/last-canonical-track",
+			CoverURL:   "https://f4.bcbits.com/img/103_3.jpg",
+			Provider:   streamnx.Bandcamp,
+			Creator:    "Label Two",
+		},
+	}, got)
+
+	fetched, err := catalog.FetchTrack(t.Context(), streamnx.Bandcamp, got[1].ID)
+	require.NoError(t, err)
+	require.Equal(t, got[1].ID, fetched.ID)
+	require.Equal(t, got[1].URL, fetched.URL)
+	require.Equal(t, "fantastictrax:mad-gavs-909-edits", fetched.AlbumID)
+}
+
+func TestBandcampCatalogSearchAlbumsResolvesCustomDomain(t *testing.T) {
+	server := newBandcampFixtureServer(t,
+		fixtures.Route{
+			Method:  http.MethodPost,
+			Path:    "/api/bcsearch_public_api/1/autocomplete_elastic",
+			Status:  http.StatusOK,
+			Fixture: "bandcamp_search_albums_custom_domain_200.json",
+			Assert: func(t *testing.T, r *http.Request) {
+				assertBandcampSearchRequest(t, r, "mad gavs 909 Edits", "a")
+			},
+		},
+		fixtures.Route{
+			Method:  http.MethodGet,
+			Path:    "/EmbeddedPlayer/album=1884059585/",
+			Status:  http.StatusOK,
+			Fixture: "bandcamp_embedded_player_album_custom_domain_200.html",
+			Assert: func(t *testing.T, r *http.Request) {
+				require.Equal(t, "bandcamp.com", r.Host)
+			},
+		},
+	)
+	defer server.Close()
+
+	catalog := newBandcampCatalog(t, server.URL)
+	got, err := catalog.SearchAlbums(t.Context(), streamnx.Bandcamp, streamnx.SearchQuery{
+		Artist: "mad gavs",
+		Title:  "909 Edits",
+	})
+
+	require.NoError(t, err)
+	require.Equal(t, []streamnx.SearchAlbum{
+		{
+			ID:       "labelone:first-canonical-album",
+			Title:    "First canonical album",
+			Artist:   "Label One",
+			URL:      "https://labelone.bandcamp.com/album/first-canonical-album",
+			CoverURL: "https://f4.bcbits.com/img/201_3.jpg",
+			Provider: streamnx.Bandcamp,
+			Creator:  "Label One",
+		},
+		{
+			ID:       "fantastictrax:mad-gavs-909-edits",
+			Title:    "mad gavs' 909 Edits",
+			Artist:   "mad gavs",
+			URL:      "https://fantastictrax.bandcamp.com/album/mad-gavs-909-edits",
+			CoverURL: "https://f4.bcbits.com/img/2537644019_3.jpg",
+			Provider: streamnx.Bandcamp,
+			Creator:  "mad gavs",
+		},
+		{
+			ID:       "labeltwo:last-canonical-album",
+			Title:    "Last canonical album",
+			Artist:   "Label Two",
+			URL:      "https://labeltwo.bandcamp.com/album/last-canonical-album",
+			CoverURL: "https://f4.bcbits.com/img/203_3.jpg",
+			Provider: streamnx.Bandcamp,
+			Creator:  "Label Two",
+		},
+	}, got)
+}
+
 func TestBandcampCatalogRejectsUnsupportedOperation(t *testing.T) {
 	catalog := newBandcampCatalog(t, "http://127.0.0.1")
 

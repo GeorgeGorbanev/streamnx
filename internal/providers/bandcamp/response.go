@@ -38,6 +38,7 @@ type searchRequest struct {
 type searchResponse struct {
 	Auto struct {
 		Results []struct {
+			ID          uint64 `json:"id"`
 			Name        string `json:"name"`
 			AlbumName   string `json:"album_name"`
 			BandName    string `json:"band_name"`
@@ -47,7 +48,16 @@ type searchResponse struct {
 	} `json:"auto"`
 }
 
+type embeddedPlayerData struct {
+	Linkback string `json:"linkback"`
+	Tracks   []struct {
+		ID        uint64 `json:"id"`
+		TitleLink string `json:"title_link"`
+	} `json:"tracks"`
+}
+
 type Entity struct {
+	NumericID   uint64
 	Name        string
 	AlbumTitle  string
 	AlbumURL    string
@@ -68,6 +78,7 @@ const (
 	trackEntityType entityType = "t"
 )
 
-var ldJSONRe = regexp.MustCompile(
-	`(?s)<script\s+type=["']application/ld\+json["']\s*>(.*?)</script>`,
+var (
+	ldJSONRe             = regexp.MustCompile(`(?s)<script\s+type=["']application/ld\+json["']\s*>(.*?)</script>`)
+	embeddedPlayerDataRe = regexp.MustCompile(`(?is)\bdata-player-data\s*=\s*(?:"([^"]*)"|'([^']*)')`)
 )

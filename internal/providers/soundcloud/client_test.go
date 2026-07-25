@@ -512,7 +512,7 @@ func TestClient_searchAlbums(t *testing.T) {
 					];</script></body></html>`))
 					require.NoError(t, err)
 				case "/search/albums":
-					require.Equal(t, "amber", r.URL.Query().Get("q"))
+					require.Equal(t, "autechre amber", r.URL.Query().Get("q"))
 					require.Equal(t, "test-client-id", r.URL.Query().Get("client_id"))
 					_, err := w.Write([]byte(tt.respBody))
 					require.NoError(t, err)

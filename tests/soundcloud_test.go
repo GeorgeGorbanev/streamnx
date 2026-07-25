@@ -14,13 +14,14 @@ import (
 const (
 	soundcloudSampleClientID = "QNR5nrdLOvApYERC8AOUr3VjRfHnLjle"
 
-	soundcloudTrackID        = "rick-astley-official:never-gonna-give-you-up"
-	soundcloudAlbumID        = "aikostar-music:whenever-you-need-somebody-4"
-	soundcloudSearchArtist   = "Rick Astley"
-	soundcloudSearchTrack    = "Never Gonna Give You Up"
-	soundcloudSearchAlbum    = "Whenever You Need Somebody"
-	soundcloudMissingTrackID = "rick-astley-official:missing-never-gonna-give-you-up"
-	soundcloudMissingAlbumID = "rick-astley-official:missing-whenever-you-need-somebody"
+	soundcloudTrackID           = "rick-astley-official:never-gonna-give-you-up"
+	soundcloudAlbumID           = "aikostar-music:whenever-you-need-somebody-4"
+	soundcloudSearchArtist      = "Rick Astley"
+	soundcloudSearchAlbumArtist = "Aiko Star"
+	soundcloudSearchTrack       = "Never Gonna Give You Up"
+	soundcloudSearchAlbum       = "Whenever You Need Somebody"
+	soundcloudMissingTrackID    = "rick-astley-official:missing-never-gonna-give-you-up"
+	soundcloudMissingAlbumID    = "rick-astley-official:missing-whenever-you-need-somebody"
 )
 
 func TestSoundcloudCatalogFetchTrack(t *testing.T) {
@@ -298,7 +299,7 @@ func TestSoundcloudCatalogSearchAlbums(t *testing.T) {
 		Status:  http.StatusOK,
 		Fixture: "soundcloud_search_albums_200.json",
 		Assert: func(t *testing.T, r *http.Request) {
-			require.Equal(t, soundcloudSearchAlbum, r.URL.Query().Get("q"))
+			require.Equal(t, soundcloudSearchAlbumArtist+" "+soundcloudSearchAlbum, r.URL.Query().Get("q"))
 			require.Equal(t, soundcloudSampleClientID, r.URL.Query().Get("client_id"))
 		},
 	})
@@ -306,7 +307,7 @@ func TestSoundcloudCatalogSearchAlbums(t *testing.T) {
 
 	catalog := newSoundcloudCatalog(t, server.URL)
 	got, err := catalog.SearchAlbums(t.Context(), streamnx.Soundcloud, streamnx.SearchQuery{
-		Artist: soundcloudSearchArtist,
+		Artist: soundcloudSearchAlbumArtist,
 		Title:  soundcloudSearchAlbum,
 	})
 
@@ -320,134 +321,6 @@ func TestSoundcloudCatalogSearchAlbums(t *testing.T) {
 			Provider: streamnx.Soundcloud,
 			Creator:  "Aiko Star",
 			URL:      "https://soundcloud.com/aikostar-music/sets/whenever-you-need-somebody-4",
-		},
-		{
-			ID:       "lindorff:whenever-you-need-somebody",
-			CoverURL: "https://i1.sndcdn.com/artworks-e19d0f03-3a3b-4348-abba-c95a083d8665-0-original.jpg",
-			Title:    "Whenever you need somebody",
-			Artist:   "Lindorff",
-			Provider: streamnx.Soundcloud,
-			Creator:  "Lindorff",
-			URL:      "https://soundcloud.com/lindorff/sets/whenever-you-need-somebody",
-		},
-		{
-			ID:       "nobrainerrecords:malente-zero-cash-ill-be",
-			CoverURL: "https://i1.sndcdn.com/artworks-000011838695-fcct6m-original.jpg",
-			Title:    "Malente & Zero Cash - I'll Be There (NBR011)",
-			Artist:   "No Brainer Records",
-			Provider: streamnx.Soundcloud,
-			Creator:  "No Brainer Records",
-			URL:      "https://soundcloud.com/nobrainerrecords/sets/malente-zero-cash-ill-be",
-			Description: "Whenever you need somebody …\r\n\r\n'I'll Be There'. Sounds like a love so" +
-				"ng, if it wasn't for the music. Banging techno by ZERO CASH (Televisio" +
-				"n Rocks) and MALENTE (No Brainer). Then again: Banging is not that far" +
-				" from love, is it?\r\n\r\nMODEK (Keatchen) loves a good party. His remix n" +
-				"ails your hands to the sky and your legs on the floor while shaking yo" +
-				"ur body. Funny how brutal love can be.\r\n\r\nLIGHT YEAR (Bang Gang) love " +
-				"the acid. Their raw and uncompromising take on 'I'll Be There' makes y" +
-				"ou wanna be nothing else but their 808.\r\n\r\nKILL FRENZY (Lectroluv) lov" +
-				"es bass. He bounces his techno below the surface. I think he might be " +
-				"after some Mermaids with what sounds like sexy sub abuse.\r\n\r\nIf you're" +
-				" not in love yet MALENTE & ZERO CASH make sure to break your heart wit" +
-				"h 'Hardware'. Not too many of you will be able to handle the pure amou" +
-				"nt of adrenaline this tune shoots into your body.\r\n\r\n'But don't worry," +
-				" I'll be there' \r\n\r\n\r\n\r\nBORIS DLUGOSCH \"Light Year is KILLER!!!!! Full" +
-				" support\"\r\nBOBMO \"I like the Light Year remix and Hardware , thanks!\"\r" +
-				"\nBRODINSKI \"Love the Light Year rmx! Bigup!\"\r\nBAG RAIDERS \"This is ter" +
-				"rific!!\"PUNKS JUMP UP \"Love the record! Hardware is our fav!\"\r\nSINDEN " +
-				"\"Yeah bwoy! The OG works for me. Quirky fun dance music\"\r\nTAI \"Lovely " +
-				"package. Definitely bunging Modek and Light Year rmx in my next set!\"\r" +
-				"\nBENI \"Light Year mix is for me\"\r\nMUMBAI SCIENCE \"Light Year Remix in " +
-				"our sets!\"\r\nAC SLATER \"Great release. hard to pick a fav track but Kil" +
-				"l Frenzy mix sticks out to me. Hardware is crazy with those detuned ho" +
-				"rns.\"\r\nDON RIMINI \"I play the Modek remix. And the Light Year is crazy" +
-				" ! I love the break in Hardware. Huge tracks!\"\r\nDON DIABLO \"Light Year" +
-				" mix = fire!\"\r\nMASON \"It's mad, disturbing, troubled. Thank you\"\r\n\r\n\r\n" +
-				"Zombies For Money, Ado, Russ Chimes, Moonbootica, Feadz, Tony Senghore" +
-				", Big Dope P / Moveltraxx, Neoteric, Larry Tee, Mixhell, Botnek, Utah " +
-				"Saints, Slap In The Bass, Hickup, The Aston Shuffle, Nick Catchdubs, P" +
-				"lump DJs, Jay Robinson, Joyce Muniz, Wolfie, John Roman, Blaze Tripp, " +
-				"Burns, Act Yo Age, Lorcan Mak, Jeff Doubleu, Tom Piper, Udachi, Stereo" +
-				" MCs, Danny T, Ben Mono, Maelstrom, DJ Gina Turner, Teenage Mutants, T" +
-				"om Stephan, Tagteam Terror, Acidkids, Markus Lange, Milt Mortez, Max l" +
-				"e Daron, Breakfastclub DJs, Fashen, Smalltown DJs, Voltron, Mat The Al" +
-				"ien, Willy Joy, B Rich, aUtOdiDakT, Oh Snap!, Designer Drugs, Ursula 1" +
-				"000, Rishi Romero, Fex Fellini, Ajax, Twist It!, Pete Carvell (Bad Lif" +
-				"e), 3 Is A Crowd, Max Cherry, BREAKS lda, \r\n\r\n\r\nRambaud Ludovic (Only " +
-				"For Djs Mag), Nina (Triple J Radio, Australia), Jérémie Anticlimax (Ts" +
-				"ugi Mag France), Andre Langenfeld (Radio Fritz, Berlin),  DJ Pffff (Ra" +
-				"zzmatazz BCN), Tommy Yamaha (on 3 radio germany), Dj Dmit.ry (Central " +
-				"Station Radost FX, GOX Radi0 Czech), HARPER (Boogie Mafia, Polskie Rad" +
-				"io 4), Robert Borzym (Polsike Radio Euro), K. Ramba (TheNewFrenchTouch" +
-				"), Richard Heinemann (T M I Radio ARA, Luxemburg), John Buergin (Schwe" +
-				"izer Rundfunk DRS Virus), Michal Stolárik (Hochspannung / Slavakia), M" +
-				"ister Sushi (ibreaks.co.uk / London)",
-		},
-		{
-			ID:       "oneill-fernandes:you-light-up-my-life",
-			CoverURL: "https://i1.sndcdn.com/artworks-vNExEuqkbwmbkdXv-Fz9UjA-original.jpg",
-			Title:    "You Light Up My Life",
-			Artist:   "O'Neill Fernandes",
-			Provider: streamnx.Soundcloud,
-			Creator:  "O'Neill Fernandes",
-			URL:      "https://soundcloud.com/oneill-fernandes/sets/you-light-up-my-life",
-			Description: "This album is ‘You Light Up My Life’ which is my 53rd Album and contin" +
-				"ues with more classic dance hits across the genres and generations and" +
-				" contains music from 1971 to 2013. So, there is something in it for ev" +
-				"eryone…\n\t\t\t\t\t\n‘Together Forever’ is a song recorded by English singer-" +
-				"songwriter Rick Astley and released by RCA and BMG as the fourth singl" +
-				"e from his debut album, ‘Whenever You Need Somebody’ (1987). \n\n‘Never " +
-				"Gonna Give You Up’ is a pop song by English singer Rick Astley, releas" +
-				"ed on 27 July 1987. Written and produced by Stock Aitken Waterman, it " +
-				"was released as the first single from Astley's debut studio album, ‘Wh" +
-				"enever You Need Somebody’.\n\n‘Wake Me Up’ is a song by Swedish DJ and r" +
-				"ecord producer Avicii, released as the lead single from his debut stud" +
-				"io album ‘True’ on 17 June 2013. \n\n‘Ain't No Sunshine’ is a song by Bi" +
-				"ll Withers, from his 1971 debut album ‘Just As I Am’ and produced by B" +
-				"ooker T. Jones.\n\n‘The Lazy Song’ is a song by American singer-songwrit" +
-				"er Bruno Mars for his debut studio album, ‘Doo-Wops & Hooligans’ and r" +
-				"eleased on February 15, 2011.\n\n‘I Need More of You’ is a song written " +
-				"by David Bellamy and recorded by American country music duo The Bellam" +
-				"y Brothers. It was released in January 1985 as the third single from t" +
-				"he album ‘Restless’. \n\n‘Blame It On The Fire In My Heart’ is a song by" +
-				" American country music duo The Bellamy Brothers. It was released in J" +
-				"anuary 1992 from the album ‘Beggars and Heroes’. \n\n‘Matrimony’ is a so" +
-				"ng by Gilbert O’Sullivan and was released in August 1971 from the albu" +
-				"m ‘Himself’. \n\n‘Leave a Light On’ is a song by American singer Belinda" +
-				" Carlisle, recorded for her third studio album ‘Runaway Horses’ releas" +
-				"ed on Sept 25, 1989. \n\n‘Dreams’ is a song by the British American rock" +
-				" band Fleetwood Mac, written and sung by Stevie Nicks for the band's e" +
-				"leventh studio album, ‘Rumours’ and released on 24 March 1977.\n\n‘Me an" +
-				"d You and a Dog Named Boo’ is the March 1971 debut single by Lobo. Wri" +
-				"tten by Lobo under his real name Kent LaVoie, it appears on the ‘Intro" +
-				"ducing Lobo’ album.\n\n‘Sky High’ is a song by British band Jigsaw. It w" +
-				"as released as a single in 1975 and was the main title theme to the fi" +
-				"lm ‘The Man from Hong Kong’. The song was a worldwide hit in the latte" +
-				"r part of 1975, reaching No. 3 on the Billboard Hot 100. \n\n‘If You Thi" +
-				"nk You Know How to Love Me’ is a song by British rock band Smokie. It " +
-				"was first released in June 1975 as a single and appeared on the album " +
-				"‘Changing All the Time’. \n\n‘Fast Car’ is the debut single by American " +
-				"singer-songwriter Tracy Chapman, released on April 6, 1988, as the lea" +
-				"d single from her 1988 self-titled debut studio album.\n\n‘Lost in Franc" +
-				"e’ is a song recorded by Welsh singer Bonnie Tyler. It was released as" +
-				" a single in September 1976 by RCA Records, written by her producers a" +
-				"nd songwriters Ronnie Scott and Steve Wolfe. \n\n‘In These Arms’ is a so" +
-				"ng by American rock band Bon Jovi, released on May 3, 1993, as the thi" +
-				"rd single from the band's fifth studio album, ‘Keep the Faith’ (1992)." +
-				" \n\n‘Baby I'm A Want You’ is the fourth album by Bread, released in Jan" +
-				" 1972. Its singles included the title cut which reached No. 3 on the B" +
-				"illboard Top 100. \n\n‘Magic Woman Touch’ is a song by The Hollies relea" +
-				"sed in 1972 from their studio Album ‘A Selection’\n\n‘A Little Peace’ is" +
-				" a song recorded by German singer Nicole, with music composed by Ralph" +
-				" Siegel and German lyrics written by Bernd Meinunger. It represented G" +
-				"ermany in the Eurovision Song Contest 1982.\n\n‘I Have Always Loved You " +
-				"is a song by Enrique Iglesias released in 1999 from the album ‘Enrique" +
-				"’.\n\n‘You Light Up My Life’ is the first solo album from singer Debby B" +
-				"oone released on Jun 15, 1977, and reached No. 1 on the Billboard Hot " +
-				"100.\n\nSo, despite all my health issues and challenges, I present to yo" +
-				"u a timeless Album filled with nostalgic hits of the past and present." +
-				" \n\nMusic Videos for this album is on YouTube…link is below:\nwww.youtub" +
-				"e.com/@ONeillFernandes\n\nEnjoy!!!",
 		},
 	}, got)
 }

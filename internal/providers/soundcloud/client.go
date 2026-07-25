@@ -126,9 +126,9 @@ func (c *Client) searchTracks(ctx context.Context, artist, title string) ([]trac
 	return result.Collection, nil
 }
 
-func (c *Client) searchAlbums(ctx context.Context, _, title string) ([]album, error) {
+func (c *Client) searchAlbums(ctx context.Context, artist, title string) ([]album, error) {
 	body, err := c.getAPI(ctx, "/search/albums", url.Values{
-		"q": []string{title},
+		"q": []string{artist + " " + title},
 	})
 	if err != nil {
 		return nil, err

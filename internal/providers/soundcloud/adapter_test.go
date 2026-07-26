@@ -2,6 +2,7 @@ package soundcloud
 
 import (
 	"context"
+	"errors"
 	"testing"
 
 	"github.com/stretchr/testify/mock"
@@ -178,6 +179,14 @@ func TestSoundcloudAdapter_fetchTrack(t *testing.T) {
 }
 
 func TestSoundcloudAdapter_fetchAlbum(t *testing.T) {
+	const (
+		firstID    int64 = 3_000_000_001
+		secondID   int64 = 3_000_000_002
+		missingID  int64 = 3_000_000_003
+		foundURN         = "soundcloud:tracks:found"
+		missingURN       = "soundcloud:tracks:missing"
+	)
+
 	tests := []struct {
 		name          string
 		id            string
@@ -233,6 +242,113 @@ func TestSoundcloudAdapter_fetchAlbum(t *testing.T) {
 			},
 		},
 		{
+			name: "enriches numeric track placeholders",
+			id:   "forss:soulhack",
+			mockClient: func(m *clientMock) {
+				m.
+					On("fetchAlbum", "forss", "soulhack").
+					Return(album{
+						Title:     "Soulhack",
+						Permalink: "soulhack",
+						User: user{
+							Username:  "Forss",
+							Permalink: "forss",
+						},
+						Tracks: []track{
+							{
+								Title:        "Already full",
+								PermalinkURL: "https://soundcloud.com/forss/already-full",
+							},
+							{ID: firstID},
+							{
+								Title:     "Full from slugs",
+								Permalink: "full-from-slugs",
+								User:      user{Permalink: "forss"},
+							},
+							{ID: secondID},
+							{ID: firstID},
+							{ID: missingID},
+						},
+					}, nil).
+					Once()
+				m.
+					On("fetchTracksByNumericIDs", []int64{firstID, secondID, missingID}).
+					Return([]track{
+						{
+							ID:           secondID,
+							URN:          "soundcloud:tracks:3000000002",
+							Title:        "Second hydrated",
+							PermalinkURL: "https://soundcloud.com/forss/second-hydrated",
+						},
+						{
+							ID:           firstID,
+							URN:          "soundcloud:tracks:3000000001",
+							Title:        "First hydrated",
+							PermalinkURL: "https://soundcloud.com/forss/first-hydrated",
+						},
+					}, nil).
+					Once()
+			},
+			expectedAlbum: release.Album{
+				ID:       "forss:soulhack",
+				Title:    "Soulhack",
+				Artist:   "Forss",
+				URL:      "https://soundcloud.com/forss/sets/soulhack",
+				Provider: release.Soundcloud,
+				Creator:  "Forss",
+				TrackIDs: []string{
+					"forss:already-full",
+					"forss:first-hydrated",
+					"forss:full-from-slugs",
+					"forss:second-hydrated",
+					"forss:first-hydrated",
+				},
+			},
+		},
+		{
+			name: "enriches urn-only track placeholders",
+			id:   "forss:soulhack",
+			mockClient: func(m *clientMock) {
+				m.
+					On("fetchAlbum", "forss", "soulhack").
+					Return(album{
+						Title:     "Soulhack",
+						Permalink: "soulhack",
+						User: user{
+							Username:  "Forss",
+							Permalink: "forss",
+						},
+						Tracks: []track{
+							{URN: foundURN},
+							{URN: missingURN},
+							{},
+						},
+					}, nil).
+					Once()
+				m.
+					On("fetchTrackByURN", foundURN).
+					Return(track{
+						URN:          foundURN,
+						Title:        "URN hydrated",
+						PermalinkURL: "https://soundcloud.com/forss/urn-hydrated",
+					}, nil).
+					Once()
+				m.
+					On("fetchTrackByURN", missingURN).
+					Return(nil, errNotFound).
+					Once()
+			},
+			expectedAlbum: release.Album{
+				ID:       "forss:soulhack",
+				Title:    "Soulhack",
+				Artist:   "Forss",
+				URL:      "https://soundcloud.com/forss/sets/soulhack",
+				Provider: release.Soundcloud,
+				Creator:  "Forss",
+				TrackIDs: []string{"forss:urn-hydrated"},
+			},
+		},
+		{
 			name: "not found ID",
 			id:   "forss:soulhack",
 			mockClient: func(m *clientMock) {
@@ -242,6 +358,24 @@ func TestSoundcloudAdapter_fetchAlbum(t *testing.T) {
 					Once()
 			},
 			expectedErr: release.ErrNotFound.Error(),
+		},
+		{
+			name: "track hydration failure is operational",
+			id:   "forss:soulhack",
+			mockClient: func(m *clientMock) {
+				m.
+					On("fetchAlbum", "forss", "soulhack").
+					Return(album{
+						Tracks: []track{{ID: 3_000_000_001}},
+					}, nil).
+					Once()
+				m.
+					On("fetchTracksByNumericIDs", []int64{3_000_000_001}).
+					Return(nil, errors.New("sample hydration error")).
+					Once()
+			},
+			expectedErr: "failed to enrich incomplete soundcloud album tracks: " +
+				"failed to enrich numeric track placeholders: sample hydration error",
 		},
 		{
 			name:        "invalid composite key",
@@ -543,6 +677,22 @@ func (m *clientMock) fetchAlbum(_ context.Context, userSlug, setSlug string) (al
 		return album{}, args.Error(1)
 	}
 	return args.Get(0).(album), args.Error(1)
+}
+
+func (m *clientMock) fetchTracksByNumericIDs(_ context.Context, ids []int64) ([]track, error) {
+	args := m.Called(ids)
+	if args.Get(0) == nil {
+		return nil, args.Error(1)
+	}
+	return args.Get(0).([]track), args.Error(1)
+}
+
+func (m *clientMock) fetchTrackByURN(_ context.Context, urn string) (track, error) {
+	args := m.Called(urn)
+	if args.Get(0) == nil {
+		return track{}, args.Error(1)
+	}
+	return args.Get(0).(track), args.Error(1)
 }
 
 func (m *clientMock) searchTracks(_ context.Context, artist, title string) ([]track, error) {

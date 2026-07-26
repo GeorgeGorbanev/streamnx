@@ -1,6 +1,8 @@
 package soundcloud
 
 type track struct {
+	ID                int64             `json:"id"`
+	URN               string            `json:"urn"`
 	ArtworkURL        string            `json:"artwork_url"`
 	Title             string            `json:"title"`
 	Description       string            `json:"description"`

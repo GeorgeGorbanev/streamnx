@@ -18,6 +18,8 @@ type Adapter struct {
 type adapterClient interface {
 	fetchTrack(ctx context.Context, userSlug, trackSlug string) (track, error)
 	fetchAlbum(ctx context.Context, userSlug, setSlug string) (album, error)
+	fetchTracksByNumericIDs(ctx context.Context, ids []int64) ([]track, error)
+	fetchTrackByURN(ctx context.Context, urn string) (track, error)
 	searchTracks(ctx context.Context, artist, title string) ([]track, error)
 	searchAlbums(ctx context.Context, artist, title string) ([]album, error)
 }
@@ -103,9 +105,15 @@ func (a *Adapter) FetchAlbum(ctx context.Context, id string) (release.Album, err
 		return release.Album{}, fmt.Errorf("failed to get album from soundcloud: %w", err)
 	}
 
+	if !a.albumTracksComplete(album.Tracks) {
+		if err := a.enrichIncompleteAlbumTracks(ctx, &album); err != nil {
+			return release.Album{}, fmt.Errorf("failed to enrich incomplete soundcloud album tracks: %w", err)
+		}
+	}
+
 	trackIDs := make([]string, 0, len(album.Tracks))
 	for _, track := range album.Tracks {
-		if track.PermalinkURL == "" && (track.User.Permalink == "" || track.Permalink == "") {
+		if !a.trackHasPermalink(track) {
 			continue
 		}
 		key, err := parseTrackLink(trackLink(track))
@@ -132,6 +140,90 @@ func (a *Adapter) FetchAlbum(ctx context.Context, id string) (release.Album, err
 		Description: album.Description,
 		TrackIDs:    trackIDs,
 	}, nil
+}
+
+func (a *Adapter) enrichIncompleteAlbumTracks(ctx context.Context, album *album) error {
+	numericIDs := make([]int64, 0)
+	urns := make([]string, 0)
+	seenNumericIDs := make(map[int64]struct{})
+	seenURNs := make(map[string]struct{})
+
+	for _, t := range album.Tracks {
+		if a.trackHasPermalink(t) {
+			continue
+		}
+		if t.ID != 0 {
+			if _, seen := seenNumericIDs[t.ID]; seen {
+				continue
+			}
+			seenNumericIDs[t.ID] = struct{}{}
+			numericIDs = append(numericIDs, t.ID)
+			continue
+		}
+		if t.URN == "" {
+			continue
+		}
+		if _, seen := seenURNs[t.URN]; seen {
+			continue
+		}
+		seenURNs[t.URN] = struct{}{}
+		urns = append(urns, t.URN)
+	}
+
+	hydratedByNumericID := make(map[int64]track, len(numericIDs))
+	if len(numericIDs) > 0 {
+		hydrated, err := a.client.fetchTracksByNumericIDs(ctx, numericIDs)
+		if err != nil {
+			return fmt.Errorf("failed to enrich numeric track placeholders: %w", err)
+		}
+		for _, t := range hydrated {
+			if t.ID != 0 {
+				hydratedByNumericID[t.ID] = t
+			}
+		}
+	}
+
+	hydratedByURN := make(map[string]track, len(urns))
+	for _, urn := range urns {
+		hydrated, err := a.client.fetchTrackByURN(ctx, urn)
+		switch {
+		case errors.Is(err, errNotFound):
+			continue
+		case err != nil:
+			return fmt.Errorf("failed to enrich urn track placeholder %q: %w", urn, err)
+		}
+		if hydrated.URN != "" {
+			hydratedByURN[hydrated.URN] = hydrated
+		}
+	}
+
+	for i, t := range album.Tracks {
+		if a.trackHasPermalink(t) {
+			continue
+		}
+		if hydrated, ok := hydratedByNumericID[t.ID]; t.ID != 0 && ok {
+			album.Tracks[i] = hydrated
+			continue
+		}
+		if hydrated, ok := hydratedByURN[t.URN]; t.ID == 0 && ok {
+			album.Tracks[i] = hydrated
+		}
+	}
+
+	return nil
+}
+
+func (a *Adapter) albumTracksComplete(tracks []track) bool {
+	for _, t := range tracks {
+		if !a.trackHasPermalink(t) {
+			return false
+		}
+	}
+	return true
+}
+
+func (a *Adapter) trackHasPermalink(t track) bool {
+	return t.PermalinkURL != "" || (t.User.Permalink != "" && t.Permalink != "")
 }
 
 func (a *Adapter) SearchTracks(ctx context.Context, artist, title string) ([]release.SearchTrack, error) {

@@ -3,6 +3,7 @@ package tests
 import (
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -70,12 +71,26 @@ func TestSoundcloudCatalogFetchTrackNotFound(t *testing.T) {
 }
 
 func TestSoundcloudCatalogFetchAlbum(t *testing.T) {
-	server := newSoundcloudFixtureServer(t, fixtures.Route{
-		Method:  http.MethodGet,
-		Path:    "/aikostar-music/sets/whenever-you-need-somebody-4",
-		Status:  http.StatusOK,
-		Fixture: "soundcloud_fetch_album_200.html",
-	})
+	server := newSoundcloudFixtureServer(t,
+		fixtures.Route{
+			Method:  http.MethodGet,
+			Path:    "/aikostar-music/sets/whenever-you-need-somebody-4",
+			Status:  http.StatusOK,
+			Fixture: "soundcloud_fetch_album_200.html",
+		},
+		fixtures.Route{
+			Method:  http.MethodGet,
+			Path:    "/tracks",
+			Status:  http.StatusOK,
+			Fixture: "soundcloud_fetch_album_tracks_200.json",
+			Assert: func(t *testing.T, r *http.Request) {
+				require.Equal(t, url.Values{
+					"client_id": {soundcloudSampleClientID},
+					"ids":       {"2206838003"},
+				}, r.URL.Query())
+			},
+		},
+	)
 	defer server.Close()
 
 	catalog := newSoundcloudCatalog(t, server.URL)
@@ -99,6 +114,7 @@ func TestSoundcloudCatalogFetchAlbum(t *testing.T) {
 			"aikostar-music:edge-of-destruction",
 			"aikostar-music:more-than-life",
 			"aikostar-music:paper-cuts",
+			"aikostar-music:all-night-long",
 		},
 	}, got)
 }

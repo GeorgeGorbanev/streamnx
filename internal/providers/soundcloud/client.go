@@ -9,6 +9,8 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"strconv"
+	"strings"
 	"sync"
 )
 
@@ -106,6 +108,39 @@ func (c *Client) fetchAlbum(ctx context.Context, userSlug, setSlug string) (albu
 		return album{}, fmt.Errorf("failed to unmarshal playlist hydration data: %w", err)
 	}
 	return a, nil
+}
+
+func (c *Client) fetchTracksByNumericIDs(ctx context.Context, ids []int64) ([]track, error) {
+	rawIDs := make([]string, len(ids))
+	for i, id := range ids {
+		rawIDs[i] = strconv.FormatInt(id, 10)
+	}
+	body, err := c.getAPI(ctx, "/tracks", url.Values{
+		"ids": []string{strings.Join(rawIDs, ",")},
+	})
+	if err != nil {
+		return nil, fmt.Errorf("failed to fetch tracks by numeric ids: %w", err)
+	}
+
+	var tracks []track
+	if err := json.Unmarshal(body, &tracks); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal tracks by numeric ids response: %w", err)
+	}
+	return tracks, nil
+}
+
+func (c *Client) fetchTrackByURN(ctx context.Context, urn string) (track, error) {
+	escapedURN := strings.ReplaceAll(url.PathEscape(urn), ":", "%3A")
+	body, err := c.getAPI(ctx, "/tracks/"+escapedURN, url.Values{})
+	if err != nil {
+		return track{}, fmt.Errorf("failed to fetch track by urn %q: %w", urn, err)
+	}
+
+	var t track
+	if err := json.Unmarshal(body, &t); err != nil {
+		return track{}, fmt.Errorf("failed to unmarshal track by urn %q response: %w", urn, err)
+	}
+	return t, nil
 }
 
 func (c *Client) searchTracks(ctx context.Context, artist, title string) ([]track, error) {

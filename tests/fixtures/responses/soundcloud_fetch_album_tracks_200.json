@@ -1,0 +1,24 @@
+[
+  {
+    "id": 2206838003,
+    "urn": "soundcloud:tracks:2206838003",
+    "kind": "track",
+    "title": "All Night Long",
+    "permalink": "all-night-long",
+    "permalink_url": "https://soundcloud.com/aikostar-music/all-night-long",
+    "duration": 30000,
+    "full_duration": 208000,
+    "release_date": "2025-11-14T00:00:00Z",
+    "monetization_model": "NOT_APPLICABLE",
+    "policy": "SNIP",
+    "publisher_metadata": {
+      "artist": "Aiko Star",
+      "album_title": "Whenever You Need Somebody"
+    },
+    "user": {
+      "username": "Aiko Star",
+      "permalink": "aikostar-music",
+      "permalink_url": "https://soundcloud.com/aikostar-music"
+    }
+  }
+]

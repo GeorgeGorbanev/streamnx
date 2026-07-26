@@ -1,6 +1,7 @@
 package soundcloud
 
 import (
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"sync"
@@ -45,6 +46,7 @@ func TestClient_fetchTrack(t *testing.T) {
 			];</script></body></html>`,
 			wantReqPath: "/forss/flickermood",
 			want: track{
+				URN:          "soundcloud:tracks:293",
 				Title:        "Flickermood",
 				Description:  "sample track description",
 				Permalink:    "flickermood",
@@ -161,6 +163,27 @@ func TestClient_fetchAlbum(t *testing.T) {
 			},
 		},
 		{
+			name:       "returns placeholder without additional requests",
+			userSlug:   "artist",
+			setSlug:    "album",
+			respStatus: http.StatusOK,
+			respBody: `<html><body><script>window.__sc_hydration = [
+				{"hydratable":"playlist","data":{
+					"title":"Album",
+					"permalink":"album",
+					"permalink_url":"https://soundcloud.com/artist/sets/album",
+					"tracks":[{"kind":"track"}]
+				}}
+			];</script></body></html>`,
+			wantReqPath: "/artist/sets/album",
+			want: album{
+				Title:        "Album",
+				Permalink:    "album",
+				PermalinkURL: "https://soundcloud.com/artist/sets/album",
+				Tracks:       []track{{}},
+			},
+		},
+		{
 			name:        "when not found",
 			userSlug:    "missing",
 			setSlug:     "album",
@@ -181,7 +204,9 @@ func TestClient_fetchAlbum(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			var requests atomic.Int32
 			srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				requests.Add(1)
 				require.Equal(t, tt.wantReqPath, r.URL.Path)
 				w.WriteHeader(tt.respStatus)
 				_, err := w.Write([]byte(tt.respBody))
@@ -198,6 +223,269 @@ func TestClient_fetchAlbum(t *testing.T) {
 			} else {
 				require.EqualError(t, err, tt.wantErr)
 			}
+			require.Equal(t, int32(1), requests.Load())
+		})
+	}
+}
+
+func TestClient_fetchTracksByNumericIDs(t *testing.T) {
+	const (
+		firstID      int64 = 3_000_000_001
+		secondID     int64 = 3_000_000_002
+		testClientID       = "test-client-id"
+	)
+
+	requestErr := errors.New("sample transport failure")
+	tests := []struct {
+		name                 string
+		ids                  []int64
+		wantIDs              string
+		responseStatus       int
+		responseBody         string
+		want                 []track
+		wantErrContains      string
+		errIs                error
+		transportErr         error
+		wantClientIDRequests int32
+	}{
+		{
+			name:           "returns provider response order",
+			ids:            []int64{firstID, secondID},
+			wantIDs:        "3000000001,3000000002",
+			responseStatus: http.StatusOK,
+			responseBody: `[
+				{"id":3000000002,"urn":"soundcloud:tracks:3000000002","title":"Second hydrated","permalink":"second-hydrated","permalink_url":"https://soundcloud.com/artist/second-hydrated","user":{"permalink":"artist"}},
+				{"id":3000000001,"urn":"soundcloud:tracks:3000000001","title":"First hydrated","permalink":"first-hydrated","permalink_url":"https://soundcloud.com/artist/first-hydrated","user":{"permalink":"artist"}}
+			]`,
+			want: []track{
+				{
+					ID:           secondID,
+					URN:          "soundcloud:tracks:3000000002",
+					Title:        "Second hydrated",
+					Permalink:    "second-hydrated",
+					PermalinkURL: "https://soundcloud.com/artist/second-hydrated",
+					User:         user{Permalink: "artist"},
+				},
+				{
+					ID:           firstID,
+					URN:          "soundcloud:tracks:3000000001",
+					Title:        "First hydrated",
+					Permalink:    "first-hydrated",
+					PermalinkURL: "https://soundcloud.com/artist/first-hydrated",
+					User:         user{Permalink: "artist"},
+				},
+			},
+			wantClientIDRequests: 1,
+		},
+		{
+			name:           "returns partial provider response",
+			ids:            []int64{200, 201},
+			wantIDs:        "200,201",
+			responseStatus: http.StatusOK,
+			responseBody: `[
+				{"id":201,"urn":"soundcloud:tracks:201","title":"Hydrated","permalink":"hydrated","permalink_url":"https://soundcloud.com/artist/hydrated"}
+			]`,
+			want: []track{
+				{
+					ID:           201,
+					URN:          "soundcloud:tracks:201",
+					Title:        "Hydrated",
+					Permalink:    "hydrated",
+					PermalinkURL: "https://soundcloud.com/artist/hydrated",
+				},
+			},
+			wantClientIDRequests: 1,
+		},
+		{
+			name:            "returns request error",
+			ids:             []int64{200},
+			wantIDs:         "200",
+			transportErr:    requestErr,
+			wantErrContains: "failed to fetch tracks by numeric ids",
+			errIs:           requestErr,
+		},
+		{
+			name:                 "returns status error",
+			ids:                  []int64{200},
+			wantIDs:              "200",
+			responseStatus:       http.StatusNotFound,
+			wantErrContains:      "failed to fetch tracks by numeric ids: not found",
+			errIs:                errNotFound,
+			wantClientIDRequests: 1,
+		},
+		{
+			name:                 "returns malformed response error",
+			ids:                  []int64{200},
+			wantIDs:              "200",
+			responseStatus:       http.StatusOK,
+			responseBody:         `{`,
+			wantErrContains:      "failed to unmarshal tracks by numeric ids response",
+			wantClientIDRequests: 1,
+		},
+	}
+
+	require.Greater(t, firstID, int64(1<<31-1))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			var clientIDRequests atomic.Int32
+			var bulkRequests atomic.Int32
+			srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				switch r.URL.Path {
+				case "/":
+					clientIDRequests.Add(1)
+					_, err := w.Write([]byte(`<html><body><script>window.__sc_hydration = [
+						{"hydratable":"apiClient","data":{"id":"test-client-id"}}
+					];</script></body></html>`))
+					require.NoError(t, err)
+				case "/tracks":
+					bulkRequests.Add(1)
+					require.Equal(t, tt.wantIDs, r.URL.Query().Get("ids"))
+					require.Equal(t, testClientID, r.URL.Query().Get("client_id"))
+					w.WriteHeader(tt.responseStatus)
+					_, err := w.Write([]byte(tt.responseBody))
+					require.NoError(t, err)
+				default:
+					t.Fatalf("unexpected path: %s", r.URL.Path)
+				}
+			}))
+			defer srv.Close()
+
+			httpClient := srv.Client()
+			if tt.transportErr != nil {
+				baseTransport := httpClient.Transport
+				httpClient.Transport = roundTripFunc(func(r *http.Request) (*http.Response, error) {
+					if r.URL.Path == "/tracks" {
+						bulkRequests.Add(1)
+						require.Equal(t, tt.wantIDs, r.URL.Query().Get("ids"))
+						require.Equal(t, testClientID, r.URL.Query().Get("client_id"))
+						return nil, tt.transportErr
+					}
+					return baseTransport.RoundTrip(r)
+				})
+			}
+
+			client := NewClient(
+				WithWebURL(srv.URL),
+				WithAPIURL(srv.URL),
+				WithHTTPClient(httpClient),
+			)
+			if tt.transportErr != nil {
+				client.clientID = testClientID
+			}
+			got, err := client.fetchTracksByNumericIDs(t.Context(), tt.ids)
+
+			if tt.wantErrContains != "" {
+				require.Nil(t, got)
+				require.ErrorContains(t, err, tt.wantErrContains)
+				if tt.errIs != nil {
+					require.ErrorIs(t, err, tt.errIs)
+				}
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, tt.want, got)
+			}
+			require.Equal(t, tt.wantClientIDRequests, clientIDRequests.Load())
+			require.Equal(t, int32(1), bulkRequests.Load())
+		})
+	}
+}
+
+func TestClient_fetchTrackByURN(t *testing.T) {
+	const (
+		trackURN     = "soundcloud:tracks:urn-only"
+		testClientID = "test-client-id"
+	)
+
+	tests := []struct {
+		name        string
+		status      int
+		body        string
+		want        track
+		wantErr     string
+		errIs       error
+		wantAPICall int32
+	}{
+		{
+			name:   "found",
+			status: http.StatusOK,
+			body: `{
+				"urn":"soundcloud:tracks:urn-only",
+				"title":"URN hydrated",
+				"permalink":"urn-hydrated",
+				"permalink_url":"https://soundcloud.com/artist/urn-hydrated",
+				"user":{"permalink":"artist"}
+			}`,
+			want: track{
+				URN:          trackURN,
+				Title:        "URN hydrated",
+				Permalink:    "urn-hydrated",
+				PermalinkURL: "https://soundcloud.com/artist/urn-hydrated",
+				User:         user{Permalink: "artist"},
+			},
+			wantAPICall: 1,
+		},
+		{
+			name:        "not found",
+			status:      http.StatusNotFound,
+			wantErr:     `failed to fetch track by urn "soundcloud:tracks:urn-only": not found`,
+			errIs:       errNotFound,
+			wantAPICall: 1,
+		},
+		{
+			name:        "operational failure",
+			status:      http.StatusInternalServerError,
+			wantErr:     `failed to fetch track by urn "soundcloud:tracks:urn-only": unexpected status code: 500`,
+			wantAPICall: 1,
+		},
+		{
+			name:        "malformed response",
+			status:      http.StatusOK,
+			body:        `{`,
+			wantErr:     `failed to unmarshal track by urn "soundcloud:tracks:urn-only" response: unexpected end of JSON input`,
+			wantAPICall: 1,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			var apiRequests atomic.Int32
+			srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				switch r.URL.Path {
+				case "/":
+					_, err := w.Write([]byte(`<html><body><script>window.__sc_hydration = [
+						{"hydratable":"apiClient","data":{"id":"test-client-id"}}
+					];</script></body></html>`))
+					require.NoError(t, err)
+				case "/tracks/" + trackURN:
+					apiRequests.Add(1)
+					require.Equal(t, "/tracks/soundcloud%3Atracks%3Aurn-only", r.URL.EscapedPath())
+					require.Equal(t, testClientID, r.URL.Query().Get("client_id"))
+					w.WriteHeader(tt.status)
+					_, err := w.Write([]byte(tt.body))
+					require.NoError(t, err)
+				default:
+					t.Fatalf("unexpected path: %s", r.URL.Path)
+				}
+			}))
+			defer srv.Close()
+
+			client := NewClient(
+				WithWebURL(srv.URL),
+				WithAPIURL(srv.URL),
+			)
+			got, err := client.fetchTrackByURN(t.Context(), trackURN)
+
+			if tt.wantErr != "" {
+				require.EqualError(t, err, tt.wantErr)
+				require.Zero(t, got)
+				if tt.errIs != nil {
+					require.ErrorIs(t, err, tt.errIs)
+				}
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, tt.want, got)
+			}
+			require.Equal(t, tt.wantAPICall, apiRequests.Load())
 		})
 	}
 }
@@ -239,6 +527,7 @@ func TestClient_searchTracks(t *testing.T) {
 			}`,
 			wantTracks: []track{
 				{
+					URN:          "soundcloud:tracks:1441462279",
 					Title:        "Nil",
 					Description:  "first search description",
 					Permalink:    "nil",
@@ -250,6 +539,7 @@ func TestClient_searchTracks(t *testing.T) {
 					},
 				},
 				{
+					URN:          "soundcloud:tracks:1441462280",
 					Title:        "Nil Alternate",
 					Description:  "second search description",
 					Permalink:    "nil-alternate",
@@ -532,4 +822,10 @@ func TestClient_searchAlbums(t *testing.T) {
 			require.Equal(t, tt.wantAlbums, albums)
 		})
 	}
+}
+
+type roundTripFunc func(*http.Request) (*http.Response, error)
+
+func (f roundTripFunc) RoundTrip(r *http.Request) (*http.Response, error) {
+	return f(r)
 }

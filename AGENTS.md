@@ -23,7 +23,7 @@ The supported providers are:
 | Deezer | `dz` | public API plus Deezer cloak redirects | numeric string |
 | Spotify | `sf` | Web API with client-credentials OAuth | opaque Spotify ID |
 | SoundCloud | `sc` | hydrated web pages plus API calls using a scraped client ID | composite `user-slug:release-slug` |
-| Yandex Music | `ya` | unofficial public API | numeric string |
+| Yandex Music | `ya` | unofficial public API | albums use a numeric string; tracks use composite `album-id:track-id` |
 | YouTube | `yt` | Data API; videos are tracks and playlists are albums | video or playlist ID |
 | YouTube Music | `ym` | anonymous YouTube Music web-client Innertube API | video, album browse, or playlist ID |
 
@@ -296,9 +296,10 @@ behavior under concurrent initial requests, expiry, and simultaneous 401s.
 - SoundCloud prefers publisher artist metadata over uploader name, upgrades
   known artwork-size suffixes to `original`, prefers full duration, and refreshes
   a scraped API client ID after one unauthorized response.
-- Yandex requires album information to construct a track URL. Missing artists
-  are tolerated; missing required album data is an adaptation error. Search-level
-  not-found maps to an empty candidate slice.
+- Yandex track IDs include the album ID as `album-id:track-id`; fetching selects
+  that exact album association and its cover. Missing artists are tolerated;
+  missing required album data is an adaptation error. Search-level not-found
+  maps to an empty candidate slice.
 - YouTube videos/playlists do not reliably provide normalized artist/album
   fields, so channel ownership belongs in `Creator`. Search hydrates each search
   result through a detail request; preserve result order and full fixture

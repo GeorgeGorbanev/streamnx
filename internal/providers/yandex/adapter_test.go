@@ -23,35 +23,35 @@ func TestYandexAdapter_ParseLink(t *testing.T) {
 			name:     "valid track URL .com",
 			input:    "https://music.yandex.com/album/3192570/track/1197793",
 			wantType: release.TypeTrack,
-			wantID:   "1197793",
+			wantID:   "3192570:1197793",
 			wantOK:   true,
 		},
 		{
 			name:     "valid track URL .ru",
 			input:    "https://music.yandex.ru/album/3192570/track/1197793",
 			wantType: release.TypeTrack,
-			wantID:   "1197793",
+			wantID:   "3192570:1197793",
 			wantOK:   true,
 		},
 		{
 			name:     "valid track URL .by",
 			input:    "https://music.yandex.by/album/3192570/track/1197793",
 			wantType: release.TypeTrack,
-			wantID:   "1197793",
+			wantID:   "3192570:1197793",
 			wantOK:   true,
 		},
 		{
 			name:     "valid track URL .kz",
 			input:    "https://music.yandex.kz/album/3192570/track/1197793",
 			wantType: release.TypeTrack,
-			wantID:   "1197793",
+			wantID:   "3192570:1197793",
 			wantOK:   true,
 		},
 		{
 			name:     "valid track URL .uz",
 			input:    "https://music.yandex.uz/album/3192570/track/1197793",
 			wantType: release.TypeTrack,
-			wantID:   "1197793",
+			wantID:   "3192570:1197793",
 			wantOK:   true,
 		},
 		{
@@ -127,17 +127,71 @@ func TestYandexAdapter_ParseLink(t *testing.T) {
 	}
 }
 
-func TestYandexAdapter_fetchTrack(t *testing.T) {
+func TestYandexAdapter_FetchTrack(t *testing.T) {
 	tests := []struct {
 		name          string
 		id            string
 		mockClient    func(m *clientMock)
 		expectedTrack release.Track
 		expectedErr   error
+		expectedText  string
 	}{
 		{
 			name: "found ID",
-			id:   "42",
+			id:   "41:42",
+			mockClient: func(m *clientMock) {
+				m.
+					On("fetchTrack", "42").
+					Return(track{
+						ID:       "42",
+						Title:    "sample name",
+						CoverURI: "wrong.example/%%",
+						Artists: []artist{
+							{Name: "sample artist"},
+						},
+						Albums: []albumRef{
+							{ID: 40, Title: "wrong album", CoverURI: "wrong.example/%%"},
+							{ID: 41, Title: "selected album", CoverURI: "selected.example/%%"},
+						},
+					}, nil).
+					Once()
+			},
+			expectedTrack: release.Track{
+				ID:         "41:42",
+				Title:      "sample name",
+				Artist:     "sample artist",
+				AlbumID:    "41",
+				AlbumTitle: "selected album",
+				URL:        "https://music.yandex.com/album/41/track/42",
+				CoverURL:   "https://selected.example/1000x1000",
+				Provider:   release.Yandex,
+			},
+		},
+		{
+			name: "allows missing artist",
+			id:   "41:42",
+			mockClient: func(m *clientMock) {
+				m.
+					On("fetchTrack", "42").
+					Return(track{
+						ID:     "42",
+						Title:  "sample name",
+						Albums: []albumRef{{ID: 41}},
+					}, nil).
+					Once()
+			},
+			expectedTrack: release.Track{
+				ID:       "41:42",
+				Title:    "sample name",
+				Artist:   "",
+				AlbumID:  "41",
+				URL:      "https://music.yandex.com/album/41/track/42",
+				Provider: release.Yandex,
+			},
+		},
+		{
+			name: "track does not belong to requested album",
+			id:   "41:42",
 			mockClient: func(m *clientMock) {
 				m.
 					On("fetchTrack", "42").
@@ -147,27 +201,24 @@ func TestYandexAdapter_fetchTrack(t *testing.T) {
 						Artists: []artist{
 							{Name: "sample artist"},
 						},
-						Albums: []albumRef{
-							{ID: 41},
-						},
+						Albums: []albumRef{{ID: 40}},
 					}, nil).
 					Once()
 			},
-			expectedTrack: release.Track{
-				ID:       "42",
-				Title:    "sample name",
-				Artist:   "sample artist",
-				AlbumID:  "41",
-				URL:      "https://music.yandex.com/album/41/track/42",
-				Provider: release.Yandex,
-			},
+			expectedErr:  release.ErrNotFound,
+			expectedText: `does not belong to album "41"`,
+		},
+		{
+			name:         "rejects non-composite track ID",
+			id:           "42",
+			expectedText: "failed to parse track id",
 		},
 		{
 			name: "not found ID",
-			id:   "notFoundID",
+			id:   "41:404",
 			mockClient: func(m *clientMock) {
 				m.
-					On("fetchTrack", "notFoundID").
+					On("fetchTrack", "404").
 					Return(nil, errNotFound).
 					Once()
 			},
@@ -177,15 +228,22 @@ func TestYandexAdapter_fetchTrack(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			clientMock := &clientMock{}
-			tt.mockClient(clientMock)
+			if tt.mockClient != nil {
+				tt.mockClient(clientMock)
+			}
 
 			a := NewAdapter(clientMock)
 
 			result, err := a.FetchTrack(t.Context(), tt.id)
 
-			if tt.expectedErr != nil {
+			if tt.expectedErr != nil || tt.expectedText != "" {
 				require.Zero(t, result)
-				require.ErrorIs(t, err, tt.expectedErr)
+				if tt.expectedErr != nil {
+					require.ErrorIs(t, err, tt.expectedErr)
+				}
+				if tt.expectedText != "" {
+					require.ErrorContains(t, err, tt.expectedText)
+				}
 			} else {
 				require.NoError(t, err)
 				require.Equal(t, tt.expectedTrack, result)
@@ -196,54 +254,7 @@ func TestYandexAdapter_fetchTrack(t *testing.T) {
 	}
 }
 
-func TestYandexAdapter_fetchTrackAllowsMissingArtist(t *testing.T) {
-	cm := &clientMock{}
-	cm.
-		On("fetchTrack", "42").
-		Return(track{
-			ID:     "42",
-			Title:  "sample name",
-			Albums: []albumRef{{ID: 41}},
-		}, nil).
-		Once()
-	a := NewAdapter(cm)
-
-	result, err := a.FetchTrack(t.Context(), "42")
-
-	require.NoError(t, err)
-	require.Equal(t, release.Track{
-		ID:       "42",
-		Title:    "sample name",
-		Artist:   "",
-		AlbumID:  "41",
-		URL:      "https://music.yandex.com/album/41/track/42",
-		Provider: release.Yandex,
-	}, result)
-	cm.AssertExpectations(t)
-}
-
-func TestYandexAdapter_fetchTrackRejectsMissingAlbum(t *testing.T) {
-	cm := &clientMock{}
-	cm.
-		On("fetchTrack", "42").
-		Return(track{
-			ID:    "42",
-			Title: "sample name",
-			Artists: []artist{
-				{Name: "sample artist"},
-			},
-		}, nil).
-		Once()
-	a := NewAdapter(cm)
-
-	result, err := a.FetchTrack(t.Context(), "42")
-
-	require.Zero(t, result)
-	require.ErrorContains(t, err, "missing album")
-	cm.AssertExpectations(t)
-}
-
-func TestYandexAdapter_fetchAlbum(t *testing.T) {
+func TestYandexAdapter_FetchAlbum(t *testing.T) {
 	tests := []struct {
 		name          string
 		id            string
@@ -298,7 +309,28 @@ func TestYandexAdapter_fetchAlbum(t *testing.T) {
 				Label:    "sample label",
 				URL:      "https://music.yandex.com/album/42",
 				Provider: release.Yandex,
-				TrackIDs: []string{"100", "101"},
+				TrackIDs: []string{"42:100", "42:101"},
+			},
+		},
+		{
+			name: "allows missing artist",
+			id:   "42",
+			mockClient: func(m *clientMock) {
+				m.
+					On("fetchAlbum", "42").
+					Return(album{
+						ID:    42,
+						Title: "sample name",
+					}, nil).
+					Once()
+			},
+			expectedAlbum: release.Album{
+				ID:       "42",
+				Title:    "sample name",
+				Artist:   "",
+				URL:      "https://music.yandex.com/album/42",
+				Provider: release.Yandex,
+				TrackIDs: []string{},
 			},
 		},
 		{
@@ -335,32 +367,7 @@ func TestYandexAdapter_fetchAlbum(t *testing.T) {
 	}
 }
 
-func TestYandexAdapter_fetchAlbumAllowsMissingArtist(t *testing.T) {
-	cm := &clientMock{}
-	cm.
-		On("fetchAlbum", "42").
-		Return(album{
-			ID:    42,
-			Title: "sample name",
-		}, nil).
-		Once()
-	a := NewAdapter(cm)
-
-	result, err := a.FetchAlbum(t.Context(), "42")
-
-	require.NoError(t, err)
-	require.Equal(t, release.Album{
-		ID:       "42",
-		Title:    "sample name",
-		Artist:   "",
-		URL:      "https://music.yandex.com/album/42",
-		Provider: release.Yandex,
-		TrackIDs: []string{},
-	}, result)
-	cm.AssertExpectations(t)
-}
-
-func TestYandexAdapter_searchTracks(t *testing.T) {
+func TestYandexAdapter_SearchTracks(t *testing.T) {
 	errUnexpected := errors.New("unexpected error")
 
 	tests := []struct {
@@ -404,7 +411,7 @@ func TestYandexAdapter_searchTracks(t *testing.T) {
 			},
 			want: []release.SearchTrack{
 				{
-					ID:       "123",
+					ID:       "456:123",
 					Title:    "First Track",
 					Artist:   "First Artist",
 					AlbumID:  "456",
@@ -412,7 +419,7 @@ func TestYandexAdapter_searchTracks(t *testing.T) {
 					Provider: release.Yandex,
 				},
 				{
-					ID:       "789",
+					ID:       "987:789",
 					Title:    "Second Track",
 					Artist:   "Second Artist",
 					AlbumID:  "987",
@@ -481,7 +488,7 @@ func TestYandexAdapter_searchTracks(t *testing.T) {
 	}
 }
 
-func TestYandexAdapter_searchAlbums(t *testing.T) {
+func TestYandexAdapter_SearchAlbums(t *testing.T) {
 	errUnexpected := errors.New("unexpected error")
 
 	tests := []struct {

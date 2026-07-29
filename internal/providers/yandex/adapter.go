@@ -28,7 +28,7 @@ func NewAdapter(c adapterClient) *Adapter {
 }
 
 func (a *Adapter) ParseLink(rawURL string) (release.Type, string, bool) {
-	if id := parseTrackLink(rawURL); id != "" {
+	if id := a.detectTrackID(rawURL); id != "" {
 		return release.TypeTrack, id, true
 	}
 	if id := parseAlbumLink(rawURL); id != "" {
@@ -37,8 +37,25 @@ func (a *Adapter) ParseLink(rawURL string) (release.Type, string, bool) {
 	return "", "", false
 }
 
+func (a *Adapter) detectTrackID(trackURL string) string {
+	key, err := parseTrackLink(trackURL)
+	if err != nil {
+		return ""
+	}
+	id, err := keyScheme.Dump(key)
+	if err != nil {
+		return ""
+	}
+	return id
+}
+
 func (a *Adapter) FetchTrack(ctx context.Context, id string) (release.Track, error) {
-	track, err := a.client.fetchTrack(ctx, id)
+	albumID, trackID, err := parseTrackKeyParts(id)
+	if err != nil {
+		return release.Track{}, fmt.Errorf("failed to parse track id: %w", err)
+	}
+
+	track, err := a.client.fetchTrack(ctx, trackID)
 	switch {
 	case errors.Is(err, errNotFound):
 		return release.Track{}, release.ErrNotFound
@@ -46,22 +63,27 @@ func (a *Adapter) FetchTrack(ctx context.Context, id string) (release.Track, err
 		return release.Track{}, fmt.Errorf("failed to get track from yandex music: %w", err)
 	}
 
-	albumID, err := a.trackAlbumID(track.Albums)
-	if err != nil {
-		return release.Track{}, err
+	trackAlbum, ok := a.trackAlbum(track.Albums, albumID)
+	if !ok {
+		return release.Track{}, fmt.Errorf(
+			"yandex music track %q does not belong to album %q: %w",
+			trackID,
+			albumID,
+			release.ErrNotFound,
+		)
 	}
 
 	return release.Track{
-		ID:          track.ID,
+		ID:          id,
 		Artist:      a.artistName(track.Artists),
 		Title:       track.Title,
-		AlbumID:     strconv.Itoa(albumID),
-		AlbumTitle:  track.Albums[0].Title,
+		AlbumID:     albumID,
+		AlbumTitle:  trackAlbum.Title,
 		Provider:    release.Yandex,
-		URL:         trackLink(albumID, track.ID),
-		CoverURL:    a.trackCoverURL(track.CoverURI, track.Albums),
+		URL:         trackLink(albumID, trackID),
+		CoverURL:    a.trackCoverURL(track.CoverURI, trackAlbum),
 		Duration:    duration.MsToSeconds(track.DurationMS),
-		ReleaseDate: a.releaseDate(track.Albums[0].ReleaseDate),
+		ReleaseDate: a.releaseDate(trackAlbum.ReleaseDate),
 	}, nil
 }
 
@@ -77,9 +99,18 @@ func (a *Adapter) FetchAlbum(ctx context.Context, id string) (release.Album, err
 	trackIDs := make([]string, 0, len(album.Volumes))
 	for _, volume := range album.Volumes {
 		for _, track := range volume {
-			if track.ID != "" {
-				trackIDs = append(trackIDs, track.ID)
+			if track.ID == "" {
+				continue
 			}
+			key, err := newTrackKey(strconv.Itoa(album.ID), track.ID)
+			if err != nil {
+				return release.Album{}, fmt.Errorf("failed to build track key: %w", err)
+			}
+			id, err := keyScheme.Dump(key)
+			if err != nil {
+				return release.Album{}, fmt.Errorf("failed to dump track key: %w", err)
+			}
+			trackIDs = append(trackIDs, id)
 		}
 	}
 
@@ -107,21 +138,30 @@ func (a *Adapter) SearchTracks(ctx context.Context, artist, title string) ([]rel
 
 	tracks := make([]release.SearchTrack, len(found))
 	for i, track := range found {
-		albumID, err := a.trackAlbumID(track.Albums)
+		if len(track.Albums) == 0 {
+			return nil, fmt.Errorf("error adapting track: unexpected yandex track response: missing album")
+		}
+		trackAlbum := track.Albums[0]
+		albumID := strconv.Itoa(trackAlbum.ID)
+		trackID := strconv.Itoa(track.ID)
+		key, err := newTrackKey(albumID, trackID)
 		if err != nil {
-			return nil, fmt.Errorf("error adapting track: %w", err)
+			return nil, fmt.Errorf("error building track key: %w", err)
+		}
+		id, err := keyScheme.Dump(key)
+		if err != nil {
+			return nil, fmt.Errorf("error dumping track key: %w", err)
 		}
 
-		trackID := strconv.Itoa(track.ID)
 		tracks[i] = release.SearchTrack{
-			ID:         trackID,
+			ID:         id,
 			Title:      track.Title,
 			Artist:     a.artistName(track.Artists),
-			AlbumID:    strconv.Itoa(albumID),
-			AlbumTitle: track.Albums[0].Title,
+			AlbumID:    albumID,
+			AlbumTitle: trackAlbum.Title,
 			Provider:   release.Yandex,
 			URL:        trackLink(albumID, trackID),
-			CoverURL:   a.trackCoverURL(track.CoverURI, track.Albums),
+			CoverURL:   a.trackCoverURL(track.CoverURI, trackAlbum),
 		}
 	}
 	return tracks, nil
@@ -168,21 +208,20 @@ func (a *Adapter) labelName(labels []label) string {
 	return labels[0].Name
 }
 
-func (a *Adapter) trackAlbumID(albums []albumRef) (int, error) {
-	if len(albums) == 0 {
-		return 0, fmt.Errorf("unexpected yandex track response: missing album")
+func (a *Adapter) trackAlbum(albums []albumRef, albumID string) (albumRef, bool) {
+	for _, album := range albums {
+		if strconv.Itoa(album.ID) == albumID {
+			return album, true
+		}
 	}
-	return albums[0].ID, nil
+	return albumRef{}, false
 }
 
-func (a *Adapter) trackCoverURL(trackCoverURI string, albums []albumRef) string {
-	if trackCoverURI != "" {
-		return a.coverURL(trackCoverURI)
+func (a *Adapter) trackCoverURL(trackCoverURI string, album albumRef) string {
+	if album.CoverURI != "" {
+		return a.coverURL(album.CoverURI)
 	}
-	if len(albums) == 0 {
-		return ""
-	}
-	return a.coverURL(albums[0].CoverURI)
+	return a.coverURL(trackCoverURI)
 }
 
 func (a *Adapter) coverURL(coverURI string) string {

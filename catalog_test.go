@@ -82,7 +82,7 @@ func TestCatalog_ParseLink(t *testing.T) {
 			want: Link{
 				URL:         "https://music.yandex.by/album/3192570/track/1197793",
 				Provider:    Yandex,
-				ReleaseID:   "1197793",
+				ReleaseID:   "3192570:1197793",
 				ReleaseType: ReleaseTypeTrack,
 			},
 		},

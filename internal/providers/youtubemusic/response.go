@@ -11,8 +11,9 @@ type run struct {
 }
 
 type navigationEndpoint struct {
-	BrowseEndpoint browseEndpoint `json:"browseEndpoint"`
-	WatchEndpoint  watchEndpoint  `json:"watchEndpoint"`
+	BrowseEndpoint        browseEndpoint        `json:"browseEndpoint"`
+	WatchEndpoint         watchEndpoint         `json:"watchEndpoint"`
+	WatchPlaylistEndpoint watchPlaylistEndpoint `json:"watchPlaylistEndpoint"`
 }
 
 type browseEndpoint struct {
@@ -30,6 +31,10 @@ type browseEndpointMusic struct {
 
 type watchEndpoint struct {
 	VideoID string `json:"videoId"`
+}
+
+type watchPlaylistEndpoint struct {
+	PlaylistID string `json:"playlistId"`
 }
 
 type thumbnail struct {
@@ -55,6 +60,23 @@ type responsiveListItem struct {
 	Thumbnail          itemThumbnail      `json:"thumbnail"`
 	NavigationEndpoint navigationEndpoint `json:"navigationEndpoint"`
 	PlaylistItemData   playlistItemData   `json:"playlistItemData"`
+	Overlay            itemOverlay        `json:"overlay"`
+}
+
+type itemOverlay struct {
+	Renderer itemThumbnailOverlayRenderer `json:"musicItemThumbnailOverlayRenderer"`
+}
+
+type itemThumbnailOverlayRenderer struct {
+	Content itemOverlayContent `json:"content"`
+}
+
+type itemOverlayContent struct {
+	PlayButton playButtonRenderer `json:"musicPlayButtonRenderer"`
+}
+
+type playButtonRenderer struct {
+	PlayNavigationEndpoint navigationEndpoint `json:"playNavigationEndpoint"`
 }
 
 type playlistItemData struct {
@@ -117,15 +139,20 @@ type browseResponse struct {
 }
 
 type responsiveHeader struct {
-	Title            text          `json:"title"`
-	Subtitle         text          `json:"subtitle"`
-	StraplineTextOne text          `json:"straplineTextOne"`
-	Thumbnail        itemThumbnail `json:"thumbnail"`
+	Title            text                     `json:"title"`
+	Subtitle         text                     `json:"subtitle"`
+	StraplineTextOne text                     `json:"straplineTextOne"`
+	Thumbnail        itemThumbnail            `json:"thumbnail"`
+	Buttons          []responsiveHeaderButton `json:"buttons"`
 	Description      struct {
 		Shelf struct {
 			Description text `json:"description"`
 		} `json:"musicDescriptionShelfRenderer"`
 	} `json:"description"`
+}
+
+type responsiveHeaderButton struct {
+	PlayButton playButtonRenderer `json:"musicPlayButtonRenderer"`
 }
 
 type playerResponse struct {

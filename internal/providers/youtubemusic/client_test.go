@@ -78,6 +78,9 @@ func TestClientRequestsAndDecodes(t *testing.T) {
 					{"musicShelfRenderer":{"contents":[{"musicResponsiveListItemRenderer":{
 						"playlistItemData":{"videoId":"video-id"},
 						"thumbnail":{"musicThumbnailRenderer":{"thumbnail":{"thumbnails":[{"url":"search-cover"}]}}},
+						"overlay":{"musicItemThumbnailOverlayRenderer":{"content":{"musicPlayButtonRenderer":{
+							"playNavigationEndpoint":{"watchPlaylistEndpoint":{"playlistId":"OLAKalbum"}}
+						}}}},
 						"flexColumns":[{"musicResponsiveListItemFlexColumnRenderer":{"text":{"runs":[{
 							"text":"Artist",
 							"navigationEndpoint":{"browseEndpoint":{
@@ -134,6 +137,8 @@ func TestClientRequestsAndDecodes(t *testing.T) {
 	albums, err := client.searchAlbums(t.Context(), "Artist – Title")
 	require.NoError(t, err)
 	require.Len(t, albums, 1)
+	require.Equal(t, "OLAKalbum", albums[0].Overlay.Renderer.Content.PlayButton.
+		PlayNavigationEndpoint.WatchPlaylistEndpoint.PlaylistID)
 
 	header, items, err := client.fetchAlbum(t.Context(), "OLAKalbum")
 	require.NoError(t, err)

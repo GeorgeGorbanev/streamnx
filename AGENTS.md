@@ -25,7 +25,7 @@ The supported providers are:
 | SoundCloud | `sc` | hydrated web pages plus API calls using a scraped client ID | composite `user-slug:release-slug` |
 | Yandex Music | `ya` | unofficial public API | albums use a numeric string; tracks use composite `album-id:track-id` |
 | YouTube | `yt` | Data API; videos are tracks and playlists are albums | video or playlist ID |
-| YouTube Music | `ym` | anonymous YouTube Music web-client Innertube API | video, album browse, or playlist ID |
+| YouTube Music | `ym` | anonymous YouTube Music web-client Innertube API | video ID for tracks; composite `b:<browse-id>` or `p:<playlist-id>` for albums |
 
 ## Repository map
 
@@ -170,8 +170,8 @@ Treat the following behavior as compatibility-sensitive.
 - Fetch methods and `ParseLink` return values, not pointers. Return the zero
   value alongside an error.
 - `Track`, `Album`, `SearchTrack`, and `SearchAlbum` share the common fields
-  `ID`, `Title`, `Artist`, `URL`, `CoverURL`, `Provider`, `Creator`, and
-  `Description`.
+  `ID`, `Title`, `Artist`, `URL`, `AlternativeURL`, `CoverURL`, `Provider`,
+  `Creator`, and `Description`.
 - `Track` additionally owns `AlbumID`, `AlbumTitle`, `Duration`, and
   `ReleaseDate`; `Album` owns `Label`, `ReleaseDate`, and `TrackIDs`;
   `SearchTrack` owns `AlbumID` and `AlbumTitle`.
@@ -306,8 +306,10 @@ behavior under concurrent initial requests, expiry, and simultaneous 401s.
   coverage for those follow-up calls.
 - YouTube Music uses the anonymous `WEB_REMIX` Innertube client: `player` plus
   `next` for exact track and album metadata, filtered `search` for normalized
-  candidates, and `browse` for album metadata and tracks. It owns
-  `music.youtube.com` links; ordinary YouTube must not recognize that subdomain.
+  candidates, and `browse` for album metadata and tracks. Album IDs preserve
+  whether a link used a browse or playlist ID; available counterpart links are
+  exposed through `AlternativeURL`. It owns `music.youtube.com` links; ordinary
+  YouTube must not recognize that subdomain.
 
 ## Functional options and public configuration
 

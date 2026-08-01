@@ -6,56 +6,60 @@ import (
 )
 
 type Track struct {
-	ID          string
-	Title       string
-	Artist      string
-	AlbumID     string
-	AlbumTitle  string
-	URL         string
-	CoverURL    string
-	Duration    int
-	ReleaseDate Date
-	Provider    Provider
-	Creator     string
-	Description string
+	ID             string
+	Title          string
+	Artist         string
+	AlbumID        string
+	AlbumTitle     string
+	URL            string
+	AlternativeURL string
+	CoverURL       string
+	Duration       int
+	ReleaseDate    Date
+	Provider       Provider
+	Creator        string
+	Description    string
 }
 
 type Album struct {
-	ID          string
-	Title       string
-	Artist      string
-	Label       string
-	URL         string
-	CoverURL    string
-	ReleaseDate Date
-	Provider    Provider
-	Creator     string
-	Description string
-	TrackIDs    []string
+	ID             string
+	Title          string
+	Artist         string
+	Label          string
+	URL            string
+	AlternativeURL string
+	CoverURL       string
+	ReleaseDate    Date
+	Provider       Provider
+	Creator        string
+	Description    string
+	TrackIDs       []string
 }
 
 type SearchTrack struct {
-	ID          string
-	Title       string
-	Artist      string
-	AlbumID     string
-	AlbumTitle  string
-	URL         string
-	CoverURL    string
-	Provider    Provider
-	Creator     string
-	Description string
+	ID             string
+	Title          string
+	Artist         string
+	AlbumID        string
+	AlbumTitle     string
+	URL            string
+	AlternativeURL string
+	CoverURL       string
+	Provider       Provider
+	Creator        string
+	Description    string
 }
 
 type SearchAlbum struct {
-	ID          string
-	Title       string
-	Artist      string
-	URL         string
-	CoverURL    string
-	Provider    Provider
-	Creator     string
-	Description string
+	ID             string
+	Title          string
+	Artist         string
+	URL            string
+	AlternativeURL string
+	CoverURL       string
+	Provider       Provider
+	Creator        string
+	Description    string
 }
 
 type Date struct {

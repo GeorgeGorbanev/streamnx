@@ -196,9 +196,11 @@ albumCandidates, err := catalog.SearchAlbums(ctx, provider, streamnx.SearchQuery
 `FetchTrack` returns `Track`, `FetchAlbum` returns `Album`, `SearchTracks`
 returns `[]SearchTrack`, and `SearchAlbums` returns `[]SearchAlbum`.
 
-All four models expose `ID`, `Title`, `Artist`, `URL`, `CoverURL`, `Provider`,
-`Creator`, and `Description`. The release type is implied by the concrete Go
-type. The models also expose fields specific to their role:
+All four models expose `ID`, `Title`, `Artist`, `URL`, `AlternativeURL`,
+`CoverURL`, `Provider`, `Creator`, and `Description`. `AlternativeURL` contains
+another provider URL for the same release when the integration exposes one;
+otherwise it is empty. The release type is implied by the concrete Go type. The
+models also expose fields specific to their role:
 
 - `Track` adds `AlbumID`, `AlbumTitle`, `Duration`, and `ReleaseDate`.
 - `Album` adds `Label`, `ReleaseDate`, and `TrackIDs`.
@@ -208,7 +210,10 @@ type. The models also expose fields specific to their role:
 `Duration` is expressed in seconds. `ReleaseDate` contains separate `Year`,
 `Month`, and `Day` components; unavailable components remain zero. `TrackIDs`
 contains provider-side track IDs when the provider exposes an album track list.
-These metadata fields are optional and provider-dependent.
+These metadata fields are optional and provider-dependent. YouTube Music album
+IDs are composite: `b:<id>` represents a `/browse/MPRE...` URL and `p:<id>` a
+`/playlist?list=...` URL. Album search keeps the browse URL in `URL` and exposes
+the corresponding audio playlist URL in `AlternativeURL` when available.
 
 `Creator` contains raw provider-side creator, owner, uploader, channel, or label
 values when a provider exposes them. `Description` contains raw provider

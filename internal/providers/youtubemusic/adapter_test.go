@@ -37,14 +37,14 @@ func TestAdapterParseLink(t *testing.T) {
 			name:     "playlist album",
 			input:    "https://music.youtube.com/playlist?list=OLAK5uy_sample-123",
 			wantType: release.TypeAlbum,
-			wantID:   "OLAK5uy_sample-123",
+			wantID:   "p:OLAK5uy_sample-123",
 			wantOK:   true,
 		},
 		{
 			name:     "browse album",
 			input:    "https://music.youtube.com/browse/MPREb_sample-123?si=sample",
 			wantType: release.TypeAlbum,
-			wantID:   "MPREb_sample-123",
+			wantID:   "b:MPREb_sample-123",
 			wantOK:   true,
 		},
 		{
@@ -137,7 +137,7 @@ func TestAdapterFetchTrack(t *testing.T) {
 				ID:          "track-id",
 				Title:       "Track title",
 				Artist:      "Artist",
-				AlbumID:     "MPREalbum",
+				AlbumID:     "b:MPREalbum",
 				AlbumTitle:  "Album title",
 				URL:         "https://music.youtube.com/watch?v=track-id",
 				CoverURL:    "large",
@@ -186,7 +186,7 @@ func TestAdapterFetchTrack(t *testing.T) {
 				ID:         "track-id",
 				Title:      "Track title",
 				Artist:     "Artist",
-				AlbumID:    "MPREalbum",
+				AlbumID:    "b:MPREalbum",
 				AlbumTitle: "Album title",
 				URL:        "https://music.youtube.com/watch?v=track-id",
 				CoverURL:   "cover",
@@ -265,12 +265,17 @@ func TestAdapterFetchAlbum(t *testing.T) {
 	}{
 		{
 			name: "album metadata",
-			id:   "MPREalbum",
+			id:   "b:MPREalbum",
 			mockClient: func(m *clientMock) {
 				header := responsiveHeader{
 					Title:            text{Runs: []run{{Text: "Album title"}}},
 					StraplineTextOne: text{Runs: []run{{Text: "Artist"}}},
 					Subtitle:         text{Runs: []run{{Text: "Album"}, {Text: " • "}, {Text: "1995"}}},
+					Buttons: []responsiveHeaderButton{{
+						PlayButton: playButtonRenderer{PlayNavigationEndpoint: navigationEndpoint{
+							WatchPlaylistEndpoint: watchPlaylistEndpoint{PlaylistID: "OLAKalbum"},
+						}},
+					}},
 				}
 				header.Thumbnail.Renderer.Thumbnail.Thumbnails = []thumbnail{{URL: "cover", Width: 544, Height: 544}}
 				header.Description.Shelf.Description.Runs = []run{{Text: "First "}, {Text: "second"}}
@@ -295,15 +300,58 @@ func TestAdapterFetchAlbum(t *testing.T) {
 				}, nil).Once()
 			},
 			wantAlbum: release.Album{
-				ID:          "MPREalbum",
-				Title:       "Album title",
-				Artist:      "Artist",
-				URL:         "https://music.youtube.com/browse/MPREalbum",
-				CoverURL:    "cover",
-				ReleaseDate: release.Date{Year: 1995},
-				Provider:    release.YoutubeMusic,
-				Description: "First second",
-				TrackIDs:    []string{"track-1", "track-2"},
+				ID:             "b:MPREalbum",
+				Title:          "Album title",
+				Artist:         "Artist",
+				URL:            "https://music.youtube.com/browse/MPREalbum",
+				AlternativeURL: "https://music.youtube.com/playlist?list=OLAKalbum",
+				CoverURL:       "cover",
+				ReleaseDate:    release.Date{Year: 1995},
+				Provider:       release.YoutubeMusic,
+				Description:    "First second",
+				TrackIDs:       []string{"track-1", "track-2"},
+			},
+		},
+		{
+			name: "playlist album metadata from tracks",
+			id:   "p:OLAKalbum",
+			mockClient: func(m *clientMock) {
+				m.On("fetchAlbum", "OLAKalbum").Return(responsiveHeader{}, []responsiveListItem{{
+					FlexColumns: []flexColumn{
+						{Renderer: flexColumnRenderer{Text: text{Runs: []run{{Text: "Track title"}}}}},
+						{Renderer: flexColumnRenderer{Text: text{Runs: []run{{
+							Text: "Artist",
+							NavigationEndpoint: navigationEndpoint{BrowseEndpoint: browseEndpoint{
+								Context: browseEndpointContext{Music: browseEndpointMusic{
+									PageType: "MUSIC_PAGE_TYPE_ARTIST",
+								}},
+							}},
+						}}}}},
+						{Renderer: flexColumnRenderer{Text: text{Runs: []run{{
+							Text: "Album title",
+							NavigationEndpoint: navigationEndpoint{BrowseEndpoint: browseEndpoint{
+								BrowseID: "MPREalbum",
+								Context: browseEndpointContext{Music: browseEndpointMusic{
+									PageType: "MUSIC_PAGE_TYPE_ALBUM",
+								}},
+							}},
+						}}}}},
+					},
+					Thumbnail: itemThumbnail{Renderer: thumbnailRenderer{
+						Thumbnail: thumbnailList{Thumbnails: []thumbnail{{URL: "cover", Width: 120, Height: 120}}},
+					}},
+					PlaylistItemData: playlistItemData{VideoID: "track-1"},
+				}}, nil).Once()
+			},
+			wantAlbum: release.Album{
+				ID:             "p:OLAKalbum",
+				Title:          "Album title",
+				Artist:         "Artist",
+				URL:            "https://music.youtube.com/playlist?list=OLAKalbum",
+				AlternativeURL: "https://music.youtube.com/browse/MPREalbum",
+				CoverURL:       "cover",
+				Provider:       release.YoutubeMusic,
+				TrackIDs:       []string{"track-1"},
 			},
 		},
 	}
@@ -378,7 +426,7 @@ func TestAdapterSearchTracks(t *testing.T) {
 					ID:         "video-1",
 					Title:      "Track",
 					Artist:     "Artist",
-					AlbumID:    "MPREalbum",
+					AlbumID:    "b:MPREalbum",
 					AlbumTitle: "Album",
 					URL:        "https://music.youtube.com/watch?v=video-1",
 					CoverURL:   "cover",
@@ -447,17 +495,37 @@ func TestAdapterSearchAlbums(t *testing.T) {
 							Thumbnail: thumbnailList{Thumbnails: []thumbnail{{URL: "cover", Width: 120, Height: 120}}},
 						}},
 						NavigationEndpoint: navigationEndpoint{BrowseEndpoint: browseEndpoint{BrowseID: "MPREalbum"}},
+						Overlay: itemOverlay{Renderer: itemThumbnailOverlayRenderer{
+							Content: itemOverlayContent{PlayButton: playButtonRenderer{
+								PlayNavigationEndpoint: navigationEndpoint{WatchPlaylistEndpoint: watchPlaylistEndpoint{
+									PlaylistID: "OLAKalbum",
+								}},
+							}},
+						}},
+					},
+					{
+						FlexColumns: []flexColumn{{
+							Renderer: flexColumnRenderer{Text: text{Runs: []run{{Text: "Album without playlist"}}}},
+						}},
+						NavigationEndpoint: navigationEndpoint{BrowseEndpoint: browseEndpoint{BrowseID: "MPREfallback"}},
 					},
 					{},
 				}, nil).Once()
 			},
 			wantAlbums: []release.SearchAlbum{
 				{
-					ID:       "MPREalbum",
-					Title:    "Album",
-					Artist:   "Artist",
-					URL:      "https://music.youtube.com/browse/MPREalbum",
-					CoverURL: "cover",
+					ID:             "b:MPREalbum",
+					Title:          "Album",
+					Artist:         "Artist",
+					URL:            "https://music.youtube.com/browse/MPREalbum",
+					AlternativeURL: "https://music.youtube.com/playlist?list=OLAKalbum",
+					CoverURL:       "cover",
+					Provider:       release.YoutubeMusic,
+				},
+				{
+					ID:       "b:MPREfallback",
+					Title:    "Album without playlist",
+					URL:      "https://music.youtube.com/browse/MPREfallback",
 					Provider: release.YoutubeMusic,
 				},
 			},

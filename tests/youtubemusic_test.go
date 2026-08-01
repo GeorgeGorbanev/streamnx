@@ -14,12 +14,45 @@ import (
 
 const (
 	youtubeMusicTrackID        = "lYBUbBu4W08"
-	youtubeMusicAlbumID        = "MPREb_dcYZhAh5urI"
+	youtubeMusicAlbumRawID     = "MPREb_dcYZhAh5urI"
+	youtubeMusicAlbumID        = "b:" + youtubeMusicAlbumRawID
 	youtubeMusicArtist         = "Rick Astley"
 	youtubeMusicTitle          = "Never Gonna Give You Up"
 	youtubeMusicAlbum          = "Whenever You Need Somebody"
 	youtubeMusicMissingTrackID = "00000000000"
 )
+
+func TestYoutubeMusicCatalogParsesAlbumIDTypes(t *testing.T) {
+	catalog := newYoutubeMusicCatalog(t, "http://127.0.0.1")
+
+	tests := []struct {
+		name string
+		url  string
+		id   string
+	}{
+		{
+			name: "browse",
+			url:  "https://music.youtube.com/browse/" + youtubeMusicAlbumRawID,
+			id:   youtubeMusicAlbumID,
+		},
+		{
+			name: "playlist",
+			url:  "https://music.youtube.com/playlist?list=OLAK5uy_nmDUsWOMoEcz0SsVqUwir0oxu-k1oUyXE",
+			id:   "p:OLAK5uy_nmDUsWOMoEcz0SsVqUwir0oxu-k1oUyXE",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			link, err := catalog.ParseLink(tt.url)
+
+			require.NoError(t, err)
+			require.Equal(t, streamnx.YoutubeMusic, link.Provider)
+			require.Equal(t, streamnx.ReleaseTypeAlbum, link.ReleaseType)
+			require.Equal(t, tt.id, link.ReleaseID)
+		})
+	}
+}
 
 func TestYoutubeMusicCatalogFetchTrack(t *testing.T) {
 	server := newYoutubeMusicFixtureServer(t,
@@ -113,7 +146,7 @@ func TestYoutubeMusicCatalogFetchAlbum(t *testing.T) {
 		Query:   map[string]string{"alt": "json"},
 		Status:  http.StatusOK,
 		Fixture: "youtubemusic_fetch_album_200.json",
-		Assert:  assertYoutubeMusicBody("browseId", youtubeMusicAlbumID),
+		Assert:  assertYoutubeMusicBody("browseId", youtubeMusicAlbumRawID),
 	})
 	defer server.Close()
 
@@ -125,13 +158,14 @@ func TestYoutubeMusicCatalogFetchAlbum(t *testing.T) {
 
 	require.NoError(t, err)
 	require.Equal(t, streamnx.Album{
-		ID:          youtubeMusicAlbumID,
-		Title:       youtubeMusicAlbum,
-		Artist:      youtubeMusicArtist,
-		URL:         "https://music.youtube.com/browse/" + youtubeMusicAlbumID,
-		CoverURL:    "https://yt3.googleusercontent.com/eC9DfRcYSk4FE-fvDCJSu_4xsKdVMKxwmFTYFZwP8OqB7R4TKxAjKoR-Kp1lXeRi2WddPFYulSte4eW-=w544-h544-l90-rj",
-		ReleaseDate: streamnx.ReleaseDate{Year: 1987},
-		Provider:    streamnx.YoutubeMusic,
+		ID:             youtubeMusicAlbumID,
+		Title:          youtubeMusicAlbum,
+		Artist:         youtubeMusicArtist,
+		URL:            "https://music.youtube.com/browse/" + youtubeMusicAlbumRawID,
+		AlternativeURL: "https://music.youtube.com/playlist?list=OLAK5uy_nmDUsWOMoEcz0SsVqUwir0oxu-k1oUyXE",
+		CoverURL:       "https://yt3.googleusercontent.com/eC9DfRcYSk4FE-fvDCJSu_4xsKdVMKxwmFTYFZwP8OqB7R4TKxAjKoR-Kp1lXeRi2WddPFYulSte4eW-=w544-h544-l90-rj",
+		ReleaseDate:    streamnx.ReleaseDate{Year: 1987},
+		Provider:       streamnx.YoutubeMusic,
 		Description: `Whenever You Need Somebody is the debut studio album by English singer Rick Astley, released on 16 November 1987 by RCA Records. It is his highest-selling album and has sold 15.2 million copies worldwide. The album is listed as the 136th best-selling album in Spain and was the seventh best-selling album of 1987 in the United Kingdom. A remastered version, containing rare remixes and extended versions, was released on 12 April 2010.
 
 From Wikipedia (https://en.wikipedia.org/wiki/Wheneve...) under Creative Commons Attribution CC-BY-SA 3.0 (https://creativecommons.org/licenses/...)`,
@@ -148,6 +182,38 @@ From Wikipedia (https://en.wikipedia.org/wiki/Wheneve...) under Creative Commons
 			"rF1NHU_0NQE",
 		},
 	}, got)
+}
+
+func TestYoutubeMusicCatalogFetchAlbumFromParsedPlaylistID(t *testing.T) {
+	const playlistID = "OLAK5uy_nmDUsWOMoEcz0SsVqUwir0oxu-k1oUyXE"
+
+	server := newYoutubeMusicFixtureServer(t, fixtures.Route{
+		Method:  http.MethodPost,
+		Path:    "/browse",
+		Query:   map[string]string{"alt": "json"},
+		Status:  http.StatusOK,
+		Fixture: "youtubemusic_fetch_album_playlist_200.json",
+		Assert:  assertYoutubeMusicBody("browseId", "VL"+playlistID),
+	})
+	defer server.Close()
+	catalog := newYoutubeMusicCatalog(t, server.URL)
+
+	link, err := catalog.ParseLink("https://music.youtube.com/playlist?list=" + playlistID)
+	require.NoError(t, err)
+	got, err := catalog.FetchAlbum(t.Context(), link.Provider, link.ReleaseID)
+
+	require.NoError(t, err)
+	require.Equal(t, "p:"+playlistID, got.ID)
+	require.Equal(t, "https://music.youtube.com/playlist?list="+playlistID, got.URL)
+	require.Equal(t, "https://music.youtube.com/browse/MPREb_MY4W1Y2GIkx", got.AlternativeURL)
+	require.Equal(t, "Barb and Feather", got.Title)
+	require.Equal(t, "Red Snapper", got.Artist)
+	require.Equal(
+		t,
+		"https://yt3.googleusercontent.com/Qxxz1U9g1T9ytABmRYF2T8BV9WolEnEhMNfKFL8-QInlYfRftuwkFFm3n1xm7hYBED5DHc_j6PIZjJmb=w120-h120-l90-rj",
+		got.CoverURL,
+	)
+	require.Len(t, got.TrackIDs, 8)
 }
 
 func TestYoutubeMusicCatalogSearchTracks(t *testing.T) {
@@ -208,7 +274,7 @@ func TestYoutubeMusicCatalogSearchTracks(t *testing.T) {
 		ID:         "0Om-vyXny3Y",
 		Title:      "I'm Never Gonna Give You Up",
 		Artist:     "Frank Stallone",
-		AlbumID:    "MPREb_vo3gSsl5j9I",
+		AlbumID:    "b:MPREb_vo3gSsl5j9I",
 		AlbumTitle: "Staying Alive (Original Motion Picture Soundtrack)",
 		URL:        "https://music.youtube.com/watch?v=0Om-vyXny3Y",
 		CoverURL:   "https://yt3.googleusercontent.com/_uMmjd35dKSmPC2YsdUPgq1DHBM8_fIaK2VQlT2t6hO76dULNn7To4X2Mr6lurXG0SClysnQPl5dnME9=w120-h120-l90-rj",
@@ -239,42 +305,44 @@ func TestYoutubeMusicCatalogSearchAlbums(t *testing.T) {
 
 	require.NoError(t, err)
 	require.Equal(t, []string{
-		"MPREb_dcYZhAh5urI",
-		"MPREb_08pJEqlUwXy",
-		"MPREb_LH7sUdCAbjP",
-		"MPREb_9QrpwHdnH04",
-		"MPREb_49zZLkGVsmC",
-		"MPREb_7EcYNH9M1sG",
-		"MPREb_BOEC90a78us",
-		"MPREb_apkMMtu39hY",
-		"MPREb_FHLw3Ybu2RR",
-		"MPREb_KsdTwKv9zSE",
-		"MPREb_fzOaMeZri49",
-		"MPREb_ovBQgQI2Vwa",
-		"MPREb_TiRZ1W121Y6",
-		"MPREb_Y70NAu9CJu7",
-		"MPREb_IbzQnyHsX6k",
-		"MPREb_ful5YBihbYD",
-		"MPREb_l269x3ITY2r",
-		"MPREb_ZOKioXS9OCN",
-		"MPREb_XF1sas6yjRc",
-		"MPREb_DlXOfGV5gPv",
+		"b:MPREb_dcYZhAh5urI",
+		"b:MPREb_08pJEqlUwXy",
+		"b:MPREb_LH7sUdCAbjP",
+		"b:MPREb_9QrpwHdnH04",
+		"b:MPREb_49zZLkGVsmC",
+		"b:MPREb_7EcYNH9M1sG",
+		"b:MPREb_BOEC90a78us",
+		"b:MPREb_apkMMtu39hY",
+		"b:MPREb_FHLw3Ybu2RR",
+		"b:MPREb_KsdTwKv9zSE",
+		"b:MPREb_fzOaMeZri49",
+		"b:MPREb_ovBQgQI2Vwa",
+		"b:MPREb_TiRZ1W121Y6",
+		"b:MPREb_Y70NAu9CJu7",
+		"b:MPREb_IbzQnyHsX6k",
+		"b:MPREb_ful5YBihbYD",
+		"b:MPREb_l269x3ITY2r",
+		"b:MPREb_ZOKioXS9OCN",
+		"b:MPREb_XF1sas6yjRc",
+		"b:MPREb_DlXOfGV5gPv",
 	}, searchAlbumIDs(got))
 	require.Equal(t, streamnx.SearchAlbum{
-		ID:       youtubeMusicAlbumID,
-		Title:    youtubeMusicAlbum,
-		Artist:   youtubeMusicArtist,
-		URL:      "https://music.youtube.com/browse/" + youtubeMusicAlbumID,
-		CoverURL: "https://yt3.googleusercontent.com/eC9DfRcYSk4FE-fvDCJSu_4xsKdVMKxwmFTYFZwP8OqB7R4TKxAjKoR-Kp1lXeRi2WddPFYulSte4eW-=w544-h544-l90-rj",
-		Provider: streamnx.YoutubeMusic,
+		ID:             youtubeMusicAlbumID,
+		Title:          youtubeMusicAlbum,
+		Artist:         youtubeMusicArtist,
+		URL:            "https://music.youtube.com/browse/" + youtubeMusicAlbumRawID,
+		AlternativeURL: "https://music.youtube.com/playlist?list=OLAK5uy_nmDUsWOMoEcz0SsVqUwir0oxu-k1oUyXE",
+		CoverURL:       "https://yt3.googleusercontent.com/eC9DfRcYSk4FE-fvDCJSu_4xsKdVMKxwmFTYFZwP8OqB7R4TKxAjKoR-Kp1lXeRi2WddPFYulSte4eW-=w544-h544-l90-rj",
+		Provider:       streamnx.YoutubeMusic,
 	}, got[0])
 	require.Equal(t, streamnx.SearchAlbum{
-		ID:       "MPREb_DlXOfGV5gPv",
-		Title:    "80s Karaoke Hits, Vol. 7",
-		Artist:   "A* Karaoke Jukebox",
-		URL:      "https://music.youtube.com/browse/MPREb_DlXOfGV5gPv",
-		CoverURL: "https://yt3.googleusercontent.com/YHJeYASGXDgt80HwoW4YrWjx7mt32csGrCKSm1e8l66FC5134_CHuT-NeAAbvLRHIQTEi1J6EZvDdhzwmg=w544-h544-l90-rj",
-		Provider: streamnx.YoutubeMusic,
+		ID:             "b:MPREb_DlXOfGV5gPv",
+		Title:          "80s Karaoke Hits, Vol. 7",
+		Artist:         "A* Karaoke Jukebox",
+		URL:            "https://music.youtube.com/browse/MPREb_DlXOfGV5gPv",
+		AlternativeURL: "https://music.youtube.com/playlist?list=OLAK5uy_nbnIFukeaEveckesMe7GRuj_TjZteqeKk",
+		CoverURL:       "https://yt3.googleusercontent.com/YHJeYASGXDgt80HwoW4YrWjx7mt32csGrCKSm1e8l66FC5134_CHuT-NeAAbvLRHIQTEi1J6EZvDdhzwmg=w544-h544-l90-rj",
+		Provider:       streamnx.YoutubeMusic,
 	}, got[len(got)-1])
 }
 

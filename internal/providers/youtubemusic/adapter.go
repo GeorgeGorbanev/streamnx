@@ -31,8 +31,11 @@ func (a *Adapter) ParseLink(rawURL string) (release.Type, string, bool) {
 	if id := parseTrackURL(rawURL); id != "" {
 		return release.TypeTrack, id, true
 	}
-	if id := parseAlbumURL(rawURL); id != "" {
-		return release.TypeAlbum, id, true
+	if key, ok := parseAlbumURL(rawURL); ok {
+		id, err := dumpAlbumKey(key)
+		if err == nil {
+			return release.TypeAlbum, id, true
+		}
 	}
 	return "", "", false
 }
@@ -54,6 +57,7 @@ func (a *Adapter) FetchTrack(ctx context.Context, id string) (release.Track, err
 
 	metadata := found.Microformat.Renderer
 	artist, albumID, albumTitle := a.metadataFromRuns(watchNext.LongBylineText.Runs)
+	albumID = a.browseAlbumID(albumID)
 	duration, _ := strconv.Atoi(a.firstNonEmpty(
 		found.VideoDetails.LengthSeconds,
 		metadata.VideoDetails.DurationSeconds,
@@ -80,7 +84,12 @@ func (a *Adapter) FetchTrack(ctx context.Context, id string) (release.Track, err
 }
 
 func (a *Adapter) FetchAlbum(ctx context.Context, id string) (release.Album, error) {
-	header, items, err := a.client.fetchAlbum(ctx, id)
+	idType, rawID, err := parseAlbumID(id)
+	if err != nil {
+		return release.Album{}, fmt.Errorf("failed to parse youtube music album id: %w", err)
+	}
+
+	header, items, err := a.client.fetchAlbum(ctx, rawID)
 	switch {
 	case errors.Is(err, errNotFound):
 		return release.Album{}, release.ErrNotFound
@@ -89,18 +98,46 @@ func (a *Adapter) FetchAlbum(ctx context.Context, id string) (release.Album, err
 	}
 
 	trackIDs := make([]string, 0, len(items))
+	fallbackTitle := ""
+	fallbackArtist := ""
+	fallbackBrowseID := ""
+	fallbackCoverURL := ""
 	for _, item := range items {
 		if videoID := a.itemVideoID(item); videoID != "" {
 			trackIDs = append(trackIDs, videoID)
 		}
+		artist, albumID, albumTitle := a.itemMetadata(item)
+		fallbackArtist = a.firstNonEmpty(fallbackArtist, artist)
+		fallbackBrowseID = a.firstNonEmpty(fallbackBrowseID, albumID)
+		fallbackTitle = a.firstNonEmpty(fallbackTitle, albumTitle)
+		fallbackCoverURL = a.firstNonEmpty(
+			fallbackCoverURL,
+			a.coverURL(item.Thumbnail.Renderer.Thumbnail.Thumbnails),
+		)
+	}
+
+	alternativeURL := ""
+	switch idType {
+	case albumIDTypeBrowse:
+		if playlistID := a.headerPlaylistID(header); playlistID != "" {
+			alternativeURL = albumURL(albumIDTypePlaylist, playlistID)
+		}
+	case albumIDTypePlaylist:
+		if fallbackBrowseID != "" {
+			alternativeURL = albumURL(albumIDTypeBrowse, fallbackBrowseID)
+		}
 	}
 
 	return release.Album{
-		ID:          id,
-		Title:       a.firstText(header.Title),
-		Artist:      a.firstText(header.StraplineTextOne),
-		URL:         albumURL(id),
-		CoverURL:    a.coverURL(header.Thumbnail.Renderer.Thumbnail.Thumbnails),
+		ID:             id,
+		Title:          a.firstNonEmpty(a.firstText(header.Title), fallbackTitle),
+		Artist:         a.firstNonEmpty(a.firstText(header.StraplineTextOne), fallbackArtist),
+		URL:            albumURL(idType, rawID),
+		AlternativeURL: alternativeURL,
+		CoverURL: a.firstNonEmpty(
+			a.coverURL(header.Thumbnail.Renderer.Thumbnail.Thumbnails),
+			fallbackCoverURL,
+		),
 		ReleaseDate: release.Date{Year: a.yearFromRuns(header.Subtitle.Runs)},
 		Provider:    release.YoutubeMusic,
 		Description: a.joinRuns(header.Description.Shelf.Description.Runs),
@@ -121,6 +158,7 @@ func (a *Adapter) SearchTracks(ctx context.Context, artist, title string) ([]rel
 			continue
 		}
 		artistName, albumID, albumTitle := a.itemMetadata(item)
+		albumID = a.browseAlbumID(albumID)
 		tracks = append(tracks, release.SearchTrack{
 			ID:         videoID,
 			Title:      a.itemTitle(item),
@@ -143,18 +181,27 @@ func (a *Adapter) SearchAlbums(ctx context.Context, artist, title string) ([]rel
 
 	albums := make([]release.SearchAlbum, 0, len(items))
 	for _, item := range items {
-		id := item.NavigationEndpoint.BrowseEndpoint.BrowseID
-		if id == "" {
+		rawID := item.NavigationEndpoint.BrowseEndpoint.BrowseID
+		if rawID == "" {
+			continue
+		}
+		id, err := newAlbumID(albumIDTypeBrowse, rawID)
+		if err != nil {
 			continue
 		}
 		artistName, _, _ := a.itemMetadata(item)
+		alternativeURL := ""
+		if playlistID := a.itemPlaylistID(item); playlistID != "" {
+			alternativeURL = albumURL(albumIDTypePlaylist, playlistID)
+		}
 		albums = append(albums, release.SearchAlbum{
-			ID:       id,
-			Title:    a.itemTitle(item),
-			Artist:   artistName,
-			URL:      albumURL(id),
-			CoverURL: a.coverURL(item.Thumbnail.Renderer.Thumbnail.Thumbnails),
-			Provider: release.YoutubeMusic,
+			ID:             id,
+			Title:          a.itemTitle(item),
+			Artist:         artistName,
+			URL:            albumURL(albumIDTypeBrowse, rawID),
+			AlternativeURL: alternativeURL,
+			CoverURL:       a.coverURL(item.Thumbnail.Renderer.Thumbnail.Thumbnails),
+			Provider:       release.YoutubeMusic,
 		})
 	}
 	return albums, nil
@@ -173,6 +220,31 @@ func (a *Adapter) searchQuery(artist, title string) string {
 	default:
 		return artist + " – " + title
 	}
+}
+
+func (a *Adapter) itemPlaylistID(item responsiveListItem) string {
+	return item.Overlay.Renderer.Content.PlayButton.
+		PlayNavigationEndpoint.WatchPlaylistEndpoint.PlaylistID
+}
+
+func (a *Adapter) headerPlaylistID(header responsiveHeader) string {
+	for _, button := range header.Buttons {
+		if id := button.PlayButton.PlayNavigationEndpoint.WatchPlaylistEndpoint.PlaylistID; id != "" {
+			return id
+		}
+	}
+	return ""
+}
+
+func (a *Adapter) browseAlbumID(rawID string) string {
+	if rawID == "" {
+		return ""
+	}
+	id, err := newAlbumID(albumIDTypeBrowse, rawID)
+	if err != nil {
+		return ""
+	}
+	return id
 }
 
 func (a *Adapter) itemTitle(item responsiveListItem) string {

@@ -37,4 +37,5 @@ type user struct {
 type publisherMetadata struct {
 	Artist     string `json:"artist"`
 	AlbumTitle string `json:"album_title"`
+	ISRC       string `json:"isrc"`
 }

@@ -42,6 +42,8 @@ The supported providers are:
 - `internal/release/compositekey` validates and serializes provider IDs that have
   multiple parts. Use it instead of ad hoc `strings.Split`/`Join` logic.
 - `internal/release/duration` contains shared duration conversion helpers.
+- `internal/release/isrc` validates and normalizes canonical and presentation
+  forms of ISRC recording identifiers.
 - `internal/providers/<provider>/` contains one isolated integration:
   - `client.go`: HTTP, authentication, provider query syntax, status handling,
     and decoding into provider-native response types.
@@ -147,17 +149,30 @@ Treat the following behavior as compatibility-sensitive.
 - Release types are track, album, and cloak. Only Deezer currently supports
   uncloaking; other adapters return `ErrUnsupportedOperation`.
 - `FetchTrack`, `FetchAlbum`, and `Uncloak` reject empty or whitespace-only IDs
-  with `ErrInvalidID` before calling an adapter.
+  with `ErrInvalidID` before calling an adapter. `FetchTracksByISRC` accepts a
+  canonical 12-character ISRC or its hyphenated presentation form, normalizes
+  it before dispatch, and returns `ErrInvalidID` for malformed values.
 - Composite IDs are an external contract. Changing their delimiter, part order,
   validation, or normalization is a breaking change. Route all creation and
   parsing through the package's `keyScheme`.
 
+### ISRC fetch
+
+- `FetchTracksByISRC` returns full `Track` objects because an ISRC can map to
+  multiple provider catalog entries. Successful calls always return a non-nil
+  slice, including zero results.
+- Every adapter implements `FetchTracksByISRC`. Apple, Deezer, and Spotify
+  support it; other adapters return `ErrUnsupportedOperation` before any
+  provider request, following the same contract as unsupported `Uncloak` calls.
+- ISRC identifies recordings, not albums. Do not add it to album models or
+  album search; UPC/EAN is the corresponding product-level identifier.
+
 ### Search
 
-- `SearchQuery` is valid when at least one of `Artist` or `Title` is non-empty
-  after trimming for validation. Both empty yields `ErrInvalidSearchQuery`.
-- Pass original query strings to the adapter; catalog validation does not
-  rewrite them.
+- Search is valid when at least one of `Artist` or `Title` is non-empty after
+  trimming for validation. Both empty yields `ErrInvalidSearchQuery`.
+- Pass original artist/title query strings to the adapter; catalog validation
+  does not rewrite them.
 - Successful public searches always return a non-nil slice, including zero
   results. `Catalog` enforces this with `forceNonNil`.
 - Adapter/client errors return a nil slice unless a provider explicitly maps a
@@ -172,9 +187,9 @@ Treat the following behavior as compatibility-sensitive.
 - `Track`, `Album`, `SearchTrack`, and `SearchAlbum` share the common fields
   `ID`, `Title`, `Artist`, `URL`, `AlternativeURL`, `CoverURL`, `Provider`,
   `Creator`, and `Description`.
-- `Track` additionally owns `AlbumID`, `AlbumTitle`, `Duration`, and
+- `Track` additionally owns `ISRC`, `AlbumID`, `AlbumTitle`, `Duration`, and
   `ReleaseDate`; `Album` owns `Label`, `ReleaseDate`, and `TrackIDs`;
-  `SearchTrack` owns `AlbumID` and `AlbumTitle`.
+  `SearchTrack` owns `ISRC`, `AlbumID`, and `AlbumTitle`.
 - `Duration` is integral seconds. Use shared conversion helpers and preserve
   their rounding semantics instead of truncating milliseconds or ISO-8601
   fractional seconds.

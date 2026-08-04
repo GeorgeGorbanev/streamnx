@@ -76,6 +76,7 @@ func (a *Adapter) FetchTrack(ctx context.Context, id string) (release.Track, err
 
 	return release.Track{
 		ID:          id,
+		ISRC:        track.ISRC,
 		Artist:      track.BandName,
 		Title:       track.Name,
 		AlbumID:     a.albumID(track.AlbumURL),
@@ -88,6 +89,10 @@ func (a *Adapter) FetchTrack(ctx context.Context, id string) (release.Track, err
 		Description: track.Description,
 		Creator:     a.creatorName(track),
 	}, nil
+}
+
+func (a *Adapter) FetchTracksByISRC(context.Context, string) ([]release.Track, error) {
+	return nil, release.ErrUnsupportedOperation
 }
 
 func (a *Adapter) FetchAlbum(ctx context.Context, id string) (release.Album, error) {

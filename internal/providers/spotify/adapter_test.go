@@ -136,9 +136,10 @@ func TestSpotifyAdapter_fetchTrack(t *testing.T) {
 				m.
 					On("fetchTrack", "sampleID").
 					Return(track{
-						ID:    "sampleID",
-						Name:  "sample name",
-						Album: albumInfo{ReleaseDate: "1987-11"},
+						ID:          "sampleID",
+						Name:        "sample name",
+						Album:       albumInfo{ReleaseDate: "1987-11"},
+						ExternalIDs: externalIDs{ISRC: "GBARL9300135"},
 						Artists: []artist{
 							{
 								Name: "sample artist",
@@ -149,6 +150,7 @@ func TestSpotifyAdapter_fetchTrack(t *testing.T) {
 			},
 			expectedTrack: release.Track{
 				ID:       "sampleID",
+				ISRC:     "GBARL9300135",
 				Title:    "sample name",
 				Artist:   "sample artist",
 				URL:      "https://open.spotify.com/track/sampleID",
@@ -300,8 +302,9 @@ func TestSpotifyAdapter_searchTracks(t *testing.T) {
 					On("searchTracks", "sample artist", "sample track").
 					Return([]track{
 						{
-							ID:   "firstTrackID",
-							Name: "first track",
+							ID:          "firstTrackID",
+							Name:        "first track",
+							ExternalIDs: externalIDs{ISRC: "GBARL9300135"},
 							Artists: []artist{
 								{
 									Name: "first artist",
@@ -323,6 +326,7 @@ func TestSpotifyAdapter_searchTracks(t *testing.T) {
 			expectedTracks: []release.SearchTrack{
 				{
 					ID:       "firstTrackID",
+					ISRC:     "GBARL9300135",
 					Title:    "first track",
 					Artist:   "first artist",
 					URL:      "https://open.spotify.com/track/firstTrackID",
@@ -381,6 +385,42 @@ func TestSpotifyAdapter_searchTracks(t *testing.T) {
 			cm.AssertExpectations(t)
 		})
 	}
+}
+
+func TestSpotifyAdapter_fetchTracksByISRC(t *testing.T) {
+	cm := &clientMock{}
+	cm.
+		On("fetchTracksByISRC", "GBARL9300135").
+		Return([]track{{
+			ID:          "sampleID",
+			Name:        "sample track",
+			DurationMS:  123000,
+			ExternalIDs: externalIDs{ISRC: "GBARL9300135"},
+			Artists:     []artist{{Name: "sample artist"}},
+			Album: albumInfo{
+				ID:          "sampleAlbumID",
+				Name:        "sample album",
+				ReleaseDate: "2024-01-02",
+			},
+		}}, nil).
+		Once()
+
+	result, err := NewAdapter(cm).FetchTracksByISRC(t.Context(), "GBARL9300135")
+
+	require.NoError(t, err)
+	require.Equal(t, []release.Track{{
+		ID:          "sampleID",
+		ISRC:        "GBARL9300135",
+		Title:       "sample track",
+		Artist:      "sample artist",
+		AlbumID:     "sampleAlbumID",
+		AlbumTitle:  "sample album",
+		URL:         "https://open.spotify.com/track/sampleID",
+		Duration:    123,
+		ReleaseDate: release.Date{Year: 2024, Month: 1, Day: 2},
+		Provider:    release.Spotify,
+	}}, result)
+	cm.AssertExpectations(t)
 }
 
 func TestSpotifyAdapter_searchAlbums(t *testing.T) {
@@ -502,6 +542,14 @@ func (m *clientMock) fetchTrack(_ context.Context, id string) (track, error) {
 
 func (m *clientMock) searchTracks(_ context.Context, artist, title string) ([]track, error) {
 	args := m.Called(artist, title)
+	if args.Get(0) == nil {
+		return nil, args.Error(1)
+	}
+	return args.Get(0).([]track), args.Error(1)
+}
+
+func (m *clientMock) fetchTracksByISRC(_ context.Context, isrc string) ([]track, error) {
+	args := m.Called(isrc)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}

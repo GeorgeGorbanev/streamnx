@@ -90,6 +90,21 @@ func (c *Client) searchTracks(ctx context.Context, artist, title string) ([]trac
 	return result.Data, nil
 }
 
+func (c *Client) fetchTrackByISRC(ctx context.Context, isrc string) (track, error) {
+	body, err := c.getAPI(ctx, "/track/isrc:"+isrc, url.Values{})
+	if err != nil {
+		return track{}, fmt.Errorf("failed to fetch track by isrc: %w", err)
+	}
+	var result track
+	if err := json.Unmarshal(body, &result); err != nil {
+		return track{}, fmt.Errorf("failed to parse isrc fetch response: %w", err)
+	}
+	if result.ID == 0 {
+		return track{}, errNotFound
+	}
+	return result, nil
+}
+
 // https://developers.deezer.com/api/album
 func (c *Client) fetchAlbum(ctx context.Context, id string) (album, error) {
 	body, err := c.getAPI(ctx, "/album/"+id, url.Values{})

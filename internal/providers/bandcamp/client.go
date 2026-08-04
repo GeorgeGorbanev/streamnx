@@ -105,6 +105,7 @@ func (c *Client) fetchEntity(ctx context.Context, u string) (Entity, error) {
 
 	return Entity{
 		URL:         u,
+		ISRC:        tralbumISRC(html),
 		Name:        ldjson.Name,
 		AlbumTitle:  ldjson.InAlbum.Name,
 		AlbumURL:    ldjson.InAlbum.ID,
@@ -116,6 +117,23 @@ func (c *Client) fetchEntity(ctx context.Context, u string) (Entity, error) {
 		ReleaseDate: ldjson.DatePublished,
 		TrackURLs:   trackURLs(ldjson),
 	}, nil
+}
+
+func tralbumISRC(body []byte) string {
+	matches := tralbumDataRe.FindSubmatch(body)
+	if len(matches) != 3 {
+		return ""
+	}
+	raw := matches[1]
+	if len(raw) == 0 {
+		raw = matches[2]
+	}
+
+	var data tralbumData
+	if err := json.Unmarshal([]byte(html.UnescapeString(string(raw))), &data); err != nil {
+		return ""
+	}
+	return data.Current.ISRC
 }
 
 func trackURLs(ldjson releaseLDJSON) []string {

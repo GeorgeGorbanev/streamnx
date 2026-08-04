@@ -136,6 +136,7 @@ func TestAppleAdapter_fetchTrack(t *testing.T) {
 						ID: "ru-123",
 						Attributes: entityAttributes{
 							ArtistName: "sample artist",
+							ISRC:       "GBARL9300135",
 							Name:       "sample name",
 							URL:        "https://music.apple.com/ru/album/song-name/1234567890?i=123",
 							EditorialNotes: editorialNotes{
@@ -147,6 +148,7 @@ func TestAppleAdapter_fetchTrack(t *testing.T) {
 			},
 			expectedTrack: release.Track{
 				ID:          "ru-123",
+				ISRC:        "GBARL9300135",
 				Title:       "sample name",
 				Artist:      "sample artist",
 				URL:         "https://music.apple.com/ru/album/song-name/1234567890?i=123",
@@ -305,6 +307,7 @@ func TestAppleAdapter_searchTracks(t *testing.T) {
 						{
 							Attributes: entityAttributes{
 								ArtistName: "first artist",
+								ISRC:       "GBARL9300135",
 								Name:       "first track",
 								URL:        "https://music.apple.com/us/album/first-album/111?i=222",
 								EditorialNotes: editorialNotes{
@@ -328,6 +331,7 @@ func TestAppleAdapter_searchTracks(t *testing.T) {
 			expectedTracks: []release.SearchTrack{
 				{
 					ID:          "us-222",
+					ISRC:        "GBARL9300135",
 					Title:       "first track",
 					Artist:      "first artist",
 					URL:         "https://music.apple.com/us/album/first-album/111?i=222",
@@ -376,6 +380,48 @@ func TestAppleAdapter_searchTracks(t *testing.T) {
 			cm.AssertExpectations(t)
 		})
 	}
+}
+
+func TestAppleAdapter_fetchTracksByISRC(t *testing.T) {
+	cm := &clientMock{}
+	cm.
+		On("fetchTracksByISRC", "GBARL9300135").
+		Return([]entity{{
+			Attributes: entityAttributes{
+				AlbumName:        "sample album",
+				ArtistName:       "sample artist",
+				DurationInMillis: 123000,
+				ISRC:             "GBARL9300135",
+				Name:             "sample track",
+				ReleaseDate:      "2024-01-02",
+				URL:              "https://music.apple.com/us/album/sample/111?i=222",
+				EditorialNotes: editorialNotes{
+					Standard: "sample description",
+				},
+			},
+			Relationships: entityRelationships{
+				Albums: albumsRelationship{Data: []entity{{ID: "111"}}},
+			},
+		}}, nil).
+		Once()
+
+	result, err := NewAdapter(cm).FetchTracksByISRC(t.Context(), "GBARL9300135")
+
+	require.NoError(t, err)
+	require.Equal(t, []release.Track{{
+		ID:          "us-222",
+		ISRC:        "GBARL9300135",
+		Title:       "sample track",
+		Artist:      "sample artist",
+		AlbumID:     "us-111",
+		AlbumTitle:  "sample album",
+		URL:         "https://music.apple.com/us/album/sample/111?i=222",
+		Duration:    123,
+		ReleaseDate: release.Date{Year: 2024, Month: 1, Day: 2},
+		Provider:    release.Apple,
+		Description: "sample description",
+	}}, result)
+	cm.AssertExpectations(t)
 }
 
 func TestAppleAdapter_searchAlbums(t *testing.T) {
@@ -485,6 +531,14 @@ func (m *clientMock) fetchTrack(_ context.Context, id, storefront string) (entit
 
 func (m *clientMock) searchTracks(_ context.Context, artist, title string) ([]entity, error) {
 	args := m.Called(artist, title)
+	if args.Get(0) == nil {
+		return nil, args.Error(1)
+	}
+	return args.Get(0).([]entity), args.Error(1)
+}
+
+func (m *clientMock) fetchTracksByISRC(_ context.Context, isrc string) ([]entity, error) {
+	args := m.Called(isrc)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}

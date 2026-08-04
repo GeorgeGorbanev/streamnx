@@ -109,13 +109,21 @@ func (c *Client) fetchAlbum(ctx context.Context, id string) (album, error) {
 
 // https://developer.spotify.com/documentation/web-api/reference/search
 func (c *Client) searchTracks(ctx context.Context, artist, title string) ([]track, error) {
+	return c.searchTracksWithQuery(ctx, fmt.Sprintf("artist:%s track:%s", artist, title))
+}
+
+func (c *Client) fetchTracksByISRC(ctx context.Context, isrc string) ([]track, error) {
+	return c.searchTracksWithQuery(ctx, "isrc:"+isrc)
+}
+
+func (c *Client) searchTracksWithQuery(ctx context.Context, query string) ([]track, error) {
 	type searchResult struct {
 		Tracks struct {
 			Items []track `json:"items"`
 		} `json:"tracks"`
 	}
 
-	body, err := c.searchAPI(ctx, release.TypeTrack, artist, title)
+	body, err := c.searchAPI(ctx, release.TypeTrack, query)
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +144,7 @@ func (c *Client) searchAlbums(ctx context.Context, artist, title string) ([]albu
 		} `json:"albums"`
 	}
 
-	body, err := c.searchAPI(ctx, release.TypeAlbum, artist, title)
+	body, err := c.searchAPI(ctx, release.TypeAlbum, fmt.Sprintf("artist:%s album:%s", artist, title))
 	if err != nil {
 		return nil, err
 	}
@@ -217,10 +225,10 @@ func (c *Client) getAPI(ctx context.Context, path string, query url.Values) ([]b
 	return body, nil
 }
 
-func (c *Client) searchAPI(ctx context.Context, rt release.Type, artist, title string) ([]byte, error) {
+func (c *Client) searchAPI(ctx context.Context, rt release.Type, query string) ([]byte, error) {
 	const defaultSearchLimit = "10"
 	return c.getAPI(ctx, "/v1/search", url.Values{
-		"q":     []string{fmt.Sprintf("artist:%s %s:%s", artist, rt, title)},
+		"q":     []string{query},
 		"type":  []string{string(rt)},
 		"limit": []string{defaultSearchLimit},
 	})

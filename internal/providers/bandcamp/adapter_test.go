@@ -99,6 +99,7 @@ func TestBandcampAdapter_fetchTrack(t *testing.T) {
 					On("fetchTrack", "autechre", "nil").
 					Return(Entity{
 						Name:        "Nil",
+						ISRC:        "GBARL9300135",
 						BandName:    "Autechre",
 						CreatorName: "Warp Records",
 						Description: "sample track description",
@@ -108,6 +109,7 @@ func TestBandcampAdapter_fetchTrack(t *testing.T) {
 			},
 			expectedTrack: release.Track{
 				ID:          "autechre:nil",
+				ISRC:        "GBARL9300135",
 				Title:       "Nil",
 				Artist:      "Autechre",
 				URL:         "https://autechre.com/track/nil",
@@ -561,6 +563,13 @@ func TestBandcampAdapter_searchAlbums(t *testing.T) {
 			cm.AssertExpectations(t)
 		})
 	}
+}
+
+func TestBandcampAdapter_fetchTracksByISRC(t *testing.T) {
+	tracks, err := (&Adapter{}).FetchTracksByISRC(t.Context(), "GBARL9300135")
+
+	require.Nil(t, tracks)
+	require.ErrorIs(t, err, release.ErrUnsupportedOperation)
 }
 
 type clientMock struct {

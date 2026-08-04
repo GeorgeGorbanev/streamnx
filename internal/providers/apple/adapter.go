@@ -18,6 +18,7 @@ type Adapter struct {
 type adapterClient interface {
 	fetchTrack(ctx context.Context, id, storefront string) (entity, error)
 	searchTracks(ctx context.Context, artist, title string) ([]entity, error)
+	fetchTracksByISRC(ctx context.Context, isrc string) ([]entity, error)
 	fetchAlbum(ctx context.Context, id, storefront string) (entity, error)
 	searchAlbums(ctx context.Context, artist, title string) ([]entity, error)
 }
@@ -72,10 +73,40 @@ func (a *Adapter) FetchTrack(ctx context.Context, id string) (release.Track, err
 		return release.Track{}, release.ErrNotFound
 	case err != nil:
 		return release.Track{}, fmt.Errorf("failed to get track from apple: %w", err)
+	default:
+		return a.releaseTrack(track, id, storefront), nil
+	}
+}
+
+func (a *Adapter) FetchTracksByISRC(ctx context.Context, isrc string) ([]release.Track, error) {
+	found, err := a.client.fetchTracksByISRC(ctx, isrc)
+	if err != nil {
+		return nil, fmt.Errorf("failed to fetch tracks by isrc from apple: %w", err)
 	}
 
+	tracks := make([]release.Track, len(found))
+	for i, track := range found {
+		key, err := parseTrackLink(track.Attributes.URL)
+		if err != nil {
+			return nil, fmt.Errorf("failed to parse track link: %w", err)
+		}
+		id, err := keyScheme.Dump(key)
+		if err != nil {
+			return nil, fmt.Errorf("failed to dump track key: %w", err)
+		}
+		_, storefront, err := parseKeyParts(id)
+		if err != nil {
+			return nil, fmt.Errorf("failed to parse track key: %w", err)
+		}
+		tracks[i] = a.releaseTrack(track, id, storefront)
+	}
+	return tracks, nil
+}
+
+func (a *Adapter) releaseTrack(track entity, id, storefront string) release.Track {
 	return release.Track{
 		ID:          id,
+		ISRC:        track.Attributes.ISRC,
 		Artist:      track.Attributes.ArtistName,
 		Title:       track.Attributes.Name,
 		AlbumID:     a.trackAlbumID(track, storefront),
@@ -86,7 +117,7 @@ func (a *Adapter) FetchTrack(ctx context.Context, id string) (release.Track, err
 		ReleaseDate: a.releaseDate(track.Attributes.ReleaseDate),
 		Provider:    release.Apple,
 		Description: a.description(track),
-	}, nil
+	}
 }
 
 func (a *Adapter) FetchAlbum(ctx context.Context, id string) (release.Album, error) {
@@ -148,7 +179,10 @@ func (a *Adapter) SearchTracks(ctx context.Context, artist, title string) ([]rel
 	if err != nil {
 		return nil, fmt.Errorf("failed to search track from apple: %w", err)
 	}
+	return a.searchTracks(found)
+}
 
+func (a *Adapter) searchTracks(found []entity) ([]release.SearchTrack, error) {
 	tracks := make([]release.SearchTrack, len(found))
 	for i, track := range found {
 		ck, err := parseTrackLink(track.Attributes.URL)
@@ -165,6 +199,7 @@ func (a *Adapter) SearchTracks(ctx context.Context, artist, title string) ([]rel
 		}
 		tracks[i] = release.SearchTrack{
 			ID:          id,
+			ISRC:        track.Attributes.ISRC,
 			Artist:      track.Attributes.ArtistName,
 			Title:       track.Attributes.Name,
 			AlbumID:     a.trackAlbumID(track, storefront),

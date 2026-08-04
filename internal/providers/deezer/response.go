@@ -2,6 +2,7 @@ package deezer
 
 type track struct {
 	ID          int       `json:"id"`
+	ISRC        string    `json:"isrc"`
 	Title       string    `json:"title"`
 	Artist      artist    `json:"artist"`
 	Album       albumInfo `json:"album"`

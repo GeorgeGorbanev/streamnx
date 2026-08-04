@@ -17,6 +17,7 @@ type Adapter struct {
 type adapterClient interface {
 	fetchTrack(ctx context.Context, id string) (track, error)
 	searchTracks(ctx context.Context, artist, title string) ([]track, error)
+	fetchTracksByISRC(ctx context.Context, isrc string) ([]track, error)
 	fetchAlbum(ctx context.Context, id string) (album, error)
 	searchAlbums(ctx context.Context, artist, title string) ([]album, error)
 }
@@ -42,10 +43,28 @@ func (a *Adapter) FetchTrack(ctx context.Context, id string) (release.Track, err
 		return release.Track{}, release.ErrNotFound
 	case err != nil:
 		return release.Track{}, fmt.Errorf("failed to get track from spotify: %w", err)
+	default:
+		return a.releaseTrack(track), nil
+	}
+}
+
+func (a *Adapter) FetchTracksByISRC(ctx context.Context, isrc string) ([]release.Track, error) {
+	found, err := a.client.fetchTracksByISRC(ctx, isrc)
+	if err != nil {
+		return nil, fmt.Errorf("failed to fetch tracks by isrc on spotify: %w", err)
 	}
 
+	tracks := make([]release.Track, len(found))
+	for i, track := range found {
+		tracks[i] = a.releaseTrack(track)
+	}
+	return tracks, nil
+}
+
+func (a *Adapter) releaseTrack(track track) release.Track {
 	return release.Track{
 		ID:          track.ID,
+		ISRC:        track.ExternalIDs.ISRC,
 		Title:       track.Name,
 		Artist:      a.artist(track.Artists),
 		AlbumID:     track.Album.ID,
@@ -55,7 +74,7 @@ func (a *Adapter) FetchTrack(ctx context.Context, id string) (release.Track, err
 		CoverURL:    a.coverURL(track.Album.Images),
 		Duration:    duration.MsToSeconds(track.DurationMS),
 		ReleaseDate: a.releaseDate(track.Album.ReleaseDate),
-	}, nil
+	}
 }
 
 func (a *Adapter) FetchAlbum(ctx context.Context, id string) (release.Album, error) {
@@ -93,11 +112,15 @@ func (a *Adapter) SearchTracks(ctx context.Context, artist, title string) ([]rel
 	if err != nil {
 		return nil, fmt.Errorf("failed to search track on spotify: %w", err)
 	}
+	return a.searchTracks(found), nil
+}
 
+func (a *Adapter) searchTracks(found []track) []release.SearchTrack {
 	tracks := make([]release.SearchTrack, len(found))
 	for i, track := range found {
 		tracks[i] = release.SearchTrack{
 			ID:         track.ID,
+			ISRC:       track.ExternalIDs.ISRC,
 			Title:      track.Name,
 			Artist:     a.artist(track.Artists),
 			AlbumID:    track.Album.ID,
@@ -107,7 +130,7 @@ func (a *Adapter) SearchTracks(ctx context.Context, artist, title string) ([]rel
 			CoverURL:   a.coverURL(track.Album.Images),
 		}
 	}
-	return tracks, nil
+	return tracks
 }
 
 func (a *Adapter) SearchAlbums(ctx context.Context, artist, title string) ([]release.SearchAlbum, error) {

@@ -125,6 +125,7 @@ func TestDeezerAdapter_fetchTrack(t *testing.T) {
 					On("fetchTrack", "123456").
 					Return(track{
 						ID:    123456,
+						ISRC:  "GBARL9300135",
 						Title: "Test Song",
 						Artist: artist{
 							Name: "Test Artist",
@@ -134,6 +135,7 @@ func TestDeezerAdapter_fetchTrack(t *testing.T) {
 			},
 			want: release.Track{
 				ID:       "123456",
+				ISRC:     "GBARL9300135",
 				Title:    "Test Song",
 				Artist:   "Test Artist",
 				URL:      "https://deezer.com/track/123456",
@@ -375,6 +377,7 @@ func TestDeezerAdapter_searchTracks(t *testing.T) {
 					Return([]track{
 						{
 							ID:    123,
+							ISRC:  "GBARL9300135",
 							Title: "First Track",
 							Artist: artist{
 								Name: "First Artist",
@@ -393,6 +396,7 @@ func TestDeezerAdapter_searchTracks(t *testing.T) {
 			want: []release.SearchTrack{
 				{
 					ID:       "123",
+					ISRC:     "GBARL9300135",
 					Title:    "First Track",
 					Artist:   "First Artist",
 					URL:      "https://deezer.com/track/123",
@@ -450,6 +454,64 @@ func TestDeezerAdapter_searchTracks(t *testing.T) {
 				require.Equal(t, tt.want, got)
 			}
 
+			cm.AssertExpectations(t)
+		})
+	}
+}
+
+func TestDeezerAdapter_fetchTracksByISRC(t *testing.T) {
+	tests := []struct {
+		name       string
+		mockClient func(m *clientMock)
+		want       []release.Track
+	}{
+		{
+			name: "found",
+			mockClient: func(m *clientMock) {
+				m.
+					On("fetchTrackByISRC", "GBARL9300135").
+					Return(track{
+						ID:          123,
+						ISRC:        "GBARL9300135",
+						Title:       "Sample Track",
+						Artist:      artist{Name: "Sample Artist"},
+						Album:       albumInfo{ID: 456, Title: "Sample Album"},
+						Duration:    123,
+						ReleaseDate: "2024-01-02",
+					}, nil).
+					Once()
+			},
+			want: []release.Track{{
+				ID:          "123",
+				ISRC:        "GBARL9300135",
+				Title:       "Sample Track",
+				Artist:      "Sample Artist",
+				AlbumID:     "456",
+				AlbumTitle:  "Sample Album",
+				URL:         "https://deezer.com/track/123",
+				Duration:    123,
+				ReleaseDate: release.Date{Year: 2024, Month: 1, Day: 2},
+				Provider:    release.Deezer,
+			}},
+		},
+		{
+			name: "not found",
+			mockClient: func(m *clientMock) {
+				m.On("fetchTrackByISRC", "GBARL9300135").Return(nil, errNotFound).Once()
+			},
+			want: []release.Track{},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			cm := &clientMock{}
+			tt.mockClient(cm)
+
+			got, err := NewAdapter(cm).FetchTracksByISRC(t.Context(), "GBARL9300135")
+
+			require.NoError(t, err)
+			require.Equal(t, tt.want, got)
 			cm.AssertExpectations(t)
 		})
 	}
@@ -576,6 +638,14 @@ func (m *clientMock) searchTracks(_ context.Context, artist, title string) ([]tr
 		return nil, args.Error(1)
 	}
 	return args.Get(0).([]track), args.Error(1)
+}
+
+func (m *clientMock) fetchTrackByISRC(_ context.Context, isrc string) (track, error) {
+	args := m.Called(isrc)
+	if args.Get(0) == nil {
+		return track{}, args.Error(1)
+	}
+	return args.Get(0).(track), args.Error(1)
 }
 
 func (m *clientMock) fetchAlbum(_ context.Context, id string) (album, error) {

@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"slices"
 	"strings"
+
+	"github.com/GeorgeGorbanev/streamnx/v2/internal/release/isrc"
 )
 
 type Catalog struct {
@@ -16,6 +18,7 @@ type Catalog struct {
 type adapter interface {
 	ParseLink(rawURL string) (ReleaseType, string, bool)
 	FetchTrack(ctx context.Context, id string) (Track, error)
+	FetchTracksByISRC(ctx context.Context, isrc string) ([]Track, error)
 	FetchAlbum(ctx context.Context, id string) (Album, error)
 	SearchTracks(ctx context.Context, artist, title string) ([]SearchTrack, error)
 	SearchAlbums(ctx context.Context, artist, title string) ([]SearchAlbum, error)
@@ -82,6 +85,22 @@ func (r *Catalog) FetchTrack(ctx context.Context, p ReleaseProvider, id string) 
 		return Track{}, ErrInvalidID
 	}
 	return a.FetchTrack(ctx, id)
+}
+
+func (r *Catalog) FetchTracksByISRC(ctx context.Context, p ReleaseProvider, rawISRC string) ([]Track, error) {
+	a, ok := r.adapters[p]
+	if !ok {
+		return nil, ErrInvalidProvider
+	}
+	normalizedISRC, valid := isrc.Normalize(rawISRC)
+	if !valid {
+		return nil, fmt.Errorf("%w: invalid isrc", ErrInvalidID)
+	}
+	tracks, err := a.FetchTracksByISRC(ctx, normalizedISRC)
+	if err != nil {
+		return nil, err
+	}
+	return forceNonNil(tracks), nil
 }
 
 func (r *Catalog) FetchAlbum(ctx context.Context, p ReleaseProvider, id string) (Album, error) {

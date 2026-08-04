@@ -1,11 +1,16 @@
 package spotify
 
 type track struct {
-	Album      albumInfo `json:"album"`
-	Artists    []artist  `json:"artists"`
-	ID         string    `json:"id"`
-	Name       string    `json:"name"`
-	DurationMS int       `json:"duration_ms"`
+	Album       albumInfo   `json:"album"`
+	Artists     []artist    `json:"artists"`
+	ExternalIDs externalIDs `json:"external_ids"`
+	ID          string      `json:"id"`
+	Name        string      `json:"name"`
+	DurationMS  int         `json:"duration_ms"`
+}
+
+type externalIDs struct {
+	ISRC string `json:"isrc"`
 }
 
 type album struct {

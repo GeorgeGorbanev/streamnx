@@ -370,6 +370,59 @@ func TestCatalog_SearchTracks(t *testing.T) {
 	am.AssertExpectations(t)
 }
 
+func TestCatalog_FetchTracksByISRC(t *testing.T) {
+	am := &adapterMock{}
+	am.
+		On("FetchTracksByISRC", "GBARL9300135").
+		Return([]Track{{ID: "1", ISRC: "GBARL9300135", Provider: Spotify}}, nil).
+		Once()
+
+	catalog := mustCatalog(t, withAdapter(Spotify, am))
+
+	result, err := catalog.FetchTracksByISRC(t.Context(), Spotify, " gb-arl-93-00135 ")
+
+	require.NoError(t, err)
+	require.Equal(t, []Track{{ID: "1", ISRC: "GBARL9300135", Provider: Spotify}}, result)
+	am.AssertExpectations(t)
+}
+
+func TestCatalog_FetchTracksByISRCRejectsUnsupportedProvider(t *testing.T) {
+	am := &adapterMock{}
+	am.
+		On("FetchTracksByISRC", "GBARL9300135").
+		Return(nil, ErrUnsupportedOperation).
+		Once()
+	catalog := mustCatalog(t, withAdapter(Youtube, am))
+
+	result, err := catalog.FetchTracksByISRC(t.Context(), Youtube, "GBARL9300135")
+
+	require.Nil(t, result)
+	require.ErrorIs(t, err, ErrUnsupportedOperation)
+	am.AssertExpectations(t)
+}
+
+func TestCatalog_FetchTracksByISRCRejectsUnregisteredProvider(t *testing.T) {
+	catalog := mustCatalog(t)
+
+	result, err := catalog.FetchTracksByISRC(t.Context(), Spotify, "GBARL9300135")
+
+	require.Nil(t, result)
+	require.ErrorIs(t, err, ErrInvalidProvider)
+}
+
+func TestCatalog_FetchTracksByISRCRejectsMalformedISRC(t *testing.T) {
+	catalog := mustCatalog(t, withAdapter(Spotify, &adapterMock{}))
+
+	for _, isrc := range []string{"", " ", "not-an-isrc", "G-BARL9300135"} {
+		t.Run(isrc, func(t *testing.T) {
+			result, err := catalog.FetchTracksByISRC(t.Context(), Spotify, isrc)
+
+			require.Nil(t, result)
+			require.ErrorIs(t, err, ErrInvalidID)
+		})
+	}
+}
+
 func TestCatalog_SearchAlbums(t *testing.T) {
 	sampleProvider := Apple
 	am := &adapterMock{}
@@ -555,6 +608,14 @@ func withAdapter(provider ReleaseProvider, adapter adapter) CatalogOption {
 
 type adapterMock struct {
 	mock.Mock
+}
+
+func (m *adapterMock) FetchTracksByISRC(_ context.Context, isrc string) ([]Track, error) {
+	args := m.Called(isrc)
+	if args.Get(0) == nil {
+		return nil, args.Error(1)
+	}
+	return args.Get(0).([]Track), args.Error(1)
 }
 
 func (m *adapterMock) FetchTrack(_ context.Context, id string) (Track, error) {

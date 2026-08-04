@@ -142,6 +142,34 @@ func (c *Client) searchTracks(ctx context.Context, artist, track string) ([]enti
 	return results, nil
 }
 
+// https://developer.apple.com/documentation/applemusicapi/get-multiple-catalog-songs-by-isrc
+func (c *Client) fetchTracksByISRC(ctx context.Context, isrc string) ([]entity, error) {
+	query := url.Values{
+		"filter[isrc]": {isrc},
+		"include":      {"albums"},
+	}
+	u := fmt.Sprintf(`%s/v1/catalog/us/songs?%s`, c.apiURL, query.Encode())
+	response, err := c.getAPI(ctx, u)
+	if err != nil {
+		return nil, fmt.Errorf("failed to perform get request: %w", err)
+	}
+	defer response.Body.Close()
+
+	switch response.StatusCode {
+	case http.StatusOK:
+	case http.StatusNotFound:
+		return []entity{}, nil
+	default:
+		return nil, fmt.Errorf("unexpected status code: %d", response.StatusCode)
+	}
+
+	r := fetchResponse{}
+	if err := json.NewDecoder(response.Body).Decode(&r); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal isrc fetch response: %w", err)
+	}
+	return r.Data, nil
+}
+
 func (c *Client) searchAlbums(ctx context.Context, artist, album string) ([]entity, error) {
 	u := fmt.Sprintf(`%s/v1/catalog/us/search?%s`, c.apiURL, c.searchQuery(artist, album))
 	response, err := c.getAPI(ctx, u)

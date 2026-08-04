@@ -572,6 +572,13 @@ func TestAdapterUncloak(t *testing.T) {
 	}
 }
 
+func TestAdapterFetchTracksByISRC(t *testing.T) {
+	tracks, err := (&Adapter{}).FetchTracksByISRC(t.Context(), "GBARL9300135")
+
+	require.Nil(t, tracks)
+	require.ErrorIs(t, err, release.ErrUnsupportedOperation)
+}
+
 type clientMock struct {
 	mock.Mock
 }

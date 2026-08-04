@@ -1,0 +1,838 @@
+{
+  "data": [
+    {
+      "id": "1559885421",
+      "type": "songs",
+      "href": "/v1/catalog/us/songs/1559885421",
+      "attributes": {
+        "albumArtistName": "Rick Astley",
+        "albumName": "Whenever You Need Somebody",
+        "artistName": "Rick Astley",
+        "artwork": {
+          "bgColor": "1e1a1a",
+          "hasP3": false,
+          "height": 1500,
+          "textColor1": "f1e4d0",
+          "textColor2": "d3d9db",
+          "textColor3": "c7bbac",
+          "textColor4": "aeb3b5",
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/{w}x{h}bb.jpg",
+          "width": 1500
+        },
+        "audioLocale": "en-US",
+        "audioTraits": [
+          "lossless",
+          "lossy-stereo"
+        ],
+        "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+        "discNumber": 1,
+        "durationInMillis": 213573,
+        "genreNames": [
+          "Pop",
+          "Music"
+        ],
+        "hasLyrics": true,
+        "hasTimeSyncedLyrics": true,
+        "isAppleDigitalMaster": false,
+        "isMasteredForItunes": false,
+        "isVocalAttenuationAllowed": true,
+        "isrc": "GBARL9300135",
+        "name": "Never Gonna Give You Up",
+        "playParams": {
+          "id": "1559885421",
+          "kind": "song"
+        },
+        "previews": [
+          {
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/3a/d6/9a/3ad69a5b-1fdc-c0ca-069b-541cef78e9d6/mzaf_11103729100333690294.plus.aac.ep.m4a"
+          }
+        ],
+        "releaseDate": "1987-07-27",
+        "trackNumber": 1,
+        "url": "https://music.apple.com/us/album/never-gonna-give-you-up/1559885420?i=1559885421"
+      },
+      "relationships": {
+        "albums": {
+          "href": "/v1/catalog/us/songs/1559885421/albums",
+          "data": [
+            {
+              "id": "1559885420",
+              "type": "albums",
+              "href": "/v1/catalog/us/albums/1559885420",
+              "attributes": {
+                "artistName": "Rick Astley",
+                "artwork": {
+                  "bgColor": "1e1a1a",
+                  "hasP3": false,
+                  "height": 1500,
+                  "textColor1": "f1e4d0",
+                  "textColor2": "d3d9db",
+                  "textColor3": "c7bbac",
+                  "textColor4": "aeb3b5",
+                  "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/{w}x{h}bb.jpg",
+                  "width": 1500
+                },
+                "audioTraits": [
+                  "lossless",
+                  "lossy-stereo"
+                ],
+                "copyright": "℗ 1987 BMG Rights Management (UK) Limited",
+                "genreNames": [
+                  "Pop",
+                  "Music",
+                  "Electronic",
+                  "Adult Contemporary",
+                  "Soft Rock",
+                  "Dance"
+                ],
+                "isCompilation": false,
+                "isComplete": true,
+                "isMasteredForItunes": false,
+                "isPrerelease": false,
+                "isSingle": false,
+                "name": "Whenever You Need Somebody",
+                "playParams": {
+                  "id": "1559885420",
+                  "kind": "album"
+                },
+                "recordLabel": "BMG Rights Management (UK) Ltd.",
+                "releaseDate": "1987-11-12",
+                "trackCount": 10,
+                "upc": "0859381157694",
+                "url": "https://music.apple.com/us/album/whenever-you-need-somebody/1559885420"
+              }
+            }
+          ]
+        },
+        "artists": {
+          "href": "/v1/catalog/us/songs/1559885421/artists",
+          "data": [
+            {
+              "id": "669771",
+              "type": "artists",
+              "href": "/v1/catalog/us/artists/669771"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "1438556832",
+      "type": "songs",
+      "href": "/v1/catalog/us/songs/1438556832",
+      "attributes": {
+        "albumArtistName": "Various Artists",
+        "albumName": "The Hit Factory Ultimate Collection",
+        "artistName": "Rick Astley",
+        "artwork": {
+          "bgColor": "ffffff",
+          "hasP3": false,
+          "height": 4000,
+          "textColor1": "090704",
+          "textColor2": "2c2b2a",
+          "textColor3": "3a3836",
+          "textColor4": "565554",
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/8c/a5/f1/8ca5f143-ee2e-49b9-3ad6-b512b88d0fbd/4050538343793.jpg/{w}x{h}bb.jpg",
+          "width": 4000
+        },
+        "audioLocale": "en-US",
+        "audioTraits": [
+          "lossless",
+          "lossy-stereo"
+        ],
+        "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+        "discNumber": 1,
+        "durationInMillis": 212747,
+        "genreNames": [
+          "Pop",
+          "Music"
+        ],
+        "hasLyrics": true,
+        "hasTimeSyncedLyrics": true,
+        "isAppleDigitalMaster": false,
+        "isMasteredForItunes": false,
+        "isVocalAttenuationAllowed": true,
+        "isrc": "GBARL9300135",
+        "name": "Never Gonna Give You Up",
+        "playParams": {
+          "id": "1438556832",
+          "kind": "song"
+        },
+        "previews": [
+          {
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/19/8b/c2/198bc2e8-87ca-5b6e-ac43-221c24a1e4f7/mzaf_5455311732429381454.plus.aac.ep.m4a"
+          }
+        ],
+        "releaseDate": "1987-01-01",
+        "trackNumber": 2,
+        "url": "https://music.apple.com/us/album/never-gonna-give-you-up/1438556560?i=1438556832"
+      },
+      "relationships": {
+        "albums": {
+          "href": "/v1/catalog/us/songs/1438556832/albums",
+          "data": [
+            {
+              "id": "1438556560",
+              "type": "albums",
+              "href": "/v1/catalog/us/albums/1438556560",
+              "attributes": {
+                "artistName": "Various Artists",
+                "artwork": {
+                  "bgColor": "ffffff",
+                  "hasP3": false,
+                  "height": 4000,
+                  "textColor1": "090704",
+                  "textColor2": "2c2b2a",
+                  "textColor3": "3a3836",
+                  "textColor4": "565554",
+                  "url": "https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/8c/a5/f1/8ca5f143-ee2e-49b9-3ad6-b512b88d0fbd/4050538343793.jpg/{w}x{h}bb.jpg",
+                  "width": 4000
+                },
+                "audioTraits": [
+                  "lossless",
+                  "lossy-stereo"
+                ],
+                "copyright": "℗ 2017 Union Square Music Limited, a BMG Company",
+                "genreNames": [
+                  "Pop",
+                  "Music"
+                ],
+                "isCompilation": true,
+                "isComplete": false,
+                "isMasteredForItunes": false,
+                "isPrerelease": false,
+                "isSingle": false,
+                "name": "The Hit Factory Ultimate Collection",
+                "playParams": {
+                  "id": "1438556560",
+                  "kind": "album"
+                },
+                "recordLabel": "USM Media",
+                "releaseDate": "2018-10-09",
+                "trackCount": 26,
+                "upc": "4050538343793",
+                "url": "https://music.apple.com/us/album/the-hit-factory-ultimate-collection/1438556560"
+              }
+            }
+          ]
+        },
+        "artists": {
+          "href": "/v1/catalog/us/songs/1438556832/artists",
+          "data": [
+            {
+              "id": "669771",
+              "type": "artists",
+              "href": "/v1/catalog/us/artists/669771"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "1485596041",
+      "type": "songs",
+      "href": "/v1/catalog/us/songs/1485596041",
+      "attributes": {
+        "albumArtistName": "Rick Astley",
+        "albumName": "The Best of Me",
+        "artistName": "Rick Astley",
+        "artwork": {
+          "bgColor": "0f1037",
+          "hasP3": false,
+          "height": 4000,
+          "textColor1": "fdd09f",
+          "textColor2": "efbd9f",
+          "textColor3": "cdaa8a",
+          "textColor4": "c29a8a",
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/17/3c/cb/173ccb70-6d48-24cc-3b5a-ff41560a0fda/4050538545074.jpg/{w}x{h}bb.jpg",
+          "width": 4000
+        },
+        "audioLocale": "en-US",
+        "audioTraits": [
+          "lossless",
+          "lossy-stereo"
+        ],
+        "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+        "discNumber": 1,
+        "durationInMillis": 213960,
+        "genreNames": [
+          "Pop",
+          "Music"
+        ],
+        "hasLyrics": true,
+        "hasTimeSyncedLyrics": true,
+        "isAppleDigitalMaster": false,
+        "isMasteredForItunes": false,
+        "isVocalAttenuationAllowed": true,
+        "isrc": "GBARL9300135",
+        "name": "Never Gonna Give You Up",
+        "playParams": {
+          "id": "1485596041",
+          "kind": "song"
+        },
+        "previews": [
+          {
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/df/b1/0b/dfb10b0e-2a27-99fd-fc5e-b35cd3469ea3/mzaf_14193351766219576096.plus.aac.ep.m4a"
+          }
+        ],
+        "releaseDate": "1987-01-01",
+        "trackNumber": 2,
+        "url": "https://music.apple.com/us/album/never-gonna-give-you-up/1485596039?i=1485596041"
+      },
+      "relationships": {
+        "albums": {
+          "href": "/v1/catalog/us/songs/1485596041/albums",
+          "data": [
+            {
+              "id": "1485596039",
+              "type": "albums",
+              "href": "/v1/catalog/us/albums/1485596039",
+              "attributes": {
+                "artistName": "Rick Astley",
+                "artwork": {
+                  "bgColor": "0f1037",
+                  "hasP3": false,
+                  "height": 4000,
+                  "textColor1": "fdd09f",
+                  "textColor2": "efbd9f",
+                  "textColor3": "cdaa8a",
+                  "textColor4": "c29a8a",
+                  "url": "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/17/3c/cb/173ccb70-6d48-24cc-3b5a-ff41560a0fda/4050538545074.jpg/{w}x{h}bb.jpg",
+                  "width": 4000
+                },
+                "audioTraits": [
+                  "lossless",
+                  "lossy-stereo"
+                ],
+                "copyright": "℗ 2019 BMG Rights Management (UK) Limited",
+                "genreNames": [
+                  "Pop",
+                  "Music"
+                ],
+                "isCompilation": true,
+                "isComplete": false,
+                "isMasteredForItunes": false,
+                "isPrerelease": false,
+                "isSingle": false,
+                "name": "The Best of Me",
+                "playParams": {
+                  "id": "1485596039",
+                  "kind": "album"
+                },
+                "recordLabel": "BMG Rights Management (UK) Ltd.",
+                "releaseDate": "2019-10-25",
+                "trackCount": 30,
+                "upc": "4050538545074",
+                "url": "https://music.apple.com/us/album/the-best-of-me/1485596039"
+              }
+            }
+          ]
+        },
+        "artists": {
+          "href": "/v1/catalog/us/songs/1485596041/artists",
+          "data": [
+            {
+              "id": "669771",
+              "type": "artists",
+              "href": "/v1/catalog/us/artists/669771"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "1632632842",
+      "type": "songs",
+      "href": "/v1/catalog/us/songs/1632632842",
+      "attributes": {
+        "albumArtistName": "Various Artists",
+        "albumName": "Ultimate Summer BBQ",
+        "artistName": "Rick Astley",
+        "artwork": {
+          "bgColor": "ff7900",
+          "hasP3": false,
+          "height": 4000,
+          "textColor1": "000401",
+          "textColor2": "001811",
+          "textColor3": "331c01",
+          "textColor4": "332b0e",
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/99/77/5e/99775e31-a746-119a-c90d-6b4c661f8322/4065142012058.jpg/{w}x{h}bb.jpg",
+          "width": 4000
+        },
+        "audioLocale": "en-US",
+        "audioTraits": [
+          "lossless",
+          "lossy-stereo"
+        ],
+        "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+        "discNumber": 1,
+        "durationInMillis": 212400,
+        "genreNames": [
+          "Pop",
+          "Music"
+        ],
+        "hasLyrics": true,
+        "hasTimeSyncedLyrics": true,
+        "isAppleDigitalMaster": false,
+        "isMasteredForItunes": false,
+        "isVocalAttenuationAllowed": true,
+        "isrc": "GBARL9300135",
+        "name": "Never Gonna Give You Up",
+        "playParams": {
+          "id": "1632632842",
+          "kind": "song"
+        },
+        "previews": [
+          {
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/d1/6e/13/d16e1325-0d1a-5047-b053-96b4c622af84/mzaf_12697546862211273838.plus.aac.ep.m4a"
+          }
+        ],
+        "releaseDate": "1987-01-01",
+        "trackNumber": 5,
+        "url": "https://music.apple.com/us/album/never-gonna-give-you-up/1632632837?i=1632632842"
+      },
+      "relationships": {
+        "albums": {
+          "href": "/v1/catalog/us/songs/1632632842/albums",
+          "data": [
+            {
+              "id": "1632632837",
+              "type": "albums",
+              "href": "/v1/catalog/us/albums/1632632837",
+              "attributes": {
+                "artistName": "Various Artists",
+                "artwork": {
+                  "bgColor": "ff7900",
+                  "hasP3": false,
+                  "height": 4000,
+                  "textColor1": "000401",
+                  "textColor2": "001811",
+                  "textColor3": "331c01",
+                  "textColor4": "332b0e",
+                  "url": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/99/77/5e/99775e31-a746-119a-c90d-6b4c661f8322/4065142012058.jpg/{w}x{h}bb.jpg",
+                  "width": 4000
+                },
+                "audioTraits": [
+                  "lossless",
+                  "lossy-stereo"
+                ],
+                "copyright": "℗ 2022 Countdown Media GmbH, a BMG company",
+                "genreNames": [
+                  "Pop",
+                  "Music"
+                ],
+                "isCompilation": true,
+                "isComplete": true,
+                "isMasteredForItunes": false,
+                "isPrerelease": false,
+                "isSingle": false,
+                "name": "Ultimate Summer BBQ",
+                "playParams": {
+                  "id": "1632632837",
+                  "kind": "album"
+                },
+                "recordLabel": "Dockland Music",
+                "releaseDate": "2022-07-29",
+                "trackCount": 50,
+                "upc": "4065142012058",
+                "url": "https://music.apple.com/us/album/ultimate-summer-bbq/1632632837"
+              }
+            }
+          ]
+        },
+        "artists": {
+          "href": "/v1/catalog/us/songs/1632632842/artists",
+          "data": [
+            {
+              "id": "669771",
+              "type": "artists",
+              "href": "/v1/catalog/us/artists/669771"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "1559523359",
+      "type": "songs",
+      "href": "/v1/catalog/us/songs/1559523359",
+      "attributes": {
+        "albumArtistName": "Rick Astley",
+        "albumName": "3 Originals",
+        "artistName": "Rick Astley",
+        "artwork": {
+          "bgColor": "000a33",
+          "hasP3": false,
+          "height": 4000,
+          "textColor1": "f6ece8",
+          "textColor2": "ece7e6",
+          "textColor3": "c5bfc4",
+          "textColor4": "bcbbc2",
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/69/5b/e3/695be316-9ddf-7262-177c-e37edd599602/0888880777768.jpg/{w}x{h}bb.jpg",
+          "width": 4000
+        },
+        "audioLocale": "en-US",
+        "audioTraits": [
+          "lossless",
+          "lossy-stereo"
+        ],
+        "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+        "discNumber": 1,
+        "durationInMillis": 214720,
+        "genreNames": [
+          "Pop",
+          "Music"
+        ],
+        "hasLyrics": true,
+        "hasTimeSyncedLyrics": true,
+        "isAppleDigitalMaster": false,
+        "isMasteredForItunes": false,
+        "isVocalAttenuationAllowed": true,
+        "isrc": "GBARL9300135",
+        "name": "Never Gonna Give You Up",
+        "playParams": {
+          "id": "1559523359",
+          "kind": "song"
+        },
+        "previews": [
+          {
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/1c/0f/a0/1c0fa075-b42d-1f99-a09e-0e440563c4fe/mzaf_13425254859660425668.plus.aac.ep.m4a"
+          }
+        ],
+        "releaseDate": "1987-01-01",
+        "trackNumber": 1,
+        "url": "https://music.apple.com/us/album/never-gonna-give-you-up/1559523357?i=1559523359"
+      },
+      "relationships": {
+        "albums": {
+          "href": "/v1/catalog/us/songs/1559523359/albums",
+          "data": [
+            {
+              "id": "1559523357",
+              "type": "albums",
+              "href": "/v1/catalog/us/albums/1559523357",
+              "attributes": {
+                "artistName": "Rick Astley",
+                "artwork": {
+                  "bgColor": "000a33",
+                  "hasP3": false,
+                  "height": 4000,
+                  "textColor1": "f6ece8",
+                  "textColor2": "ece7e6",
+                  "textColor3": "c5bfc4",
+                  "textColor4": "bcbbc2",
+                  "url": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/69/5b/e3/695be316-9ddf-7262-177c-e37edd599602/0888880777768.jpg/{w}x{h}bb.jpg",
+                  "width": 4000
+                },
+                "audioTraits": [
+                  "lossless",
+                  "lossy-stereo"
+                ],
+                "copyright": "℗ 2002 BMG Rights Management (UK) Limited",
+                "genreNames": [
+                  "Pop",
+                  "Music",
+                  "Dance",
+                  "Adult Contemporary",
+                  "Electronic"
+                ],
+                "isCompilation": true,
+                "isComplete": true,
+                "isMasteredForItunes": false,
+                "isPrerelease": false,
+                "isSingle": false,
+                "name": "3 Originals",
+                "playParams": {
+                  "id": "1559523357",
+                  "kind": "album"
+                },
+                "recordLabel": "BMG Rights Management (UK) Ltd.",
+                "releaseDate": "2002-12-07",
+                "trackCount": 31,
+                "upc": "0888880777768",
+                "url": "https://music.apple.com/us/album/3-originals/1559523357"
+              }
+            }
+          ]
+        },
+        "artists": {
+          "href": "/v1/catalog/us/songs/1559523359/artists",
+          "data": [
+            {
+              "id": "669771",
+              "type": "artists",
+              "href": "/v1/catalog/us/artists/669771"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "1446567594",
+      "type": "songs",
+      "href": "/v1/catalog/us/songs/1446567594",
+      "attributes": {
+        "albumArtistName": "Various Artists",
+        "albumName": "80s Dance",
+        "artistName": "Rick Astley",
+        "artwork": {
+          "bgColor": "47ded3",
+          "hasP3": false,
+          "height": 4000,
+          "textColor1": "070412",
+          "textColor2": "0b0314",
+          "textColor3": "143039",
+          "textColor4": "172f3a",
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/31/f4/16/31f416e3-563a-c7d9-55d2-ce4b8d0f8c9c/4050538457902.jpg/{w}x{h}bb.jpg",
+          "width": 4000
+        },
+        "audioLocale": "en-US",
+        "audioTraits": [
+          "lossless",
+          "lossy-stereo"
+        ],
+        "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+        "discNumber": 1,
+        "durationInMillis": 212747,
+        "genreNames": [
+          "Pop",
+          "Music"
+        ],
+        "hasLyrics": true,
+        "hasTimeSyncedLyrics": true,
+        "isAppleDigitalMaster": false,
+        "isMasteredForItunes": false,
+        "isVocalAttenuationAllowed": true,
+        "isrc": "GBARL9300135",
+        "name": "Never Gonna Give You Up",
+        "playParams": {
+          "id": "1446567594",
+          "kind": "song"
+        },
+        "previews": [
+          {
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/43/a8/fd/43a8fd68-6bd0-9d83-8614-f0ecc408bd19/mzaf_5475118832491557657.plus.aac.ep.m4a"
+          }
+        ],
+        "releaseDate": "1987-01-01",
+        "trackNumber": 7,
+        "url": "https://music.apple.com/us/album/never-gonna-give-you-up/1446567587?i=1446567594"
+      },
+      "relationships": {
+        "albums": {
+          "href": "/v1/catalog/us/songs/1446567594/albums",
+          "data": [
+            {
+              "id": "1446567587",
+              "type": "albums",
+              "href": "/v1/catalog/us/albums/1446567587",
+              "attributes": {
+                "artistName": "Various Artists",
+                "artwork": {
+                  "bgColor": "47ded3",
+                  "hasP3": false,
+                  "height": 4000,
+                  "textColor1": "070412",
+                  "textColor2": "0b0314",
+                  "textColor3": "143039",
+                  "textColor4": "172f3a",
+                  "url": "https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/31/f4/16/31f416e3-563a-c7d9-55d2-ce4b8d0f8c9c/4050538457902.jpg/{w}x{h}bb.jpg",
+                  "width": 4000
+                },
+                "audioTraits": [
+                  "lossless",
+                  "lossy-stereo"
+                ],
+                "copyright": "℗ 2019 BMG Rights Management (UK) Ltd.",
+                "genreNames": [
+                  "Pop",
+                  "Music"
+                ],
+                "isCompilation": true,
+                "isComplete": false,
+                "isMasteredForItunes": false,
+                "isPrerelease": false,
+                "isSingle": false,
+                "name": "80s Dance",
+                "playParams": {
+                  "id": "1446567587",
+                  "kind": "album"
+                },
+                "recordLabel": "BMG Rights Management (UK) Ltd.",
+                "releaseDate": "2019-01-18",
+                "trackCount": 31,
+                "upc": "4050538457902",
+                "url": "https://music.apple.com/us/album/80s-dance/1446567587"
+              }
+            }
+          ]
+        },
+        "artists": {
+          "href": "/v1/catalog/us/songs/1446567594/artists",
+          "data": [
+            {
+              "id": "669771",
+              "type": "artists",
+              "href": "/v1/catalog/us/artists/669771"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "1773293184",
+      "type": "songs",
+      "href": "/v1/catalog/us/songs/1773293184",
+      "attributes": {
+        "albumArtistName": "Rick Astley",
+        "albumName": "The Best Of Me: Never Edition",
+        "artistName": "Rick Astley",
+        "artwork": {
+          "bgColor": "808fa2",
+          "hasP3": false,
+          "height": 4000,
+          "textColor1": "0b0808",
+          "textColor2": "0e0e11",
+          "textColor3": "222327",
+          "textColor4": "25282e",
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/db/9e/2a/db9e2ae0-cb9f-f2a9-2774-de399dff2580/4099964133639.jpg/{w}x{h}bb.jpg",
+          "width": 4000
+        },
+        "audioLocale": "en-US",
+        "audioTraits": [
+          "lossless",
+          "lossy-stereo"
+        ],
+        "composerName": "Mike Stock, Matt Aitken & Pete Waterman",
+        "discNumber": 1,
+        "durationInMillis": 213960,
+        "genreNames": [
+          "Pop",
+          "Music"
+        ],
+        "hasLyrics": true,
+        "hasTimeSyncedLyrics": true,
+        "isAppleDigitalMaster": false,
+        "isMasteredForItunes": false,
+        "isVocalAttenuationAllowed": true,
+        "isrc": "GBARL9300135",
+        "name": "Never Gonna Give You Up",
+        "playParams": {
+          "id": "1773293184",
+          "kind": "song"
+        },
+        "previews": [
+          {
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/6e/b3/33/6eb33356-a55e-a371-d05b-1a2fc578099e/mzaf_18314689345312474043.plus.aac.ep.m4a"
+          }
+        ],
+        "releaseDate": "1987-01-01",
+        "trackNumber": 2,
+        "url": "https://music.apple.com/us/album/never-gonna-give-you-up/1773292758?i=1773293184"
+      },
+      "relationships": {
+        "albums": {
+          "href": "/v1/catalog/us/songs/1773293184/albums",
+          "data": [
+            {
+              "id": "1773292758",
+              "type": "albums",
+              "href": "/v1/catalog/us/albums/1773292758",
+              "attributes": {
+                "artistName": "Rick Astley",
+                "artwork": {
+                  "bgColor": "808fa2",
+                  "hasP3": false,
+                  "height": 4000,
+                  "textColor1": "0b0808",
+                  "textColor2": "0e0e11",
+                  "textColor3": "222327",
+                  "textColor4": "25282e",
+                  "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/db/9e/2a/db9e2ae0-cb9f-f2a9-2774-de399dff2580/4099964133639.jpg/{w}x{h}bb.jpg",
+                  "width": 4000
+                },
+                "audioTraits": [
+                  "lossless",
+                  "lossy-stereo"
+                ],
+                "copyright": "℗ 2024 BMG Rights Management (UK) Limited",
+                "genreNames": [
+                  "Pop",
+                  "Music"
+                ],
+                "isCompilation": true,
+                "isComplete": true,
+                "isMasteredForItunes": false,
+                "isPrerelease": false,
+                "isSingle": false,
+                "name": "The Best Of Me: Never Edition",
+                "playParams": {
+                  "id": "1773292758",
+                  "kind": "album"
+                },
+                "recordLabel": "BMG Rights Management (UK) Ltd.",
+                "releaseDate": "2019-12-29",
+                "trackCount": 38,
+                "upc": "4099964133639",
+                "url": "https://music.apple.com/us/album/the-best-of-me-never-edition/1773292758"
+              }
+            }
+          ]
+        },
+        "artists": {
+          "href": "/v1/catalog/us/songs/1773293184/artists",
+          "data": [
+            {
+              "id": "669771",
+              "type": "artists",
+              "href": "/v1/catalog/us/artists/669771"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "meta": {
+    "filters": {
+      "isrc": {
+        "GBARL9300135": [
+          {
+            "id": "1559885421",
+            "type": "songs",
+            "href": "/v1/catalog/us/songs/1559885421"
+          },
+          {
+            "id": "1438556832",
+            "type": "songs",
+            "href": "/v1/catalog/us/songs/1438556832"
+          },
+          {
+            "id": "1485596041",
+            "type": "songs",
+            "href": "/v1/catalog/us/songs/1485596041"
+          },
+          {
+            "id": "1632632842",
+            "type": "songs",
+            "href": "/v1/catalog/us/songs/1632632842"
+          },
+          {
+            "id": "1559523359",
+            "type": "songs",
+            "href": "/v1/catalog/us/songs/1559523359"
+          },
+          {
+            "id": "1446567594",
+            "type": "songs",
+            "href": "/v1/catalog/us/songs/1446567594"
+          },
+          {
+            "id": "1773293184",
+            "type": "songs",
+            "href": "/v1/catalog/us/songs/1773293184"
+          }
+        ]
+      }
+    }
+  }
+}

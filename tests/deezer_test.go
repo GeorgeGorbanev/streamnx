@@ -39,6 +39,7 @@ func TestDeezerCatalogFetchTrack(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, streamnx.Track{
 		ID:         deezerTrackID,
+		ISRC:       "GBARL9300135",
 		CoverURL:   "https://cdn-images.dzcdn.net/images/cover/07de029f6cbc9ce63d9b6064f68b7455/1000x1000-000000-80-0-0.jpg",
 		Title:      "Never Gonna Give You Up",
 		Artist:     "Rick Astley",
@@ -199,6 +200,7 @@ func TestDeezerCatalogSearchTracks(t *testing.T) {
 	require.Equal(t, []streamnx.SearchTrack{
 		{
 			ID:         "3786363472",
+			ISRC:       "GBARL9300135",
 			AlbumID:    "901480252",
 			AlbumTitle: "The Best of Me",
 			CoverURL:   "https://cdn-images.dzcdn.net/images/cover/1fcfca61ca4e05027612a1af865b2e03/1000x1000-000000-80-0-0.jpg",
@@ -209,6 +211,7 @@ func TestDeezerCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "10794700",
+			ISRC:       "GBKTX1000770",
 			AlbumID:    "986064",
 			AlbumTitle: "World's Greatest 80's Disco - The Only 80's Disco Album You'll Ever Need",
 			CoverURL:   "https://cdn-images.dzcdn.net/images/cover/0a0e66cf7d26af9d80716073930cf9e5/1000x1000-000000-80-0-0.jpg",
@@ -219,6 +222,7 @@ func TestDeezerCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "3786024802",
+			ISRC:       "GBARL8700068",
 			AlbumID:    "901415272",
 			AlbumTitle: "PWL Extended: Big Hits & Surprises (Vols. 1 & 2)",
 			CoverURL:   "https://cdn-images.dzcdn.net/images/cover/2e1f422c0d1883d42d121f396c6bdb14/1000x1000-000000-80-0-0.jpg",
@@ -229,6 +233,7 @@ func TestDeezerCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "3786363752",
+			ISRC:       "GB5KW1903177",
 			AlbumID:    "901480252",
 			AlbumTitle: "The Best of Me",
 			CoverURL:   "https://cdn-images.dzcdn.net/images/cover/1fcfca61ca4e05027612a1af865b2e03/1000x1000-000000-80-0-0.jpg",
@@ -239,6 +244,7 @@ func TestDeezerCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "3809420952",
+			ISRC:       "GBARL0600787",
 			AlbumID:    "907102572",
 			AlbumTitle: "The Hit Factory Ultimate Collection",
 			CoverURL:   "https://cdn-images.dzcdn.net/images/cover/0276d581675201173472fdbc86ce60f8/1000x1000-000000-80-0-0.jpg",
@@ -249,6 +255,7 @@ func TestDeezerCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "3816551312",
+			ISRC:       "GBARL1001562",
 			AlbumID:    "909591702",
 			AlbumTitle: "Whenever You Need Somebody (Deluxe Edition / Remastered 2022)",
 			CoverURL:   "https://cdn-images.dzcdn.net/images/cover/f93d54aa0c8411c092d93c65546a8f41/1000x1000-000000-80-0-0.jpg",
@@ -259,6 +266,7 @@ func TestDeezerCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "3816551402",
+			ISRC:       "GBARL0600788",
 			AlbumID:    "909591702",
 			AlbumTitle: "Whenever You Need Somebody (Deluxe Edition / Remastered 2022)",
 			CoverURL:   "https://cdn-images.dzcdn.net/images/cover/f93d54aa0c8411c092d93c65546a8f41/1000x1000-000000-80-0-0.jpg",
@@ -269,6 +277,7 @@ func TestDeezerCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "3816551472",
+			ISRC:       "GBARL0600785",
 			AlbumID:    "909591702",
 			AlbumTitle: "Whenever You Need Somebody (Deluxe Edition / Remastered 2022)",
 			CoverURL:   "https://cdn-images.dzcdn.net/images/cover/f93d54aa0c8411c092d93c65546a8f41/1000x1000-000000-80-0-0.jpg",
@@ -279,6 +288,7 @@ func TestDeezerCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "87155985",
+			ISRC:       "US7VG1463700",
 			AlbumID:    "8795315",
 			AlbumTitle: "Where Are You on the Ruby, Pt. 2",
 			CoverURL:   "https://cdn-images.dzcdn.net/images/cover/3ccc729302c9c96ae49dfd8a8238f6f6/1000x1000-000000-80-0-0.jpg",
@@ -288,6 +298,39 @@ func TestDeezerCatalogSearchTracks(t *testing.T) {
 			URL:        "https://deezer.com/track/87155985",
 		},
 	}, got)
+}
+
+func TestDeezerCatalogFetchTracksByISRC(t *testing.T) {
+	server := newDeezerFixtureServer(t, fixtures.Route{
+		Method:  http.MethodGet,
+		Path:    "/track/isrc:GBARL9300135",
+		Status:  http.StatusOK,
+		Fixture: "deezer_fetch_tracks_by_isrc_200.json",
+	})
+	defer server.Close()
+
+	got, err := newDeezerCatalog(t, server.URL).FetchTracksByISRC(
+		t.Context(),
+		streamnx.Deezer,
+		"GBARL9300135",
+	)
+
+	require.NoError(t, err)
+	require.Equal(t, []streamnx.Track{{
+		ID:         "15646529",
+		ISRC:       "GBARL9300135",
+		CoverURL:   "https://cdn-images.dzcdn.net/images/cover/2fec34e02d0ca76df05f9f533f0492f2/1000x1000-000000-80-0-0.jpg",
+		Title:      "Never Gonna Give You Up",
+		Artist:     "Rick Astley",
+		AlbumID:    "1444785",
+		AlbumTitle: "Love Songs",
+		Duration:   211,
+		ReleaseDate: streamnx.ReleaseDate{
+			Year: 2004, Month: 1, Day: 12,
+		},
+		Provider: streamnx.Deezer,
+		URL:      "https://deezer.com/track/15646529",
+	}}, got)
 }
 
 func TestDeezerCatalogSearchAlbums(t *testing.T) {

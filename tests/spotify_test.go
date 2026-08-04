@@ -45,6 +45,7 @@ func TestSpotifyCatalogFetchTrack(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, streamnx.Track{
 		ID:         spotifyTrackID,
+		ISRC:       "GBARL9300135",
 		CoverURL:   "https://i.scdn.co/image/ab67616d0000b273baf89eb11ec7c657805d2da0",
 		Title:      "Never Gonna Give You Up",
 		Artist:     "Rick Astley",
@@ -165,6 +166,7 @@ func TestSpotifyCatalogSearchTracks(t *testing.T) {
 	require.Equal(t, []streamnx.SearchTrack{
 		{
 			ID:         "4PTG3Z6ehGkBFwjybzWkR8",
+			ISRC:       "GBARL9300135",
 			AlbumID:    "6eUW0wxWtzkFdaEFsTJto6",
 			AlbumTitle: "Whenever You Need Somebody",
 			CoverURL:   "https://i.scdn.co/image/ab67616d0000b27315ebbedaacef61af244262a8",
@@ -175,6 +177,7 @@ func TestSpotifyCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "4L7qMw8HI3vM57hHRMyb4Y",
+			ISRC:       "GBARL9300135",
 			AlbumID:    "6CWdaSQN5rsdDkOrhFcZ0E",
 			AlbumTitle: "The Best of Me",
 			CoverURL:   "https://i.scdn.co/image/ab67616d0000b273ad292ed19701d9f5c8cf71b6",
@@ -185,6 +188,7 @@ func TestSpotifyCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "5AErEepoomKZK54EWm5i9a",
+			ISRC:       "GBARL8700068",
 			AlbumID:    "4C4LvbYS0pxXLW5sGD9EK5",
 			AlbumTitle: "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
 			CoverURL:   "https://i.scdn.co/image/ab67616d0000b2733a67639779ccabd632e1a80e",
@@ -195,6 +199,7 @@ func TestSpotifyCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "2MPdnhqZpLjD97bFQxIZZY",
+			ISRC:       "GB5KW2103369",
 			AlbumID:    "58VYKotsIdQJVR6MrCZQSY",
 			AlbumTitle: "80s Party Anthems",
 			CoverURL:   "https://i.scdn.co/image/ab67616d0000b2735c37a644a590fc82490f2028",
@@ -205,6 +210,7 @@ func TestSpotifyCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "0yNttAVwMr39qyODHNIkrY",
+			ISRC:       "GB5KW2103369",
 			AlbumID:    "4C4LvbYS0pxXLW5sGD9EK5",
 			AlbumTitle: "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
 			CoverURL:   "https://i.scdn.co/image/ab67616d0000b2733a67639779ccabd632e1a80e",
@@ -215,6 +221,7 @@ func TestSpotifyCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "2jkJe0SyxAa9rpaRcbZcf1",
+			ISRC:       "GB5KW1903177",
 			AlbumID:    "4C4LvbYS0pxXLW5sGD9EK5",
 			AlbumTitle: "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
 			CoverURL:   "https://i.scdn.co/image/ab67616d0000b2733a67639779ccabd632e1a80e",
@@ -225,6 +232,7 @@ func TestSpotifyCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "17hHET630wWQ2NLEQeaRGC",
+			ISRC:       "GBARL1001562",
 			AlbumID:    "4C4LvbYS0pxXLW5sGD9EK5",
 			AlbumTitle: "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
 			CoverURL:   "https://i.scdn.co/image/ab67616d0000b2733a67639779ccabd632e1a80e",
@@ -235,6 +243,7 @@ func TestSpotifyCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "3NdPVhbbubJGjrg9LWlc0N",
+			ISRC:       "GB5KW1903177",
 			AlbumID:    "6CWdaSQN5rsdDkOrhFcZ0E",
 			AlbumTitle: "The Best of Me",
 			CoverURL:   "https://i.scdn.co/image/ab67616d0000b273ad292ed19701d9f5c8cf71b6",
@@ -245,6 +254,7 @@ func TestSpotifyCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "2XoYH6OudHoyQUKTlSNq2P",
+			ISRC:       "GBARL0600785",
 			AlbumID:    "4C4LvbYS0pxXLW5sGD9EK5",
 			AlbumTitle: "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
 			CoverURL:   "https://i.scdn.co/image/ab67616d0000b2733a67639779ccabd632e1a80e",
@@ -255,6 +265,7 @@ func TestSpotifyCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "0hvbmkrDotGgNSbjdSEVUY",
+			ISRC:       "GBARL0600788",
 			AlbumID:    "4C4LvbYS0pxXLW5sGD9EK5",
 			AlbumTitle: "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
 			CoverURL:   "https://i.scdn.co/image/ab67616d0000b2733a67639779ccabd632e1a80e",
@@ -262,6 +273,167 @@ func TestSpotifyCatalogSearchTracks(t *testing.T) {
 			Artist:     "Rick Astley",
 			Provider:   streamnx.Spotify,
 			URL:        "https://open.spotify.com/track/0hvbmkrDotGgNSbjdSEVUY",
+		},
+	}, got)
+}
+
+func TestSpotifyCatalogFetchTracksByISRC(t *testing.T) {
+	server := newSpotifyFixtureServer(t, fixtures.Route{
+		Method:  http.MethodGet,
+		Path:    "/v1/search",
+		Status:  http.StatusOK,
+		Fixture: "spotify_fetch_tracks_by_isrc_200.json",
+		Assert: func(t *testing.T, r *http.Request) {
+			require.Equal(t, spotifyAuthorization, r.Header.Get("Authorization"))
+			require.Equal(t, "isrc:GBARL9300135", r.URL.Query().Get("q"))
+			require.Equal(t, "track", r.URL.Query().Get("type"))
+			require.Equal(t, "10", r.URL.Query().Get("limit"))
+		},
+	})
+	defer server.Close()
+
+	got, err := newSpotifyCatalog(t, server.URL).FetchTracksByISRC(
+		t.Context(),
+		streamnx.Spotify,
+		"GBARL9300135",
+	)
+
+	require.NoError(t, err)
+	require.Equal(t, []streamnx.Track{
+		{
+			ID:         "4PTG3Z6ehGkBFwjybzWkR8",
+			ISRC:       "GBARL9300135",
+			CoverURL:   "https://i.scdn.co/image/ab67616d0000b27315ebbedaacef61af244262a8",
+			Title:      "Never Gonna Give You Up",
+			Artist:     "Rick Astley",
+			AlbumID:    "6eUW0wxWtzkFdaEFsTJto6",
+			AlbumTitle: "Whenever You Need Somebody",
+			Duration:   214,
+			ReleaseDate: streamnx.ReleaseDate{
+				Year: 1987, Month: 11, Day: 12,
+			},
+			Provider: streamnx.Spotify,
+			URL:      "https://open.spotify.com/track/4PTG3Z6ehGkBFwjybzWkR8",
+		},
+		{
+			ID:         "4L7qMw8HI3vM57hHRMyb4Y",
+			ISRC:       "GBARL9300135",
+			CoverURL:   "https://i.scdn.co/image/ab67616d0000b273ad292ed19701d9f5c8cf71b6",
+			Title:      "Never Gonna Give You Up",
+			Artist:     "Rick Astley",
+			AlbumID:    "6CWdaSQN5rsdDkOrhFcZ0E",
+			AlbumTitle: "The Best of Me",
+			Duration:   214,
+			ReleaseDate: streamnx.ReleaseDate{
+				Year: 2019, Month: 12, Day: 29,
+			},
+			Provider: streamnx.Spotify,
+			URL:      "https://open.spotify.com/track/4L7qMw8HI3vM57hHRMyb4Y",
+		},
+		{
+			ID:         "1lO9fEwLRExY4rLtzdKaew",
+			ISRC:       "GBARL9300135",
+			CoverURL:   "https://i.scdn.co/image/ab67616d0000b273045a898e246703046c36fe3f",
+			Title:      "Never Gonna Give You Up",
+			Artist:     "Rick Astley",
+			AlbumID:    "5PHoa5MzLs6pJ3mPIfjftC",
+			AlbumTitle: "3 Originals",
+			Duration:   215,
+			ReleaseDate: streamnx.ReleaseDate{
+				Year: 2002, Month: 12, Day: 7,
+			},
+			Provider: streamnx.Spotify,
+			URL:      "https://open.spotify.com/track/1lO9fEwLRExY4rLtzdKaew",
+		},
+		{
+			ID:         "27Snz8YoSOHlEOoU5gM0bc",
+			ISRC:       "GBARL9300135",
+			CoverURL:   "https://i.scdn.co/image/ab67616d0000b27316c0ed5eb538f35bc19eead4",
+			Title:      "Never Gonna Give You Up",
+			Artist:     "Rick Astley",
+			AlbumID:    "6C55u1I4oqut6X97zIh8m4",
+			AlbumTitle: "The Best Of Me: Never Edition",
+			Duration:   214,
+			ReleaseDate: streamnx.ReleaseDate{
+				Year: 2019, Month: 12, Day: 29,
+			},
+			Provider: streamnx.Spotify,
+			URL:      "https://open.spotify.com/track/27Snz8YoSOHlEOoU5gM0bc",
+		},
+		{
+			ID:         "1HshnBRm7C3BAQs9vyzsEd",
+			ISRC:       "GBARL9300135",
+			CoverURL:   "https://i.scdn.co/image/ab67616d0000b2737195492955cfebf3c169f07d",
+			Title:      "Never Gonna Give You Up",
+			Artist:     "Rick Astley",
+			AlbumID:    "5D4SkkJHjX9NaE9pWOt8Us",
+			AlbumTitle: "Ultimate Party",
+			Duration:   212,
+			ReleaseDate: streamnx.ReleaseDate{
+				Year: 2022, Month: 12, Day: 26,
+			},
+			Provider: streamnx.Spotify,
+			URL:      "https://open.spotify.com/track/1HshnBRm7C3BAQs9vyzsEd",
+		},
+		{
+			ID:         "2btjACyhCW6IuKOpZG1erS",
+			ISRC:       "GBARL9300135",
+			CoverURL:   "https://i.scdn.co/image/ab67616d0000b2734aa3d2d2b28611f47feebebf",
+			Title:      "Never Gonna Give You Up",
+			Artist:     "Rick Astley",
+			AlbumID:    "4RlwBqmNNgxahsSgNcyKFh",
+			AlbumTitle: "80s Dance",
+			Duration:   213,
+			ReleaseDate: streamnx.ReleaseDate{
+				Year: 2019, Month: 1, Day: 18,
+			},
+			Provider: streamnx.Spotify,
+			URL:      "https://open.spotify.com/track/2btjACyhCW6IuKOpZG1erS",
+		},
+		{
+			ID:         "1Ojc3QD0dfJ5HG8uzLsfTg",
+			ISRC:       "GBARL9300135",
+			CoverURL:   "https://i.scdn.co/image/ab67616d0000b273ccad63aea836b34a2d96eab8",
+			Title:      "Never Gonna Give You Up",
+			Artist:     "Rick Astley",
+			AlbumID:    "2q7VhXuLKvqgfpt5RGuz4O",
+			AlbumTitle: "The Hit Factory Ultimate Collection",
+			Duration:   213,
+			ReleaseDate: streamnx.ReleaseDate{
+				Year: 2017, Month: 11, Day: 3,
+			},
+			Provider: streamnx.Spotify,
+			URL:      "https://open.spotify.com/track/1Ojc3QD0dfJ5HG8uzLsfTg",
+		},
+		{
+			ID:         "5w3NicA8Q0hRxx0WJIekAT",
+			ISRC:       "GBARL9300135",
+			CoverURL:   "https://i.scdn.co/image/ab67616d0000b27304ecbffa9e18f27eeab00b4e",
+			Title:      "Never Gonna Give You Up",
+			Artist:     "Rick Astley",
+			AlbumID:    "51TWdMIuY6wExv7rSsahzI",
+			AlbumTitle: "80s Dance",
+			Duration:   213,
+			ReleaseDate: streamnx.ReleaseDate{
+				Year: 2019, Month: 1, Day: 18,
+			},
+			Provider: streamnx.Spotify,
+			URL:      "https://open.spotify.com/track/5w3NicA8Q0hRxx0WJIekAT",
+		},
+		{
+			ID:         "1EZx2d5h6OfBwRfORsdU8j",
+			ISRC:       "GBARL9300135",
+			CoverURL:   "https://i.scdn.co/image/ab67616d0000b273aa80d245eaefd3708d7a5dee",
+			Title:      "Never Gonna Give You Up",
+			Artist:     "Rick Astley",
+			AlbumID:    "2ez9egymT5MEHIFGRuAPht",
+			AlbumTitle: "Ultimate Summer BBQ",
+			Duration:   212,
+			ReleaseDate: streamnx.ReleaseDate{
+				Year: 2022, Month: 7, Day: 29,
+			},
+			Provider: streamnx.Spotify,
+			URL:      "https://open.spotify.com/track/1EZx2d5h6OfBwRfORsdU8j",
 		},
 	}, got)
 }

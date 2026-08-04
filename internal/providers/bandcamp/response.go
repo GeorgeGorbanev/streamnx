@@ -56,8 +56,15 @@ type embeddedPlayerData struct {
 	} `json:"tracks"`
 }
 
+type tralbumData struct {
+	Current struct {
+		ISRC string `json:"isrc"`
+	} `json:"current"`
+}
+
 type Entity struct {
 	NumericID   uint64
+	ISRC        string
 	Name        string
 	AlbumTitle  string
 	AlbumURL    string
@@ -81,4 +88,5 @@ const (
 var (
 	ldJSONRe             = regexp.MustCompile(`(?s)<script\s+type=["']application/ld\+json["']\s*>(.*?)</script>`)
 	embeddedPlayerDataRe = regexp.MustCompile(`(?is)\bdata-player-data\s*=\s*(?:"([^"]*)"|'([^']*)')`)
+	tralbumDataRe        = regexp.MustCompile(`(?is)\bdata-tralbum\s*=\s*(?:"([^"]*)"|'([^']*)')`)
 )

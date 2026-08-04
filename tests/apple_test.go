@@ -47,6 +47,7 @@ func TestAppleCatalogFetchTrack(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, streamnx.Track{
 		ID:         appleTrackID,
+		ISRC:       "GBARL9300135",
 		CoverURL:   "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/1200x1200bb.jpg",
 		Title:      "Never Gonna Give You Up",
 		Artist:     "Rick Astley",
@@ -172,6 +173,7 @@ func TestAppleCatalogSearchTracks(t *testing.T) {
 	require.Equal(t, []streamnx.SearchTrack{
 		{
 			ID:         "us-1559885421",
+			ISRC:       "GBARL9300135",
 			AlbumID:    "us-1559885420",
 			AlbumTitle: "Whenever You Need Somebody",
 			CoverURL:   "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/1200x1200bb.jpg",
@@ -182,6 +184,7 @@ func TestAppleCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "us-1612648434",
+			ISRC:       "GBARL8700068",
 			AlbumID:    "us-1612648318",
 			AlbumTitle: "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
 			CoverURL:   "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/21/d3/b321d3e4-edfe-124b-d0cd-a64ad1df3290/4050538793840.jpg/1200x1200bb.jpg",
@@ -192,6 +195,7 @@ func TestAppleCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "us-1600742155",
+			ISRC:       "US23A1918472",
 			AlbumID:    "us-1600742151",
 			AlbumTitle: "Supermix (DJ Mix)",
 			CoverURL:   "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/35/6b/88/356b88a4-fab2-87cb-9238-0109c40ebfe5/DF_Supermix_4000.jpg/1200x1200bb.jpg",
@@ -202,6 +206,7 @@ func TestAppleCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "us-1612648427",
+			ISRC:       "GBARL1001562",
 			AlbumID:    "us-1612648318",
 			AlbumTitle: "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
 			CoverURL:   "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/21/d3/b321d3e4-edfe-124b-d0cd-a64ad1df3290/4050538793840.jpg/1200x1200bb.jpg",
@@ -212,6 +217,7 @@ func TestAppleCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "us-1612648440",
+			ISRC:       "GBARL8700008",
 			AlbumID:    "us-1612648318",
 			AlbumTitle: "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
 			CoverURL:   "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/21/d3/b321d3e4-edfe-124b-d0cd-a64ad1df3290/4050538793840.jpg/1200x1200bb.jpg",
@@ -222,6 +228,7 @@ func TestAppleCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "us-1503050130",
+			ISRC:       "SEVWR2002701",
 			AlbumID:    "us-1503050108",
 			AlbumTitle: "Never Gonna Give You Up - Single",
 			CoverURL:   "https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/0a/cb/04/0acb041e-0d6c-7e9e-329d-60f140e6eae5/195081167275.jpg/1200x1200bb.jpg",
@@ -232,6 +239,7 @@ func TestAppleCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "us-1446924456",
+			ISRC:       "GBBBY0300026",
 			AlbumID:    "us-1446924085",
 			AlbumTitle: "Anthology",
 			CoverURL:   "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/99/be/51/99be51d9-08c1-2a51-b298-813cb644e8c8/16UMGIM70815.rgb.jpg/1200x1200bb.jpg",
@@ -242,6 +250,7 @@ func TestAppleCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "us-1559804346",
+			ISRC:       "QZGX42100010",
 			AlbumID:    "us-1559804099",
 			AlbumTitle: "Never Gonna Give You Up - Single",
 			CoverURL:   "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/41/50/39/4150396d-4bff-43dc-338f-806aefcf8374/196006358976.jpg/1200x1200bb.jpg",
@@ -252,6 +261,7 @@ func TestAppleCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "us-1612648444",
+			ISRC:       "GBARL0600785",
 			AlbumID:    "us-1612648318",
 			AlbumTitle: "Whenever You Need Somebody (Deluxe Edition - 2022 Remaster)",
 			CoverURL:   "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/b3/21/d3/b321d3e4-edfe-124b-d0cd-a64ad1df3290/4050538793840.jpg/1200x1200bb.jpg",
@@ -259,6 +269,138 @@ func TestAppleCatalogSearchTracks(t *testing.T) {
 			Artist:     "Rick Astley",
 			Provider:   streamnx.Apple,
 			URL:        "https://music.apple.com/us/album/never-gonna-give-you-up-instrumental/1612648318?i=1612648444",
+		},
+	}, got)
+}
+
+func TestAppleCatalogFetchTracksByISRC(t *testing.T) {
+	var serverURL string
+	server := newAppleFixtureServer(t, fixtures.Route{
+		Method:  http.MethodGet,
+		Path:    "/v1/catalog/us/songs",
+		Status:  http.StatusOK,
+		Fixture: "apple_fetch_tracks_by_isrc_200.json",
+		Assert: func(t *testing.T, r *http.Request) {
+			assertAppleAPIRequest(t, r, serverURL)
+			require.Equal(t, "GBARL9300135", r.URL.Query().Get("filter[isrc]"))
+			require.Equal(t, "albums", r.URL.Query().Get("include"))
+		},
+	})
+	serverURL = server.URL
+	defer server.Close()
+
+	got, err := newAppleCatalog(t, server.URL).FetchTracksByISRC(
+		t.Context(),
+		streamnx.Apple,
+		"GB-ARL-93-00135",
+	)
+
+	require.NoError(t, err)
+	require.Equal(t, []streamnx.Track{
+		{
+			ID:         appleTrackID,
+			ISRC:       "GBARL9300135",
+			CoverURL:   "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/1200x1200bb.jpg",
+			Title:      "Never Gonna Give You Up",
+			Artist:     "Rick Astley",
+			AlbumID:    "us-1559885420",
+			AlbumTitle: "Whenever You Need Somebody",
+			Duration:   214,
+			ReleaseDate: streamnx.ReleaseDate{
+				Year: 1987, Month: 7, Day: 27,
+			},
+			Provider: streamnx.Apple,
+			URL:      "https://music.apple.com/us/album/never-gonna-give-you-up/1559885420?i=1559885421",
+		},
+		{
+			ID:         "us-1438556832",
+			ISRC:       "GBARL9300135",
+			CoverURL:   "https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/8c/a5/f1/8ca5f143-ee2e-49b9-3ad6-b512b88d0fbd/4050538343793.jpg/1200x1200bb.jpg",
+			Title:      "Never Gonna Give You Up",
+			Artist:     "Rick Astley",
+			AlbumID:    "us-1438556560",
+			AlbumTitle: "The Hit Factory Ultimate Collection",
+			Duration:   213,
+			ReleaseDate: streamnx.ReleaseDate{
+				Year: 1987, Month: 1, Day: 1,
+			},
+			Provider: streamnx.Apple,
+			URL:      "https://music.apple.com/us/album/never-gonna-give-you-up/1438556560?i=1438556832",
+		},
+		{
+			ID:         "us-1485596041",
+			ISRC:       "GBARL9300135",
+			CoverURL:   "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/17/3c/cb/173ccb70-6d48-24cc-3b5a-ff41560a0fda/4050538545074.jpg/1200x1200bb.jpg",
+			Title:      "Never Gonna Give You Up",
+			Artist:     "Rick Astley",
+			AlbumID:    "us-1485596039",
+			AlbumTitle: "The Best of Me",
+			Duration:   214,
+			ReleaseDate: streamnx.ReleaseDate{
+				Year: 1987, Month: 1, Day: 1,
+			},
+			Provider: streamnx.Apple,
+			URL:      "https://music.apple.com/us/album/never-gonna-give-you-up/1485596039?i=1485596041",
+		},
+		{
+			ID:         "us-1632632842",
+			ISRC:       "GBARL9300135",
+			CoverURL:   "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/99/77/5e/99775e31-a746-119a-c90d-6b4c661f8322/4065142012058.jpg/1200x1200bb.jpg",
+			Title:      "Never Gonna Give You Up",
+			Artist:     "Rick Astley",
+			AlbumID:    "us-1632632837",
+			AlbumTitle: "Ultimate Summer BBQ",
+			Duration:   212,
+			ReleaseDate: streamnx.ReleaseDate{
+				Year: 1987, Month: 1, Day: 1,
+			},
+			Provider: streamnx.Apple,
+			URL:      "https://music.apple.com/us/album/never-gonna-give-you-up/1632632837?i=1632632842",
+		},
+		{
+			ID:         "us-1559523359",
+			ISRC:       "GBARL9300135",
+			CoverURL:   "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/69/5b/e3/695be316-9ddf-7262-177c-e37edd599602/0888880777768.jpg/1200x1200bb.jpg",
+			Title:      "Never Gonna Give You Up",
+			Artist:     "Rick Astley",
+			AlbumID:    "us-1559523357",
+			AlbumTitle: "3 Originals",
+			Duration:   215,
+			ReleaseDate: streamnx.ReleaseDate{
+				Year: 1987, Month: 1, Day: 1,
+			},
+			Provider: streamnx.Apple,
+			URL:      "https://music.apple.com/us/album/never-gonna-give-you-up/1559523357?i=1559523359",
+		},
+		{
+			ID:         "us-1446567594",
+			ISRC:       "GBARL9300135",
+			CoverURL:   "https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/31/f4/16/31f416e3-563a-c7d9-55d2-ce4b8d0f8c9c/4050538457902.jpg/1200x1200bb.jpg",
+			Title:      "Never Gonna Give You Up",
+			Artist:     "Rick Astley",
+			AlbumID:    "us-1446567587",
+			AlbumTitle: "80s Dance",
+			Duration:   213,
+			ReleaseDate: streamnx.ReleaseDate{
+				Year: 1987, Month: 1, Day: 1,
+			},
+			Provider: streamnx.Apple,
+			URL:      "https://music.apple.com/us/album/never-gonna-give-you-up/1446567587?i=1446567594",
+		},
+		{
+			ID:         "us-1773293184",
+			ISRC:       "GBARL9300135",
+			CoverURL:   "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/db/9e/2a/db9e2ae0-cb9f-f2a9-2774-de399dff2580/4099964133639.jpg/1200x1200bb.jpg",
+			Title:      "Never Gonna Give You Up",
+			Artist:     "Rick Astley",
+			AlbumID:    "us-1773292758",
+			AlbumTitle: "The Best Of Me: Never Edition",
+			Duration:   214,
+			ReleaseDate: streamnx.ReleaseDate{
+				Year: 1987, Month: 1, Day: 1,
+			},
+			Provider: streamnx.Apple,
+			URL:      "https://music.apple.com/us/album/never-gonna-give-you-up/1773292758?i=1773293184",
 		},
 	}, got)
 }

@@ -132,31 +132,28 @@ The application decides how to rank the candidates and what fallback to show whe
 there are no confident matches.
 
 ``` golang
-func convertAppleTrackToSpotify(ctx context.Context, catalog *streamnx.Catalog, link string) (streamnx.SearchTrack, bool, error) {
+func convertAppleTrackToSpotify(ctx context.Context, catalog *streamnx.Catalog, link string) (streamnx.Track, bool, error) {
     parsedLink, err := catalog.ParseLink(link)
     if err != nil {
-        return streamnx.SearchTrack{}, false, err
+        return streamnx.Track{}, false, err
     }
 
     if parsedLink.ReleaseType != streamnx.ReleaseTypeTrack {
-        return streamnx.SearchTrack{}, false, fmt.Errorf("expected track link, got %s", parsedLink.ReleaseType)
+        return streamnx.Track{}, false, fmt.Errorf("expected track link, got %s", parsedLink.ReleaseType)
     }
 
     track, err := catalog.FetchTrack(ctx, parsedLink.Provider, parsedLink.ReleaseID)
     if err != nil {
-        return streamnx.SearchTrack{}, false, err
+        return streamnx.Track{}, false, err
     }
 
-    candidates, err := catalog.SearchTracks(ctx, streamnx.Spotify, streamnx.SearchQuery{
-        Artist: track.Artist,
-        Title:  track.Title,
-    })
+    candidates, err := catalog.FetchTracksByISRC(ctx, streamnx.Spotify, track.ISRC)
     if err != nil {
-        return streamnx.SearchTrack{}, false, err
+        return streamnx.Track{}, false, err
     }
 
     if len(candidates) == 0 {
-        return streamnx.SearchTrack{}, false, nil
+        return streamnx.Track{}, false, nil
     }
 
     return candidates[0], true, nil
@@ -185,6 +182,8 @@ trackCandidates, err := catalog.SearchTracks(ctx, provider, streamnx.SearchQuery
     Title:  "Track Title",
 })
 
+isrcTracks, err := catalog.FetchTracksByISRC(ctx, provider, "GBARL9300135")
+
 album, err := catalog.FetchAlbum(ctx, provider, albumID)
 
 albumCandidates, err := catalog.SearchAlbums(ctx, provider, streamnx.SearchQuery{
@@ -193,8 +192,9 @@ albumCandidates, err := catalog.SearchAlbums(ctx, provider, streamnx.SearchQuery
 })
 ```
 
-`FetchTrack` returns `Track`, `FetchAlbum` returns `Album`, `SearchTracks`
-returns `[]SearchTrack`, and `SearchAlbums` returns `[]SearchAlbum`.
+`FetchTrack` returns `Track`, `FetchTracksByISRC` returns `[]Track`, `FetchAlbum`
+returns `Album`, `SearchTracks` returns `[]SearchTrack`, and `SearchAlbums`
+returns `[]SearchAlbum`.
 
 All four models expose `ID`, `Title`, `Artist`, `URL`, `AlternativeURL`,
 `CoverURL`, `Provider`, `Creator`, and `Description`. `AlternativeURL` contains
@@ -202,9 +202,9 @@ another provider URL for the same release when the integration exposes one;
 otherwise it is empty. The release type is implied by the concrete Go type. The
 models also expose fields specific to their role:
 
-- `Track` adds `AlbumID`, `AlbumTitle`, `Duration`, and `ReleaseDate`.
+- `Track` adds `ISRC`, `AlbumID`, `AlbumTitle`, `Duration`, and `ReleaseDate`.
 - `Album` adds `Label`, `ReleaseDate`, and `TrackIDs`.
-- `SearchTrack` adds `AlbumID` and `AlbumTitle`.
+- `SearchTrack` adds `ISRC`, `AlbumID`, and `AlbumTitle`.
 - `SearchAlbum` has only the common fields.
 
 `Duration` is expressed in seconds. `ReleaseDate` contains separate `Year`,
@@ -224,19 +224,32 @@ code.
 
 Search methods return candidates in provider-defined order. If a search
 completes but finds no results, it returns a non-nil empty slice and a nil
-error. `SearchQuery` requires at least one non-empty field: `Artist` or
-`Title`. They do not choose the best conversion target. Matching, ranking,
+error. `SearchQuery` requires at least one non-empty field: `Artist` or `Title`.
+
+`FetchTracksByISRC` accepts canonical 12-character and hyphenated ISRCs and
+normalizes them before dispatch. It returns full `Track` objects because a
+single recording can have multiple provider catalog entries. A successful call
+with no matching entries returns a non-nil empty slice.
+
+Apple Music, Deezer, and Spotify support `FetchTracksByISRC`. Other providers
+return `ErrUnsupportedOperation` before making a provider request. Some
+unsupported providers may still expose ISRC metadata on fetched or text-search
+results; currently this includes Bandcamp when its release page contains the
+optional field, and SoundCloud distributor tracks. ISRC identifies a recording,
+not an album; UPC/EAN is the corresponding product-level identifier.
+
+Search methods do not choose the best conversion target. Matching, ranking,
 fuzzy search decisions, and user-facing fallback behavior belong in consumers
 of the library. Streamnx does not apply a cross-provider client-side result
 limit; consumers can trim candidate lists after search if their product flow
 needs it.
 
-`FetchTrack`, `FetchAlbum`, and `Uncloak` require a non-empty ID. They return
-`ErrInvalidID` for an empty or whitespace-only ID. A fetch returns
-`ErrNotFound` when the provider reports that no release exists for the supplied
-ID, or `ErrScrapingBlocked` when the provider blocks automated metadata
-retrieval. Searches use `ErrInvalidSearchQuery` only when both query fields are
-empty.
+`FetchTrack`, `FetchAlbum`, and `Uncloak` require a non-empty ID.
+`FetchTracksByISRC` requires a valid ISRC. These methods return `ErrInvalidID`
+for invalid input. A single-release fetch returns `ErrNotFound` when the
+provider reports that no release exists for the supplied ID, or
+`ErrScrapingBlocked` when the provider blocks automated metadata retrieval.
+Searches use `ErrInvalidSearchQuery` for an empty query.
 
 #### Provider
 

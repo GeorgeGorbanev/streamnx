@@ -40,6 +40,7 @@ func TestSoundcloudCatalogFetchTrack(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, streamnx.Track{
 		ID:         soundcloudTrackID,
+		ISRC:       "GBARL9300135",
 		CoverURL:   "https://i1.sndcdn.com/artworks-keikGz8pxIhJ-0-original.jpg",
 		Title:      "Never Gonna Give You Up",
 		Artist:     "Rick Astley",
@@ -158,6 +159,7 @@ func TestSoundcloudCatalogSearchTracks(t *testing.T) {
 	require.Equal(t, []streamnx.SearchTrack{
 		{
 			ID:         "rick-astley-official:never-gonna-give-you-up",
+			ISRC:       "GBARL9300135",
 			AlbumID:    "",
 			AlbumTitle: "Whenever You Need Somebody",
 			CoverURL:   "https://i1.sndcdn.com/artworks-keikGz8pxIhJ-0-original.jpg",
@@ -169,6 +171,7 @@ func TestSoundcloudCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "rick-astley-official:never-gonna-give-you-up-2022",
+			ISRC:       "GB5KW2103369",
 			AlbumID:    "",
 			AlbumTitle: "Chart Toppers",
 			CoverURL:   "https://i1.sndcdn.com/artworks-YE40JIgqUheZ-0-original.jpg",
@@ -226,6 +229,7 @@ func TestSoundcloudCatalogSearchTracks(t *testing.T) {
 		},
 		{
 			ID:         "djericfaria:eric-faria-oni-remix-rick-astley-never-gonna-give-you-up-out-soon",
+			ISRC:       "QM8DG1898534",
 			AlbumID:    "",
 			AlbumTitle: "",
 			CoverURL:   "https://i1.sndcdn.com/artworks-000196755418-x4u4ma-original.jpg",

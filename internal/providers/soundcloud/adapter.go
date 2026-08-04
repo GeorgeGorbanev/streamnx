@@ -78,6 +78,7 @@ func (a *Adapter) FetchTrack(ctx context.Context, id string) (release.Track, err
 
 	return release.Track{
 		ID:          id,
+		ISRC:        track.PublisherMetadata.ISRC,
 		Title:       track.Title,
 		Artist:      a.trackArtist(track),
 		AlbumTitle:  track.PublisherMetadata.AlbumTitle,
@@ -89,6 +90,10 @@ func (a *Adapter) FetchTrack(ctx context.Context, id string) (release.Track, err
 		Creator:     track.User.Username,
 		Description: track.Description,
 	}, nil
+}
+
+func (a *Adapter) FetchTracksByISRC(context.Context, string) ([]release.Track, error) {
+	return nil, release.ErrUnsupportedOperation
 }
 
 func (a *Adapter) FetchAlbum(ctx context.Context, id string) (release.Album, error) {
@@ -246,6 +251,7 @@ func (a *Adapter) SearchTracks(ctx context.Context, artist, title string) ([]rel
 
 		tracks[i] = release.SearchTrack{
 			ID:          id,
+			ISRC:        foundTrack.PublisherMetadata.ISRC,
 			Title:       foundTrack.Title,
 			Artist:      a.trackArtist(foundTrack),
 			AlbumTitle:  foundTrack.PublisherMetadata.AlbumTitle,

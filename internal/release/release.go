@@ -7,6 +7,7 @@ import (
 
 type Track struct {
 	ID             string
+	ISRC           string
 	Title          string
 	Artist         string
 	AlbumID        string
@@ -38,6 +39,7 @@ type Album struct {
 
 type SearchTrack struct {
 	ID             string
+	ISRC           string
 	Title          string
 	Artist         string
 	AlbumID        string

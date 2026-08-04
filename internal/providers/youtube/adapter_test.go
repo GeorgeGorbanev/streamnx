@@ -501,6 +501,13 @@ func TestYoutubeAdapter_searchAlbums(t *testing.T) {
 	cm.AssertExpectations(t)
 }
 
+func TestYoutubeAdapter_fetchTracksByISRC(t *testing.T) {
+	tracks, err := (&Adapter{}).FetchTracksByISRC(t.Context(), "GBARL9300135")
+
+	require.Nil(t, tracks)
+	require.ErrorIs(t, err, release.ErrUnsupportedOperation)
+}
+
 type clientMock struct {
 	mock.Mock
 }

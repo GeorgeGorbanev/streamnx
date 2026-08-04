@@ -156,6 +156,7 @@ func TestClient_fetchTrack(t *testing.T) {
 						}
 					}
 					</script>
+					<script data-tralbum="{&quot;current&quot;:{&quot;isrc&quot;:&quot;GBARL9300135&quot;}}"></script>
 				</head>
 				<body></body>
 			</html>`,
@@ -163,6 +164,7 @@ func TestClient_fetchTrack(t *testing.T) {
 			wantReqPath: "/track/nil",
 			want: Entity{
 				Name:        "Nil",
+				ISRC:        "GBARL9300135",
 				BandName:    "Autechre",
 				CreatorName: "Warp Records",
 				Description: "sample track description",

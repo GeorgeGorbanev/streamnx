@@ -125,12 +125,14 @@ func TestSoundcloudAdapter_fetchTrack(t *testing.T) {
 						},
 						PublisherMetadata: publisherMetadata{
 							Artist: "Real Artist",
+							ISRC:   "GBARL9300135",
 						},
 					}, nil).
 					Once()
 			},
 			expectedTrack: release.Track{
 				ID:          "forss:flickermood",
+				ISRC:        "GBARL9300135",
 				Title:       "Flickermood",
 				Artist:      "Real Artist",
 				URL:         "https://soundcloud.com/forss/flickermood",
@@ -427,6 +429,9 @@ func TestSoundcloudAdapter_searchTracks(t *testing.T) {
 							Title:        "Flickermood",
 							Description:  "first track description",
 							PermalinkURL: "https://soundcloud.com/forss/flickermood",
+							PublisherMetadata: publisherMetadata{
+								ISRC: "GBARL9300135",
+							},
 							User: user{
 								Username: "Forss",
 							},
@@ -445,6 +450,7 @@ func TestSoundcloudAdapter_searchTracks(t *testing.T) {
 			expectedTracks: []release.SearchTrack{
 				{
 					ID:          "forss:flickermood",
+					ISRC:        "GBARL9300135",
 					Title:       "Flickermood",
 					Artist:      "Forss",
 					URL:         "https://soundcloud.com/forss/flickermood",
@@ -657,6 +663,13 @@ func TestSoundcloudAdapter_searchAlbums(t *testing.T) {
 			cm.AssertExpectations(t)
 		})
 	}
+}
+
+func TestSoundcloudAdapter_fetchTracksByISRC(t *testing.T) {
+	tracks, err := (&Adapter{}).FetchTracksByISRC(t.Context(), "GBARL9300135")
+
+	require.Nil(t, tracks)
+	require.ErrorIs(t, err, release.ErrUnsupportedOperation)
 }
 
 type clientMock struct {

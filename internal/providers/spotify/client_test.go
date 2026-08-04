@@ -199,6 +199,46 @@ func TestClient_searchTracks(t *testing.T) {
 	}
 }
 
+func TestClient_fetchTracksByISRC(t *testing.T) {
+	mockAuthServer := newAuthServerMock(t)
+	defer mockAuthServer.Close()
+
+	mockAPIServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		require.Equal(t, http.MethodGet, r.Method)
+		require.Equal(t, "Bearer mock_access_token", r.Header.Get("Authorization"))
+		require.Equal(t, "/v1/search", r.URL.Path)
+		require.Equal(t, "isrc:GBARL9300135", r.URL.Query().Get("q"))
+		require.Equal(t, "track", r.URL.Query().Get("type"))
+		require.Equal(t, "10", r.URL.Query().Get("limit"))
+		_, err := w.Write([]byte(`{
+			"tracks": {
+				"items": [{
+					"id": "sampletrackid",
+					"external_ids": {"isrc": "GBARL9300135"},
+					"name": "Sample Track"
+				}]
+			}
+		}`))
+		require.NoError(t, err)
+	}))
+	defer mockAPIServer.Close()
+
+	client := NewClient(
+		&sampleCredentials,
+		WithAuthURL(mockAuthServer.URL),
+		WithAPIURL(mockAPIServer.URL),
+	)
+
+	tracks, err := client.fetchTracksByISRC(t.Context(), "GBARL9300135")
+
+	require.NoError(t, err)
+	require.Equal(t, []track{{
+		ID:          "sampletrackid",
+		ExternalIDs: externalIDs{ISRC: "GBARL9300135"},
+		Name:        "Sample Track",
+	}}, tracks)
+}
+
 func TestClient_fetchAlbum(t *testing.T) {
 	tests := []struct {
 		name          string

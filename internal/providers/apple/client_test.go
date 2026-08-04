@@ -276,6 +276,50 @@ func TestClient_searchTracks(t *testing.T) {
 	}
 }
 
+func TestClient_fetchTracksByISRC(t *testing.T) {
+	var origin string
+	apiServerMock := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		require.Equal(t, http.MethodGet, r.Method)
+		require.Equal(t, "Bearer tokenMock", r.Header.Get("Authorization"))
+		require.Equal(t, origin, r.Header.Get("Origin"))
+		require.Equal(t, "/v1/catalog/us/songs", r.URL.Path)
+		require.Equal(t, "GBARL9300135", r.URL.Query().Get("filter[isrc]"))
+		require.Equal(t, "albums", r.URL.Query().Get("include"))
+		_, err := w.Write([]byte(`{
+			"data": [{
+				"id": "1559885421",
+				"attributes": {
+					"artistName": "Rick Astley",
+					"isrc": "GBARL9300135",
+					"name": "Never Gonna Give You Up"
+				}
+			}]
+		}`))
+		require.NoError(t, err)
+	}))
+	origin = apiServerMock.URL
+	defer apiServerMock.Close()
+
+	client := Client{
+		apiURL:       apiServerMock.URL,
+		webPlayerURL: apiServerMock.URL,
+		token:        "tokenMock",
+		httpClient:   &http.Client{},
+	}
+
+	result, err := client.fetchTracksByISRC(t.Context(), "GBARL9300135")
+
+	require.NoError(t, err)
+	require.Equal(t, []entity{{
+		ID: "1559885421",
+		Attributes: entityAttributes{
+			ArtistName: "Rick Astley",
+			ISRC:       "GBARL9300135",
+			Name:       "Never Gonna Give You Up",
+		},
+	}}, result)
+}
+
 func TestClient_fetchAlbum(t *testing.T) {
 	tests := []struct {
 		name       string

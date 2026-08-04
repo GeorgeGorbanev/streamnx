@@ -186,6 +186,34 @@ func TestClient_searchTracks(t *testing.T) {
 	}
 }
 
+func TestClient_fetchTrackByISRC(t *testing.T) {
+	apiServerMock := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		require.Equal(t, http.MethodGet, r.Method)
+		require.Equal(t, "/track/isrc:GBARL9300135", r.URL.Path)
+		_, err := w.Write([]byte(`{
+			"id": 3135556,
+			"isrc": "GBARL9300135",
+			"title": "Never Gonna Give You Up",
+			"artist": {"name": "Rick Astley"}
+		}`))
+		require.NoError(t, err)
+	}))
+	defer apiServerMock.Close()
+
+	result, err := NewClient(WithAPIURL(apiServerMock.URL)).fetchTrackByISRC(
+		t.Context(),
+		"GBARL9300135",
+	)
+
+	require.NoError(t, err)
+	require.Equal(t, track{
+		ID:     3135556,
+		ISRC:   "GBARL9300135",
+		Title:  "Never Gonna Give You Up",
+		Artist: artist{Name: "Rick Astley"},
+	}, result)
+}
+
 // https://api.deezer.com/album/302127
 func TestClient_fetchAlbum(t *testing.T) {
 	tests := []struct {

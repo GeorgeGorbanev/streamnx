@@ -12,6 +12,7 @@ type entity struct {
 
 type entityAttributes struct {
 	Name             string         `json:"name"`
+	ISRC             string         `json:"isrc"`
 	AlbumName        string         `json:"albumName"`
 	URL              string         `json:"url"`
 	Artwork          artwork        `json:"artwork"`

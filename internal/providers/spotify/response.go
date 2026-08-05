@@ -11,6 +11,8 @@ type track struct {
 
 type externalIDs struct {
 	ISRC string `json:"isrc"`
+	EAN  string `json:"ean"`
+	UPC  string `json:"upc"`
 }
 
 type album struct {
@@ -18,6 +20,7 @@ type album struct {
 	Label       string         `json:"label"`
 	Name        string         `json:"name"`
 	Artists     []artist       `json:"artists"`
+	ExternalIDs externalIDs    `json:"external_ids"`
 	Images      []spotifyImage `json:"images"`
 	Tracks      albumTracks    `json:"tracks"`
 	ReleaseDate string         `json:"release_date"`

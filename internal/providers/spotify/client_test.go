@@ -239,6 +239,51 @@ func TestClient_fetchTracksByISRC(t *testing.T) {
 	}}, tracks)
 }
 
+func TestClient_fetchAlbumsByUPC(t *testing.T) {
+	mockAuthServer := newAuthServerMock(t)
+	defer mockAuthServer.Close()
+
+	mockAPIServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		require.Equal(t, http.MethodGet, r.Method)
+		require.Equal(t, "Bearer mock_access_token", r.Header.Get("Authorization"))
+		switch r.URL.Path {
+		case "/v1/search":
+			require.Equal(t, "upc:196006422677", r.URL.Query().Get("q"))
+			require.Equal(t, "album", r.URL.Query().Get("type"))
+			require.Equal(t, "10", r.URL.Query().Get("limit"))
+			_, err := w.Write([]byte(`{
+				"albums": {"items": [{"id": "1P0Ox1jln7nn2J9BT6yMhL"}]}
+			}`))
+			require.NoError(t, err)
+		case "/v1/albums/1P0Ox1jln7nn2J9BT6yMhL":
+			_, err := w.Write([]byte(`{
+				"id": "1P0Ox1jln7nn2J9BT6yMhL",
+				"external_ids": {"upc": "196006422677"},
+				"name": "კინომუსიკა: გოგი ცაბაძის შემოქმედება ნაწილი XIII"
+			}`))
+			require.NoError(t, err)
+		default:
+			require.Fail(t, "unexpected path", r.URL.Path)
+		}
+	}))
+	defer mockAPIServer.Close()
+
+	client := NewClient(
+		&sampleCredentials,
+		WithAuthURL(mockAuthServer.URL),
+		WithAPIURL(mockAPIServer.URL),
+	)
+
+	albums, err := client.fetchAlbumsByUPC(t.Context(), "196006422677")
+
+	require.NoError(t, err)
+	require.Equal(t, []album{{
+		ID:          "1P0Ox1jln7nn2J9BT6yMhL",
+		ExternalIDs: externalIDs{UPC: "196006422677"},
+		Name:        "კინომუსიკა: გოგი ცაბაძის შემოქმედება ნაწილი XIII",
+	}}, albums)
+}
+
 func TestClient_fetchAlbum(t *testing.T) {
 	tests := []struct {
 		name          string

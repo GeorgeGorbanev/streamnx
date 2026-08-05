@@ -214,6 +214,34 @@ func TestClient_fetchTrackByISRC(t *testing.T) {
 	}, result)
 }
 
+func TestClient_fetchAlbumByUPC(t *testing.T) {
+	apiServerMock := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		require.Equal(t, http.MethodGet, r.Method)
+		require.Equal(t, "/album/upc:196006422677", r.URL.Path)
+		_, err := w.Write([]byte(`{
+			"id": 246271832,
+			"upc": "196006422677",
+			"title": "კინომუსიკა: გოგი ცაბაძის შემოქმედება ნაწილი XIII",
+			"artist": {"name": "გოგი ცაბაძე"}
+		}`))
+		require.NoError(t, err)
+	}))
+	defer apiServerMock.Close()
+
+	result, err := NewClient(WithAPIURL(apiServerMock.URL)).fetchAlbumByUPC(
+		t.Context(),
+		"196006422677",
+	)
+
+	require.NoError(t, err)
+	require.Equal(t, album{
+		ID:     246271832,
+		UPC:    "196006422677",
+		Title:  "კინომუსიკა: გოგი ცაბაძის შემოქმედება ნაწილი XIII",
+		Artist: artist{Name: "გოგი ცაბაძე"},
+	}, result)
+}
+
 // https://api.deezer.com/album/302127
 func TestClient_fetchAlbum(t *testing.T) {
 	tests := []struct {

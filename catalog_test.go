@@ -423,6 +423,59 @@ func TestCatalog_FetchTracksByISRCRejectsMalformedISRC(t *testing.T) {
 	}
 }
 
+func TestCatalog_FetchAlbumsByUPC(t *testing.T) {
+	am := &adapterMock{}
+	am.
+		On("FetchAlbumsByUPC", "859381157694").
+		Return([]Album{{ID: "1", UPC: "0859381157694", Provider: Spotify}}, nil).
+		Once()
+
+	catalog := mustCatalog(t, withAdapter(Spotify, am))
+
+	result, err := catalog.FetchAlbumsByUPC(t.Context(), Spotify, " 0859381157694 ")
+
+	require.NoError(t, err)
+	require.Equal(t, []Album{{ID: "1", UPC: "0859381157694", Provider: Spotify}}, result)
+	am.AssertExpectations(t)
+}
+
+func TestCatalog_FetchAlbumsByUPCRejectsUnsupportedProvider(t *testing.T) {
+	am := &adapterMock{}
+	am.
+		On("FetchAlbumsByUPC", "196006422677").
+		Return(nil, ErrUnsupportedOperation).
+		Once()
+	catalog := mustCatalog(t, withAdapter(Youtube, am))
+
+	result, err := catalog.FetchAlbumsByUPC(t.Context(), Youtube, "196006422677")
+
+	require.Nil(t, result)
+	require.ErrorIs(t, err, ErrUnsupportedOperation)
+	am.AssertExpectations(t)
+}
+
+func TestCatalog_FetchAlbumsByUPCRejectsUnregisteredProvider(t *testing.T) {
+	catalog := mustCatalog(t)
+
+	result, err := catalog.FetchAlbumsByUPC(t.Context(), Spotify, "196006422677")
+
+	require.Nil(t, result)
+	require.ErrorIs(t, err, ErrInvalidProvider)
+}
+
+func TestCatalog_FetchAlbumsByUPCRejectsMalformedUPC(t *testing.T) {
+	catalog := mustCatalog(t, withAdapter(Spotify, &adapterMock{}))
+
+	for _, value := range []string{"", " ", "not-a-upc", "196006422678"} {
+		t.Run(value, func(t *testing.T) {
+			result, err := catalog.FetchAlbumsByUPC(t.Context(), Spotify, value)
+
+			require.Nil(t, result)
+			require.ErrorIs(t, err, ErrInvalidID)
+		})
+	}
+}
+
 func TestCatalog_SearchAlbums(t *testing.T) {
 	sampleProvider := Apple
 	am := &adapterMock{}
@@ -608,6 +661,14 @@ func withAdapter(provider ReleaseProvider, adapter adapter) CatalogOption {
 
 type adapterMock struct {
 	mock.Mock
+}
+
+func (m *adapterMock) FetchAlbumsByUPC(_ context.Context, upc string) ([]Album, error) {
+	args := m.Called(upc)
+	if args.Get(0) == nil {
+		return nil, args.Error(1)
+	}
+	return args.Get(0).([]Album), args.Error(1)
 }
 
 func (m *adapterMock) FetchTracksByISRC(_ context.Context, isrc string) ([]Track, error) {

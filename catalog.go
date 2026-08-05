@@ -7,7 +7,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/GeorgeGorbanev/streamnx/v2/internal/release/isrc"
+	"github.com/GeorgeGorbanev/streamnx/v2/internal/release/extid"
 )
 
 type Catalog struct {
@@ -20,6 +20,7 @@ type adapter interface {
 	FetchTrack(ctx context.Context, id string) (Track, error)
 	FetchTracksByISRC(ctx context.Context, isrc string) ([]Track, error)
 	FetchAlbum(ctx context.Context, id string) (Album, error)
+	FetchAlbumsByUPC(ctx context.Context, upc string) ([]Album, error)
 	SearchTracks(ctx context.Context, artist, title string) ([]SearchTrack, error)
 	SearchAlbums(ctx context.Context, artist, title string) ([]SearchAlbum, error)
 	Uncloak(ctx context.Context, cloakID string) (ReleaseType, string, error)
@@ -92,7 +93,7 @@ func (r *Catalog) FetchTracksByISRC(ctx context.Context, p ReleaseProvider, rawI
 	if !ok {
 		return nil, ErrInvalidProvider
 	}
-	normalizedISRC, valid := isrc.Normalize(rawISRC)
+	normalizedISRC, valid := extid.NormalizeISRC(rawISRC)
 	if !valid {
 		return nil, fmt.Errorf("%w: invalid isrc", ErrInvalidID)
 	}
@@ -112,6 +113,22 @@ func (r *Catalog) FetchAlbum(ctx context.Context, p ReleaseProvider, id string) 
 		return Album{}, ErrInvalidID
 	}
 	return a.FetchAlbum(ctx, id)
+}
+
+func (r *Catalog) FetchAlbumsByUPC(ctx context.Context, p ReleaseProvider, rawUPC string) ([]Album, error) {
+	a, ok := r.adapters[p]
+	if !ok {
+		return nil, ErrInvalidProvider
+	}
+	normalizedUPC, valid := extid.NormalizeUPC(rawUPC)
+	if !valid {
+		return nil, fmt.Errorf("%w: invalid upc", ErrInvalidID)
+	}
+	albums, err := a.FetchAlbumsByUPC(ctx, normalizedUPC)
+	if err != nil {
+		return nil, err
+	}
+	return forceNonNil(albums), nil
 }
 
 func (r *Catalog) SearchTracks(ctx context.Context, p ReleaseProvider, query SearchQuery) ([]SearchTrack, error) {

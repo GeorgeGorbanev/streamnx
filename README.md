@@ -186,6 +186,8 @@ isrcTracks, err := catalog.FetchTracksByISRC(ctx, provider, "GBARL9300135")
 
 album, err := catalog.FetchAlbum(ctx, provider, albumID)
 
+upcAlbums, err := catalog.FetchAlbumsByUPC(ctx, provider, "196006422677")
+
 albumCandidates, err := catalog.SearchAlbums(ctx, provider, streamnx.SearchQuery{
     Artist: "Artist Name",
     Title:  "Album Title",
@@ -193,8 +195,8 @@ albumCandidates, err := catalog.SearchAlbums(ctx, provider, streamnx.SearchQuery
 ```
 
 `FetchTrack` returns `Track`, `FetchTracksByISRC` returns `[]Track`, `FetchAlbum`
-returns `Album`, `SearchTracks` returns `[]SearchTrack`, and `SearchAlbums`
-returns `[]SearchAlbum`.
+returns `Album`, `FetchAlbumsByUPC` returns `[]Album`, `SearchTracks` returns
+`[]SearchTrack`, and `SearchAlbums` returns `[]SearchAlbum`.
 
 All four models expose `ID`, `Title`, `Artist`, `URL`, `AlternativeURL`,
 `CoverURL`, `Provider`, `Creator`, and `Description`. `AlternativeURL` contains
@@ -203,9 +205,9 @@ otherwise it is empty. The release type is implied by the concrete Go type. The
 models also expose fields specific to their role:
 
 - `Track` adds `ISRC`, `AlbumID`, `AlbumTitle`, `Duration`, and `ReleaseDate`.
-- `Album` adds `Label`, `ReleaseDate`, and `TrackIDs`.
+- `Album` adds `UPC`, `Label`, `ReleaseDate`, and `TrackIDs`.
 - `SearchTrack` adds `ISRC`, `AlbumID`, and `AlbumTitle`.
-- `SearchAlbum` has only the common fields.
+- `SearchAlbum` adds `UPC`.
 
 `Duration` is expressed in seconds. `ReleaseDate` contains separate `Year`,
 `Month`, and `Day` components; unavailable components remain zero. `TrackIDs`
@@ -238,6 +240,17 @@ results; currently this includes Bandcamp when its release page contains the
 optional field, and SoundCloud distributor tracks. ISRC identifies a recording,
 not an album; UPC/EAN is the corresponding product-level identifier.
 
+`FetchAlbumsByUPC` accepts a valid 12-digit UPC-A or 13-digit EAN-13. An EAN-13
+whose leading digit is zero is normalized to its equivalent 12-digit UPC-A so
+providers that expose different representations still interoperate. It returns
+full `Album` objects because a product code may map to multiple catalog entries.
+A successful call with no matching entries returns a non-nil empty slice.
+
+Apple Music, Deezer, and Spotify support `FetchAlbumsByUPC`. Spotify first
+searches by its album-only `upc` filter and then hydrates every result through
+the full album endpoint. Other providers return `ErrUnsupportedOperation`
+before making a provider request.
+
 Search methods do not choose the best conversion target. Matching, ranking,
 fuzzy search decisions, and user-facing fallback behavior belong in consumers
 of the library. Streamnx does not apply a cross-provider client-side result
@@ -245,8 +258,9 @@ limit; consumers can trim candidate lists after search if their product flow
 needs it.
 
 `FetchTrack`, `FetchAlbum`, and `Uncloak` require a non-empty ID.
-`FetchTracksByISRC` requires a valid ISRC. These methods return `ErrInvalidID`
-for invalid input. A single-release fetch returns `ErrNotFound` when the
+`FetchTracksByISRC` requires a valid ISRC and `FetchAlbumsByUPC` requires a
+valid UPC-A/EAN-13 check digit. These methods return `ErrInvalidID` for invalid
+input. A single-release fetch returns `ErrNotFound` when the
 provider reports that no release exists for the supplied ID, or
 `ErrScrapingBlocked` when the provider blocks automated metadata retrieval.
 Searches use `ErrInvalidSearchQuery` for an empty query.

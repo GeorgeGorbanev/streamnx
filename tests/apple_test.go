@@ -103,6 +103,7 @@ func TestAppleCatalogFetchAlbum(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, streamnx.Album{
 		ID:       appleAlbumID,
+		UPC:      "0859381157694",
 		CoverURL: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ce/6d/5b/ce6d5b48-8c36-b990-3b9c-81862fadb459/0859381157694.jpg/1200x1200bb.jpg",
 		Title:    "Whenever You Need Somebody",
 		Artist:   "Rick Astley",
@@ -146,6 +147,37 @@ func TestAppleCatalogFetchAlbumNotFound(t *testing.T) {
 
 	require.Zero(t, got)
 	require.ErrorIs(t, err, streamnx.ErrNotFound)
+}
+
+func TestAppleCatalogFetchAlbumsByUPC(t *testing.T) {
+	var serverURL string
+	server := newAppleFixtureServer(t, fixtures.Route{
+		Method:  http.MethodGet,
+		Path:    "/v1/catalog/us/albums",
+		Status:  http.StatusOK,
+		Fixture: "apple_fetch_albums_by_upc_gogi_tsabadze_200.json",
+		Assert: func(t *testing.T, r *http.Request) {
+			assertAppleAPIRequest(t, r, serverURL)
+			require.Equal(t, "196006422677", r.URL.Query().Get("filter[upc]"))
+			require.Equal(t, "tracks", r.URL.Query().Get("include"))
+		},
+	})
+	serverURL = server.URL
+	defer server.Close()
+
+	got, err := newAppleCatalog(t, server.URL).FetchAlbumsByUPC(
+		t.Context(),
+		streamnx.Apple,
+		"196006422677",
+	)
+
+	require.NoError(t, err)
+	require.Len(t, got, 1)
+	require.Equal(t, "us-1577580468", got[0].ID)
+	require.Equal(t, "196006422677", got[0].UPC)
+	require.Equal(t, "Kinomusika : Gogi Tsabadzis Shemokmedeba Natsili XIII", got[0].Title)
+	require.Equal(t, "გოგი ცაბაძე", got[0].Artist)
+	require.Len(t, got[0].TrackIDs, 20)
 }
 
 func TestAppleCatalogSearchTracks(t *testing.T) {

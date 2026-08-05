@@ -517,6 +517,36 @@ func TestDeezerAdapter_fetchTracksByISRC(t *testing.T) {
 	}
 }
 
+func TestDeezerAdapter_fetchAlbumsByUPC(t *testing.T) {
+	cm := &clientMock{}
+	cm.
+		On("fetchAlbumByUPC", "196006422677").
+		Return(album{
+			ID:          246271832,
+			UPC:         "196006422677",
+			Title:       "კინომუსიკა: გოგი ცაბაძის შემოქმედება ნაწილი XIII",
+			Artist:      artist{Name: "გოგი ცაბაძე"},
+			ReleaseDate: "2021-04-07",
+			Tracks:      trackData{Data: []track{{ID: 1441222442}}},
+		}, nil).
+		Once()
+
+	result, err := NewAdapter(cm).FetchAlbumsByUPC(t.Context(), "196006422677")
+
+	require.NoError(t, err)
+	require.Equal(t, []release.Album{{
+		ID:          "246271832",
+		UPC:         "196006422677",
+		Title:       "კინომუსიკა: გოგი ცაბაძის შემოქმედება ნაწილი XIII",
+		Artist:      "გოგი ცაბაძე",
+		URL:         "https://deezer.com/album/246271832",
+		ReleaseDate: release.Date{Year: 2021, Month: 4, Day: 7},
+		Provider:    release.Deezer,
+		TrackIDs:    []string{"1441222442"},
+	}}, result)
+	cm.AssertExpectations(t)
+}
+
 func TestDeezerAdapter_searchAlbums(t *testing.T) {
 	tests := []struct {
 		name       string
@@ -536,6 +566,7 @@ func TestDeezerAdapter_searchAlbums(t *testing.T) {
 					Return([]album{
 						{
 							ID:    789,
+							UPC:   "196006422677",
 							Title: "First Album",
 							Artist: artist{
 								Name: "First Artist",
@@ -556,6 +587,7 @@ func TestDeezerAdapter_searchAlbums(t *testing.T) {
 			want: []release.SearchAlbum{
 				{
 					ID:       "789",
+					UPC:      "196006422677",
 					Title:    "First Album",
 					Artist:   "First Artist",
 					URL:      "https://deezer.com/album/789",
@@ -650,6 +682,14 @@ func (m *clientMock) fetchTrackByISRC(_ context.Context, isrc string) (track, er
 
 func (m *clientMock) fetchAlbum(_ context.Context, id string) (album, error) {
 	args := m.Called(id)
+	if args.Get(0) == nil {
+		return album{}, args.Error(1)
+	}
+	return args.Get(0).(album), args.Error(1)
+}
+
+func (m *clientMock) fetchAlbumByUPC(_ context.Context, upc string) (album, error) {
+	args := m.Called(upc)
 	if args.Get(0) == nil {
 		return album{}, args.Error(1)
 	}

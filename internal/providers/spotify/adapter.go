@@ -19,6 +19,7 @@ type adapterClient interface {
 	searchTracks(ctx context.Context, artist, title string) ([]track, error)
 	fetchTracksByISRC(ctx context.Context, isrc string) ([]track, error)
 	fetchAlbum(ctx context.Context, id string) (album, error)
+	fetchAlbumsByUPC(ctx context.Context, upc string) ([]album, error)
 	searchAlbums(ctx context.Context, artist, title string) ([]album, error)
 }
 
@@ -84,8 +85,25 @@ func (a *Adapter) FetchAlbum(ctx context.Context, id string) (release.Album, err
 		return release.Album{}, release.ErrNotFound
 	case err != nil:
 		return release.Album{}, fmt.Errorf("failed to get album from spotify: %w", err)
+	default:
+		return a.releaseAlbum(album), nil
+	}
+}
+
+func (a *Adapter) FetchAlbumsByUPC(ctx context.Context, upc string) ([]release.Album, error) {
+	found, err := a.client.fetchAlbumsByUPC(ctx, upc)
+	if err != nil {
+		return nil, fmt.Errorf("failed to fetch albums by upc on spotify: %w", err)
 	}
 
+	albums := make([]release.Album, len(found))
+	for i, album := range found {
+		albums[i] = a.releaseAlbum(album)
+	}
+	return albums, nil
+}
+
+func (a *Adapter) releaseAlbum(album album) release.Album {
 	trackIDs := make([]string, 0, len(album.Tracks.Items))
 	for _, track := range album.Tracks.Items {
 		if track.ID != "" {
@@ -95,6 +113,7 @@ func (a *Adapter) FetchAlbum(ctx context.Context, id string) (release.Album, err
 
 	return release.Album{
 		ID:          album.ID,
+		UPC:         a.albumUPC(album),
 		Title:       album.Name,
 		Artist:      a.artist(album.Artists),
 		Label:       album.Label,
@@ -104,7 +123,7 @@ func (a *Adapter) FetchAlbum(ctx context.Context, id string) (release.Album, err
 		CoverURL:    a.coverURL(album.Images),
 		ReleaseDate: a.releaseDate(album.ReleaseDate),
 		TrackIDs:    trackIDs,
-	}, nil
+	}
 }
 
 func (a *Adapter) SearchTracks(ctx context.Context, artist, title string) ([]release.SearchTrack, error) {
@@ -143,6 +162,7 @@ func (a *Adapter) SearchAlbums(ctx context.Context, artist, title string) ([]rel
 	for i, foundAlbum := range found {
 		albums[i] = release.SearchAlbum{
 			ID:       foundAlbum.ID,
+			UPC:      a.albumUPC(foundAlbum),
 			Title:    foundAlbum.Name,
 			Artist:   a.artist(foundAlbum.Artists),
 			Provider: release.Spotify,
@@ -152,6 +172,13 @@ func (a *Adapter) SearchAlbums(ctx context.Context, artist, title string) ([]rel
 		}
 	}
 	return albums, nil
+}
+
+func (*Adapter) albumUPC(album album) string {
+	if album.ExternalIDs.UPC != "" {
+		return album.ExternalIDs.UPC
+	}
+	return album.ExternalIDs.EAN
 }
 
 func (a *Adapter) Uncloak(context.Context, string) (release.Type, string, error) {

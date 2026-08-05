@@ -147,6 +147,10 @@ func (a *Adapter) FetchAlbum(ctx context.Context, id string) (release.Album, err
 	}, nil
 }
 
+func (a *Adapter) FetchAlbumsByUPC(context.Context, string) ([]release.Album, error) {
+	return nil, release.ErrUnsupportedOperation
+}
+
 func (a *Adapter) enrichIncompleteAlbumTracks(ctx context.Context, album *album) error {
 	numericIDs := make([]int64, 0)
 	urns := make([]string, 0)

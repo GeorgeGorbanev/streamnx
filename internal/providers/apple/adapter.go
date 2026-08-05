@@ -20,6 +20,7 @@ type adapterClient interface {
 	searchTracks(ctx context.Context, artist, title string) ([]entity, error)
 	fetchTracksByISRC(ctx context.Context, isrc string) ([]entity, error)
 	fetchAlbum(ctx context.Context, id, storefront string) (entity, error)
+	fetchAlbumsByUPC(ctx context.Context, upc string) ([]entity, error)
 	searchAlbums(ctx context.Context, artist, title string) ([]entity, error)
 }
 
@@ -132,8 +133,40 @@ func (a *Adapter) FetchAlbum(ctx context.Context, id string) (release.Album, err
 		return release.Album{}, release.ErrNotFound
 	case err != nil:
 		return release.Album{}, fmt.Errorf("failed to get album from apple: %w", err)
+	default:
+		return a.releaseAlbum(album, id, storefront)
+	}
+}
+
+func (a *Adapter) FetchAlbumsByUPC(ctx context.Context, upc string) ([]release.Album, error) {
+	found, err := a.client.fetchAlbumsByUPC(ctx, upc)
+	if err != nil {
+		return nil, fmt.Errorf("failed to fetch albums by upc from apple: %w", err)
 	}
 
+	albums := make([]release.Album, len(found))
+	for i, album := range found {
+		key, err := parseAlbumLink(album.Attributes.URL)
+		if err != nil {
+			return nil, fmt.Errorf("failed to parse album link: %w", err)
+		}
+		id, err := keyScheme.Dump(key)
+		if err != nil {
+			return nil, fmt.Errorf("failed to dump album key: %w", err)
+		}
+		_, storefront, err := parseKeyParts(id)
+		if err != nil {
+			return nil, fmt.Errorf("failed to parse album key: %w", err)
+		}
+		albums[i], err = a.releaseAlbum(album, id, storefront)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return albums, nil
+}
+
+func (a *Adapter) releaseAlbum(album entity, id, storefront string) (release.Album, error) {
 	tracks := album.Relationships.Tracks.Data
 	trackIDs := make([]string, 0, len(tracks))
 	for _, track := range tracks {
@@ -162,6 +195,7 @@ func (a *Adapter) FetchAlbum(ctx context.Context, id string) (release.Album, err
 
 	return release.Album{
 		ID:          id,
+		UPC:         album.Attributes.UPC,
 		Title:       album.Attributes.Name,
 		Artist:      album.Attributes.ArtistName,
 		Label:       album.Attributes.RecordLabel,
@@ -248,6 +282,7 @@ func (a *Adapter) SearchAlbums(ctx context.Context, artist, title string) ([]rel
 		}
 		albums[i] = release.SearchAlbum{
 			ID:          id,
+			UPC:         album.Attributes.UPC,
 			Title:       album.Attributes.Name,
 			Artist:      album.Attributes.ArtistName,
 			URL:         album.Attributes.URL,

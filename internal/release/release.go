@@ -24,6 +24,7 @@ type Track struct {
 
 type Album struct {
 	ID             string
+	UPC            string
 	Title          string
 	Artist         string
 	Label          string
@@ -54,6 +55,7 @@ type SearchTrack struct {
 
 type SearchAlbum struct {
 	ID             string
+	UPC            string
 	Title          string
 	Artist         string
 	URL            string

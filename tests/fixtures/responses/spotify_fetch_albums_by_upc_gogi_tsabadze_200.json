@@ -1,0 +1,28 @@
+{
+  "albums": {
+    "href": "https://api.spotify.com/v1/search?query=upc%3A196006422677&type=album&offset=0&limit=10",
+    "limit": 10,
+    "next": null,
+    "offset": 0,
+    "previous": null,
+    "total": 1,
+    "items": [
+      {
+        "album_type": "album",
+        "total_tracks": 20,
+        "href": "https://api.spotify.com/v1/albums/1P0Ox1jln7nn2J9BT6yMhL",
+        "id": "1P0Ox1jln7nn2J9BT6yMhL",
+        "name": "კინომუსიკა: გოგი ცაბაძის შემოქმედება ნაწილი XIII",
+        "release_date": "2021-04-07",
+        "type": "album",
+        "uri": "spotify:album:1P0Ox1jln7nn2J9BT6yMhL",
+        "artists": [
+          {
+            "name": "გოგი ცაბაძე",
+            "type": "artist"
+          }
+        ]
+      }
+    ]
+  }
+}

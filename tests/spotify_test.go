@@ -97,6 +97,7 @@ func TestSpotifyCatalogFetchAlbum(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, streamnx.Album{
 		ID:       spotifyAlbumID,
+		UPC:      "859381157694",
 		CoverURL: "https://i.scdn.co/image/ab67616d0000b273baf89eb11ec7c657805d2da0",
 		Title:    "Whenever You Need Somebody",
 		Artist:   "Rick Astley",
@@ -139,6 +140,44 @@ func TestSpotifyCatalogFetchAlbumNotFound(t *testing.T) {
 
 	require.Zero(t, got)
 	require.ErrorIs(t, err, streamnx.ErrNotFound)
+}
+
+func TestSpotifyCatalogFetchAlbumsByUPC(t *testing.T) {
+	server := newSpotifyFixtureServer(t,
+		fixtures.Route{
+			Method:  http.MethodGet,
+			Path:    "/v1/search",
+			Status:  http.StatusOK,
+			Fixture: "spotify_fetch_albums_by_upc_gogi_tsabadze_200.json",
+			Assert: func(t *testing.T, r *http.Request) {
+				require.Equal(t, spotifyAuthorization, r.Header.Get("Authorization"))
+				require.Equal(t, "upc:196006422677", r.URL.Query().Get("q"))
+				require.Equal(t, "album", r.URL.Query().Get("type"))
+				require.Equal(t, "10", r.URL.Query().Get("limit"))
+			},
+		},
+		fixtures.Route{
+			Method:  http.MethodGet,
+			Path:    "/v1/albums/1P0Ox1jln7nn2J9BT6yMhL",
+			Status:  http.StatusOK,
+			Fixture: "spotify_fetch_album_gogi_tsabadze_200.json",
+		},
+	)
+	defer server.Close()
+
+	got, err := newSpotifyCatalog(t, server.URL).FetchAlbumsByUPC(
+		t.Context(),
+		streamnx.Spotify,
+		"196006422677",
+	)
+
+	require.NoError(t, err)
+	require.Len(t, got, 1)
+	require.Equal(t, "1P0Ox1jln7nn2J9BT6yMhL", got[0].ID)
+	require.Equal(t, "196006422677", got[0].UPC)
+	require.Equal(t, "კინომუსიკა: გოგი ცაბაძის შემოქმედება ნაწილი XIII", got[0].Title)
+	require.Equal(t, "გოგი ცაბაძე", got[0].Artist)
+	require.Len(t, got[0].TrackIDs, 20)
 }
 
 func TestSpotifyCatalogSearchTracks(t *testing.T) {
@@ -490,7 +529,7 @@ func TestSpotifyCatalogRejectsUnsupportedOperation(t *testing.T) {
 	require.ErrorIs(t, err, streamnx.ErrUnsupportedOperation)
 }
 
-func newSpotifyFixtureServer(t *testing.T, apiRoute fixtures.Route) *httptest.Server {
+func newSpotifyFixtureServer(t *testing.T, apiRoutes ...fixtures.Route) *httptest.Server {
 	t.Helper()
 
 	authRoute := fixtures.Route{
@@ -504,7 +543,10 @@ func newSpotifyFixtureServer(t *testing.T, apiRoute fixtures.Route) *httptest.Se
 		},
 	}
 
-	return fixtures.NewServer(t, authRoute, apiRoute)
+	routes := make([]fixtures.Route, 0, len(apiRoutes)+1)
+	routes = append(routes, authRoute)
+	routes = append(routes, apiRoutes...)
+	return fixtures.NewServer(t, routes...)
 }
 
 func newSpotifyCatalog(t *testing.T, serverURL string) *streamnx.Catalog {

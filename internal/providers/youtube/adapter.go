@@ -92,6 +92,10 @@ func (a *Adapter) FetchAlbum(ctx context.Context, id string) (release.Album, err
 	}, nil
 }
 
+func (a *Adapter) FetchAlbumsByUPC(context.Context, string) ([]release.Album, error) {
+	return nil, release.ErrUnsupportedOperation
+}
+
 func (a *Adapter) SearchTracks(ctx context.Context, artist, title string) ([]release.SearchTrack, error) {
 	searchResults, err := a.client.searchVideos(ctx, artist+" – "+title)
 	if err != nil {

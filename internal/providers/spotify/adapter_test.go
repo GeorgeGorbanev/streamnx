@@ -423,6 +423,36 @@ func TestSpotifyAdapter_fetchTracksByISRC(t *testing.T) {
 	cm.AssertExpectations(t)
 }
 
+func TestSpotifyAdapter_fetchAlbumsByUPC(t *testing.T) {
+	cm := &clientMock{}
+	cm.
+		On("fetchAlbumsByUPC", "196006422677").
+		Return([]album{{
+			ID:          "1P0Ox1jln7nn2J9BT6yMhL",
+			Name:        "კინომუსიკა: გოგი ცაბაძის შემოქმედება ნაწილი XIII",
+			Artists:     []artist{{Name: "გოგი ცაბაძე"}},
+			ExternalIDs: externalIDs{UPC: "196006422677"},
+			ReleaseDate: "2021-04-07",
+			Tracks:      albumTracks{Items: []track{{ID: "2D7PyQw6igUXxEyjlzx5kO"}}},
+		}}, nil).
+		Once()
+
+	result, err := NewAdapter(cm).FetchAlbumsByUPC(t.Context(), "196006422677")
+
+	require.NoError(t, err)
+	require.Equal(t, []release.Album{{
+		ID:          "1P0Ox1jln7nn2J9BT6yMhL",
+		UPC:         "196006422677",
+		Title:       "კინომუსიკა: გოგი ცაბაძის შემოქმედება ნაწილი XIII",
+		Artist:      "გოგი ცაბაძე",
+		URL:         "https://open.spotify.com/album/1P0Ox1jln7nn2J9BT6yMhL",
+		ReleaseDate: release.Date{Year: 2021, Month: 4, Day: 7},
+		Provider:    release.Spotify,
+		TrackIDs:    []string{"2D7PyQw6igUXxEyjlzx5kO"},
+	}}, result)
+	cm.AssertExpectations(t)
+}
+
 func TestSpotifyAdapter_searchAlbums(t *testing.T) {
 	tests := []struct {
 		name           string
@@ -441,9 +471,10 @@ func TestSpotifyAdapter_searchAlbums(t *testing.T) {
 					On("searchAlbums", "sample artist", "sample album").
 					Return([]album{
 						{
-							ID:    "firstAlbumID",
-							Name:  "first album",
-							Label: "first label",
+							ID:          "firstAlbumID",
+							Name:        "first album",
+							Label:       "first label",
+							ExternalIDs: externalIDs{UPC: "196006422677"},
 							Artists: []artist{
 								{
 									Name: "first artist",
@@ -466,6 +497,7 @@ func TestSpotifyAdapter_searchAlbums(t *testing.T) {
 			expectedAlbums: []release.SearchAlbum{
 				{
 					ID:       "firstAlbumID",
+					UPC:      "196006422677",
 					Title:    "first album",
 					Artist:   "first artist",
 					URL:      "https://open.spotify.com/album/firstAlbumID",
@@ -562,6 +594,14 @@ func (m *clientMock) fetchAlbum(_ context.Context, id string) (album, error) {
 		return album{}, args.Error(1)
 	}
 	return args.Get(0).(album), args.Error(1)
+}
+
+func (m *clientMock) fetchAlbumsByUPC(_ context.Context, upc string) ([]album, error) {
+	args := m.Called(upc)
+	if args.Get(0) == nil {
+		return nil, args.Error(1)
+	}
+	return args.Get(0).([]album), args.Error(1)
 }
 
 func (m *clientMock) searchAlbums(_ context.Context, artist, title string) ([]album, error) {

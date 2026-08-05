@@ -670,6 +670,11 @@ func TestSoundcloudAdapter_fetchTracksByISRC(t *testing.T) {
 
 	require.Nil(t, tracks)
 	require.ErrorIs(t, err, release.ErrUnsupportedOperation)
+
+	albums, err := (&Adapter{}).FetchAlbumsByUPC(t.Context(), "196006422677")
+
+	require.Nil(t, albums)
+	require.ErrorIs(t, err, release.ErrUnsupportedOperation)
 }
 
 type clientMock struct {

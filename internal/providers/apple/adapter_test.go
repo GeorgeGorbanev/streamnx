@@ -424,6 +424,41 @@ func TestAppleAdapter_fetchTracksByISRC(t *testing.T) {
 	cm.AssertExpectations(t)
 }
 
+func TestAppleAdapter_fetchAlbumsByUPC(t *testing.T) {
+	cm := &clientMock{}
+	cm.
+		On("fetchAlbumsByUPC", "196006422677").
+		Return([]entity{{
+			ID: "1577580468",
+			Attributes: entityAttributes{
+				ArtistName:  "გოგი ცაბაძე",
+				Name:        "კინომუსიკა: გოგი ცაბაძის შემოქმედება ნაწილი XIII",
+				UPC:         "196006422677",
+				URL:         "https://music.apple.com/us/album/album/1577580468",
+				ReleaseDate: "2021-04-07",
+			},
+			Relationships: entityRelationships{
+				Tracks: tracksRelationship{Data: []entity{{ID: "1577581602"}}},
+			},
+		}}, nil).
+		Once()
+
+	result, err := NewAdapter(cm).FetchAlbumsByUPC(t.Context(), "196006422677")
+
+	require.NoError(t, err)
+	require.Equal(t, []release.Album{{
+		ID:          "us-1577580468",
+		UPC:         "196006422677",
+		Title:       "კინომუსიკა: გოგი ცაბაძის შემოქმედება ნაწილი XIII",
+		Artist:      "გოგი ცაბაძე",
+		URL:         "https://music.apple.com/us/album/album/1577580468",
+		ReleaseDate: release.Date{Year: 2021, Month: 4, Day: 7},
+		Provider:    release.Apple,
+		TrackIDs:    []string{"us-1577581602"},
+	}}, result)
+	cm.AssertExpectations(t)
+}
+
 func TestAppleAdapter_searchAlbums(t *testing.T) {
 	tests := []struct {
 		name           string
@@ -445,6 +480,7 @@ func TestAppleAdapter_searchAlbums(t *testing.T) {
 							Attributes: entityAttributes{
 								ArtistName: "first artist",
 								Name:       "first album",
+								UPC:        "196006422677",
 								URL:        "https://music.apple.com/us/album/first-album/444",
 								EditorialNotes: editorialNotes{
 									Short: "first album short notes",
@@ -467,6 +503,7 @@ func TestAppleAdapter_searchAlbums(t *testing.T) {
 			expectedAlbums: []release.SearchAlbum{
 				{
 					ID:          "us-444",
+					UPC:         "196006422677",
 					Title:       "first album",
 					Artist:      "first artist",
 					URL:         "https://music.apple.com/us/album/first-album/444",
@@ -551,6 +588,14 @@ func (m *clientMock) fetchAlbum(_ context.Context, id, storefront string) (entit
 		return entity{}, args.Error(1)
 	}
 	return args.Get(0).(entity), args.Error(1)
+}
+
+func (m *clientMock) fetchAlbumsByUPC(_ context.Context, upc string) ([]entity, error) {
+	args := m.Called(upc)
+	if args.Get(0) == nil {
+		return nil, args.Error(1)
+	}
+	return args.Get(0).([]entity), args.Error(1)
 }
 
 func (m *clientMock) searchAlbums(_ context.Context, artist, title string) ([]entity, error) {

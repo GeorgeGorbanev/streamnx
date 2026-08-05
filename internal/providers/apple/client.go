@@ -114,6 +114,34 @@ func (c *Client) fetchAlbum(ctx context.Context, id, storefront string) (entity,
 	return r.Data[0], nil
 }
 
+// https://developer.apple.com/documentation/applemusicapi/get-multiple-catalog-albums-by-upc
+func (c *Client) fetchAlbumsByUPC(ctx context.Context, upc string) ([]entity, error) {
+	query := url.Values{
+		"filter[upc]": {upc},
+		"include":     {"tracks"},
+	}
+	u := fmt.Sprintf(`%s/v1/catalog/us/albums?%s`, c.apiURL, query.Encode())
+	response, err := c.getAPI(ctx, u)
+	if err != nil {
+		return nil, fmt.Errorf("failed to perform get request: %w", err)
+	}
+	defer response.Body.Close()
+
+	switch response.StatusCode {
+	case http.StatusOK:
+	case http.StatusNotFound:
+		return []entity{}, nil
+	default:
+		return nil, fmt.Errorf("unexpected status code: %d", response.StatusCode)
+	}
+
+	r := fetchResponse{}
+	if err := json.NewDecoder(response.Body).Decode(&r); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal upc fetch response: %w", err)
+	}
+	return r.Data, nil
+}
+
 func (c *Client) searchTracks(ctx context.Context, artist, track string) ([]entity, error) {
 	u := fmt.Sprintf(`%s/v1/catalog/us/search?%s`, c.apiURL, c.searchQuery(artist, track))
 	response, err := c.getAPI(ctx, u)
@@ -219,7 +247,7 @@ func (c *Client) searchQuery(artist, title string) string {
 		"with":                  {"lyricHighlights,lyrics,serverBubbles"},
 		"fields[albums]": {
 			"artistName,artistUrl,artwork,contentRating,editorialArtwork," +
-				"editorialNotes,name,playParams,releaseDate,url,trackCount",
+				"editorialNotes,name,playParams,releaseDate,url,trackCount,upc",
 		},
 		"types": {
 			"activities,albums,apple-curators,artists,curators," +

@@ -138,13 +138,37 @@ func (c *Client) searchTracksWithQuery(ctx context.Context, query string) ([]tra
 
 // https://developer.spotify.com/documentation/web-api/reference/search
 func (c *Client) searchAlbums(ctx context.Context, artist, title string) ([]album, error) {
+	return c.searchAlbumsWithQuery(ctx, fmt.Sprintf("artist:%s album:%s", artist, title))
+}
+
+func (c *Client) fetchAlbumsByUPC(ctx context.Context, upc string) ([]album, error) {
+	found, err := c.searchAlbumsWithQuery(ctx, "upc:"+upc)
+	if err != nil {
+		return nil, err
+	}
+
+	albums := make([]album, 0, len(found))
+	for _, candidate := range found {
+		if candidate.ID == "" {
+			continue
+		}
+		fullAlbum, err := c.fetchAlbum(ctx, candidate.ID)
+		if err != nil {
+			return nil, fmt.Errorf("failed to hydrate upc search album %q: %w", candidate.ID, err)
+		}
+		albums = append(albums, fullAlbum)
+	}
+	return albums, nil
+}
+
+func (c *Client) searchAlbumsWithQuery(ctx context.Context, query string) ([]album, error) {
 	type searchResult struct {
 		Albums struct {
 			Items []album `json:"items"`
 		} `json:"albums"`
 	}
 
-	body, err := c.searchAPI(ctx, release.TypeAlbum, fmt.Sprintf("artist:%s album:%s", artist, title))
+	body, err := c.searchAPI(ctx, release.TypeAlbum, query)
 	if err != nil {
 		return nil, err
 	}

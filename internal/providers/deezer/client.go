@@ -121,6 +121,21 @@ func (c *Client) fetchAlbum(ctx context.Context, id string) (album, error) {
 	return a, nil
 }
 
+func (c *Client) fetchAlbumByUPC(ctx context.Context, upc string) (album, error) {
+	body, err := c.getAPI(ctx, "/album/upc:"+upc, url.Values{})
+	if err != nil {
+		return album{}, fmt.Errorf("failed to fetch album by upc: %w", err)
+	}
+	var result album
+	if err := json.Unmarshal(body, &result); err != nil {
+		return album{}, fmt.Errorf("failed to parse upc fetch response: %w", err)
+	}
+	if result.ID == 0 {
+		return album{}, errNotFound
+	}
+	return result, nil
+}
+
 // https://developers.deezer.com/api/search/album
 func (c *Client) searchAlbums(ctx context.Context, artist, title string) ([]album, error) {
 	body, err := c.getAPI(ctx, "/search/album", url.Values{

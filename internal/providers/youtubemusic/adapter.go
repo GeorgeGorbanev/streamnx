@@ -149,6 +149,10 @@ func (a *Adapter) FetchAlbum(ctx context.Context, id string) (release.Album, err
 	}, nil
 }
 
+func (a *Adapter) FetchAlbumsByUPC(context.Context, string) ([]release.Album, error) {
+	return nil, release.ErrUnsupportedOperation
+}
+
 func (a *Adapter) SearchTracks(ctx context.Context, artist, title string) ([]release.SearchTrack, error) {
 	items, err := a.client.searchTracks(ctx, a.searchQuery(artist, title))
 	if err != nil {

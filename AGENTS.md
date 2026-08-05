@@ -42,8 +42,9 @@ The supported providers are:
 - `internal/release/compositekey` validates and serializes provider IDs that have
   multiple parts. Use it instead of ad hoc `strings.Split`/`Join` logic.
 - `internal/release/duration` contains shared duration conversion helpers.
-- `internal/release/isrc` validates and normalizes canonical and presentation
-  forms of ISRC recording identifiers.
+- `internal/release/extid` validates and normalizes ISRC recording identifiers
+  and UPC-A/EAN-13 album identifiers. Keep identifier-specific functions and
+  variables prefixed with `isrc` or `upc` within this shared package.
 - `internal/providers/<provider>/` contains one isolated integration:
   - `client.go`: HTTP, authentication, provider query syntax, status handling,
     and decoding into provider-native response types.
@@ -152,6 +153,9 @@ Treat the following behavior as compatibility-sensitive.
   with `ErrInvalidID` before calling an adapter. `FetchTracksByISRC` accepts a
   canonical 12-character ISRC or its hyphenated presentation form, normalizes
   it before dispatch, and returns `ErrInvalidID` for malformed values.
+  `FetchAlbumsByUPC` accepts a check-digit-valid 12-digit UPC-A or 13-digit
+  EAN-13. A 13-digit value with a leading zero is normalized to its equivalent
+  12-digit UPC-A before dispatch.
 - Composite IDs are an external contract. Changing their delimiter, part order,
   validation, or normalization is a breaking change. Route all creation and
   parsing through the package's `keyScheme`.
@@ -166,6 +170,20 @@ Treat the following behavior as compatibility-sensitive.
   provider request, following the same contract as unsupported `Uncloak` calls.
 - ISRC identifies recordings, not albums. Do not add it to album models or
   album search; UPC/EAN is the corresponding product-level identifier.
+
+### UPC fetch
+
+- `FetchAlbumsByUPC` returns full `Album` objects because a UPC can map to
+  multiple provider catalog entries. Successful calls always return a non-nil
+  slice, including zero results.
+- Every adapter implements `FetchAlbumsByUPC`. Apple, Deezer, and Spotify
+  support it; other adapters return `ErrUnsupportedOperation` before any
+  provider request.
+- Spotify UPC search returns simplified album objects, so the client hydrates
+  every result through the full album endpoint before returning to the adapter.
+- Provider models may expose the same GTIN as 13-digit EAN with a leading zero
+  or 12-digit UPC-A. Preserve provider metadata in model fields; catalog input
+  normalization handles equivalent query representations.
 
 ### Search
 
@@ -188,8 +206,9 @@ Treat the following behavior as compatibility-sensitive.
   `ID`, `Title`, `Artist`, `URL`, `AlternativeURL`, `CoverURL`, `Provider`,
   `Creator`, and `Description`.
 - `Track` additionally owns `ISRC`, `AlbumID`, `AlbumTitle`, `Duration`, and
-  `ReleaseDate`; `Album` owns `Label`, `ReleaseDate`, and `TrackIDs`;
-  `SearchTrack` owns `ISRC`, `AlbumID`, and `AlbumTitle`.
+  `ReleaseDate`; `Album` owns `UPC`, `Label`, `ReleaseDate`, and `TrackIDs`;
+  `SearchTrack` owns `ISRC`, `AlbumID`, and `AlbumTitle`; `SearchAlbum` owns
+  `UPC`.
 - `Duration` is integral seconds. Use shared conversion helpers and preserve
   their rounding semantics instead of truncating milliseconds or ISO-8601
   fractional seconds.

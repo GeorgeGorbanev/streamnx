@@ -20,6 +20,7 @@ type adapterClient interface {
 	searchTracks(ctx context.Context, artist, title string) ([]track, error)
 	fetchTrackByISRC(ctx context.Context, isrc string) (track, error)
 	fetchAlbum(ctx context.Context, id string) (album, error)
+	fetchAlbumByUPC(ctx context.Context, upc string) (album, error)
 	searchAlbums(ctx context.Context, artist, title string) ([]album, error)
 	followCloak(ctx context.Context, cloakCode string) (string, error)
 }
@@ -88,8 +89,24 @@ func (a *Adapter) FetchAlbum(ctx context.Context, id string) (release.Album, err
 		return release.Album{}, release.ErrNotFound
 	case err != nil:
 		return release.Album{}, fmt.Errorf("failed to get album from deezer: %w", err)
+	default:
+		return a.releaseAlbum(album), nil
 	}
+}
 
+func (a *Adapter) FetchAlbumsByUPC(ctx context.Context, upc string) ([]release.Album, error) {
+	found, err := a.client.fetchAlbumByUPC(ctx, upc)
+	switch {
+	case errors.Is(err, errNotFound):
+		return []release.Album{}, nil
+	case err != nil:
+		return nil, fmt.Errorf("failed to fetch album by upc from deezer: %w", err)
+	default:
+		return []release.Album{a.releaseAlbum(found)}, nil
+	}
+}
+
+func (a *Adapter) releaseAlbum(album album) release.Album {
 	trackIDs := make([]string, 0, len(album.Tracks.Data))
 	for _, track := range album.Tracks.Data {
 		if track.ID != 0 {
@@ -99,6 +116,7 @@ func (a *Adapter) FetchAlbum(ctx context.Context, id string) (release.Album, err
 
 	return release.Album{
 		ID:          strconv.Itoa(album.ID),
+		UPC:         album.UPC,
 		Title:       album.Title,
 		Artist:      album.Artist.Name,
 		Label:       album.Label,
@@ -108,7 +126,7 @@ func (a *Adapter) FetchAlbum(ctx context.Context, id string) (release.Album, err
 		CoverURL:    a.coverURL(album.coverURLs),
 		ReleaseDate: a.releaseDate(album.ReleaseDate),
 		TrackIDs:    trackIDs,
-	}, nil
+	}
 }
 
 func (a *Adapter) SearchTracks(ctx context.Context, artist, title string) ([]release.SearchTrack, error) {
@@ -154,6 +172,7 @@ func (a *Adapter) SearchAlbums(ctx context.Context, artist, title string) ([]rel
 	for i, album := range found {
 		albums[i] = release.SearchAlbum{
 			ID:       strconv.Itoa(album.ID),
+			UPC:      album.UPC,
 			Title:    album.Title,
 			Artist:   album.Artist.Name,
 			Provider: release.Deezer,

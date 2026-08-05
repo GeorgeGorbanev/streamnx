@@ -166,7 +166,7 @@ func TestClient_searchTracks(t *testing.T) {
 				require.Equal(t, "artists", q.Get("relate[albums]"))
 				require.Equal(t, "albums", q.Get("relate[songs]"))
 				require.Equal(t, "artistName,artistUrl,artwork,contentRating,editorialArtwork,editorialNotes,name,"+
-					"playParams,releaseDate,url,trackCount", q.Get("fields[albums]"))
+					"playParams,releaseDate,url,trackCount,upc", q.Get("fields[albums]"))
 				require.Equal(t, "activities,albums,apple-curators,artists,curators,editorial-items,music-movies,"+
 					"music-videos,playlists,record-labels,songs,stations,tv-episodes,uploaded-videos", q.Get("types"))
 				require.Equal(t, "lyricHighlights,lyrics,serverBubbles", q.Get("with"))
@@ -316,6 +316,50 @@ func TestClient_fetchTracksByISRC(t *testing.T) {
 			ArtistName: "Rick Astley",
 			ISRC:       "GBARL9300135",
 			Name:       "Never Gonna Give You Up",
+		},
+	}}, result)
+}
+
+func TestClient_fetchAlbumsByUPC(t *testing.T) {
+	var origin string
+	apiServerMock := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		require.Equal(t, http.MethodGet, r.Method)
+		require.Equal(t, "Bearer tokenMock", r.Header.Get("Authorization"))
+		require.Equal(t, origin, r.Header.Get("Origin"))
+		require.Equal(t, "/v1/catalog/us/albums", r.URL.Path)
+		require.Equal(t, "196006422677", r.URL.Query().Get("filter[upc]"))
+		require.Equal(t, "tracks", r.URL.Query().Get("include"))
+		_, err := w.Write([]byte(`{
+			"data": [{
+				"id": "1577580468",
+				"attributes": {
+					"artistName": "გოგი ცაბაძე",
+					"name": "კინომუსიკა: გოგი ცაბაძის შემოქმედება ნაწილი XIII",
+					"upc": "196006422677"
+				}
+			}]
+		}`))
+		require.NoError(t, err)
+	}))
+	origin = apiServerMock.URL
+	defer apiServerMock.Close()
+
+	client := Client{
+		apiURL:       apiServerMock.URL,
+		webPlayerURL: apiServerMock.URL,
+		token:        "tokenMock",
+		httpClient:   &http.Client{},
+	}
+
+	result, err := client.fetchAlbumsByUPC(t.Context(), "196006422677")
+
+	require.NoError(t, err)
+	require.Equal(t, []entity{{
+		ID: "1577580468",
+		Attributes: entityAttributes{
+			ArtistName: "გოგი ცაბაძე",
+			Name:       "კინომუსიკა: გოგი ცაბაძის შემოქმედება ნაწილი XIII",
+			UPC:        "196006422677",
 		},
 	}}, result)
 }
@@ -618,7 +662,7 @@ func TestClient_searchAlbums(t *testing.T) {
 				require.Equal(t, "artists", q.Get("relate[albums]"))
 				require.Equal(t, "albums", q.Get("relate[songs]"))
 				require.Equal(t, "artistName,artistUrl,artwork,contentRating,editorialArtwork,editorialNotes,name,"+
-					"playParams,releaseDate,url,trackCount", q.Get("fields[albums]"))
+					"playParams,releaseDate,url,trackCount,upc", q.Get("fields[albums]"))
 				require.Equal(t, "activities,albums,apple-curators,artists,curators,editorial-items,music-movies,"+
 					"music-videos,playlists,record-labels,songs,stations,tv-episodes,uploaded-videos", q.Get("types"))
 				require.Equal(t, "lyricHighlights,lyrics,serverBubbles", q.Get("with"))
@@ -1076,7 +1120,7 @@ func TestClient_searchQuery(t *testing.T) {
 	require.Equal(t, "artists", q.Get("relate[albums]"))
 	require.Equal(t, "albums", q.Get("relate[songs]"))
 	require.Equal(t, "artistName,artistUrl,artwork,contentRating,editorialArtwork,editorialNotes,name,"+
-		"playParams,releaseDate,url,trackCount", q.Get("fields[albums]"))
+		"playParams,releaseDate,url,trackCount,upc", q.Get("fields[albums]"))
 	require.Equal(t, "activities,albums,apple-curators,artists,curators,editorial-items,music-movies,"+
 		"music-videos,playlists,record-labels,songs,stations,tv-episodes,uploaded-videos", q.Get("types"))
 	require.Equal(t, "lyricHighlights,lyrics,serverBubbles", q.Get("with"))

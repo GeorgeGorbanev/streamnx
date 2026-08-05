@@ -1,0 +1,43 @@
+{
+  "id": "1P0Ox1jln7nn2J9BT6yMhL",
+  "external_ids": {
+    "upc": "196006422677"
+  },
+  "label": "GMI Rights Management",
+  "name": "კინომუსიკა: გოგი ცაბაძის შემოქმედება ნაწილი XIII",
+  "release_date": "2021-04-07",
+  "artists": [
+    {"name": "გოგი ცაბაძე"}
+  ],
+  "images": [
+    {
+      "url": "https://i.scdn.co/image/ab67616d0000b27359ff610ef41404cb7f929b69",
+      "height": 640,
+      "width": 640
+    }
+  ],
+  "tracks": {
+    "items": [
+      {"id": "5lvWmR0RYxUTGfDfMbQYNQ"},
+      {"id": "3rxvaiS5XRZXLmpPHkazje"},
+      {"id": "5YBlHPyGzJFIhmUOnm1NwL"},
+      {"id": "0sGPQ3jtRK2nSHEnTU1t5w"},
+      {"id": "1OVzvyPoq6A5hC7RY5GqB7"},
+      {"id": "1VzakeN4wkjE8us923TIM2"},
+      {"id": "7EOAevIYbPZ5DWqZEHUQRD"},
+      {"id": "4skC3nkaTbBfGVnXj9NSCi"},
+      {"id": "5YnyQmz5rpPMC2pFRTkqLz"},
+      {"id": "01kq66KwQOpRdG51qiwOjc"},
+      {"id": "60vWnbeuDaRC2k71pBxdkl"},
+      {"id": "5zZw3gBi4QdQQadAcZdPAS"},
+      {"id": "5CAj2Xvqby8fnAjC6qNlxa"},
+      {"id": "0mhOCynMMycM10vBx0gFsM"},
+      {"id": "4TD7HRyFgXCT1ROJt2lvc6"},
+      {"id": "4OMnVASKtmVgVxvg9ip64V"},
+      {"id": "7yVVcFzRG63m8xAF4RHThz"},
+      {"id": "0aVM4ClFZhbXSeguXOAMe7"},
+      {"id": "2D7PyQw6igUXxEyjlzx5kO"},
+      {"id": "6IQ11i3xhDxe9ArvSFeIkH"}
+    ]
+  }
+}

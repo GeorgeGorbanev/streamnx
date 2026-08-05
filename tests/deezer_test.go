@@ -85,6 +85,7 @@ func TestDeezerCatalogFetchAlbum(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, streamnx.Album{
 		ID:       deezerAlbumID,
+		UPC:      "859381157694",
 		CoverURL: "https://cdn-images.dzcdn.net/images/cover/07de029f6cbc9ce63d9b6064f68b7455/1000x1000-000000-80-0-0.jpg",
 		Title:    "Whenever You Need Somebody",
 		Artist:   "Rick Astley",
@@ -176,6 +177,30 @@ func TestDeezerCatalogFetchAlbumCloak(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, streamnx.ReleaseTypeAlbum, gotType)
 	require.Equal(t, deezerAlbumID, gotID)
+}
+
+func TestDeezerCatalogFetchAlbumsByUPC(t *testing.T) {
+	server := newDeezerFixtureServer(t, fixtures.Route{
+		Method:  http.MethodGet,
+		Path:    "/album/upc:196006422677",
+		Status:  http.StatusOK,
+		Fixture: "deezer_fetch_albums_by_upc_gogi_tsabadze_200.json",
+	})
+	defer server.Close()
+
+	got, err := newDeezerCatalog(t, server.URL).FetchAlbumsByUPC(
+		t.Context(),
+		streamnx.Deezer,
+		"196006422677",
+	)
+
+	require.NoError(t, err)
+	require.Len(t, got, 1)
+	require.Equal(t, "246271832", got[0].ID)
+	require.Equal(t, "196006422677", got[0].UPC)
+	require.Equal(t, "კინომუსიკა: გოგი ცაბაძის შემოქმედება ნაწილი XIII", got[0].Title)
+	require.Equal(t, "გოგი ცაბაძე", got[0].Artist)
+	require.Len(t, got[0].TrackIDs, 20)
 }
 
 func TestDeezerCatalogSearchTracks(t *testing.T) {

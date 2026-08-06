@@ -41,7 +41,15 @@ func NewClient(opts ...ClientOption) *Client {
 	return &c
 }
 
-var errNotFound = errors.New("not found")
+const (
+	resultNotFound = "not-found"
+	resultNoRights = "no-rights"
+)
+
+var (
+	errNotFound = errors.New("not found")
+	errNoRights = errors.New("no rights")
+)
 
 func (c *Client) fetchTrack(ctx context.Context, trackID string) (track, error) {
 	body, err := c.getAPI(ctx, "/tracks/"+trackID, url.Values{})
@@ -58,14 +66,18 @@ func (c *Client) fetchTrack(ctx context.Context, trackID string) (track, error) 
 	if len(resp.Result) < 1 {
 		return track{}, errNotFound
 	}
+
 	yandexTrack := resp.Result[0]
-	if yandexTrack.Error == "not-found" {
+	switch yandexTrack.Error {
+	case "":
+		return yandexTrack, nil
+	case resultNotFound:
 		return track{}, errNotFound
-	}
-	if yandexTrack.Error != "" {
+	case resultNoRights:
+		return track{}, errNoRights
+	default:
 		return track{}, fmt.Errorf("api error: %s", yandexTrack.Error)
 	}
-	return yandexTrack, nil
 }
 
 func (c *Client) searchTracks(ctx context.Context, query string) ([]searchTrack, error) {
@@ -109,15 +121,16 @@ func (c *Client) fetchAlbum(ctx context.Context, albumID string) (album, error) 
 		return album{}, fmt.Errorf("failed to unmarshal response body: %w", err)
 	}
 
-	if resp.Error != nil {
-		const notFoundAPIErr = "not-found"
-		if resp.Error.Name == notFoundAPIErr {
-			return album{}, errNotFound
-		}
+	switch {
+	case resp.Error == nil:
+		return resp.Result, nil
+	case resp.Error.Name == resultNotFound:
+		return album{}, errNotFound
+	case resp.Error.Name == resultNoRights:
+		return album{}, errNoRights
+	default:
 		return album{}, fmt.Errorf("api error: %s: %s", resp.Error.Name, resp.Error.Message)
 	}
-
-	return resp.Result, nil
 }
 
 func (c *Client) searchAlbums(ctx context.Context, query string) ([]searchAlbum, error) {

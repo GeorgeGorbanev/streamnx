@@ -59,6 +59,8 @@ func (a *Adapter) FetchTrack(ctx context.Context, id string) (release.Track, err
 	switch {
 	case errors.Is(err, errNotFound):
 		return release.Track{}, release.ErrNotFound
+	case errors.Is(err, errNoRights):
+		return release.Track{}, release.ErrReleaseRevoked
 	case err != nil:
 		return release.Track{}, fmt.Errorf("failed to get track from yandex music: %w", err)
 	}
@@ -96,6 +98,8 @@ func (a *Adapter) FetchAlbum(ctx context.Context, id string) (release.Album, err
 	switch {
 	case errors.Is(err, errNotFound):
 		return release.Album{}, release.ErrNotFound
+	case errors.Is(err, errNoRights):
+		return release.Album{}, release.ErrReleaseRevoked
 	case err != nil:
 		return release.Album{}, fmt.Errorf("failed to get album from yandex music: %w", err)
 	}

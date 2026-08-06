@@ -33,6 +33,7 @@ const (
 
 var (
 	ErrNotFound             = release.ErrNotFound
+	ErrReleaseRevoked       = release.ErrReleaseRevoked
 	ErrScrapingBlocked      = release.ErrScrapingBlocked
 	ErrUnsupportedOperation = release.ErrUnsupportedOperation
 )

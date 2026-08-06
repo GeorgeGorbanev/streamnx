@@ -224,6 +224,17 @@ func TestYandexAdapter_FetchTrack(t *testing.T) {
 			},
 			expectedErr: release.ErrNotFound,
 		},
+		{
+			name: "track rights revoked",
+			id:   "41:42",
+			mockClient: func(m *clientMock) {
+				m.
+					On("fetchTrack", "42").
+					Return(nil, errNoRights).
+					Once()
+			},
+			expectedErr: release.ErrReleaseRevoked,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -343,6 +354,17 @@ func TestYandexAdapter_FetchAlbum(t *testing.T) {
 					Once()
 			},
 			expectedErr: release.ErrNotFound,
+		},
+		{
+			name: "album rights revoked",
+			id:   "42",
+			mockClient: func(m *clientMock) {
+				m.
+					On("fetchAlbum", "42").
+					Return(nil, errNoRights).
+					Once()
+			},
+			expectedErr: release.ErrReleaseRevoked,
 		},
 	}
 	for _, tt := range tests {

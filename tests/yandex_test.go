@@ -12,14 +12,15 @@ import (
 )
 
 const (
-	yandexTrackID        = "609676"
-	yandexAlbumID        = "14599266"
-	yandexTrackKey       = yandexAlbumID + ":" + yandexTrackID
-	yandexSearchArtist   = "Rick Astley"
-	yandexSearchTrack    = "Never Gonna Give You Up"
-	yandexSearchAlbum    = "Whenever You Need Somebody"
-	yandexMissingTrackID = "987654321"
-	yandexMissingAlbumID = "-1231231231"
+	yandexTrackID         = "609676"
+	yandexAlbumID         = "14599266"
+	yandexTrackKey        = yandexAlbumID + ":" + yandexTrackID
+	yandexSearchArtist    = "Rick Astley"
+	yandexSearchTrack     = "Never Gonna Give You Up"
+	yandexSearchAlbum     = "Whenever You Need Somebody"
+	yandexMissingTrackID  = "987654321"
+	yandexMissingAlbumID  = "-1231231231"
+	yandexRevokedTrackURL = "https://music.yandex.com/album/3277243/track/27373847"
 )
 
 func TestYandexCatalogFetchTrack(t *testing.T) {
@@ -69,6 +70,25 @@ func TestYandexCatalogFetchTrackNotFound(t *testing.T) {
 
 	require.Zero(t, got)
 	require.ErrorIs(t, err, streamnx.ErrNotFound)
+}
+
+func TestYandexCatalogFetchTrackRevoked(t *testing.T) {
+	server := newYandexFixtureServer(t, fixtures.Route{
+		Method:  http.MethodGet,
+		Path:    "/tracks/27373847",
+		Status:  http.StatusOK,
+		Fixture: "yandex_fetch_track_no_rights_200.json",
+	})
+	defer server.Close()
+
+	catalog := newYandexCatalog(t, server.URL)
+	link, err := catalog.ParseLink(yandexRevokedTrackURL)
+	require.NoError(t, err)
+
+	got, err := catalog.FetchTrack(t.Context(), link.Provider, link.ReleaseID)
+
+	require.Zero(t, got)
+	require.ErrorIs(t, err, streamnx.ErrReleaseRevoked)
 }
 
 func TestYandexCatalogFetchAlbum(t *testing.T) {

@@ -104,10 +104,11 @@ func TestClient_fetchTrack(t *testing.T) {
 
 func TestClient_fetchAlbum(t *testing.T) {
 	tests := []struct {
-		name    string
-		albumID string
-		want    album
-		wantErr error
+		name            string
+		albumID         string
+		want            album
+		wantErr         error
+		wantErrContains string
 	}{
 		{
 			name:    "when album found",
@@ -164,6 +165,16 @@ func TestClient_fetchAlbum(t *testing.T) {
 			albumID: "-1231231231",
 			wantErr: errNotFound,
 		},
+		{
+			name:    "when album has no rights",
+			albumID: "noRightsID",
+			wantErr: errNoRights,
+		},
+		{
+			name:            "when api returns an unexpected error",
+			albumID:         "apiErrorID",
+			wantErrContains: "api error: internal-error: Internal server error",
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -206,6 +217,22 @@ func TestClient_fetchAlbum(t *testing.T) {
 						}
 					}`))
 					require.NoError(t, err)
+				case "/albums/noRightsID/with-tracks":
+					_, err := w.Write([]byte(`{
+						"error": {
+							"name": "no-rights",
+							"message": "Not enough rights"
+						}
+					}`))
+					require.NoError(t, err)
+				case "/albums/apiErrorID/with-tracks":
+					_, err := w.Write([]byte(`{
+						"error": {
+							"name": "internal-error",
+							"message": "Internal server error"
+						}
+					}`))
+					require.NoError(t, err)
 				default:
 					require.Fail(t, "unexpected path: %s", r.URL.Path)
 				}
@@ -217,6 +244,9 @@ func TestClient_fetchAlbum(t *testing.T) {
 			result, err := client.fetchAlbum(t.Context(), tt.albumID)
 			if tt.wantErr != nil {
 				require.ErrorIs(t, err, tt.wantErr)
+			} else if tt.wantErrContains != "" {
+				require.Zero(t, result)
+				require.ErrorContains(t, err, tt.wantErrContains)
 			} else {
 				require.NoError(t, err)
 				require.Equal(t, tt.want, result)

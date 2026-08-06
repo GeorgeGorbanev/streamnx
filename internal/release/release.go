@@ -106,6 +106,7 @@ var Providers = []Provider{
 
 var (
 	ErrNotFound             = errors.New("release not found")
+	ErrReleaseRevoked       = errors.New("release has been revoked")
 	ErrScrapingBlocked      = errors.New("scraping blocked")
 	ErrUnsupportedOperation = errors.New("unsupported operation")
 )

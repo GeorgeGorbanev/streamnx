@@ -1,0 +1,47 @@
+{
+  "invocationInfo": {
+    "req-id": "1786055411762762-11091541828585482953",
+    "hostname": "music-web-default-production-music-99.klg.yp-c.yandex.net",
+    "exec-duration-millis": 7
+  },
+  "result": [
+    {
+      "id": "27373847",
+      "realId": "27373847",
+      "title": "I Am The Walrus",
+      "version": "Remastered 2009",
+      "available": false,
+      "availableForPremiumUsers": false,
+      "availableFullWithoutPermission": false,
+      "availableForOptions": [],
+      "disclaimers": [],
+      "artists": [
+        {
+          "id": 35004,
+          "name": "The Beatles",
+          "various": false,
+          "composer": false,
+          "available": true,
+          "cover": {
+            "type": "from-artist-photos",
+            "uri": "avatars.yandex.net/get-music-content/5496390/8a91c09d.p.35004/%%",
+            "prefix": "8a91c09d.p.35004/"
+          },
+          "genres": [],
+          "disclaimers": []
+        }
+      ],
+      "albums": [],
+      "lyricsAvailable": true,
+      "type": "music",
+      "rememberPosition": false,
+      "trackSharingFlag": "COVER_ONLY",
+      "lyricsInfo": {
+        "hasAvailableSyncLyrics": true,
+        "hasAvailableTextLyrics": true
+      },
+      "trackSource": "OWN",
+      "error": "no-rights"
+    }
+  ]
+}

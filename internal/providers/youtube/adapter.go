@@ -102,13 +102,16 @@ func (a *Adapter) SearchTracks(ctx context.Context, artist, title string) ([]rel
 		return nil, fmt.Errorf("failed to search video on youtube: %w", err)
 	}
 
-	tracks := make([]release.SearchTrack, len(searchResults))
-	for i, searchResult := range searchResults {
+	tracks := make([]release.SearchTrack, 0, len(searchResults))
+	for _, searchResult := range searchResults {
 		video, err := a.client.fetchVideo(ctx, searchResult.ID.VideoID)
-		if err != nil {
+		switch {
+		case errors.Is(err, errNotFound):
+			continue
+		case err != nil:
 			return nil, fmt.Errorf("failed to get video from youtube: %w", err)
 		}
-		tracks[i] = release.SearchTrack{
+		tracks = append(tracks, release.SearchTrack{
 			ID:          video.ID,
 			Title:       video.Snippet.Title,
 			Provider:    release.Youtube,
@@ -116,7 +119,7 @@ func (a *Adapter) SearchTracks(ctx context.Context, artist, title string) ([]rel
 			Description: video.Snippet.Description,
 			CoverURL:    coverURL(video.Snippet.Thumbnails),
 			URL:         videoURL(video.ID),
-		}
+		})
 	}
 	return tracks, nil
 }
@@ -127,13 +130,16 @@ func (a *Adapter) SearchAlbums(ctx context.Context, artist, title string) ([]rel
 		return nil, fmt.Errorf("failed to search playlist on youtube: %w", err)
 	}
 
-	albums := make([]release.SearchAlbum, len(searchResults))
-	for i, searchResult := range searchResults {
+	albums := make([]release.SearchAlbum, 0, len(searchResults))
+	for _, searchResult := range searchResults {
 		playlist, err := a.client.fetchPlaylist(ctx, searchResult.ID.PlaylistID)
-		if err != nil {
+		switch {
+		case errors.Is(err, errNotFound):
+			continue
+		case err != nil:
 			return nil, fmt.Errorf("failed to get playlist from youtube: %w", err)
 		}
-		albums[i] = release.SearchAlbum{
+		albums = append(albums, release.SearchAlbum{
 			ID:          playlist.ID,
 			Title:       playlist.Snippet.Title,
 			URL:         playlistURL(playlist.ID),
@@ -141,7 +147,7 @@ func (a *Adapter) SearchAlbums(ctx context.Context, artist, title string) ([]rel
 			Creator:     a.ownerChannelTitle(playlist.Snippet),
 			Description: playlist.Snippet.Description,
 			CoverURL:    coverURL(playlist.Snippet.Thumbnails),
-		}
+		})
 	}
 	return albums, nil
 }

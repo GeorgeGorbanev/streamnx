@@ -216,63 +216,111 @@ func TestYoutubeAdapter_fetchTrack(t *testing.T) {
 }
 
 func TestYoutubeAdapter_searchTracks(t *testing.T) {
-	cm := &clientMock{}
-	cm.
-		On("searchVideos", "sample artist – sample track").
-		Return([]videoSearchResult{
-			{ID: videoSearchID{VideoID: "firstID"}},
-			{ID: videoSearchID{VideoID: "secondID"}},
-		}, nil).
-		Once()
-	cm.
-		On("fetchVideo", "firstID").
-		Return(video{
-			ID: "firstID",
-			Snippet: snippet{
-				Title:        "first raw title [official]",
-				ChannelTitle: "first channel",
-				Description:  "first raw description",
-			},
-		}, nil).
-		Once()
-	cm.
-		On("fetchVideo", "secondID").
-		Return(video{
-			ID: "secondID",
-			Snippet: snippet{
-				Title:        "second raw title (live)",
-				ChannelTitle: "second channel",
-				Description:  "second raw description",
-			},
-		}, nil).
-		Once()
-
-	a := NewAdapter(cm)
-
-	result, err := a.SearchTracks(t.Context(), "sample artist", "sample track")
-
-	require.NoError(t, err)
-	require.Equal(t, []release.SearchTrack{
+	tests := []struct {
+		name           string
+		mockClient     func(*clientMock)
+		expectedTracks []release.SearchTrack
+	}{
 		{
-			ID:          "firstID",
-			Title:       "first raw title [official]",
-			Artist:      "",
-			URL:         "https://www.youtube.com/watch?v=firstID",
-			Provider:    release.Youtube,
-			Creator:     "first channel",
-			Description: "first raw description",
+			name: "hydrates every available search result in order",
+			mockClient: func(m *clientMock) {
+				m.
+					On("searchVideos", "sample artist – sample track").
+					Return([]videoSearchResult{
+						{ID: videoSearchID{VideoID: "firstID"}},
+						{ID: videoSearchID{VideoID: "secondID"}},
+					}, nil).
+					Once()
+				m.
+					On("fetchVideo", "firstID").
+					Return(video{
+						ID: "firstID",
+						Snippet: snippet{
+							Title:        "first raw title [official]",
+							ChannelTitle: "first channel",
+							Description:  "first raw description",
+						},
+					}, nil).
+					Once()
+				m.
+					On("fetchVideo", "secondID").
+					Return(video{
+						ID: "secondID",
+						Snippet: snippet{
+							Title:        "second raw title (live)",
+							ChannelTitle: "second channel",
+							Description:  "second raw description",
+						},
+					}, nil).
+					Once()
+			},
+			expectedTracks: []release.SearchTrack{
+				{
+					ID:          "firstID",
+					Title:       "first raw title [official]",
+					Artist:      "",
+					URL:         "https://www.youtube.com/watch?v=firstID",
+					Provider:    release.Youtube,
+					Creator:     "first channel",
+					Description: "first raw description",
+				},
+				{
+					ID:          "secondID",
+					Title:       "second raw title (live)",
+					Artist:      "",
+					URL:         "https://www.youtube.com/watch?v=secondID",
+					Provider:    release.Youtube,
+					Creator:     "second channel",
+					Description: "second raw description",
+				},
+			},
 		},
 		{
-			ID:          "secondID",
-			Title:       "second raw title (live)",
-			Artist:      "",
-			URL:         "https://www.youtube.com/watch?v=secondID",
-			Provider:    release.Youtube,
-			Creator:     "second channel",
-			Description: "second raw description",
+			name: "skips unavailable videos",
+			mockClient: func(m *clientMock) {
+				m.
+					On("searchVideos", "sample artist – sample track").
+					Return([]videoSearchResult{
+						{ID: videoSearchID{VideoID: "unavailableID"}},
+						{ID: videoSearchID{VideoID: "availableID"}},
+					}, nil).
+					Once()
+				m.
+					On("fetchVideo", "unavailableID").
+					Return(nil, errNotFound).
+					Once()
+				m.
+					On("fetchVideo", "availableID").
+					Return(video{
+						ID: "availableID",
+						Snippet: snippet{
+							Title:        "available track",
+							ChannelTitle: "available channel",
+						},
+					}, nil).
+					Once()
+			},
+			expectedTracks: []release.SearchTrack{{
+				ID:       "availableID",
+				Title:    "available track",
+				Provider: release.Youtube,
+				Creator:  "available channel",
+				URL:      "https://www.youtube.com/watch?v=availableID",
+			}},
 		},
-	}, result)
-	cm.AssertExpectations(t)
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			cm := &clientMock{}
+			tt.mockClient(cm)
+
+			result, err := NewAdapter(cm).SearchTracks(t.Context(), "sample artist", "sample track")
+
+			require.NoError(t, err)
+			require.Equal(t, tt.expectedTracks, result)
+			cm.AssertExpectations(t)
+		})
+	}
 }
 
 func TestYoutubeAdapter_fetchAlbum(t *testing.T) {
@@ -442,63 +490,111 @@ func TestYoutubeAdapter_fetchAlbum(t *testing.T) {
 }
 
 func TestYoutubeAdapter_searchAlbums(t *testing.T) {
-	cm := &clientMock{}
-	cm.
-		On("searchPlaylists", "sample artist – sample album").
-		Return([]playlistSearchResult{
-			{ID: playlistSearchID{PlaylistID: "firstID"}},
-			{ID: playlistSearchID{PlaylistID: "secondID"}},
-		}, nil).
-		Once()
-	cm.
-		On("fetchPlaylist", "firstID").
-		Return(playlist{
-			ID: "firstID",
-			Snippet: snippet{
-				Title:        "first raw playlist [full album]",
-				ChannelTitle: "first playlist channel",
-				Description:  "first playlist raw description",
-			},
-		}, nil).
-		Once()
-	cm.
-		On("fetchPlaylist", "secondID").
-		Return(playlist{
-			ID: "secondID",
-			Snippet: snippet{
-				Title:        "Album - second raw playlist",
-				ChannelTitle: "YouTube",
-				Description:  "second playlist raw description",
-			},
-		}, nil).
-		Once()
-
-	a := NewAdapter(cm)
-
-	result, err := a.SearchAlbums(t.Context(), "sample artist", "sample album")
-
-	require.NoError(t, err)
-	require.Equal(t, []release.SearchAlbum{
+	tests := []struct {
+		name           string
+		mockClient     func(*clientMock)
+		expectedAlbums []release.SearchAlbum
+	}{
 		{
-			ID:          "firstID",
-			Title:       "first raw playlist [full album]",
-			Artist:      "",
-			URL:         "https://www.youtube.com/playlist?list=firstID",
-			Provider:    release.Youtube,
-			Creator:     "first playlist channel",
-			Description: "first playlist raw description",
+			name: "hydrates every available search result in order",
+			mockClient: func(m *clientMock) {
+				m.
+					On("searchPlaylists", "sample artist – sample album").
+					Return([]playlistSearchResult{
+						{ID: playlistSearchID{PlaylistID: "firstID"}},
+						{ID: playlistSearchID{PlaylistID: "secondID"}},
+					}, nil).
+					Once()
+				m.
+					On("fetchPlaylist", "firstID").
+					Return(playlist{
+						ID: "firstID",
+						Snippet: snippet{
+							Title:        "first raw playlist [full album]",
+							ChannelTitle: "first playlist channel",
+							Description:  "first playlist raw description",
+						},
+					}, nil).
+					Once()
+				m.
+					On("fetchPlaylist", "secondID").
+					Return(playlist{
+						ID: "secondID",
+						Snippet: snippet{
+							Title:        "Album - second raw playlist",
+							ChannelTitle: "YouTube",
+							Description:  "second playlist raw description",
+						},
+					}, nil).
+					Once()
+			},
+			expectedAlbums: []release.SearchAlbum{
+				{
+					ID:          "firstID",
+					Title:       "first raw playlist [full album]",
+					Artist:      "",
+					URL:         "https://www.youtube.com/playlist?list=firstID",
+					Provider:    release.Youtube,
+					Creator:     "first playlist channel",
+					Description: "first playlist raw description",
+				},
+				{
+					ID:          "secondID",
+					Title:       "Album - second raw playlist",
+					Artist:      "",
+					URL:         "https://www.youtube.com/playlist?list=secondID",
+					Provider:    release.Youtube,
+					Creator:     "YouTube",
+					Description: "second playlist raw description",
+				},
+			},
 		},
 		{
-			ID:          "secondID",
-			Title:       "Album - second raw playlist",
-			Artist:      "",
-			URL:         "https://www.youtube.com/playlist?list=secondID",
-			Provider:    release.Youtube,
-			Creator:     "YouTube",
-			Description: "second playlist raw description",
+			name: "skips unavailable playlists",
+			mockClient: func(m *clientMock) {
+				m.
+					On("searchPlaylists", "sample artist – sample album").
+					Return([]playlistSearchResult{
+						{ID: playlistSearchID{PlaylistID: "unavailableID"}},
+						{ID: playlistSearchID{PlaylistID: "availableID"}},
+					}, nil).
+					Once()
+				m.
+					On("fetchPlaylist", "unavailableID").
+					Return(nil, errNotFound).
+					Once()
+				m.
+					On("fetchPlaylist", "availableID").
+					Return(playlist{
+						ID: "availableID",
+						Snippet: snippet{
+							Title:        "available album",
+							ChannelTitle: "available channel",
+						},
+					}, nil).
+					Once()
+			},
+			expectedAlbums: []release.SearchAlbum{{
+				ID:       "availableID",
+				Title:    "available album",
+				Provider: release.Youtube,
+				Creator:  "available channel",
+				URL:      "https://www.youtube.com/playlist?list=availableID",
+			}},
 		},
-	}, result)
-	cm.AssertExpectations(t)
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			cm := &clientMock{}
+			tt.mockClient(cm)
+
+			result, err := NewAdapter(cm).SearchAlbums(t.Context(), "sample artist", "sample album")
+
+			require.NoError(t, err)
+			require.Equal(t, tt.expectedAlbums, result)
+			cm.AssertExpectations(t)
+		})
+	}
 }
 
 func TestYoutubeAdapter_fetchTracksByISRC(t *testing.T) {

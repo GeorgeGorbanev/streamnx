@@ -407,7 +407,7 @@ func (c *Client) parseToken(jsBundle []byte) (string, error) {
 	return tokenVarValue, err
 }
 
-var tokenVarRe = regexp.MustCompile(`headers\.Authorization\s*=\s*` + "`Bearer \\${([a-zA-Z0-9_]+)}`")
+var tokenVarRe = regexp.MustCompile(`headers\.Authorization\s*=\s*` + "`Bearer \\${([a-zA-Z_$][a-zA-Z0-9_$]*)}`")
 
 func (c *Client) parseTokenVar(jsBundle []byte) string {
 	matches := tokenVarRe.FindSubmatch(jsBundle)
@@ -418,7 +418,7 @@ func (c *Client) parseTokenVar(jsBundle []byte) string {
 }
 
 func (c *Client) parseVariableValue(jsBundle []byte, variable string) (string, error) {
-	re, err := regexp.Compile(fmt.Sprintf(`\b%s\s*=\s*"([^"]+)"`, regexp.QuoteMeta(variable)))
+	re, err := regexp.Compile(fmt.Sprintf(`(?:^|[^a-zA-Z0-9_$])%s\s*=\s*"([^"]+)"`, regexp.QuoteMeta(variable)))
 	if err != nil {
 		return "", fmt.Errorf("failed to compile regex: %w", err)
 	}

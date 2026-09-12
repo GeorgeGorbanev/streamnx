@@ -513,6 +513,34 @@ func TestAppleCatalogRejectsUnsupportedOperation(t *testing.T) {
 	require.ErrorIs(t, err, streamnx.ErrUnsupportedOperation)
 }
 
+func TestAppleCatalogFetchTrackWithDollarTokenVariable(t *testing.T) {
+	var serverURL string
+	server := fixtures.NewServer(t,
+		fixtures.Route{
+			Method: http.MethodGet, Path: "/", Status: http.StatusOK,
+			Fixture: "apple_web_player_200.html",
+		},
+		fixtures.Route{
+			Method: http.MethodGet, Path: appleWebPlayerJSPath, Status: http.StatusOK,
+			Fixture: "apple_web_player_dollar_token_js_200.js",
+		},
+		fixtures.Route{
+			Method: http.MethodGet, Path: "/v1/catalog/us/songs/" + appleTrackCatalogID,
+			Status: http.StatusOK, Fixture: "apple_fetch_track_200.json",
+			Assert: func(t *testing.T, r *http.Request) {
+				assertAppleAPIRequest(t, r, serverURL)
+			},
+		},
+	)
+	serverURL = server.URL
+	defer server.Close()
+
+	got, err := newAppleCatalog(t, server.URL).FetchTrack(t.Context(), streamnx.Apple, appleTrackID)
+	require.NoError(t, err)
+	require.Equal(t, appleTrackID, got.ID)
+	require.Equal(t, "Never Gonna Give You Up", got.Title)
+}
+
 func newAppleFixtureServer(t *testing.T, apiRoute fixtures.Route) *httptest.Server {
 	t.Helper()
 

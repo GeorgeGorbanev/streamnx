@@ -1098,6 +1098,33 @@ func TestClient_parseToken(t *testing.T) {
 	require.Equal(t, "sampleToken", result)
 }
 
+func TestClient_parseTokenJavaScriptIdentifiers(t *testing.T) {
+	for _, variable := range []string{"$c", "c$", "c$1", "_c", "c1"} {
+		t.Run(variable, func(t *testing.T) {
+			jsBundle := []byte(`const prefix` + variable + `="wrongToken",` +
+				variable + `="sampleToken"; n.headers.Authorization=` +
+				"`Bearer ${" + variable + "}`;")
+			result, err := NewClient().parseToken(jsBundle)
+			require.NoError(t, err)
+			require.Equal(t, "sampleToken", result)
+		})
+	}
+
+	t.Run("dollar variable at start of bundle", func(t *testing.T) {
+		result, err := NewClient().parseToken([]byte(
+			`$c="sampleToken"; n.headers.Authorization=` + "`Bearer ${$c}`;"))
+		require.NoError(t, err)
+		require.Equal(t, "sampleToken", result)
+	})
+
+	t.Run("does not use a suffix of another identifier", func(t *testing.T) {
+		result, err := NewClient().parseToken([]byte(
+			`prefix$c="wrongToken"; n.headers.Authorization=` + "`Bearer ${$c}`;"))
+		require.Empty(t, result)
+		require.ErrorContains(t, err, "value of variable $c not found")
+	})
+}
+
 func TestClient_searchQuery(t *testing.T) {
 	result := NewClient().searchQuery("sample", "term")
 

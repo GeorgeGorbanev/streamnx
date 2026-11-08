@@ -1,4 +1,4 @@
-package youtube
+package official
 
 import (
 	"fmt"
@@ -7,6 +7,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
+
+	"github.com/GeorgeGorbanev/streamnx/v2/internal/providers/youtube/client"
 )
 
 const sampleAPIKey = "sampleApiKey"
@@ -16,7 +18,7 @@ func TestClient_GetVideo(t *testing.T) {
 		name         string
 		inputID      string
 		responseMock string
-		expectedItem video
+		expectedItem client.Video
 		expectedErr  error
 	}{
 		{
@@ -36,15 +38,13 @@ func TestClient_GetVideo(t *testing.T) {
 					}
 				]
 			}`,
-			expectedItem: video{
-				ID: "dQw4w9WgXcQ",
-				Snippet: snippet{
-					Title:        "Rick Astley - Never Gonna Give You Up (Video)",
-					ChannelTitle: "RickAstleyVEVO",
+			expectedItem: client.Video{
+				Metadata: client.Metadata{
+					ID:      "dQw4w9WgXcQ",
+					Title:   "Rick Astley - Never Gonna Give You Up (Video)",
+					Creator: "RickAstleyVEVO",
 				},
-				ContentDetails: contentDetails{
-					Duration: "PT3M33S",
-				},
+				Duration: 213,
 			},
 		},
 		{
@@ -53,7 +53,7 @@ func TestClient_GetVideo(t *testing.T) {
 			responseMock: `{	
 				"items": []
 			}`,
-			expectedErr: errNotFound,
+			expectedErr: client.ErrNotFound,
 		},
 	}
 	for _, tt := range tests {
@@ -70,9 +70,9 @@ func TestClient_GetVideo(t *testing.T) {
 			}))
 			defer apiServerMock.Close()
 
-			client := NewClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
+			c := NewClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
 
-			item, err := client.fetchVideo(t.Context(), tt.inputID)
+			item, err := c.FetchVideo(t.Context(), tt.inputID)
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
 			} else {
@@ -88,7 +88,7 @@ func TestClient_SearchVideo(t *testing.T) {
 		name          string
 		query         string
 		responseMock  string
-		expectedItems []videoSearchResult
+		expectedItems []string
 		expectedErr   error
 	}{
 		{
@@ -116,18 +116,7 @@ func TestClient_SearchVideo(t *testing.T) {
 					}
 				]
 			}`,
-			expectedItems: []videoSearchResult{
-				{
-					ID: videoSearchID{
-						VideoID: "dQw4w9WgXcQ",
-					},
-				},
-				{
-					ID: videoSearchID{
-						VideoID: "secondVideoID",
-					},
-				},
-			},
+			expectedItems: []string{"dQw4w9WgXcQ", "secondVideoID"},
 		},
 		{
 			name:  "when videos not found",
@@ -135,7 +124,7 @@ func TestClient_SearchVideo(t *testing.T) {
 			responseMock: `{	
 				"items": []
 			}`,
-			expectedItems: []videoSearchResult{},
+			expectedItems: []string{},
 		},
 	}
 	for _, tt := range tests {
@@ -154,9 +143,9 @@ func TestClient_SearchVideo(t *testing.T) {
 			}))
 			defer apiServerMock.Close()
 
-			client := NewClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
+			c := NewClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
 
-			items, err := client.searchVideos(t.Context(), tt.query)
+			items, err := c.SearchVideos(t.Context(), tt.query)
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
 			} else {
@@ -172,7 +161,7 @@ func TestClient_GetPlaylist(t *testing.T) {
 		name         string
 		inputID      string
 		responseMock string
-		expectedItem playlist
+		expectedItem client.Metadata
 		expectedErr  error
 	}{
 		{
@@ -190,13 +179,11 @@ func TestClient_GetPlaylist(t *testing.T) {
 					}
 				]
 			}`,
-			expectedItem: playlist{
-				ID: "PLH1JGOJgZ2u2J7bRnfjl-7kDj_vQKTPa6",
-				Snippet: snippet{
-					Title:        "Portishead - (1994) Dummy [Full Album]",
-					ChannelTitle: "Harry",
-					Description:  "playlist raw description",
-				},
+			expectedItem: client.Metadata{
+				ID:          "PLH1JGOJgZ2u2J7bRnfjl-7kDj_vQKTPa6",
+				Title:       "Portishead - (1994) Dummy [Full Album]",
+				Creator:     "Harry",
+				Description: "playlist raw description",
 			},
 		},
 		{
@@ -205,7 +192,7 @@ func TestClient_GetPlaylist(t *testing.T) {
 			responseMock: `{	
 				"items": []
 			}`,
-			expectedErr: errNotFound,
+			expectedErr: client.ErrNotFound,
 		},
 	}
 	for _, tt := range tests {
@@ -222,9 +209,9 @@ func TestClient_GetPlaylist(t *testing.T) {
 			}))
 			defer apiServerMock.Close()
 
-			client := NewClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
+			c := NewClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
 
-			item, err := client.fetchPlaylist(t.Context(), tt.inputID)
+			item, err := c.FetchPlaylist(t.Context(), tt.inputID)
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
 			} else {
@@ -240,7 +227,7 @@ func TestClient_SearchPlaylist(t *testing.T) {
 		name          string
 		query         string
 		responseMock  string
-		expectedItems []playlistSearchResult
+		expectedItems []string
 		expectedErr   error
 	}{
 		{
@@ -268,18 +255,7 @@ func TestClient_SearchPlaylist(t *testing.T) {
 					}
 				]
 			}`,
-			expectedItems: []playlistSearchResult{
-				{
-					ID: playlistSearchID{
-						PlaylistID: "PLH1JGOJgZ2u2J7bRnfjl-7kDj_vQKTPa6",
-					},
-				},
-				{
-					ID: playlistSearchID{
-						PlaylistID: "secondPlaylistID",
-					},
-				},
-			},
+			expectedItems: []string{"PLH1JGOJgZ2u2J7bRnfjl-7kDj_vQKTPa6", "secondPlaylistID"},
 		},
 		{
 			name:  "when playlists not found",
@@ -287,7 +263,7 @@ func TestClient_SearchPlaylist(t *testing.T) {
 			responseMock: `{	
 				"items": []
 			}`,
-			expectedItems: []playlistSearchResult{},
+			expectedItems: []string{},
 		},
 	}
 	for _, tt := range tests {
@@ -306,9 +282,9 @@ func TestClient_SearchPlaylist(t *testing.T) {
 			}))
 			defer apiServerMock.Close()
 
-			client := NewClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
+			c := NewClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
 
-			items, err := client.searchPlaylists(t.Context(), tt.query)
+			items, err := c.SearchPlaylists(t.Context(), tt.query)
 			if tt.expectedErr != nil {
 				require.ErrorIs(t, err, tt.expectedErr)
 			} else {
@@ -325,7 +301,7 @@ func TestClient_GetPlaylistItems(t *testing.T) {
 		inputID       string
 		responseMock  string
 		responseCode  int
-		expectedItems []playlistItem
+		expectedItems []string
 		expectedError error
 	}{
 		{
@@ -349,22 +325,7 @@ func TestClient_GetPlaylistItems(t *testing.T) {
 				]
 			}`,
 			expectedError: nil,
-			expectedItems: []playlistItem{
-				{
-					ID: "T0xBSzV1eV9uNHhhdXVzVEpTajZNdHQ0Y0l1cTRLWnppU2ZqQUJZV1UuQjcxRUYzNEU1RkQxODA0OQ",
-					Snippet: snippet{
-						Title:        "Space Oddity",
-						ChannelTitle: "YouTube",
-						Description: "Provided to YouTube by Revolver Records\n\nSpace Oddity · David Bowie · David Bowie " +
-							"· David Bowie\n\nSpace Oddity\n\n℗ 2018 Revolver Records\n\nReleased on: 2020-01-01\n\n" +
-							"Generated by the provider.",
-						VideoOwnerChannelTitle: "David Bowie Topic Channel",
-						ResourceID: resourceID{
-							VideoID: "dQw4w9WgXcQ",
-						},
-					},
-				},
-			},
+			expectedItems: []string{"dQw4w9WgXcQ"},
 		},
 		{
 			name:          "when playlist not found",
@@ -391,12 +352,12 @@ func TestClient_GetPlaylistItems(t *testing.T) {
 			}))
 			defer apiServerMock.Close()
 
-			client := NewClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
+			c := NewClient(sampleAPIKey, WithAPIURL(apiServerMock.URL))
 
-			items, err := client.fetchPlaylistItems(t.Context(), tt.inputID)
+			items, err := c.fetchPlaylistItems(t.Context(), tt.inputID)
 
 			if tt.expectedError != nil {
-				require.Error(t, tt.expectedError, err)
+				require.EqualError(t, err, tt.expectedError.Error())
 			} else {
 				require.NoError(t, err)
 			}

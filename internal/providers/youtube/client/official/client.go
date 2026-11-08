@@ -1,13 +1,16 @@
-package youtube
+package official
 
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io"
 	"net/http"
 	"net/url"
+	"strconv"
+
+	"github.com/GeorgeGorbanev/streamnx/v2/internal/providers/youtube/client"
+	"github.com/GeorgeGorbanev/streamnx/v2/internal/release/duration"
 )
 
 type Client struct {
@@ -16,26 +19,24 @@ type Client struct {
 	httpClient *http.Client
 }
 
-type ClientOption func(client *Client)
+type ClientOption func(*Client)
 
 func WithAPIURL(url string) ClientOption {
-	return func(client *Client) {
-		client.apiURL = url
+	return func(c *Client) {
+		c.apiURL = url
 	}
 }
 
 func WithHTTPClient(httpClient *http.Client) ClientOption {
-	return func(client *Client) {
-		client.httpClient = httpClient
+	return func(c *Client) {
+		c.httpClient = httpClient
 	}
 }
 
 func NewClient(apiKey string, opts ...ClientOption) *Client {
-	const defaultAPIURL = "https://www.googleapis.com"
-
 	c := Client{
+		apiURL:     "https://www.googleapis.com",
 		apiKey:     apiKey,
-		apiURL:     defaultAPIURL,
 		httpClient: &http.Client{},
 	}
 	for _, opt := range opts {
@@ -44,37 +45,39 @@ func NewClient(apiKey string, opts ...ClientOption) *Client {
 	return &c
 }
 
-var errNotFound = errors.New("not found")
-
 // https://developers.google.com/youtube/v3/docs/videos/list
-func (c *Client) fetchVideo(ctx context.Context, id string) (video, error) {
+func (c *Client) FetchVideo(ctx context.Context, id string) (client.Video, error) {
 	body, err := c.getWithKey(ctx, "/youtube/v3/videos", url.Values{
 		"part": {"snippet,contentDetails"},
 		"id":   {id},
 	})
 	if err != nil {
-		return video{}, err
+		return client.Video{}, err
 	}
 
 	response := videoResponse{}
 	if err := json.Unmarshal(body, &response); err != nil {
-		return video{}, fmt.Errorf("failed to decode api response: %w", err)
+		return client.Video{}, fmt.Errorf("failed to decode api response: %w", err)
 	}
 	if len(response.Items) == 0 {
-		return video{}, errNotFound
+		return client.Video{}, client.ErrNotFound
 	}
 
-	return response.Items[0], nil
+	item := response.Items[0]
+	return client.Video{
+		Metadata: c.snippetMetadata(item.ID, item.Snippet),
+		Duration: duration.ISO8601ToSeconds(item.ContentDetails.Duration),
+	}, nil
 }
 
 // https://developers.google.com/youtube/v3/docs/search/list
-func (c *Client) searchVideos(ctx context.Context, query string) ([]videoSearchResult, error) {
+func (c *Client) SearchVideos(ctx context.Context, query string) ([]string, error) {
 	body, err := c.getWithKey(ctx, "/youtube/v3/search", url.Values{
 		"q":               {query},
 		"part":            {"snippet"},
 		"type":            {"video"},
 		"videoCategoryId": {"10"},
-		"maxResults":      {"10"},
+		"maxResults":      {strconv.Itoa(client.SearchLimit)},
 	})
 	if err != nil {
 		return nil, err
@@ -85,37 +88,54 @@ func (c *Client) searchVideos(ctx context.Context, query string) ([]videoSearchR
 		return nil, fmt.Errorf("failed to decode api response: %w", err)
 	}
 
-	return response.Items, nil
+	ids := make([]string, 0, len(response.Items))
+	for _, item := range response.Items {
+		ids = append(ids, item.ID.VideoID)
+	}
+	return ids, nil
 }
 
 // https://developers.google.com/youtube/v3/docs/playlists/list
-func (c *Client) fetchPlaylist(ctx context.Context, id string) (playlist, error) {
+func (c *Client) FetchPlaylist(ctx context.Context, id string) (client.Metadata, error) {
 	body, err := c.getWithKey(ctx, "/youtube/v3/playlists", url.Values{
 		"part": {"snippet"},
 		"id":   {id},
 	})
 	if err != nil {
-		return playlist{}, err
+		return client.Metadata{}, err
 	}
 
 	response := playlistResponse{}
 	if err := json.Unmarshal(body, &response); err != nil {
-		return playlist{}, fmt.Errorf("failed to decode api response: %w", err)
+		return client.Metadata{}, fmt.Errorf("failed to decode api response: %w", err)
 	}
 	if len(response.Items) == 0 {
-		return playlist{}, errNotFound
+		return client.Metadata{}, client.ErrNotFound
 	}
 
-	return response.Items[0], nil
+	item := response.Items[0]
+	return c.snippetMetadata(item.ID, item.Snippet), nil
+}
+
+func (c *Client) FetchPlaylistWithItems(ctx context.Context, id string) (client.Metadata, []string, error) {
+	playlist, err := c.FetchPlaylist(ctx, id)
+	if err != nil {
+		return client.Metadata{}, nil, fmt.Errorf("failed to get playlist from youtube: %w", err)
+	}
+	items, err := c.fetchPlaylistItems(ctx, playlist.ID)
+	if err != nil {
+		return client.Metadata{}, nil, fmt.Errorf("failed to get playlist items from youtube: %w", err)
+	}
+	return playlist, items, nil
 }
 
 // https://developers.google.com/youtube/v3/docs/search/list
-func (c *Client) searchPlaylists(ctx context.Context, query string) ([]playlistSearchResult, error) {
+func (c *Client) SearchPlaylists(ctx context.Context, query string) ([]string, error) {
 	body, err := c.getWithKey(ctx, "/youtube/v3/search", url.Values{
 		"q":          {query},
 		"part":       {"snippet"},
 		"type":       {"playlist"},
-		"maxResults": {"10"},
+		"maxResults": {strconv.Itoa(client.SearchLimit)},
 	})
 	if err != nil {
 		return nil, err
@@ -126,11 +146,15 @@ func (c *Client) searchPlaylists(ctx context.Context, query string) ([]playlistS
 		return nil, fmt.Errorf("failed to decode api response: %w", err)
 	}
 
-	return response.Items, nil
+	ids := make([]string, 0, len(response.Items))
+	for _, item := range response.Items {
+		ids = append(ids, item.ID.PlaylistID)
+	}
+	return ids, nil
 }
 
 // https://developers.google.com/youtube/v3/docs/playlistItems/list
-func (c *Client) fetchPlaylistItems(ctx context.Context, id string) ([]playlistItem, error) {
+func (c *Client) fetchPlaylistItems(ctx context.Context, id string) ([]string, error) {
 	body, err := c.getWithKey(ctx, "/youtube/v3/playlistItems", url.Values{
 		"part":       {"snippet"},
 		"maxResults": {"50"},
@@ -144,7 +168,11 @@ func (c *Client) fetchPlaylistItems(ctx context.Context, id string) ([]playlistI
 		return nil, fmt.Errorf("failed to decode api response: %w", err)
 	}
 
-	return response.Items, nil
+	ids := make([]string, 0, len(response.Items))
+	for _, item := range response.Items {
+		ids = append(ids, item.Snippet.ResourceID.VideoID)
+	}
+	return ids, nil
 }
 
 func (c *Client) getWithKey(ctx context.Context, path string, values url.Values) ([]byte, error) {
@@ -166,4 +194,27 @@ func (c *Client) getWithKey(ctx context.Context, path string, values url.Values)
 	}
 
 	return io.ReadAll(response.Body)
+}
+
+func (c *Client) snippetMetadata(id string, s snippet) client.Metadata {
+	creator := s.VideoOwnerChannelTitle
+	if creator == "" {
+		creator = s.ChannelTitle
+	}
+	return client.Metadata{
+		ID:          id,
+		Title:       s.Title,
+		Creator:     creator,
+		Description: s.Description,
+		CoverURL:    c.coverURL(s.Thumbnails),
+	}
+}
+
+func (c *Client) coverURL(t thumbnails) string {
+	for _, image := range []thumbnail{t.Maxres, t.Standard, t.High, t.Medium, t.Default} {
+		if image.URL != "" {
+			return image.URL
+		}
+	}
+	return ""
 }

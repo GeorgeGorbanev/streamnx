@@ -7,6 +7,7 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
+	"github.com/GeorgeGorbanev/streamnx/v2/internal/providers/youtube/client"
 	"github.com/GeorgeGorbanev/streamnx/v2/internal/release"
 )
 
@@ -130,23 +131,21 @@ func TestYoutubeAdapter_fetchTrack(t *testing.T) {
 			id:   "sampleID",
 			mockClient: func(m *clientMock) {
 				m.
-					On("fetchVideo", "sampleID").
-					Return(video{
-						ID: "sampleID",
-						Snippet: snippet{
-							Title:        "sample artist – sample track (official video)",
-							ChannelTitle: "sample channel",
-							Description:  "sample raw description",
+					On("FetchVideo", "sampleID").
+					Return(client.Video{
+						Metadata: client.Metadata{
+							ID:          "sampleID",
+							Title:       "sample artist – sample track (official client.Video)",
+							Creator:     "sample channel",
+							Description: "sample raw description",
 						},
-						ContentDetails: contentDetails{
-							Duration: "PT3M33S",
-						},
+						Duration: 213,
 					}, nil).
 					Once()
 			},
 			expectedTrack: release.Track{
 				ID:          "sampleID",
-				Title:       "sample artist – sample track (official video)",
+				Title:       "sample artist – sample track (official client.Video)",
 				Artist:      "",
 				URL:         "https://www.youtube.com/watch?v=sampleID",
 				Provider:    release.Youtube,
@@ -160,13 +159,13 @@ func TestYoutubeAdapter_fetchTrack(t *testing.T) {
 			id:   "sampleID",
 			mockClient: func(m *clientMock) {
 				m.
-					On("fetchVideo", "sampleID").
-					Return(video{
-						ID: "sampleID",
-						Snippet: snippet{
-							Title:        "track name (remastered)",
-							Description:  "raw provider generated description",
-							ChannelTitle: "sample artist topic channel",
+					On("FetchVideo", "sampleID").
+					Return(client.Video{
+						Metadata: client.Metadata{
+							ID:          "sampleID",
+							Title:       "track name (remastered)",
+							Description: "raw provider generated description",
+							Creator:     "sample artist topic channel",
 						},
 					}, nil).
 					Once()
@@ -186,8 +185,8 @@ func TestYoutubeAdapter_fetchTrack(t *testing.T) {
 			id:   "notFoundID",
 			mockClient: func(m *clientMock) {
 				m.
-					On("fetchVideo", "notFoundID").
-					Return(nil, errNotFound).
+					On("FetchVideo", "notFoundID").
+					Return(nil, client.ErrNotFound).
 					Once()
 			},
 			expectedErr: release.ErrNotFound,
@@ -225,31 +224,28 @@ func TestYoutubeAdapter_searchTracks(t *testing.T) {
 			name: "hydrates every available search result in order",
 			mockClient: func(m *clientMock) {
 				m.
-					On("searchVideos", "sample artist – sample track").
-					Return([]videoSearchResult{
-						{ID: videoSearchID{VideoID: "firstID"}},
-						{ID: videoSearchID{VideoID: "secondID"}},
-					}, nil).
+					On("SearchVideos", "sample artist – sample track").
+					Return([]string{"firstID", "secondID"}, nil).
 					Once()
 				m.
-					On("fetchVideo", "firstID").
-					Return(video{
-						ID: "firstID",
-						Snippet: snippet{
-							Title:        "first raw title [official]",
-							ChannelTitle: "first channel",
-							Description:  "first raw description",
+					On("FetchVideo", "firstID").
+					Return(client.Video{
+						Metadata: client.Metadata{
+							ID:          "firstID",
+							Title:       "first raw title [official]",
+							Creator:     "first channel",
+							Description: "first raw description",
 						},
 					}, nil).
 					Once()
 				m.
-					On("fetchVideo", "secondID").
-					Return(video{
-						ID: "secondID",
-						Snippet: snippet{
-							Title:        "second raw title (live)",
-							ChannelTitle: "second channel",
-							Description:  "second raw description",
+					On("FetchVideo", "secondID").
+					Return(client.Video{
+						Metadata: client.Metadata{
+							ID:          "secondID",
+							Title:       "second raw title (live)",
+							Creator:     "second channel",
+							Description: "second raw description",
 						},
 					}, nil).
 					Once()
@@ -279,23 +275,20 @@ func TestYoutubeAdapter_searchTracks(t *testing.T) {
 			name: "skips unavailable videos",
 			mockClient: func(m *clientMock) {
 				m.
-					On("searchVideos", "sample artist – sample track").
-					Return([]videoSearchResult{
-						{ID: videoSearchID{VideoID: "unavailableID"}},
-						{ID: videoSearchID{VideoID: "availableID"}},
-					}, nil).
+					On("SearchVideos", "sample artist – sample track").
+					Return([]string{"unavailableID", "availableID"}, nil).
 					Once()
 				m.
-					On("fetchVideo", "unavailableID").
-					Return(nil, errNotFound).
+					On("FetchVideo", "unavailableID").
+					Return(nil, client.ErrNotFound).
 					Once()
 				m.
-					On("fetchVideo", "availableID").
-					Return(video{
-						ID: "availableID",
-						Snippet: snippet{
-							Title:        "available track",
-							ChannelTitle: "available channel",
+					On("FetchVideo", "availableID").
+					Return(client.Video{
+						Metadata: client.Metadata{
+							ID:      "availableID",
+							Title:   "available track",
+							Creator: "available channel",
 						},
 					}, nil).
 					Once()
@@ -336,30 +329,13 @@ func TestYoutubeAdapter_fetchAlbum(t *testing.T) {
 			id:   "sampleID",
 			mockClient: func(m *clientMock) {
 				m.
-					On("fetchPlaylist", "sampleID").
-					Return(playlist{
-						ID: "sampleID",
-						Snippet: snippet{
-							Title:        "sample artist – sample album [full playlist]",
-							ChannelTitle: "playlist channel",
-							Description:  "playlist raw description",
-						},
-					}, nil).
-					Once()
-				m.
-					On("fetchPlaylistItems", "sampleID").
-					Return([]playlistItem{
-						{
-							Snippet: snippet{
-								ResourceID: resourceID{VideoID: "firstVideoID"},
-							},
-						},
-						{
-							Snippet: snippet{
-								ResourceID: resourceID{VideoID: "secondVideoID"},
-							},
-						},
-					}, nil).
+					On("FetchPlaylistWithItems", "sampleID").
+					Return(client.Metadata{
+						ID:          "sampleID",
+						Title:       "sample artist – sample album [full playlist]",
+						Creator:     "playlist channel",
+						Description: "playlist raw description",
+					}, []string{"firstVideoID", "secondVideoID"}, nil).
 					Once()
 			},
 			expectedAlbum: release.Album{
@@ -378,29 +354,13 @@ func TestYoutubeAdapter_fetchAlbum(t *testing.T) {
 			id:   "sampleID",
 			mockClient: func(m *clientMock) {
 				m.
-					On("fetchPlaylist", "sampleID").
-					Return(playlist{
-						ID: "sampleID",
-						Snippet: snippet{
-							Title:        "Album - sample name",
-							ChannelTitle: "YouTube",
-							Description:  "playlist raw description",
-						},
-					}, nil).
-					Once()
-				m.
-					On("fetchPlaylistItems", "sampleID").
-					Return([]playlistItem{
-						{
-							ID: "sampleTrackID",
-							Snippet: snippet{
-								Title:                  "first item raw title",
-								VideoOwnerChannelTitle: "sample artist - Topic",
-								Description:            "first item raw description",
-								ResourceID:             resourceID{VideoID: "sampleTrackID"},
-							},
-						},
-					}, nil).
+					On("FetchPlaylistWithItems", "sampleID").
+					Return(client.Metadata{
+						ID:          "sampleID",
+						Title:       "Album - sample name",
+						Creator:     "YouTube",
+						Description: "playlist raw description",
+					}, []string{"sampleTrackID"}, nil).
 					Once()
 			},
 			expectedAlbum: release.Album{
@@ -415,33 +375,17 @@ func TestYoutubeAdapter_fetchAlbum(t *testing.T) {
 			},
 		},
 		{
-			name: "generic playlist owner ignores item channel title",
+			name: "empty playlist item IDs are skipped",
 			id:   "sampleID",
 			mockClient: func(m *clientMock) {
 				m.
-					On("fetchPlaylist", "sampleID").
-					Return(playlist{
-						ID: "sampleID",
-						Snippet: snippet{
-							Title:        "Album - sample name",
-							ChannelTitle: "YouTube",
-							Description:  "playlist raw description",
-						},
-					}, nil).
-					Once()
-				m.
-					On("fetchPlaylistItems", "sampleID").
-					Return([]playlistItem{
-						{
-							ID: "sampleTrackID",
-							Snippet: snippet{
-								Title:        "first item raw title",
-								ChannelTitle: "first item channel",
-								Description:  "first item raw description",
-								ResourceID:   resourceID{VideoID: "sampleTrackID"},
-							},
-						},
-					}, nil).
+					On("FetchPlaylistWithItems", "sampleID").
+					Return(client.Metadata{
+						ID:          "sampleID",
+						Title:       "Album - sample name",
+						Creator:     "YouTube",
+						Description: "playlist raw description",
+					}, []string{"", "sampleTrackID"}, nil).
 					Once()
 			},
 			expectedAlbum: release.Album{
@@ -460,8 +404,8 @@ func TestYoutubeAdapter_fetchAlbum(t *testing.T) {
 			id:   "notFoundID",
 			mockClient: func(m *clientMock) {
 				m.
-					On("fetchPlaylist", "notFoundID").
-					Return(nil, errNotFound).
+					On("FetchPlaylistWithItems", "notFoundID").
+					Return(nil, nil, client.ErrNotFound).
 					Once()
 			},
 			expectedErr: release.ErrNotFound,
@@ -499,32 +443,25 @@ func TestYoutubeAdapter_searchAlbums(t *testing.T) {
 			name: "hydrates every available search result in order",
 			mockClient: func(m *clientMock) {
 				m.
-					On("searchPlaylists", "sample artist – sample album").
-					Return([]playlistSearchResult{
-						{ID: playlistSearchID{PlaylistID: "firstID"}},
-						{ID: playlistSearchID{PlaylistID: "secondID"}},
+					On("SearchPlaylists", "sample artist – sample album").
+					Return([]string{"firstID", "secondID"}, nil).
+					Once()
+				m.
+					On("FetchPlaylist", "firstID").
+					Return(client.Metadata{
+						ID:          "firstID",
+						Title:       "first raw playlist [full album]",
+						Creator:     "first playlist channel",
+						Description: "first playlist raw description",
 					}, nil).
 					Once()
 				m.
-					On("fetchPlaylist", "firstID").
-					Return(playlist{
-						ID: "firstID",
-						Snippet: snippet{
-							Title:        "first raw playlist [full album]",
-							ChannelTitle: "first playlist channel",
-							Description:  "first playlist raw description",
-						},
-					}, nil).
-					Once()
-				m.
-					On("fetchPlaylist", "secondID").
-					Return(playlist{
-						ID: "secondID",
-						Snippet: snippet{
-							Title:        "Album - second raw playlist",
-							ChannelTitle: "YouTube",
-							Description:  "second playlist raw description",
-						},
+					On("FetchPlaylist", "secondID").
+					Return(client.Metadata{
+						ID:          "secondID",
+						Title:       "Album - second raw playlist",
+						Creator:     "YouTube",
+						Description: "second playlist raw description",
 					}, nil).
 					Once()
 			},
@@ -553,24 +490,19 @@ func TestYoutubeAdapter_searchAlbums(t *testing.T) {
 			name: "skips unavailable playlists",
 			mockClient: func(m *clientMock) {
 				m.
-					On("searchPlaylists", "sample artist – sample album").
-					Return([]playlistSearchResult{
-						{ID: playlistSearchID{PlaylistID: "unavailableID"}},
-						{ID: playlistSearchID{PlaylistID: "availableID"}},
-					}, nil).
+					On("SearchPlaylists", "sample artist – sample album").
+					Return([]string{"unavailableID", "availableID"}, nil).
 					Once()
 				m.
-					On("fetchPlaylist", "unavailableID").
-					Return(nil, errNotFound).
+					On("FetchPlaylist", "unavailableID").
+					Return(nil, client.ErrNotFound).
 					Once()
 				m.
-					On("fetchPlaylist", "availableID").
-					Return(playlist{
-						ID: "availableID",
-						Snippet: snippet{
-							Title:        "available album",
-							ChannelTitle: "available channel",
-						},
+					On("FetchPlaylist", "availableID").
+					Return(client.Metadata{
+						ID:      "availableID",
+						Title:   "available album",
+						Creator: "available channel",
 					}, nil).
 					Once()
 			},
@@ -613,42 +545,39 @@ type clientMock struct {
 	mock.Mock
 }
 
-func (m *clientMock) fetchVideo(_ context.Context, id string) (video, error) {
+func (m *clientMock) FetchVideo(_ context.Context, id string) (client.Video, error) {
 	args := m.Called(id)
 	if args.Get(0) == nil {
-		return video{}, args.Error(1)
+		return client.Video{}, args.Error(1)
 	}
-	return args.Get(0).(video), args.Error(1)
+	return args.Get(0).(client.Video), args.Error(1)
 }
 
-func (m *clientMock) searchVideos(_ context.Context, term string) ([]videoSearchResult, error) {
+func (m *clientMock) SearchVideos(_ context.Context, term string) ([]string, error) {
 	args := m.Called(term)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
-	return args.Get(0).([]videoSearchResult), args.Error(1)
+	return args.Get(0).([]string), args.Error(1)
 }
 
-func (m *clientMock) fetchPlaylist(_ context.Context, id string) (playlist, error) {
+func (m *clientMock) FetchPlaylist(_ context.Context, id string) (client.Metadata, error) {
 	args := m.Called(id)
-	if args.Get(0) == nil {
-		return playlist{}, args.Error(1)
-	}
-	return args.Get(0).(playlist), args.Error(1)
+	metadata, _ := args.Get(0).(client.Metadata)
+	return metadata, args.Error(1)
 }
 
-func (m *clientMock) searchPlaylists(_ context.Context, term string) ([]playlistSearchResult, error) {
+func (m *clientMock) FetchPlaylistWithItems(_ context.Context, id string) (client.Metadata, []string, error) {
+	args := m.Called(id)
+	metadata, _ := args.Get(0).(client.Metadata)
+	items, _ := args.Get(1).([]string)
+	return metadata, items, args.Error(2)
+}
+
+func (m *clientMock) SearchPlaylists(_ context.Context, term string) ([]string, error) {
 	args := m.Called(term)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
-	return args.Get(0).([]playlistSearchResult), args.Error(1)
-}
-
-func (m *clientMock) fetchPlaylistItems(_ context.Context, id string) ([]playlistItem, error) {
-	args := m.Called(id)
-	if args.Get(0) == nil {
-		return nil, args.Error(1)
-	}
-	return args.Get(0).([]playlistItem), args.Error(1)
+	return args.Get(0).([]string), args.Error(1)
 }

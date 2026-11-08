@@ -24,7 +24,7 @@ The supported providers are:
 | Spotify | `sf` | Web API with client-credentials OAuth | opaque Spotify ID |
 | SoundCloud | `sc` | hydrated web pages plus API calls using a scraped client ID | composite `user-slug:release-slug` |
 | Yandex Music | `ya` | unofficial public API | albums use a numeric string; tracks use composite `album-id:track-id` |
-| YouTube | `yt` | Data API; videos are tracks and playlists are albums | video or playlist ID |
+| YouTube | `yt` | Data API or public web pages with Innertube playlist continuations; videos are tracks and playlists are albums | video or playlist ID |
 | YouTube Music | `ym` | anonymous YouTube Music web-client Innertube API | video ID for tracks; composite `b:<browse-id>` or `p:<playlist-id>` for albums |
 
 ## Repository map
@@ -127,7 +127,7 @@ Treat the following behavior as compatibility-sensitive.
 
 - `NewCatalog` starts empty. Providers are opt-in through `WithApple`,
   `WithBandcamp`, `WithDeezer`, `WithSpotify`, `WithSoundcloud`, `WithYandex`,
-  `WithYoutube`, and `WithYoutubeMusic`.
+  `WithYoutubeOfficial` or `WithYoutubeUnofficial`, and `WithYoutubeMusic`.
 - A catalog recognizes and dispatches only providers registered in that catalog.
 - A nil `CatalogOption`, nil provider option, or nil public HTTP client override
   is ignored. Do not turn those cases into panics.
@@ -338,6 +338,17 @@ behavior under concurrent initial requests, expiry, and simultaneous 401s.
   fields, so channel ownership belongs in `Creator`. Search hydrates each search
   result through a detail request; preserve result order and full fixture
   coverage for those follow-up calls.
+  The `youtube/client` package defines shared metadata and the not-found
+  sentinel. Its `official` and `unofficial` subpackages each own their transport
+  and response types. They convert responses to shared metadata and IDs for the
+  adapter.
+  The two YouTube constructors register the same provider. Official mode takes
+  `YoutubeOption` and unofficial mode takes `YoutubeUnofficialOption`.
+  `WithYoutube` is a deprecated alias for the official mode.
+  The unofficial mode searches the public site and has no Music category filter.
+  For album fetches, the unofficial client reads metadata and the first page
+  of items from one response before following continuations. The official
+  client uses separate metadata and item requests.
 - YouTube Music uses the anonymous `WEB_REMIX` Innertube client: `player` plus
   `next` for exact track and album metadata, filtered `search` for normalized
   candidates, and `browse` for album metadata and tracks. Album IDs preserve

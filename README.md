@@ -75,12 +75,12 @@ anti-bot handling depending on your environment.
 Provider availability, from easiest to most restricted:
 
 1. Deezer: official API, no registration, free.
-2. Spotify and YouTube: official APIs, application registration required, free
-   within quota limits.
+2. Spotify and YouTube's official mode: official APIs, application registration
+   required, free within quota limits.
 3. Apple Music: official API with developer registration and a paid Apple
    Developer Program membership; Streamnx currently uses the free web-player
    token from the public web player, with its limits.
-4. Yandex Music and YouTube Music: unofficial APIs, no registration. 
+4. Yandex Music, YouTube Music, and YouTube's unofficial mode: no registration.
 5. Soundcloud and Bandcamp: official API access is closed or granted by
    individual agreement, so Streamnx uses HTML scraping; these integrations may
    require proxies or anti-bot handling.
@@ -93,7 +93,7 @@ useful for the project.
 
 You can get the following credentials for free:
 
-1. YouTube API key from the [Google Cloud Console](https://console.cloud.google.com/apis/credentials).
+1. YouTube Data API key for `WithYoutubeOfficial` from the [Google Cloud Console](https://console.cloud.google.com/apis/credentials).
 2. Spotify Client ID and Client Secret from the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard).
 
 If you are not going to work with these streaming providers, you can skip
@@ -115,7 +115,7 @@ catalog, err := streamnx.NewCatalog(
     }),
     streamnx.WithSoundcloud(),
     streamnx.WithYandex(),
-    streamnx.WithYoutube(streamnx.YoutubeCredentials{
+    streamnx.WithYoutubeOfficial(streamnx.YoutubeCredentials{
         APIKey: "[your youtube api key]",
     }),
     streamnx.WithYoutubeMusic(),
@@ -124,6 +124,21 @@ if err != nil {
     // Handle error
 }
 ```
+
+Choose `WithYoutubeUnofficial` to fetch public YouTube videos and playlists
+without an API key. Both modes register the `Youtube` provider, so choose one
+per catalog. `WithYoutube` is deprecated and still selects the official mode.
+
+```go
+catalog, err := streamnx.NewCatalog(streamnx.WithYoutubeUnofficial(
+    streamnx.WithYoutubeUnofficialHTTPClient(youtubeHTTPClient),
+))
+```
+
+The unofficial mode uses YouTube's web search. Video results can include
+categories outside Music, and result order can differ from the Data API.
+The HTTP client override is optional. Use `WithYoutubeHTTPClient` for the
+official mode and `WithYoutubeUnofficialHTTPClient` for the unofficial mode.
 
 ## Usage
 
@@ -361,7 +376,7 @@ catalog, err := streamnx.NewCatalog(
         streamnx.WithSpotifyAPIURL(spotifyAPIServerMock.URL),
     ),
     streamnx.WithYandex(streamnx.WithYandexAPIURL(yandexMockServer.URL)),
-    streamnx.WithYoutube(
+    streamnx.WithYoutubeOfficial(
         streamnx.YoutubeCredentials{},
         streamnx.WithYoutubeAPIURL(youtubeMockServer.URL),
         streamnx.WithYoutubeHTTPClient(youtubeHTTPClient),

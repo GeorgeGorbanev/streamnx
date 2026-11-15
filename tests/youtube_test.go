@@ -665,7 +665,7 @@ func TestYoutubeCatalogRejectsUnsupportedOperation(t *testing.T) {
 func newYoutubeCatalog(t *testing.T, serverURL string) *streamnx.Catalog {
 	t.Helper()
 
-	catalog, err := streamnx.NewCatalog(streamnx.WithYoutube(
+	catalog, err := streamnx.NewCatalog(streamnx.WithYoutubeOfficial(
 		streamnx.YoutubeCredentials{APIKey: youtubeAPIKey},
 		streamnx.WithYoutubeAPIURL(serverURL),
 	))

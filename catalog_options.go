@@ -10,6 +10,8 @@ import (
 	"github.com/GeorgeGorbanev/streamnx/v2/internal/providers/spotify"
 	"github.com/GeorgeGorbanev/streamnx/v2/internal/providers/yandex"
 	"github.com/GeorgeGorbanev/streamnx/v2/internal/providers/youtube"
+	"github.com/GeorgeGorbanev/streamnx/v2/internal/providers/youtube/client/official"
+	"github.com/GeorgeGorbanev/streamnx/v2/internal/providers/youtube/client/unofficial"
 	"github.com/GeorgeGorbanev/streamnx/v2/internal/providers/youtubemusic"
 )
 
@@ -260,25 +262,29 @@ type YoutubeCredentials struct {
 }
 
 type youtubeOptions struct {
-	client []youtube.ClientOption
+	client []official.ClientOption
 }
 
+// Deprecated: Use WithYoutubeOfficial or WithYoutubeUnofficial to select the integration explicitly.
 func WithYoutube(creds YoutubeCredentials, opts ...YoutubeOption) CatalogOption {
+	return WithYoutubeOfficial(creds, opts...)
+}
+
+func WithYoutubeOfficial(creds YoutubeCredentials, opts ...YoutubeOption) CatalogOption {
 	return func(r *Catalog) error {
-		cfg := youtubeOptions{}
+		var cfg youtubeOptions
 		for _, opt := range opts {
-			if opt == nil {
-				continue
+			if opt != nil {
+				opt(&cfg)
 			}
-			opt(&cfg)
 		}
-		return r.register(Youtube, youtube.NewAdapter(youtube.NewClient(creds.APIKey, cfg.client...)))
+		return r.register(Youtube, youtube.NewAdapter(official.NewClient(creds.APIKey, cfg.client...)))
 	}
 }
 
 func WithYoutubeAPIURL(url string) YoutubeOption {
 	return func(cfg *youtubeOptions) {
-		cfg.client = append(cfg.client, youtube.WithAPIURL(url))
+		cfg.client = append(cfg.client, official.WithAPIURL(url))
 	}
 }
 
@@ -287,7 +293,40 @@ func WithYoutubeHTTPClient(client *http.Client) YoutubeOption {
 		if client == nil {
 			return
 		}
-		cfg.client = append(cfg.client, youtube.WithHTTPClient(client))
+		cfg.client = append(cfg.client, official.WithHTTPClient(client))
+	}
+}
+
+type YoutubeUnofficialOption func(*youtubeUnofficialOptions)
+
+type youtubeUnofficialOptions struct {
+	client []unofficial.ClientOption
+}
+
+func WithYoutubeUnofficial(opts ...YoutubeUnofficialOption) CatalogOption {
+	return func(r *Catalog) error {
+		var cfg youtubeUnofficialOptions
+		for _, opt := range opts {
+			if opt != nil {
+				opt(&cfg)
+			}
+		}
+		return r.register(Youtube, youtube.NewAdapter(unofficial.NewClient(cfg.client...)))
+	}
+}
+
+func WithYoutubeUnofficialAPIURL(url string) YoutubeUnofficialOption {
+	return func(cfg *youtubeUnofficialOptions) {
+		cfg.client = append(cfg.client, unofficial.WithAPIURL(url))
+	}
+}
+
+func WithYoutubeUnofficialHTTPClient(client *http.Client) YoutubeUnofficialOption {
+	return func(cfg *youtubeUnofficialOptions) {
+		if client == nil {
+			return
+		}
+		cfg.client = append(cfg.client, unofficial.WithHTTPClient(client))
 	}
 }
 

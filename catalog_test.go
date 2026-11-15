@@ -16,7 +16,7 @@ func TestCatalog_ParseLink(t *testing.T) {
 		WithSpotify(SpotifyCredentials{}),
 		WithSoundcloud(),
 		WithYandex(),
-		WithYoutube(YoutubeCredentials{}),
+		WithYoutubeOfficial(YoutubeCredentials{}),
 		WithYoutubeMusic(),
 	)
 
@@ -176,12 +176,22 @@ func TestNewCatalogIgnoresNilOptions(t *testing.T) {
 		WithSpotify(SpotifyCredentials{}, nil, WithSpotifyHTTPClient(nil)),
 		WithSoundcloud(nil, WithSoundcloudHTTPClient(nil)),
 		WithYandex(nil, WithYandexHTTPClient(nil)),
-		WithYoutube(YoutubeCredentials{}, nil, WithYoutubeHTTPClient(nil)),
+		WithYoutubeOfficial(YoutubeCredentials{}, nil, WithYoutubeHTTPClient(nil)),
 		WithYoutubeMusic(nil, WithYoutubeMusicHTTPClient(nil)),
 	)
 
 	require.NoError(t, err)
 	require.Len(t, catalog.adapters, len(Providers()))
+}
+
+func TestNewCatalogYoutubeModes(t *testing.T) {
+	unofficial := WithYoutubeUnofficial(nil, WithYoutubeUnofficialHTTPClient(nil))
+	catalog, err := NewCatalog(unofficial)
+	require.NoError(t, err)
+	require.NotNil(t, catalog.adapters[Youtube])
+
+	_, err = NewCatalog(WithYoutubeOfficial(YoutubeCredentials{}), unofficial)
+	require.ErrorIs(t, err, ErrDuplicateProvider)
 }
 
 func TestProvidersReturnsCopy(t *testing.T) {

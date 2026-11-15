@@ -1,7 +1,10 @@
 package fixtures
 
 import (
+	"bytes"
 	"embed"
+	"encoding/json"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"path"
@@ -15,13 +18,14 @@ import (
 var responses embed.FS
 
 type Route struct {
-	Method  string
-	Path    string
-	Query   map[string]string
-	Status  int
-	Fixture string
-	Headers map[string]string
-	Assert  func(*testing.T, *http.Request)
+	Method   string
+	Path     string
+	Query    map[string]string
+	JSONBody map[string]string
+	Status   int
+	Fixture  string
+	Headers  map[string]string
+	Assert   func(*testing.T, *http.Request)
 }
 
 func NewServer(t *testing.T, routes ...Route) *httptest.Server {
@@ -66,6 +70,26 @@ func routeMatches(route Route, r *http.Request) bool {
 	for key, value := range route.Query {
 		if r.URL.Query().Get(key) != value {
 			return false
+		}
+	}
+	if len(route.JSONBody) > 0 {
+		if r.Body == nil {
+			return false
+		}
+		raw, err := io.ReadAll(r.Body)
+		if err != nil {
+			return false
+		}
+		r.Body = io.NopCloser(bytes.NewReader(raw))
+		var body map[string]json.RawMessage
+		if err := json.Unmarshal(raw, &body); err != nil {
+			return false
+		}
+		for key, value := range route.JSONBody {
+			var got string
+			if err := json.Unmarshal(body[key], &got); err != nil || got != value {
+				return false
+			}
 		}
 	}
 	return true

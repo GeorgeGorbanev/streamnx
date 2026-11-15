@@ -1,4 +1,4 @@
-package youtube
+package official
 
 type snippet struct {
 	Title                  string     `json:"title"`
@@ -6,7 +6,6 @@ type snippet struct {
 	Description            string     `json:"description"`
 	Thumbnails             thumbnails `json:"thumbnails"`
 	VideoOwnerChannelTitle string     `json:"videoOwnerChannelTitle"`
-	ResourceID             resourceID `json:"resourceId"`
 }
 
 type thumbnails struct {
@@ -18,9 +17,7 @@ type thumbnails struct {
 }
 
 type thumbnail struct {
-	URL    string `json:"url"`
-	Width  int    `json:"width"`
-	Height int    `json:"height"`
+	URL string `json:"url"`
 }
 
 type resourceID struct {
@@ -55,8 +52,9 @@ type playlistItemsResponse struct {
 }
 
 type playlistItem struct {
-	ID      string  `json:"id"`
-	Snippet snippet `json:"snippet"`
+	Snippet struct {
+		ResourceID resourceID `json:"resourceId"`
+	} `json:"snippet"`
 }
 
 type videoSearchResponse struct {

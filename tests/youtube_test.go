@@ -54,6 +54,30 @@ func TestYoutubeCatalogFetchTrack(t *testing.T) {
 	}, got)
 }
 
+func TestYoutubeCatalogQuotaExceeded(t *testing.T) {
+	// Captured upload API error: https://github.com/ShareX/ShareX/issues/4477#issuecomment-2511259875
+	server := fixtures.NewServer(t, fixtures.Route{
+		Method:  http.MethodGet,
+		Path:    "/youtube/v3/videos",
+		Query:   map[string]string{"id": youtubeTrackID},
+		Status:  http.StatusForbidden,
+		Fixture: "youtube_api_quota_exceeded_403.json",
+		Assert: func(t *testing.T, r *http.Request) {
+			q := r.URL.Query()
+			require.Equal(t, youtubeAPIKey, q.Get("key"))
+			require.Equal(t, "snippet,contentDetails", q.Get("part"))
+		},
+	})
+	defer server.Close()
+
+	catalog := newYoutubeCatalog(t, server.URL)
+	track, err := catalog.FetchTrack(t.Context(), streamnx.Youtube, youtubeTrackID)
+
+	require.Zero(t, track)
+	require.ErrorIs(t, err, streamnx.ErrQuotaExceeded)
+	require.ErrorContains(t, err, "reason: quotaExceeded")
+}
+
 func TestYoutubeCatalogFetchTrackNotFound(t *testing.T) {
 	server := fixtures.NewServer(t, fixtures.Route{
 		Method:  http.MethodGet,

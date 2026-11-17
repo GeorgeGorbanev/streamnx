@@ -1,5 +1,13 @@
 package official
 
+type errorResponse struct {
+	Error struct {
+		Errors []struct {
+			Reason string `json:"reason"`
+		} `json:"errors"`
+	} `json:"error"`
+}
+
 type snippet struct {
 	Title                  string     `json:"title"`
 	ChannelTitle           string     `json:"channelTitle"`

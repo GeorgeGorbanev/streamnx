@@ -224,7 +224,7 @@ Treat the following behavior as compatibility-sensitive.
 
 ### Errors
 
-- Stable cross-provider sentinels are `ErrNotFound`, `ErrScrapingBlocked`,
+- Stable cross-provider sentinels are `ErrNotFound`, `ErrScrapingBlocked`, `ErrQuotaExceeded`,
   `ErrUnsupportedOperation`, `ErrInvalidProvider`, `ErrDuplicateProvider`,
   `ErrUnknownLink`, `ErrInvalidID`, and `ErrInvalidSearchQuery`.
 - Clients may use private sentinels such as `errNotFound` and
@@ -234,6 +234,10 @@ Treat the following behavior as compatibility-sensitive.
   `errors.Is`/`require.ErrorIs`. Add context at layer boundaries, for example
   `failed to get track from spotify: %w`.
 - Do not expose provider-private sentinels through the public API.
+- The official YouTube client wraps `release.ErrQuotaExceeded` only for HTTP 403
+  with `error.errors[].reason == "quotaExceeded"`. API error text includes the
+  HTTP status and all non-empty `error.errors[].reason` values. Malformed or
+  absent error bodies retain the HTTP status alone.
 - Malformed success payloads and unexpected statuses are operational errors,
   not automatically `ErrNotFound`.
 

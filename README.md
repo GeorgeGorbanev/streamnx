@@ -280,6 +280,12 @@ provider reports that no release exists for the supplied ID, or
 `ErrScrapingBlocked` when the provider blocks automated metadata retrieval.
 Searches use `ErrInvalidSearchQuery` for an empty query.
 
+The official YouTube client returns an error wrapping `ErrQuotaExceeded` when
+the API responds with HTTP 403 and the reason `quotaExceeded`. Check it with
+`errors.Is(err, streamnx.ErrQuotaExceeded)` in fetch and search calls.
+Other official YouTube API errors include the HTTP status and any returned
+`error.errors[].reason` values in their text.
+
 #### Provider
 
 `ReleaseProvider` represents a music streaming service code.

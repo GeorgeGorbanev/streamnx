@@ -35,6 +35,7 @@ var (
 	ErrNotFound             = release.ErrNotFound
 	ErrReleaseRevoked       = release.ErrReleaseRevoked
 	ErrScrapingBlocked      = release.ErrScrapingBlocked
+	ErrQuotaExceeded        = release.ErrQuotaExceeded
 	ErrUnsupportedOperation = release.ErrUnsupportedOperation
 )
 

@@ -108,5 +108,6 @@ var (
 	ErrNotFound             = errors.New("release not found")
 	ErrReleaseRevoked       = errors.New("release has been revoked")
 	ErrScrapingBlocked      = errors.New("scraping blocked")
+	ErrQuotaExceeded        = errors.New("quota exceeded")
 	ErrUnsupportedOperation = errors.New("unsupported operation")
 )

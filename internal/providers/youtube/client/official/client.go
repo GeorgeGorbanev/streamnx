@@ -7,9 +7,12 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"slices"
 	"strconv"
+	"strings"
 
 	"github.com/GeorgeGorbanev/streamnx/v2/internal/providers/youtube/client"
+	"github.com/GeorgeGorbanev/streamnx/v2/internal/release"
 	"github.com/GeorgeGorbanev/streamnx/v2/internal/release/duration"
 )
 
@@ -190,10 +193,35 @@ func (c *Client) getWithKey(ctx context.Context, path string, values url.Values)
 	defer response.Body.Close()
 
 	if response.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("non ok http status: %d", response.StatusCode)
+		return nil, c.responseError(response)
 	}
 
 	return io.ReadAll(response.Body)
+}
+
+func (c *Client) responseError(response *http.Response) error {
+	const quotaExceededReason = "quotaExceeded"
+
+	result := fmt.Errorf("non ok http status: %d", response.StatusCode)
+	body, err := io.ReadAll(response.Body)
+	var errRes errorResponse
+	if err != nil || json.Unmarshal(body, &errRes) != nil {
+		return result
+	}
+
+	reasons := make([]string, 0, len(errRes.Error.Errors))
+	for _, detail := range errRes.Error.Errors {
+		if detail.Reason != "" {
+			reasons = append(reasons, detail.Reason)
+		}
+	}
+	if len(reasons) > 0 {
+		result = fmt.Errorf("%w (reason: %s)", result, strings.Join(reasons, ", "))
+	}
+	if response.StatusCode == http.StatusForbidden && slices.Contains(reasons, quotaExceededReason) {
+		return fmt.Errorf("%w: %w", result, release.ErrQuotaExceeded)
+	}
+	return result
 }
 
 func (c *Client) snippetMetadata(id string, s snippet) client.Metadata {

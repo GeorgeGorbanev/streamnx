@@ -4,14 +4,64 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 
 	"github.com/GeorgeGorbanev/streamnx/v2/internal/providers/youtube/client"
+	"github.com/GeorgeGorbanev/streamnx/v2/internal/release"
 )
 
 const sampleAPIKey = "sampleApiKey"
+
+func TestClientAPIError(t *testing.T) {
+	for _, tt := range []struct {
+		name           string
+		status         int
+		body           string
+		expectedReason string
+		exceeded       bool
+	}{
+		{"quota exhausted", 403, `{"error":{"errors":[{"reason":"quotaExceeded"}]}}`, "quotaExceeded", true},
+		{"later quota reason", 403, `{"error":{"errors":[{"reason":"forbidden"},{"reason":"quotaExceeded"}]}}`, "forbidden, quotaExceeded", true},
+		{"access forbidden", 403, `{"error":{"errors":[{"reason":"forbidden"}]}}`, "forbidden", false},
+		{"multiple reasons", 403, `{"error":{"errors":[{"reason":"forbidden"},{"reason":"insufficientPermissions"}]}}`, "forbidden, insufficientPermissions", false},
+		{"bad request", 400, `{"error":{"errors":[{"reason":"invalidFilters"}]}}`, "invalidFilters", false},
+		{"not found", 404, `{"error":{"errors":[{"reason":"videoNotFound"}]}}`, "videoNotFound", false},
+		{"empty reason", 403, `{"error":{"errors":[{"reason":""},{"reason":"forbidden"}]}}`, "forbidden", false},
+		{"quota mentioned in message", 403, `{"error":{"message":"quotaExceeded"}}`, "", false},
+		{"invalid JSON", 403, `{"error":`, "", false},
+		{"trailing data", 403, `{"error":{"errors":[{"reason":"quotaExceeded"}]}}invalid`, "", false},
+		{"empty response", 403, "", "", false},
+		{"server error", 500, `{"error":{"errors":[{"reason":"quotaExceeded"}]}}`, "quotaExceeded", false},
+	} {
+		t.Run(tt.name, func(t *testing.T) {
+			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+				w.WriteHeader(tt.status)
+				_, err := w.Write([]byte(tt.body))
+				require.NoError(t, err)
+			}))
+			defer server.Close()
+			c := NewClient(sampleAPIKey, WithAPIURL(server.URL))
+
+			body, err := c.getWithKey(t.Context(), "/youtube/v3/videos", url.Values{"id": {"video-id"}})
+
+			require.Nil(t, body)
+			expected := fmt.Sprintf("non ok http status: %d", tt.status)
+			if tt.expectedReason != "" {
+				expected += " (reason: " + tt.expectedReason + ")"
+			}
+			if tt.exceeded {
+				require.ErrorIs(t, err, release.ErrQuotaExceeded)
+				expected += ": " + release.ErrQuotaExceeded.Error()
+			} else {
+				require.NotErrorIs(t, err, release.ErrQuotaExceeded)
+			}
+			require.EqualError(t, err, expected)
+		})
+	}
+}
 
 func TestClient_GetVideo(t *testing.T) {
 	tests := []struct {
